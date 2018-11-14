@@ -37,4 +37,4 @@ Suggests:
 biocViews: Clustering, DataImport, DifferentialExpression, GeneExpression, MultipleComparison, Normalization, Preprocessing, QualityControl, RNASeq, Sequencing, Software, Transcription, Visualization
 RoxygenNote: 6.1.0
 BugReports: https://github.com/lrutter/bigPint/issues
-URL: https://lrutter.github.io/bigPint/
+URL: URL: https://github.com/lrutter/bigPint
