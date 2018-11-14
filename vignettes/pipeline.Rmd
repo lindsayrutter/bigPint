@@ -208,7 +208,7 @@ The above parallel coordinate plots show reliability in the DEG designation. How
 
 Indeed, subplot A of the parallel coordinate plot below shows the DEGs from this data after library scale normalization [@Marioni]. The division of DEGs between the two groups was disparate, with 78% of the DEGs being kidney-specific and only 22% of the DEGs being liver-specific. While the parallel coordinate patterns of the liver-specific DEGs appear as expected, the patterns of the kidney-specific DEGs seem to show comparatively larger variability between the replicates. Subplot B shows parallel coordinate plots of the DEGs after TMM normalization. The division of DEGs between the two groups is now more balanced, with 53% of the DEGs being kidney-specific and 47% of the DEGs being liver-specific. Additionally, the parallel coordinate patterns of both the liver-specific and kidney-specific DEGs appear as expected and more consistent with each other. Hence, these parallel coordinate plots could immediately alert users that DEGs may be more reliable for this dataset when TMM normalization is used.
 
-![](https://raw.githubusercontent.com/lrutter/bigPint/master/man/figures/lkClusters.jpg)
+![](https://raw.githubusercontent.com/lrutter/bigPint/master/man/figures/lkClusters.png)
 
 ____________________________________________________________________________________
 
