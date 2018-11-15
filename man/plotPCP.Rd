@@ -7,7 +7,7 @@
 plotPCP(data, dataMetrics = NULL, threshVar = "FDR",
   threshVal = 0.05, geneList = NULL, lineSize = 0.1,
   lineColor = "orange", outDir = getwd(), saveFile = TRUE,
-  hover = FALSE)
+  hover = FALSE, vxAxis = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
@@ -29,28 +29,40 @@ plotPCP(data, dataMetrics = NULL, threshVar = "FDR",
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
 \item{hover}{BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify IDs; default FALSE}
+
+\item{vxAxis}{BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical orientation; default FALSE}
 }
 \description{
 Plot static parallel coordinate plots onto side-by-side boxplot of whole dataset.
 }
 \examples{
-# Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying any metrics data by keeping the dataMetrics parameter its default value of NULL.
+# Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying any metrics
+data by keeping the dataMetrics parameter its default value of NULL.
+
 data(soybean_ir_sub)
 soybean_ir_sub[,-1] = log(soybean_ir_sub[,-1] + 1)
 ret <- plotPCP(data = soybean_ir_sub, saveFile = FALSE)
 ret[[1]]
 
-# Example 2: Overlay genes with FDR < 1e-4 as orange parallel coordinate lines
+# Example 2: Overlay genes with FDR < 1e-4 as orange parallel coordinate lines.
+
 data(soybean_ir_sub_metrics)
-ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-4, saveFile = FALSE)
+ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-4, 
+  saveFile = FALSE)
 ret[[1]]
   
-# Example 3: Overlay the ten most significant genes (lowest FDR values) as blue parallel coordinate lines
+# Example 3: Overlay the ten most significant genes (lowest FDR values) as blue parallel 
+coordinate lines.
+
 geneList = soybean_ir_sub_metrics[["N_P"]][1:10,]$ID
-ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", saveFile = FALSE)
+ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", 
+  saveFile = FALSE)
 ret[[1]]
 
-# Example 4: Repeat this same procedure, only now set the hover parameter to TRUE to allow us to hover over blue parallel coordinate lines and determine their individual IDs
-ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", saveFile = FALSE, hover = TRUE)
+# Example 4: Repeat this same procedure, only now set the hover parameter to TRUE to allow us 
+to hover over blue parallel coordinate lines and determine their individual IDs.
+
+ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", 
+  saveFile = FALSE, hover = TRUE)
 ret[[1]]
 }

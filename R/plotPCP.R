@@ -11,6 +11,7 @@
 #' @param outDir CHARACTER STRING | Output directory to save all plots; default current directory
 #' @param lineSize INTEGER | Size of plotted parallel coordinate lines; default 0.1
 #' @param lineColor CHARACTER STRING | Color of plotted parallel coordinate lines; default "orange"
+#' @param vxAxis BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical orientation; default FALSE
 #' @param hover BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify IDs; default FALSE
 #' 
 #' @importFrom dplyr filter select %>%
@@ -27,27 +28,37 @@
 #' 
 #' @export
 #' @examples
-#' # Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying any metrics data by keeping the dataMetrics parameter its default value of NULL.
+#' # Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying any metrics
+#' data by keeping the dataMetrics parameter its default value of NULL.
+#' 
 #' data(soybean_ir_sub)
 #' soybean_ir_sub[,-1] = log(soybean_ir_sub[,-1] + 1)
 #' ret <- plotPCP(data = soybean_ir_sub, saveFile = FALSE)
 #' ret[[1]]
 #'
-#' # Example 2: Overlay genes with FDR < 1e-4 as orange parallel coordinate lines
+#' # Example 2: Overlay genes with FDR < 1e-4 as orange parallel coordinate lines.
+#' 
 #' data(soybean_ir_sub_metrics)
-#' ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-4, saveFile = FALSE)
+#' ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-4, 
+#'   saveFile = FALSE)
 #' ret[[1]]
 #'   
-#' # Example 3: Overlay the ten most significant genes (lowest FDR values) as blue parallel coordinate lines
+#' # Example 3: Overlay the ten most significant genes (lowest FDR values) as blue parallel 
+#' coordinate lines.
+#' 
 #' geneList = soybean_ir_sub_metrics[["N_P"]][1:10,]$ID
-#' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", saveFile = FALSE)
+#' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", 
+#'   saveFile = FALSE)
 #' ret[[1]]
 #' 
-#' # Example 4: Repeat this same procedure, only now set the hover parameter to TRUE to allow us to hover over blue parallel coordinate lines and determine their individual IDs
-#' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", saveFile = FALSE, hover = TRUE)
+#' # Example 4: Repeat this same procedure, only now set the hover parameter to TRUE to allow us 
+#' to hover over blue parallel coordinate lines and determine their individual IDs.
+#' 
+#' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", 
+#'   saveFile = FALSE, hover = TRUE)
 #' ret[[1]]
 
-plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05, geneList = NULL, lineSize = 0.1, lineColor = "orange", outDir=getwd(), saveFile=TRUE, hover=FALSE){
+plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05, geneList = NULL, lineSize = 0.1, lineColor = "orange", outDir=getwd(), saveFile=TRUE, hover=FALSE, vxAxis=FALSE){
   
   key <- val <- ID <- Sample <- Count <- NULL
   
@@ -68,12 +79,20 @@ plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05
       boxDat <- datSel %>% gather(key, val, -c(ID))
       colnames(boxDat) <- c("ID", "Sample", "Count")
       
+      userOrder <- unique(boxDat$Sample)
+      boxDat$Sample <- as.factor(boxDat$Sample)
+      levels(boxDat$Sample) <- userOrder
+      
       if (!is.null(geneList)){
         pcpDat <- datSel[which(datSel$ID %in% geneList),]
         pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
         colnames(pcpDat2) <- c("ID", "Sample", "Count")
         p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample', y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
         
+        if (vxAxis == TRUE){
+          p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+        }
+
         if (hover == TRUE){
           gP <- ggplotly(p)
           gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
@@ -95,6 +114,10 @@ plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05
         colnames(pcpDat2) <- c("ID", "Sample", "Count")
         p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample', y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
         
+        if (vxAxis == TRUE){
+          p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+        }
+        
         if (hover == TRUE){
           gP <- ggplotly(p)
           gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
@@ -105,6 +128,11 @@ plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05
         
       }else{
         p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot()
+        
+        if (vxAxis == TRUE){
+          p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+        }
+        
       }
       
       if (saveFile == TRUE){

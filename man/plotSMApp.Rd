@@ -16,7 +16,8 @@ Plot interactive scatterplot matrices.
 }
 \examples{
 \dontrun{
-# Example: Create interactive scatterplot matrix for first two treatment groups of data
+# Example: Create interactive scatterplot matrix for first two treatment groups of data.
+
 data(soybean_cn_sub)
 soybean_cn_sub <- soybean_cn_sub[,1:7]
 plotSMApp(data=soybean_cn_sub)

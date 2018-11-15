@@ -113,6 +113,11 @@ server <- function(input, output, session) {
   
   metricDF <- eventReactive(c(input$selPair, input$selMetric, input$selOrder), {
     metricDF <- dataMetrics[[paste0(input$selPair[1], "_", input$selPair[2])]]
+    
+    if (!is.null(geneList)){
+      metricDF <- metricDF[which(metricDF$ID %in% geneList),]
+    }
+    
     if (!is.null(metricDF[[input$selMetric]])){
       metricDF <- metricDF[order(metricDF[[input$selMetric]]),]
       if (input$selOrder == "Decreasing"){
@@ -124,15 +129,8 @@ server <- function(input, output, session) {
   
   currMetric <- eventReactive(values$x, {
     validate(need(values$x > 0, "Plot a gene."))
-  
-    if (is.null(geneList)){
       currMetric <- metricDF()[values$x, ]
       currMetric
-    }
-    else{
-      currMetric <- metricDF()[which(metricDF()$ID %in% geneList[values$x]),]
-      currMetric
-    }
     })
   currID <- eventReactive(currMetric(), {as.character(currMetric()$ID)})
   currGene <- eventReactive(currID(), {unname(unlist(datSel()[which(datSel()$ID == currID()), -1]))})

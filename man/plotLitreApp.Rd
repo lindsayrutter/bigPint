@@ -23,14 +23,18 @@ Plot interactive litre plots.
 }
 \examples{
 \dontrun{
-# Example 1: Create an interactive litre plot for the logged data using default background of hexagons
+# Example 1: Create an interactive litre plot for the logged data using default background of 
+hexagons.
+
 data(soybean_ir_sub)
 data(soybean_ir_sub_metrics)
 soybean_ir_sub_log <- soybean_ir_sub
 soybean_ir_sub_log[,-1] <- log(soybean_ir_sub[,-1]+1)
 plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
 
-# Example 2: Repeat the same process, only now plot background data as individual points. Note this may be too slow now that all points are drawn in the background.
+# Example 2: Repeat the same process, only now plot background data as individual points. Note 
+this may be too slow now that all points are drawn in the background.
+
 plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics, option = "allPoints", pointColor = "red")
 }
 }

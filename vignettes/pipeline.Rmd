@@ -1,8 +1,8 @@
 ---
 title: 'Recommended RNA-seq pipeline'
-#:author:
-#:- name: Lindsay Rutter
-#:date: '`r Sys.Date()`'
+author:
+- name: Lindsay Rutter
+date: '`r Sys.Date()`'
 package: bigPint
 bibliography: bigPint.bib
 output:
@@ -181,26 +181,30 @@ str(dataMetrics)
 At this point, we can view our DEGs (which we consider to be genes with FDR < 0.1). Below we show a standardized parallel coordinate plot and scatterplot matrix with the DEGs superimposed in magenta. The DEGs follow the patterns we expect, which were described in the article [Introduction to bigPint plots](https://lrutter.github.io/bigPint/articles/plotIntro.html). 
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotPCP(data_st, dataMetrics, threshVal = 0.1, lineSize = 0.3, lineColor = "magenta", saveFile = FALSE)
+ret <- plotPCP(data_st, dataMetrics, threshVal = 0.1, lineSize = 0.3, lineColor = "magenta", 
+  saveFile = FALSE)
 ret[["S1_S3"]] + ggtitle("DEGs (FDR < 0.1)")
 ```
 
 The user can recreate the parallel coordinate plot in a fashion that allows them to quickly hover over individual parallel coordinates and determine their individual gene IDs by setting the `hover` parameter to a value of TRUE.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotPCP(data_st, dataMetrics, threshVal = 0.1, lineSize = 0.3, lineColor = "magenta", saveFile = FALSE, hover = TRUE)
+ret <- plotPCP(data_st, dataMetrics, threshVal = 0.1, lineSize = 0.3, lineColor = "magenta", 
+  saveFile = FALSE, hover = TRUE)
 ret[["S1_S3"]] %>% layout(title="DEGs (FDR < 0.1)")
 ```
 
 While the parallel coordinate plot above confirms that the DEG calls appear reliable, some users may find that superimposing *all* DEGs at once will create `bigPint` plots that are difficult to interpret. This is especially true in datasets with low signal:to:noise ratios and/or large number of DEGs. In these cases, it can be helpful to perform hierarchical clustering on the DEGs to group them into more manageable sizes of similar patterns and then examine these plots for each separate cluster. Here, we create two DEG clusters and examine their parallel coordinate plots. We see that the first cluster captured 41 DEGs with larger expression in the S1 group and the second cluster captured 23 DEGs with larger expression in the S3 group. Because we set the `verbose` parameter to a value of TRUE, we also generate .rds files that contain the gene IDs within these clusters in `outDir`, which is the current working directory by default. We will use these .rds files in the last three steps. 
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotClusters(data_st, dataMetrics, threshVal = 0.1, nC = 2, colList = c("#00A600FF", "#CC00FFFF"), lineSize = 0.5, verbose = TRUE)
+ret <- plotClusters(data_st, dataMetrics, threshVal = 0.1, nC = 2,
+  colList = c("#00A600FF", "#CC00FFFF"), lineSize = 0.5, verbose = TRUE)
 plot(ret[["S1_S3_2"]])
 ```
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotClusters(data_st, dataMetrics, threshVal = 0.1, nC = 2, colList = c("#00A600FF", "#CC00FFFF"), lineSize = 0.5, saveFile = FALSE)
+ret <- plotClusters(data_st, dataMetrics, threshVal = 0.1, nC = 2,
+  colList = c("#00A600FF", "#CC00FFFF"), lineSize = 0.5, saveFile = FALSE)
 plot(ret[["S1_S3_2"]])
 ```
 
@@ -243,24 +247,28 @@ S1S3Cluster2
 Now, we can reexamine the scatterplot matrix of DEGs for each of these clusters separately. We can maintain the same overlaying colors throughout this process.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(data, geneList = S1S3Cluster1, pointColor = "#00A600FF", pointSize = 1, saveFile = FALSE)
+ret <- plotSM(data, geneList = S1S3Cluster1, pointColor = "#00A600FF", pointSize = 1,
+  saveFile = FALSE)
 ret[["S1_S3"]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
 ```
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(data, geneList = S1S3Cluster2, pointColor = "#CC00FFFF", pointSize = 1, saveFile = FALSE)
+ret <- plotSM(data, geneList = S1S3Cluster2, pointColor = "#CC00FFFF", pointSize = 1,
+ saveFile = FALSE)
 ret[["S1_S3"]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")"))
 ```
 
 It is sometimes convenient to also view DEG scatterplot matrices using the standardized data.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(data_st, geneList = S1S3Cluster1, pointColor = "#00A600FF", pointSize = 1, saveFile = FALSE)
+ret <- plotSM(data_st, geneList = S1S3Cluster1, pointColor = "#00A600FF", pointSize = 1, 
+  saveFile = FALSE)
 ret[["S1_S3"]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
 ```
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(data_st, geneList = S1S3Cluster2, pointColor = "#CC00FFFF", pointSize = 1, saveFile = FALSE)
+ret <- plotSM(data_st, geneList = S1S3Cluster2, pointColor = "#CC00FFFF", pointSize = 1, 
+  saveFile = FALSE)
 ret[["S1_S3"]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")"))
 ```
 
@@ -271,39 +279,45 @@ ________________________________________________________________________________
 It is useful to investigate the DEGs individually; this can be accomplished using litre plots. Below we show an example litre plot for the DEG with the lowest FDR value in Cluster 1 (ID: "Glyma08g22380.1").
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotLitre(data, geneList = S1S3Cluster1[1], pointColor = "#00A600FF", pointSize = 2, saveFile = FALSE)
+ret <- plotLitre(data, geneList = S1S3Cluster1[1], pointColor = "#00A600FF", pointSize = 2, 
+  saveFile = FALSE)
 ret[[1]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), "): ", S1S3Cluster1[1]))
 ```
 
 We also show an example litre plot for the DEG with the lowest FDR value in Cluster 2 (ID: "Glyma01g24710.1").
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotLitre(data, geneList = S1S3Cluster2[1], pointColor = "#CC00FFFF", pointSize = 2, saveFile = FALSE)
+ret <- plotLitre(data, geneList = S1S3Cluster2[1], pointColor = "#CC00FFFF", pointSize = 2, 
+  saveFile = FALSE)
 ret[[1]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), "): ", S1S3Cluster2[1]))
 ```
 
 We can verify from these litre plots that these example DEGs from each cluster show the patterns we would expect from differential expression. Users can also repeat this process on the standardized data, as is shown below. Here, we also change the `option` parameter to plot the background data as points instead of the default hexagons.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotLitre(data_st, geneList = S1S3Cluster1[1], pointColor = "#00A600FF", pointSize = 2, saveFile = FALSE, option = "allPoints")
+ret <- plotLitre(data_st, geneList = S1S3Cluster1[1], pointColor = "#00A600FF", pointSize = 2, 
+  saveFile = FALSE, option = "allPoints")
 ret[[1]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), "): ", S1S3Cluster1[1]))
 ```
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotLitre(data_st, geneList = S1S3Cluster2[1], pointColor = "#CC00FFFF", pointSize = 2, saveFile = FALSE, option = "allPoints")
+ret <- plotLitre(data_st, geneList = S1S3Cluster2[1], pointColor = "#CC00FFFF", pointSize = 2, 
+  saveFile = FALSE, option = "allPoints")
 ret[[1]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), "): ", S1S3Cluster2[1]))
 ```
 
 We only investigated one DEG (the one with the lowest FDR) from each cluster. One way to enhance the usefulness of litre plots is to allow users to flip through the genes quickly and take note of any DEGs that may have questionable patterns. This is best achieved with interactivity. To accomplish this, the user can use the [`plotLitreApp()` function](https://lrutter.github.io/bigPint/reference/plotLitreApp.html). Below is an example of creating an interactive litre plot of the standardized data that allows the user to flip through all 41 DEGs in Cluster 1. The vignette will not open this application. Please run the below code to view this application.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-plotLitreApp(data = data_st, dataMetrics = dataMetrics, geneList = S1S3Cluster1, pointColor = "#00A600FF")
+plotLitreApp(data = data_st, dataMetrics = dataMetrics, geneList = S1S3Cluster1,
+  pointColor = "#00A600FF")
 ```
 
 We can also flip through all 23 DEGs in Cluster 2 by creating the following interactive litre plot.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-plotLitreApp(data = data_st, dataMetrics = dataMetrics, geneList = S1S3Cluster2, pointColor = "#CC00FFFF")
+plotLitreApp(data = data_st, dataMetrics = dataMetrics, geneList = S1S3Cluster2,
+  pointColor = "#CC00FFFF")
 ```
 
 ____________________________________________________________________________________
@@ -313,21 +327,24 @@ ________________________________________________________________________________
 It can also be helpful to determine how the magnitude change and significance values of DEGs compare to the rest of the dataset. Do these DEGs only show large magnitude compared to the rest of the data, or do they also have small magnitude changes? The users can quickly obtain this information in visual format using the [`plotVolcano()`](https://lrutter.github.io/bigPint/reference/plotVolcano.html) function. Below we use the default option of plotting all the data as hexagon bins in the background and we superimpose the 41 DEGs from Cluster 1.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster1, saveFile = FALSE, pointSize = 4, pointColor = "#00A600FF")
+ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster1,
+  saveFile = FALSE, pointSize = 4, pointColor = "#00A600FF")
 ret[["S1_S3"]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
 ```
 
 In some cases, we may find it easier to plot all the data as individual points instead of hexagon bins. They may also wish to set the `hover` parameter to a value of TRUE so that they can hover over overlaid points and determine their gene IDs.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster1, saveFile = FALSE, pointSize = 4, pointColor = "#00A600FF", option = "allPoints", hover = TRUE)
+ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster1,
+  saveFile = FALSE, pointSize = 4, pointColor = "#00A600FF", option = "allPoints", hover = TRUE)
 ret[["S1_S3"]] %>% layout(title=paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
 ```
 
 We repeat this process for the 23 DEGs from Cluster 2.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster2, saveFile = FALSE, pointSize = 4, pointColor = "#CC00FFFF", option = "allPoints", hover = TRUE)
+ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster2,
+  saveFile = FALSE, pointSize = 4, pointColor = "#CC00FFFF", option = "allPoints", hover = TRUE)
 ret[["S1_S3"]] %>% layout(title=paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")"))
 ```
 

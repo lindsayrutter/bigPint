@@ -30,7 +30,9 @@
 #' 
 #' @export
 #' @examples
-#' # Example 1: Create one litre plot for each of the 61 genes that have FDR < 1e-10 and examine the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
+#' # Example 1: Create one litre plot for each of the 61 genes that have FDR < 1e-10 and examine 
+#' the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
+#' 
 #' data(soybean_ir_sub)
 #' soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1]+1)
 #' data(soybean_ir_sub_metrics)
@@ -39,13 +41,18 @@
 #' names(ret)[1]
 #' ret[[1]]
 #' 
-#' # Example 2: Create one litre plot for each of the five most significant genes (lowest FDR values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".
+#' # Example 2: Create one litre plot for each of the five most significant genes (lowest FDR 
+#' values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".
+#' 
 #' geneList = soybean_ir_sub_metrics[["N_P"]][1:5,]$ID
 #' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, pointColor = "deeppink")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
-#' # Example 3: Create one litre plot for each of the five most significant genes (lowest FDR values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1". Use points instead of the default hexagons as the background.
+#' # Example 3: Create one litre plot for each of the five most significant genes (lowest FDR 
+#' values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1". Use points instead of 
+#' the default hexagons as the background.
+#' 
 #' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, pointColor = "deeppink", option = "allPoints")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
