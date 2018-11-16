@@ -232,37 +232,33 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'># Example 1: Create one litre plot for each of the 61 genes that have FDR < 1e-10 and examine 
-the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
+    <pre class="examples"><div class='input'><span class='co'># Example 1: Create one litre plot for each of the 61 genes that have FDR &lt; 1e-10 and examine </span>
+<span class='co'># the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")</span>
 
-data(soybean_ir_sub)
-soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1]+1)
-data(soybean_ir_sub_metrics)
-ret <- plotLitre(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-10, saveFile = FALSE)
-length(ret)
-names(ret)[1]
-ret[[1]]
+<span class='fu'>data</span>(<span class='no'>soybean_ir_sub</span>)
+<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fu'>log</span>(<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>]+<span class='fl'>1</span>)
+<span class='fu'>data</span>(<span class='no'>soybean_ir_sub_metrics</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitre</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>,
+  <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-10</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='fu'>length</span>(<span class='no'>ret</span>)</div><div class='output co'>#&gt; [1] 61</div><div class='input'><span class='fu'>names</span>(<span class='no'>ret</span>)[<span class='fl'>1</span>]</div><div class='output co'>#&gt; [1] "N_P_Glyma.19G168700.Wm82.a2.v1"</div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotLitre-1.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='co'># Example 2: Create one litre plot for each of the five most significant genes (lowest FDR </span>
+<span class='co'># values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".</span>
 
-# Example 2: Create one litre plot for each of the five most significant genes (lowest FDR 
-values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".
+<span class='no'>geneList</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span><span class='kw'>[[</span><span class='st'>"N_P"</span>]][<span class='fl'>1</span>:<span class='fl'>5</span>,]$<span class='no'>ID</span>
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitre</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"deeppink"</span>)
+<span class='fu'>names</span>(<span class='no'>ret</span>)</div><div class='output co'>#&gt; [1] "N_P_Glyma.19G168700.Wm82.a2.v1" "N_P_Glyma.13G293500.Wm82.a2.v1"
+#&gt; [3] "N_P_Glyma.05G188700.Wm82.a2.v1" "N_P_Glyma.13G173100.Wm82.a2.v1"
+#&gt; [5] "N_P_Glyma.11G141800.Wm82.a2.v1"</div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_Glyma.19G168700.Wm82.a2.v1"</span>]]</div><div class='img'><img src='plotLitre-2.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='co'># Example 3: Create one litre plot for each of the five most significant genes (lowest FDR </span>
+<span class='co'># values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1". Use points instead</span>
+<span class='co'># of the default hexagons as the background.</span>
 
-geneList = soybean_ir_sub_metrics[["N_P"]][1:5,]$ID
-ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, pointColor = "deeppink")
-names(ret)
-ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
-
-# Example 3: Create one litre plot for each of the five most significant genes (lowest FDR 
-values) and examine the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1". Use points instead of 
-the default hexagons as the background.
-
-ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, pointColor = "deeppink", option = "allPoints")
-names(ret)
-ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
-
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:2:5: unexpected symbol</span>
-#&gt; <span class='error'>1: # Example 1: Create one litre plot for each of the 61 genes that have FDR &lt; 1e-10 and examine </span>
-#&gt; <span class='error'>2: the first</span>
-#&gt; <span class='error'>       ^</span></div></pre>
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitre</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"deeppink"</span>,
+  <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>)
+<span class='fu'>names</span>(<span class='no'>ret</span>)</div><div class='output co'>#&gt; [1] "N_P_Glyma.19G168700.Wm82.a2.v1" "N_P_Glyma.13G293500.Wm82.a2.v1"
+#&gt; [3] "N_P_Glyma.05G188700.Wm82.a2.v1" "N_P_Glyma.13G173100.Wm82.a2.v1"
+#&gt; [5] "N_P_Glyma.11G141800.Wm82.a2.v1"</div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_Glyma.19G168700.Wm82.a2.v1"</span>]]</div><div class='img'><img src='plotLitre-3.png' alt='' width='700' height='700' /></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -64,7 +64,8 @@ We note that the `geneList` object is more flexible than the `dataMetrics` objec
 
 ```{r, eval=TRUE, include=TRUE}
 library(dplyr)
-sigGenes = soybean_ir_sub_metrics[["N_P"]] %>% filter(FDR < 1e-10) %>% filter(abs(logFC) > 6) %>%   select(ID)
+sigGenes = soybean_ir_sub_metrics[["N_P"]] %>% filter(FDR < 1e-10) %>% filter(abs(logFC) > 6) %>%   
+  select(ID)
 sigGenes = sigGenes[,1]
 ret <- plotSM(data=soybean_ir_sub, geneList = sigGenes, pointSize = 0.5, pointColor = "magenta", 
   saveFile = FALSE)

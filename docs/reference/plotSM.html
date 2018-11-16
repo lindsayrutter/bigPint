@@ -264,54 +264,42 @@
   <span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>soybean_cn_sub_st</span>)-<span class='fl'>1</span>)]
 <span class='fu'>colnames</span>(<span class='no'>soybean_cn_sub_st</span>) <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>soybean_cn_sub</span>)
 <span class='no'>nID</span> <span class='kw'>&lt;-</span> <span class='fu'>which</span>(<span class='fu'>is.nan</span>(<span class='no'>soybean_cn_sub_st</span>[,<span class='fl'>2</span>]))
-<span class='no'>soybean_cn_sub_st</span>[<span class='no'>nID</span>,<span class='fl'>2</span>:<span class='fu'>length</span>(<span class='no'>soybean_cn_sub_st</span>)] <span class='kw'>&lt;-</span> <span class='fl'>0</span></div># NOT RUN {
-# Example 1: Plot scatterplot matrix of points. Saves three plots to outDir because saveFile 
-equals TRUE by default.
+<span class='no'>soybean_cn_sub_st</span>[<span class='no'>nID</span>,<span class='fl'>2</span>:<span class='fu'>length</span>(<span class='no'>soybean_cn_sub_st</span>)] <span class='kw'>&lt;-</span> <span class='fl'>0</span></div><span class='co'># NOT RUN {</span>
+<span class='co'># Example 1: Plot scatterplot matrix of points. Saves three plots to outDir because saveFile </span>
+<span class='co'># equals TRUE by default.</span>
 
-plotSM(soybean_cn_sub, soybean_cn_sub_metrics)
-# }
-<div class='input'>
-# Example 2: Plot scatterplot matrix of points. Return list of plots so user can tailor them 
-(such as add title) and does not save to outDir because saveFile equals FALSE.
+<span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>)
+<span class='co'># }</span><div class='input'>
+<span class='co'># Example 2: Plot scatterplot matrix of points. Return list of plots so user can tailor them </span>
+<span class='co'># (such as add title) and does not save to outDir because saveFile equals FALSE.</span>
 
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, pointColor = "pink", saveFile = FALSE)
-# Determine names of plots in returned list
-names(ret)
-ret[["S1_S2"]] + ggtitle("S1 versus S2")
-ret[["S1_S3"]] + ggtitle("S1 versus S3")
-ret[["S2_S3"]] + ggtitle("S2 versus S3")
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"pink"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='co'># Determine names of plots in returned list</span>
+<span class='fu'>names</span>(<span class='no'>ret</span>)</div><div class='output co'>#&gt; [1] "S1_S2" "S1_S3" "S2_S3"</div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S2"</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S1 versus S2"</span>)</div><div class='img'><img src='plotSM-1.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S3"</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S1 versus S3"</span>)</div><div class='img'><img src='plotSM-2.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S2_S3"</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S2 versus S3"</span>)</div><div class='img'><img src='plotSM-3.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='co'># Example 3: Plot standardized data as scatterplot matrix of points.</span>
 
-# Example 3: Plot standardized data as scatterplot matrix of points.
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub_st</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"#00C379"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span>
+  <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span>(<span class='st'>"Standardized read counts"</span>) + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span>(<span class='st'>"Standardized read counts"</span>)</div><div class='img'><img src='plotSM-4.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='co'># Example 4: Plot scatterplot matrix of hexagons.</span>
 
-ret <- plotSM(soybean_cn_sub_st, soybean_cn_sub_metrics, pointColor = "#00C379", saveFile = 
-  FALSE)
-ret[[1]] + xlab("Standardized read counts") + ylab("Standardized read counts")
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>pointSize</span>
+  <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>2</span>]]</div><div class='img'><img src='plotSM-5.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='co'># Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, first without </span>
+<span class='co'># considering the metrics dataset and then considering it.</span>
 
-# Example 4: Plot scatterplot matrix of hexagons.
+<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fu'>log</span>(<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>] + <span class='fl'>1</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_ir_sub</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"orthogonal"</span>, <span class='kw'>threshOrth</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
+  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-6.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_ir_sub</span>, <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"orthogonal"</span>, <span class='kw'>threshOrth</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-7.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='co'># Example 6: Plot scatterplot matrix of fold change.</span>
 
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "hexagon", xbins = 5, pointSize 
-  = 0.1, saveFile = FALSE)
-ret[[2]]
-
-# Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, first without considering the metrics dataset and then considering it.
-
-soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1] + 1) 
-ret <- plotSM(soybean_ir_sub, option = "orthogonal", threshOrth = 2.5, pointSize = 0.2, 
-  saveFile = FALSE)
-ret[[1]]
-ret <- plotSM(soybean_ir_sub, soybean_ir_sub_metrics, option = "orthogonal", threshOrth = 2.5, 
-  pointSize = 0.2, saveFile = FALSE)
-ret[[1]]
-
-# Example 6: Plot scatterplot matrix of fold change.
-
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange", threshFC = 0.5, 
-  pointSize = 0.2, saveFile = FALSE)
-ret[[1]]
-</div><div class='output co'>#&gt; <span class='error'>Error: &lt;text&gt;:3:7: unexpected symbol</span>
-#&gt; <span class='error'>2: # Example 2: Plot scatterplot matrix of points. Return list of plots so user can tailor them </span>
-#&gt; <span class='error'>3: (such as</span>
-#&gt; <span class='error'>         ^</span></div></pre>
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"foldChange"</span>, <span class='kw'>threshFC</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-8.png' alt='' width='700' height='700' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -67,14 +67,15 @@ nID <- which(is.nan(soybean_cn_sub_st[,2]))
 soybean_cn_sub_st[nID,2:length(soybean_cn_sub_st)] <- 0
 
 \dontrun{
+
 # Example 1: Plot scatterplot matrix of points. Saves three plots to outDir because saveFile 
-equals TRUE by default.
+# equals TRUE by default.
 
 plotSM(soybean_cn_sub, soybean_cn_sub_metrics)
 }
 
 # Example 2: Plot scatterplot matrix of points. Return list of plots so user can tailor them 
-(such as add title) and does not save to outDir because saveFile equals FALSE.
+# (such as add title) and does not save to outDir because saveFile equals FALSE.
 
 ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, pointColor = "pink", saveFile = FALSE)
 # Determine names of plots in returned list
@@ -95,7 +96,8 @@ ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "hexagon", xbins 
   = 0.1, saveFile = FALSE)
 ret[[2]]
 
-# Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, first without considering the metrics dataset and then considering it.
+# Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, first without 
+# considering the metrics dataset and then considering it.
 
 soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1] + 1) 
 ret <- plotSM(soybean_ir_sub, option = "orthogonal", threshOrth = 2.5, pointSize = 0.2, 

@@ -51,8 +51,8 @@ Perform hierarchical clustering analysis and visualize results with parallel coo
 }
 \examples{
 # Example 1: Perform hierarchical clustering of size four using the default agglomeration 
-method ward.D. Cluster only on the genes that have FDR < 1e-7 (n = 113) and overlay these 
-genes.
+# method "ward.D". Cluster only on the genes that have FDR < 1e-7 (n = 113) and overlay 
+# these genes.
 
 library(grid)
 library(matrixStats)
@@ -66,25 +66,25 @@ ret <- plotClusters(data=soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, n
 plot(ret[["N_P_4"]])
 
 # Example 2: Perform the same analysis, only now create the four groups by clustering on all 
-genes in the data (n = 5,604). Then, overlay the genes that have FDR < 1e-7 (n = 113) into 
-their corresponding clusters.
+# genes in the data (n = 5,604). Then, overlay the genes that have FDR < 1e-7 (n = 113) into 
+# their corresponding clusters.
 
 ret <- plotClusters(data=soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, nC=4, 
   colList = colList, clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
 plot(ret[["N_P_4"]])
 
 # Example 3: Perform the same analysis, only now overlay all genes in the data by keeping the
-dataMetrics object as its default value of NULL.
+# dataMetrics object as its default value of NULL.
 
 ret <- plotClusters(data=soybean_ir_sub, nC=4, colList = colList, clusterAllData = TRUE,
   saveFile = FALSE)
 plot(ret[["N_P_4"]])
 
 # Example 4: Visualization of gene clusters is usually performed on standardized data. Here, 
-hierarchical clustering of size four is performed using the agglomeration method "average" on
-standardized data. Only genes with FDR < 0.05 are used for the clustering. Only two of the 
-three pairwise combinations of treatment groups (S1 and S2; S1 and S3) have any genes with 
-FDR < 0.05. The output plots for these two pairs are examined. 
+# hierarchical clustering of size four is performed using the agglomeration method "average"
+# on standardized data. Only genes with FDR < 0.05 are used for the clustering. Only two of
+# the three pairwise combinations of treatment groups (S1 and S2; S1 and S3) have any genes
+# with FDR < 0.05. The output plots for these two pairs are examined. 
 
 data(soybean_cn_sub)
 data(soybean_cn_sub_metrics)
@@ -104,8 +104,9 @@ plot(ret[["S1_S2_4"]])
 plot(ret[["S1_S3_4"]])
 
 # Example 5: Run the same analysis, only now set the verbose parameter to value TRUE. This 
-will save images of each individual cluster, .rds files that contain the IDs within each 
-cluster, and images of the conglomerate clusters to outDir (default current working directory).
+# will save images of each individual cluster, .rds files that contain the IDs within each 
+# cluster, and images of the conglomerate clusters to outDir (default current working
+# directory).
 
 \dontrun{
 plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, nC=4,

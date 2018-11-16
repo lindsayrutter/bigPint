@@ -37,7 +37,7 @@ Plot static parallel coordinate plots onto side-by-side boxplot of whole dataset
 }
 \examples{
 # Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying any metrics
-data by keeping the dataMetrics parameter its default value of NULL.
+# data by keeping the dataMetrics parameter its default value of NULL.
 
 data(soybean_ir_sub)
 soybean_ir_sub[,-1] = log(soybean_ir_sub[,-1] + 1)
@@ -52,7 +52,7 @@ ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, thre
 ret[[1]]
   
 # Example 3: Overlay the ten most significant genes (lowest FDR values) as blue parallel 
-coordinate lines.
+# coordinate lines.
 
 geneList = soybean_ir_sub_metrics[["N_P"]][1:10,]$ID
 ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", 
@@ -60,7 +60,7 @@ ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineC
 ret[[1]]
 
 # Example 4: Repeat this same procedure, only now set the hover parameter to TRUE to allow us 
-to hover over blue parallel coordinate lines and determine their individual IDs.
+# to hover over blue parallel coordinate lines and determine their individual IDs.
 
 ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, lineColor = "blue", 
   saveFile = FALSE, hover = TRUE)

@@ -23,12 +23,11 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom shinydashboard menuItem tabItem dashboardPage dashboardHeader dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
-#' 
 #' @export
 #' @examples
 #' \dontrun{
 #' # Example 1: Create an interactive litre plot for the logged data using default background of 
-#' hexagons.
+#' # hexagons.
 #' 
 #' data(soybean_ir_sub)
 #' data(soybean_ir_sub_metrics)
@@ -37,9 +36,10 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
 #' 
 #' # Example 2: Repeat the same process, only now plot background data as individual points. Note 
-#' this may be too slow now that all points are drawn in the background.
+#' # this may be too slow now that all points are drawn in the background.
 #' 
-#' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics, option = "allPoints", pointColor = "red")
+#' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics, option = "allPoints", 
+#'   pointColor = "red")
 #' }
 
 plotLitreApp = function(data=data, dataMetrics=dataMetrics, geneList = NULL, pointColor = "orange", option = "hexagon"){

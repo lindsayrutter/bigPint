@@ -206,22 +206,22 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"># NOT RUN {
-# Example 1: Create an interactive litre plot for the logged data using default background of 
-hexagons.
+    <pre class="examples"><span class='co'># NOT RUN {</span>
+<span class='co'># Example 1: Create an interactive litre plot for the logged data using default background of </span>
+<span class='co'># hexagons.</span>
 
-data(soybean_ir_sub)
-data(soybean_ir_sub_metrics)
-soybean_ir_sub_log <- soybean_ir_sub
-soybean_ir_sub_log[,-1] <- log(soybean_ir_sub[,-1]+1)
-plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
+<span class='fu'>data</span>(<span class='no'>soybean_ir_sub</span>)
+<span class='fu'>data</span>(<span class='no'>soybean_ir_sub_metrics</span>)
+<span class='no'>soybean_ir_sub_log</span> <span class='kw'>&lt;-</span> <span class='no'>soybean_ir_sub</span>
+<span class='no'>soybean_ir_sub_log</span>[,-<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fu'>log</span>(<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>]+<span class='fl'>1</span>)
+<span class='fu'>plotLitreApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_log</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>)
 
-# Example 2: Repeat the same process, only now plot background data as individual points. Note 
-this may be too slow now that all points are drawn in the background.
+<span class='co'># Example 2: Repeat the same process, only now plot background data as individual points. Note </span>
+<span class='co'># this may be too slow now that all points are drawn in the background.</span>
 
-plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics, option = "allPoints", pointColor = "red")
-# }
-</pre>
+<span class='fu'>plotLitreApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_log</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>,
+  <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='co'># }</span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

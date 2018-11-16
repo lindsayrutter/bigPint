@@ -17,7 +17,7 @@ Plot interactive parallel coordinate plots.
 \examples{
 \dontrun{
 # Example: Create interactive parallel coordinate plot for genes that have FDR < 0.01 and
-logFC < -4.
+# logFC < -4.
 
 data(soybean_ir_sub)
 data(soybean_ir_sub_metrics)

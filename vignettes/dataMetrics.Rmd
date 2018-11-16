@@ -34,18 +34,17 @@ As was shown in the article [Data object](https://lrutter.github.io/bigPint/arti
 ```{r, eval=TRUE, include=TRUE}
 library(bigPint)
 data("soybean_ir_sub_metrics")
-str(soybean_ir_sub_metrics)
+str(soybean_ir_sub_metrics, strict.width = "wrap")
 ```
-
 ____________________________________________________________________________________
 
 ## Example: three treatments
 
 Similarly, as was shown in the data page, the `data` object called `soybean_cn_sub` contained 7,332 genes and three treatment groups, S1, S2, and S3 [@brown2015developmental]. We can examine the structure of its corresponding `dataMetrics` object called `soybean_cn_sub_metrics` as follows:
 
-```{r, eval=TRUE, include=TRUE}
+```{r, eval=TRUE, include=FALSE}
 data("soybean_cn_sub_metrics")
-str(soybean_cn_sub_metrics)
+str(soybean_cn_sub_metrics, strict.width = "wrap")
 ```
 
 ____________________________________________________________________________________

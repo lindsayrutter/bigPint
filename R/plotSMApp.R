@@ -6,7 +6,6 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param xbins INTEGER | Number of bins partitioning the range of the plot; default 10 
-#' 
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly config
 #' @importFrom ggplot2 ggplot aes_string aes xlim ylim geom_boxplot theme geom_hex geom_abline coord_cartesian
 #' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyUI sliderInput shinyServer shinyApp HTML br reactiveValues strong em div p img
@@ -20,7 +19,6 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom shinycssloaders withSpinner
 #' @importFrom shinydashboard dashboardSidebar sidebarMenu menuItem dashboardBody tabItems box tabItem dashboardPage dashboardHeader
 #' @importForm GGally ggpairs
-#' 
 #' @export
 #' @examples
 #' \dontrun{

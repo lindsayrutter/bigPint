@@ -1,7 +1,7 @@
-^docs$
-^_pkgdown\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^docs$
+^_pkgdown\.yml$
 ^bigPint\.Rproj$
 ^vignettes/*\.jpg$
 ^vignettes/*[.]jpg$
@@ -11,14 +11,10 @@
 .Rproject.user
 .git
 README.Rmd
-makesbCNsubset.R
-makesbIRsubset.R
-makesbCNsubset.R
-makeSimData2Groups.R
-makeSimData3Groups.R
-data/sdat*
 data/soybean_cn.rda
 data/soybean_cn_metrics.rda
 data/soybean_ir.rda
 data/soybean_ir_metrics.rda
 vignettes/installPkgDown.Rmd
+inst/shiny-dashboards
+

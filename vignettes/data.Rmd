@@ -40,7 +40,7 @@ head(soybean_ir_sub)
 We can also examine the structure of an example `data` object as follows:
 
 ```{r, eval=TRUE, include=TRUE}
-str(soybean_ir_sub)
+str(soybean_ir_sub, strict.width = "wrap")
 ```
 
 This example dataset contains 5,604 genes and six samples [@soybeanIR]. There are two treatment groups, N and P. Each treatment group contains three replicates.
@@ -75,7 +75,7 @@ Note that the `data` object can contain more than two treatment groups. In this 
 
 ```{r, eval=TRUE, include=TRUE}
 data(soybean_cn_sub)
-str(soybean_cn_sub)
+str(soybean_cn_sub, strict.width = "wrap")
 ```
 
 This example dataset contains 7,332 genes and nine samples [@brown2015developmental]. There are three treatment groups, S1, S2, and S3. Each treatment group contains three replicates. In such cases where the `data` object contains more than two treatment groups, all functions in the `bigPint` package (except `plotSMApp()`) will automatically produce a plot for each pairwise combination of treatment groups.

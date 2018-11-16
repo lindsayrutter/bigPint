@@ -8,7 +8,6 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @param dataMetrics LIST | Differential expression metrics. This object must contain one column named "logFC" and one column named "PValue".
 #' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"
 #' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"
-#' 
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly config
 #' @importFrom ggplot2 ggplot aes_string aes xlim ylim geom_boxplot theme
 #' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyUI sliderInput shinyServer shinyApp HTML br reactiveValues strong em div p img observeEvent selectInput selectizeInput numericInput actionButton 
@@ -23,7 +22,6 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom shinydashboard menuItem tabItem dashboardPage dashboardHeader dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
-#' 
 #' @export
 #' @examples
 #' \dontrun{
@@ -33,6 +31,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' data(soybean_cn_sub_metrics)
 #' plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics)
 #' }
+#' 
 #' \dontrun{
 #' # Example 2: Create interactive volcano plot of logged data using points for the background.
 #' 

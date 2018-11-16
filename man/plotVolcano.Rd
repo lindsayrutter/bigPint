@@ -57,15 +57,15 @@ ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", p
 ret[[1]]
 
 # Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This time, plot all 
-points (instead of hexagons) for the background.
+# points (instead of hexagons) for the background.
 
 ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", pointSize = 1,
   threshVar = "PValue", threshVal = 1e-15, option = "allPoints", saveFile = FALSE)
 ret[[1]]
 
 # Example 4: Plot volcano plot with points in background and overlay points with
-PValue < 1e-15. This time, use a value of TRUE for the hover parameter so that you can hover 
-over overlaid points and determine their IDs .
+# PValue < 1e-15. This time, use a value of TRUE for the hover parameter so that you can
+# hover over overlaid points and determine their IDs .
 
 ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", pointSize = 1,
   threshVar = "PValue", threshVal = 1e-15, option = "allPoints", saveFile = FALSE, 

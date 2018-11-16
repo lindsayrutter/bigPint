@@ -71,7 +71,7 @@ for (i in 1:(ncol(fit)-1)){
 We can indeed examine the generated `soybean_ir_sub_metrics` object as follows:
 
 ```{r, eval=TRUE, include=TRUE}
-str(soybean_ir_sub_metrics)
+str(soybean_ir_sub_metrics, strict.width = "wrap")
 ```
 
 And verify that it contains one list element:
@@ -125,7 +125,7 @@ for (i in 1:(ncol(fit)-1)){
 We can indeed examine the generated `soybean_cn_sub_metrics` object as follows:
 
 ```{r, eval=TRUE, include=TRUE}
-str(soybean_cn_sub_metrics)
+str(soybean_cn_sub_metrics, strict.width = "wrap")
 ```
 
 And verify that it contains three list element:
