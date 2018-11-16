@@ -58,6 +58,9 @@
     <loc>http://lrutter.github.io/bigPint/reference/soybean_ir_sub_metrics.html</loc>
   </url>
   <url>
+    <loc>http://lrutter.github.io/bigPint/articles/bioconductor.html</loc>
+  </url>
+  <url>
     <loc>http://lrutter.github.io/bigPint/articles/clusters.html</loc>
   </url>
   <url>
@@ -74,9 +77,6 @@
   </url>
   <url>
     <loc>http://lrutter.github.io/bigPint/articles/interactive.html</loc>
-  </url>
-  <url>
-    <loc>http://lrutter.github.io/bigPint/articles/introduction.html</loc>
   </url>
   <url>
     <loc>http://lrutter.github.io/bigPint/articles/pipeline.html</loc>

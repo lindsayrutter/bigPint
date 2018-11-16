@@ -22,15 +22,15 @@ knitr::opts_chunk$set(
 
 ## Getting Started
 
-Welcome to the `bigPint` package website! If you are a new user, please begin by reading from the `Get Started` tab at the top of this website. We recommend reading the ten vignettes in order. These vignettes provide:
+Welcome to the `bigPint` package website! If you are a new user, please begin by reading from the `Get Started` tab at the top of this website. There are ten short vignette articles in that tab, and we recommend reading them in order. These short vignette articles consist of reproducible code that provide:
 
 - An introduction to `bigPint` plots and how to interpret them
 - A guide to installing the `bigPint` package
-- Expected formats of two parameters in most `bigPint` functions (data and data metrics)
+- Expected formats of two input objects in most `bigPint` functions
 - How to produce static `bigPint` plots
 - How to produce interactive `bigPint` plots
 - How to perform hierarchical clustering and use the clusters in `bigPint` functions
-- A recommended RNA-seq visualization pipeline with reproducible code
+- A recommended RNA-seq visualization pipeline with example code for you to follow
 
 ____________________________________________________________________________________
 

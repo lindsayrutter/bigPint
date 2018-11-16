@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Installation • bigPint</title>
+<title>bigPint Vignette • bigPint</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.7.1/clipboard.min.js" integrity="sha384-cV+rhyOuRHc9Ub/91rihWcGmMmCXDeksTtCihMupQHSsi8GIIRDG0ThDc3HGQFJ3" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsearch.js@2/dist/cdn/docsearch.min.css">
 <link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Installation">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="bigPint Vignette">
 <meta property="og:description" content="">
 <meta property="og:image" content="http://lrutter.github.io/bigPint/logo.png">
 <meta name="twitter:card" content="summary">
@@ -127,52 +127,31 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Installation</h1>
+      <h1>bigPint Vignette</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
             <h4 class="date">2018-11-16</h4>
       
-      <small class="dont-index">Source: <a href="https://github.com/lrutter/bigPint/blob/master/vignettes/installation.Rmd"><code>vignettes/installation.Rmd</code></a></small>
-      <div class="hidden name"><code>installation.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/lrutter/bigPint/blob/master/vignettes/bioconductor.Rmd"><code>vignettes/bioconductor.Rmd</code></a></small>
+      <div class="hidden name"><code>bioconductor.Rmd</code></div>
 
     </div>
 
     
     
-<div id="r-software" class="section level2">
+<div id="accessing-the-vignette" class="section level2">
 <h2 class="hasAnchor">
-<a href="#r-software" class="anchor"></a>R software</h2>
-<p><code>bigPint</code> requires <a href="https://cran.r-project.org">R</a> (version &gt;= 3.4.1) to be installed on your system. R is an open source software project for statistical computing, and can be freely downloaded from the Comprehensive R Archive Network (CRAN) website. The link to contributed documentation on the CRAN website offers practical resources for an introduction to R, in several languages. After downloading and installing R, the installation of additional packages is straightforward. The latest development version of the <code>bigPint</code> package can be installed as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(devtools)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/install_github">install_github</a></span>(<span class="st">"lrutter/bigPint"</span>)</a></code></pre></div>
-<p>The <code>bigPint</code> package will hopefully also be available on <a href="https://www.bioconductor.org/">Bioconductor</a>. As a result, the latest stable release version of the package and all its dependencies can be accessed using the following Bioconductor infrastructure:</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb2-1" data-line-number="1"><span class="cf">if</span> (<span class="op">!</span><span class="kw">require</span>(<span class="st">"BiocManager"</span>))</a>
-<a class="sourceLine" id="cb2-2" data-line-number="2">    <span class="kw">install.packages</span>(<span class="st">"BiocManager"</span>)</a>
-<a class="sourceLine" id="cb2-3" data-line-number="3">BiocManager<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/BiocManager/topics/install">install</a></span>(<span class="st">"bigPint"</span>)</a></code></pre></div>
-<p>The bigPint package should now be successfully installed. Next, to render it accessible to the current R session, simply type:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">library</span>(bigPint)</a></code></pre></div>
-<hr>
-</div>
-<div id="accessing-help-pages" class="section level2">
-<h2 class="hasAnchor">
-<a href="#accessing-help-pages" class="anchor"></a>Accessing help pages</h2>
-<p>To access help pages with example syntax and documentation for the available functions of the bigPint package, please type:</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/help">help</a></span>(<span class="dt">package=</span><span class="st">"bigPint"</span>)</a></code></pre></div>
-<p>To access more detailed information about a specific function in the bigPint package, use the following help command on that function, such as:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/devtools/topics/help">help</a></span>(plotLitre)</a></code></pre></div>
-<hr>
-</div>
-<div id="running-help-examples" class="section level2">
-<h2 class="hasAnchor">
-<a href="#running-help-examples" class="anchor"></a>Running help examples</h2>
-<p>The above command will return the help file for the  function. The help file often includes freestanding example syntax to illustrate how function commands are executed. In the case of the  function, the example syntax is the following seven lines, which can be pasted directly into an R session.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">data</span>(soybean_ir_sub)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">log</span>(soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3"><span class="kw">data</span>(soybean_ir_sub_metrics)</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">geneList =<span class="st"> </span>soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]][<span class="dv">1</span><span class="op">:</span><span class="dv">5</span>,]<span class="op">$</span>ID</a>
-<a class="sourceLine" id="cb6-5" data-line-number="5">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotLitre.html">plotLitre</a></span>(<span class="dt">data =</span> soybean_ir_sub, <span class="dt">geneList =</span> geneList, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb6-6" data-line-number="6"><span class="kw">names</span>(ret)</a>
-<a class="sourceLine" id="cb6-7" data-line-number="7">ret[[<span class="st">"N_P_Glyma.19G168700.Wm82.a2.v1"</span>]]</a></code></pre></div>
+<a href="#accessing-the-vignette" class="anchor"></a>Accessing the vignette</h2>
+<p>Welcome to the <code>bigPint</code> package! If you are a new user, please visit the package website at <a href="https://lrutter.github.io/bigPint/">https://lrutter.github.io/bigPint/</a>. There, you will find a general overview of the <code>bigPint</code> package and the motivations behind it. You will also find ten short vignette articles that we recommend reading in order. These short vignette articles consist of reproducible code that provide:</p>
+<ul>
+<li>An introduction to <code>bigPint</code> plots and how to interpret them</li>
+<li>A guide to installing the <code>bigPint</code> package</li>
+<li>Expected formats of two input objects in most <code>bigPint</code> functions</li>
+<li>How to produce static <code>bigPint</code> plots</li>
+<li>How to produce interactive <code>bigPint</code> plots</li>
+<li>How to perform hierarchical clustering and use the clusters in <code>bigPint</code> functions</li>
+<li>A recommended RNA-seq visualization pipeline with example code for you to follow</li>
+</ul>
 </div>
   </div>
 
@@ -181,9 +160,7 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#r-software">R software</a></li>
-      <li><a href="#accessing-help-pages">Accessing help pages</a></li>
-      <li><a href="#running-help-examples">Running help examples</a></li>
+<li><a href="#accessing-the-vignette">Accessing the vignette</a></li>
       </ul>
 </div>
       </div>

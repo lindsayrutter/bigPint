@@ -30,3 +30,5 @@ vignettes/pipeline.Rmd
 vignettes/plotIntro.Rmd
 vignettes/static.Rmd
 vignettes/superimposeData.Rmd
+README.md
+_pkgdown.yml
