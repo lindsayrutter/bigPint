@@ -15,15 +15,16 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @export
 #' @examples
 #' \dontrun{
-#' # Example: Create interactive parallel coordinate plot for genes that have FDR < 0.01 and
-#' # logFC < -4.
+#' # Example: Create interactive parallel coordinate plot for genes that have
+#' # FDR < 0.01 and logFC < -4.
 #' 
 #' data(soybean_ir_sub)
 #' data(soybean_ir_sub_metrics)
 #' 
 #' # Create standardized version of data
 #' library(matrixStats)
-#' soybean_ir_sub_st = as.data.frame(t(apply(as.matrix(soybean_ir_sub[,-1]), 1, scale)))
+#' soybean_ir_sub_st = as.data.frame(t(apply(as.matrix(soybean_ir_sub[,-1]), 1,
+#'   scale)))
 #' soybean_ir_sub_st$ID = as.character(soybean_ir_sub$ID)
 #' soybean_ir_sub_st = soybean_ir_sub_st[,c(length(soybean_ir_sub_st),
 #'   1:length(soybean_ir_sub_st)-1)]
@@ -32,7 +33,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' soybean_ir_sub_st[nID,2:length(soybean_ir_sub_st)] = 0
 #' 
 #' library(dplyr, warn.conflicts = FALSE)
-#' plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) %>% select(ID)
+#' plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) %>% 
+#'   select(ID)
 #' pcpDat = filter(soybean_ir_sub_st, ID %in% plotGenes[,1])
 #' plotPCPApp(data = pcpDat, pointColor = "purple")
 #' }

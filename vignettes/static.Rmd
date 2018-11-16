@@ -32,7 +32,8 @@ library(bigPint)
 library(dplyr)
 data("soybean_ir_sub")
 data("soybean_ir_sub_metrics")
-tenSigGenes <- soybean_ir_sub_metrics[["N_P"]] %>% select(ID) %>% filter(row_number() <= 10)
+tenSigGenes <- soybean_ir_sub_metrics[["N_P"]] %>% select(ID) %>%
+  filter(row_number() <= 10)
 tenSigGenes <- tenSigGenes[,1]
 soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1] + 1)
 plotLitre(data=soybean_ir_sub, geneList = tenSigGenes)
@@ -43,7 +44,8 @@ library(bigPint)
 library(dplyr)
 data("soybean_ir_sub")
 data("soybean_ir_sub_metrics")
-tenSigGenes <- soybean_ir_sub_metrics[["N_P"]] %>% select(ID) %>% filter(row_number() <= 10)
+tenSigGenes <- soybean_ir_sub_metrics[["N_P"]] %>% select(ID) %>%
+  filter(row_number() <= 10)
 tenSigGenes <- tenSigGenes[,1]
 soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1] + 1)
 plotLitre(data=soybean_ir_sub, geneList = tenSigGenes, saveFile = FALSE)
@@ -149,7 +151,8 @@ We can instead return a list of these three plots into our R session and prevent
      
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, pointColor = "pink", saveFile = FALSE)
+ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, pointColor = "pink",
+  saveFile = FALSE)
 names(ret)
 ret[["S1_S2"]] + ggtitle("S1 versus S2")
 ret[["S1_S3"]] + ggtitle("S1 versus S3")
@@ -171,39 +174,40 @@ ret[[1]] + xlab("Standardized read counts") + ylab("Standardized read counts")
 As our next three examples show, the [plotSM()](https://lrutter.github.io/bigPint/reference/plotSM.html) function also has an input paramater called `option`. We have thusfar used the default value of "allPoints" for this parameter. However, there are three other options for this parameter that can tailor the scatterplot matrix in other meaningful ways. One option "hexagon" will render the full dataset as hexagon bins as follows.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "hexagon", xbins = 5, pointSize = 0.1,
-  saveFile = FALSE)
+ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "hexagon", xbins = 5, 
+  pointSize = 0.1, saveFile = FALSE)
 ret[[2]]
 ```
 
 Another option "orthogonal" will plot data points related to an orthogonal distance from the *x=y* line in each scatterplot. In the following example, only data points that pass a threshold of orthogonal distance from the *x=y* line are plotted in each scatterplot. The orthogonal threshold is represented by a lavendar shade.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(soybean_ir_sub, option = "orthogonal", threshOrth = 2.5, pointSize = 0.2,
-  saveFile = FALSE)
+ret <- plotSM(soybean_ir_sub, option = "orthogonal", threshOrth = 2.5,
+  pointSize = 0.2, saveFile = FALSE)
 ret[[1]]
 ```
 
 Above, we did not input any genes to be superimposed (through the `geneList` or `dataMetrics` parameters), so we simply examined which genes exceeded an orthogonal distance of 2.5 from the *x=y* line. Here, we specify that we now wish to superimpose a subset of genes that have an FDR value less than 0.05. Genes that pass the orthogonal threshold and were differentially expressed (FDR < 0.05) are colored red. Genes that did not pass the orthogonal threshold and were differentially expressed (FDR < 0.05) are colored blue. Genes that pass the orthogonal threshold but were not differentially expressed (FDR > 0.05) are colored grey.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(soybean_ir_sub, soybean_ir_sub_metrics, option = "orthogonal", threshOrth = 2.5, 
-  pointSize = 0.2, saveFile = FALSE)
+ret <- plotSM(soybean_ir_sub, soybean_ir_sub_metrics, option = "orthogonal", 
+  threshOrth = 2.5, pointSize = 0.2, saveFile = FALSE)
 ret[[1]]
 ```
 
 The last option "foldChange" will plot data points related to a fold change value. In the following example, only data points that pass a fold change threshold of 0.5 are plotted in each scatterplot. The fold change threshold is represented by a lavendar shade.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(soybean_cn_sub, option = "foldChange", threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
+ret <- plotSM(soybean_cn_sub, option = "foldChange", threshFC = 0.5, pointSize = 0.2, 
+  saveFile = FALSE)
 ret[[1]]
 ```
 
 Above, we did not input any genes to be superimposed (through the `geneList` or `dataMetrics` parameters), so we simply examined which genes exceeded a fold change of 0.5. Here, we specify that we now wish to superimpose a subset of genes that have an FDR value less than 0.05. Genes that pass the fold change threshold and were differentially expressed (FDR < 0.05) are colored red. Genes that did not pass the fold change threshold and were differentially expressed (FDR < 0.05) are colored blue. Genes that pass the fold change threshold but were not differentially expressed (FDR > 0.05) are colored grey.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange", threshFC = 0.5, 
-  pointSize = 0.2, saveFile = FALSE)
+ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange",
+  threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
 ret[[1]]
 ```
 
@@ -215,8 +219,8 @@ Litre plots allow users to quickly superimpose a gene of interest onto the distr
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList = soybean_cn_sub_metrics[["S1_S2"]][1:5,]$ID
-ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList, pointColor = "gold", 
-  saveFile = FALSE)
+ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList,
+  pointColor = "gold", saveFile = FALSE)
 names(ret)
 ret[["S1_S2_Glyma18g00690.1"]]
 ```
@@ -225,8 +229,8 @@ We can examine the same litre plot, but now plot the full dataset in the backgro
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList = soybean_cn_sub_metrics[["S1_S2"]][1:5,]$ID
-ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList, pointColor = "gold", 
-  saveFile = FALSE, option = "allPoints")
+ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList,
+  pointColor = "gold", saveFile = FALSE, option = "allPoints")
 ret[["S1_S2_Glyma18g00690.1"]]
 ```
 
@@ -240,16 +244,16 @@ Static parallel coordinate plots can be generated with the `bigPint` function [p
 soybean_ir_sub_log = soybean_ir_sub
 soybean_ir_sub_log[,-1] = log(soybean_ir_sub[,-1] + 1)
 geneList = soybean_ir_sub_metrics[["N_P"]][1:10,]$ID
-ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.7, lineColor = "purple", 
-  saveFile = FALSE)
+ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.7, 
+  lineColor = "purple", saveFile = FALSE)
 ret[[1]]
 ```
 
 We may wish to recreate the above plot but allow us to quickly identify each of the ten genes. We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotPCP()` function. The capabilities in the interactive parallel coordinate plot (`plotPCPApp()`[https://lrutter.github.io/bigPint/reference/plotPCPApp.html]) extend upon this functionality.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.4, lineColor = "purple", 
-  saveFile = FALSE, hover = TRUE)
+ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.4, 
+  lineColor = "purple", saveFile = FALSE, hover = TRUE)
 ret[[1]]
 ```
 
@@ -280,8 +284,8 @@ colnames(soybean_ir_sub_ns) = colnames(soybean_ir_sub_n)
 nID = which(is.nan(soybean_ir_sub_ns[,2]))
 soybean_ir_sub_ns[nID,2:length(soybean_ir_sub_ns)] = 0
 
-ret <- plotPCP(data = soybean_ir_sub_ns, dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-4,   
-  saveFile = FALSE)
+ret <- plotPCP(data = soybean_ir_sub_ns, dataMetrics = soybean_ir_sub_metrics, 
+  threshVal = 1e-4, saveFile = FALSE)
 ret[["N_P"]]
 ```
 
@@ -292,8 +296,8 @@ ________________________________________________________________________________
 The `bigPint` function [plotVolcano()](https://lrutter.github.io/bigPint/reference/plotVolcano.html) allows users to plot static volcano plots. Below is an example in which the genes with a FDR values less than 1e-8 are overlaid as orange points onto the full dataset represented as hexbins.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, threshVal = 1e-8, pointSize = 3, 
-  saveFile = FALSE)
+ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, threshVal = 1e-8,
+  pointSize = 3, saveFile = FALSE)
 ret[["N_P"]]
 ```
 

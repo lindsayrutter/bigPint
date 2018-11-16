@@ -58,7 +58,8 @@ data(soybean_ir_sub_metrics)
 # Create standardized version of data (need for some examples)
 library(matrixStats)
 library(ggplot2)
-soybean_cn_sub_st <- as.data.frame(t(apply(as.matrix(soybean_cn_sub[,-1]), 1, scale)))
+soybean_cn_sub_st <- as.data.frame(t(apply(as.matrix(soybean_cn_sub[,-1]), 1,
+  scale)))
 soybean_cn_sub_st$ID <- as.character(soybean_cn_sub$ID)
 soybean_cn_sub_st <- soybean_cn_sub_st[,c(length(soybean_cn_sub_st),
   1:length(soybean_cn_sub_st)-1)]
@@ -68,16 +69,18 @@ soybean_cn_sub_st[nID,2:length(soybean_cn_sub_st)] <- 0
 
 \dontrun{
 
-# Example 1: Plot scatterplot matrix of points. Saves three plots to outDir because saveFile 
-# equals TRUE by default.
+# Example 1: Plot scatterplot matrix of points. Saves three plots to outDir because 
+# saveFile equals TRUE by default.
 
 plotSM(soybean_cn_sub, soybean_cn_sub_metrics)
 }
 
-# Example 2: Plot scatterplot matrix of points. Return list of plots so user can tailor them 
-# (such as add title) and does not save to outDir because saveFile equals FALSE.
+# Example 2: Plot scatterplot matrix of points. Return list of plots so user can 
+# tailor them (such as add title) and does not save to outDir because saveFile 
+# equals FALSE.
 
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, pointColor = "pink", saveFile = FALSE)
+ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, pointColor = "pink",
+  saveFile = FALSE)
 # Determine names of plots in returned list
 names(ret)
 ret[["S1_S2"]] + ggtitle("S1 versus S2")
@@ -86,30 +89,30 @@ ret[["S2_S3"]] + ggtitle("S2 versus S3")
 
 # Example 3: Plot standardized data as scatterplot matrix of points.
 
-ret <- plotSM(soybean_cn_sub_st, soybean_cn_sub_metrics, pointColor = "#00C379", saveFile = 
-  FALSE)
+ret <- plotSM(soybean_cn_sub_st, soybean_cn_sub_metrics, pointColor = "#00C379", 
+  saveFile = FALSE)
 ret[[1]] + xlab("Standardized read counts") + ylab("Standardized read counts")
 
 # Example 4: Plot scatterplot matrix of hexagons.
 
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "hexagon", xbins = 5, pointSize 
-  = 0.1, saveFile = FALSE)
+ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "hexagon", xbins = 5, 
+  pointSize = 0.1, saveFile = FALSE)
 ret[[2]]
 
-# Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, first without 
-# considering the metrics dataset and then considering it.
+# Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, 
+# first without considering the metrics dataset and then considering it.
 
 soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1] + 1) 
-ret <- plotSM(soybean_ir_sub, option = "orthogonal", threshOrth = 2.5, pointSize = 0.2, 
-  saveFile = FALSE)
-ret[[1]]
-ret <- plotSM(soybean_ir_sub, soybean_ir_sub_metrics, option = "orthogonal", threshOrth = 2.5, 
+ret <- plotSM(soybean_ir_sub, option = "orthogonal", threshOrth = 2.5,
   pointSize = 0.2, saveFile = FALSE)
+ret[[1]]
+ret <- plotSM(soybean_ir_sub, soybean_ir_sub_metrics, option = "orthogonal", 
+  threshOrth = 2.5, pointSize = 0.2, saveFile = FALSE)
 ret[[1]]
 
 # Example 6: Plot scatterplot matrix of fold change.
 
-ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange", threshFC = 0.5, 
-  pointSize = 0.2, saveFile = FALSE)
+ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange", 
+  threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
 ret[[1]]
 }

@@ -44,7 +44,8 @@ Users can easily overlay the differentially expressed genes (DEGs) returned from
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, message=FALSE, warning=FALSE}
 data("soybean_cn_sub_metrics")
-ret <- plotSM(data=soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics, pointColor = "magenta", saveFile = FALSE)
+ret <- plotSM(data=soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics,
+  pointColor = "magenta", saveFile = FALSE)
 ret[["S1_S2"]]
 ```
 
@@ -53,11 +54,13 @@ We note that the DEG superimposition on the above scatterplot matrix may be hard
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, message=FALSE, warning=FALSE}
 soybean_cn_sub_st <- as.data.frame(t(apply(as.matrix(soybean_cn_sub[,-1]), 1, scale)))
 soybean_cn_sub_st$ID <- as.character(soybean_cn_sub$ID)
-soybean_cn_sub_st <- soybean_cn_sub_st[,c(length(soybean_cn_sub_st), 1:length(soybean_cn_sub_st)-1)]
+soybean_cn_sub_st <- soybean_cn_sub_st[,c(length(soybean_cn_sub_st), 
+  1:length(soybean_cn_sub_st)-1)]
 colnames(soybean_cn_sub_st) <- colnames(soybean_cn_sub)
 nID <- which(is.nan(soybean_cn_sub_st[,2]))
 soybean_cn_sub_st[nID,2:length(soybean_cn_sub_st)] <- 0
-ret <- plotSM(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, pointColor = "magenta", saveFile = FALSE)
+ret <- plotSM(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics,
+  pointColor = "magenta", saveFile = FALSE)
 ret[["S1_S2"]]
 ```
 
@@ -75,7 +78,8 @@ Below is an example litre plot. Notice from the legend that a large number of th
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList = soybean_cn_sub_metrics[["S1_S2"]][1:5,]$ID
-ret <- plotLitre(data = soybean_cn_sub[,c(1:7)], geneList = geneList, pointColor = "gold", saveFile = FALSE, pointSize = 2)
+ret <- plotLitre(data = soybean_cn_sub[,c(1:7)], geneList = geneList,
+  pointColor = "gold", saveFile = FALSE, pointSize = 2)
 ret[["S1_S2_Glyma18g00690.1"]]
 ```
 
@@ -83,7 +87,8 @@ In contrast, below is an example litre plot for a gene that had a large FDR valu
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList = soybean_cn_sub_metrics[["S1_S2"]][7327:7332,]$ID
-ret <- plotLitre(data = soybean_cn_sub[,c(1:7)], geneList = geneList, pointColor = "gold", saveFile = FALSE, pointSize = 2)
+ret <- plotLitre(data = soybean_cn_sub[,c(1:7)], geneList = geneList,
+  pointColor = "gold", saveFile = FALSE, pointSize = 2)
 ret[["S1_S2_Glyma05g34410.3"]]
 ```
 
@@ -91,7 +96,8 @@ Note that, again, we can standardize the data before creating litre plots. This 
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList = soybean_cn_sub_metrics[["S1_S2"]][1:5,]$ID
-ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList, pointColor = "gold", saveFile = FALSE, pointSize = 3)
+ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList,
+  pointColor = "gold", saveFile = FALSE, pointSize = 3)
 ret[["S1_S2_Glyma18g00690.1"]]
 ```
 
@@ -99,7 +105,8 @@ And the resulting *standardized* litre plot for the non-DEG is shown below:
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList = soybean_cn_sub_metrics[["S1_S2"]][7327:7332,]$ID
-ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList, pointColor = "gold", saveFile = FALSE, pointSize = 3)
+ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList,
+  pointColor = "gold", saveFile = FALSE, pointSize = 3)
 ret[["S1_S2_Glyma05g34410.3"]]
 ```
 
@@ -110,7 +117,8 @@ ________________________________________________________________________________
 Parallel coordinate plots are crucial to visually verify the relationships between samples in multivariate data. A parallel coordinate plot draws each case (gene) as a line. Connections between samples with positive correlations are flat, and connections between samples with negative correlations are crossed. As an example, we show below the DEGs from the soybean cotyledon dataset superimposed as orange lines on a side-by-side boxplot. The side-by-side boxplot shows the read count distribution across *all* genes in the dataset. Together, the user can quickly ascertain how the read counts of the DEGs (orange parallel coordinate lines) compare to the dataset as a whole (side-by-side boxplot). Note that we optionally chose to standardize the dataset before plotting so that each gene has a mean of zero and a standard deviation of one across its samples [@Chandrasekhar].
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotPCP(data = soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, saveFile = FALSE, lineSize = 0.5)
+ret <- plotPCP(data = soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, 
+  saveFile = FALSE, lineSize = 0.5)
 ret[["S1_S2"]]
 ```
 
@@ -118,7 +126,8 @@ We note that in the plot above, the 16 DEGs appear as expected: They have consis
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList <- tail(soybean_cn_sub_metrics[["S1_S2"]], 16)$ID
-ret <- plotPCP(data = soybean_cn_sub_st, geneList = geneList, saveFile = FALSE, lineSize = 0.5)
+ret <- plotPCP(data = soybean_cn_sub_st, geneList = geneList, saveFile = FALSE, 
+  lineSize = 0.5)
 ret[["S1_S2"]]
 ```
 
@@ -133,7 +142,8 @@ The volcano plot is another useful form of the scatterplot that has become incre
 Below, we superimpose the 16 DEGs from the soybean cotyledon dataset as red points onto a volcano plot. We again use hexagon bins to summarize the full dataset and reduce overplotting problems. We can confirm that these 16 DEGs in general have both high magnitude and statistical significance. 
 
 ```{r, eval=TRUE, echo = FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotVolcano(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics, saveFile = FALSE, pointSize = 3, pointColor = "red")
+ret <- plotVolcano(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics, 
+  saveFile = FALSE, pointSize = 3, pointColor = "red")
 ret[["S1_S2"]]
 ```
 

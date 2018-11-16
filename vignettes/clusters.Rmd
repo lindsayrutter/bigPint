@@ -80,8 +80,8 @@ ________________________________________________________________________________
 In this last approach, we will perform hierarchical clustering on *all* 5,604 genes in the data and also overlay *all* 5,604 genes as parallel coordinate lines. We do not create any subset of genes (such as significant genes) because we leave the `dataMetrics` object with its default value of `NULL`.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotClusters(data=soybean_ir_sub, nC=4, colList = colList, clusterAllData = TRUE, 
-  saveFile = FALSE)
+ret <- plotClusters(data=soybean_ir_sub, nC=4, colList = colList,
+  clusterAllData = TRUE, saveFile = FALSE)
 plot(ret[["N_P_4"]])
 ```
 
@@ -96,16 +96,18 @@ When visualizing hierarchical clustering of genes, it is often recommended to co
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 data(soybean_cn_sub)
 data(soybean_cn_sub_metrics)
-soybean_cn_sub_st <- as.data.frame(t(apply(as.matrix(soybean_cn_sub[,-1]), 1, scale)))
+soybean_cn_sub_st <- as.data.frame(t(apply(as.matrix(soybean_cn_sub[,-1]), 1, 
+  scale)))
 soybean_cn_sub_st$ID <- as.character(soybean_cn_sub$ID)
-soybean_cn_sub_st <- soybean_cn_sub_st[,c(length(soybean_cn_sub_st), 1:length(soybean_cn_sub_st)-1)]
+soybean_cn_sub_st <- soybean_cn_sub_st[,c(length(soybean_cn_sub_st), 
+  1:length(soybean_cn_sub_st)-1)]
 colnames(soybean_cn_sub_st) <- colnames(soybean_cn_sub)
 nID <- which(is.nan(soybean_cn_sub_st[,2]))
 soybean_cn_sub_st[nID,2:length(soybean_cn_sub_st)] <- 0
-ret <- plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, nC=4,
-  colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5, lineAlpha = 1,
-  clusterAllData = FALSE, aggMethod = "average", yAxisLabel = "Standardized read count",
-  saveFile = FALSE)
+ret <- plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, 
+  nC=4, colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5, 
+  lineAlpha = 1, clusterAllData = FALSE, aggMethod = "average",
+  yAxisLabel = "Standardized read count", saveFile = FALSE)
 names(ret)
 plot(ret[["S1_S2_4"]])
 plot(ret[["S1_S3_4"]])
@@ -119,9 +121,9 @@ In some cases, users may wish to use the `plotClusters()` function to create clu
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, nC=4,
-  colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5, lineAlpha = 1,
-  clusterAllData = FALSE, aggMethod = "average", yAxisLabel = "Standardized read count",
-  verbose = TRUE)
+  colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5, 
+  lineAlpha = 1, clusterAllData = FALSE, aggMethod = "average",
+  yAxisLabel = "Standardized read count", verbose = TRUE)
 ```
 
 Running the command above will save the following files into the `outDir` location (current working directory by default): 
@@ -165,8 +167,8 @@ S1S3Cluster1
 Then, we can overlay these 19 genes from Cluster 1 in the S1 versus S3 comparison as points onto the scatterplot matrix. This step can give us another perspective of these 19 genes. We may wish to use the same color (green) that we did in the parallel coordinate plots above and add an informative plot title.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
-ret <- plotSM(data = soybean_cn_sub_st, geneList = S1S3Cluster1, pointColor = "#00A600FF", 
-  saveFile = FALSE)
+ret <- plotSM(data = soybean_cn_sub_st, geneList = S1S3Cluster1,
+  pointColor = "#00A600FF", saveFile = FALSE)
 ret[["S1_S3"]] + ggtitle("Cluster 1 Genes (n=19)")
 ```
 

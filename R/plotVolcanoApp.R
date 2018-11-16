@@ -25,7 +25,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @export
 #' @examples
 #' \dontrun{
-#' # Example 1: Create interactive volcano plot of logged data using hexagon bins for the background.
+#' # Example 1: Create interactive volcano plot of logged data using hexagon bins for 
+#' # the background.
 #' 
 #' data(soybean_cn_sub)
 #' data(soybean_cn_sub_metrics)
@@ -33,7 +34,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' }
 #' 
 #' \dontrun{
-#' # Example 2: Create interactive volcano plot of logged data using points for the background.
+#' # Example 2: Create interactive volcano plot of logged data using points for the 
+#' # background.
 #' 
 #' plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics, 
 #'   option = "allPoints", pointColor = "magenta")

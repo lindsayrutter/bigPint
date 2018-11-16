@@ -232,8 +232,8 @@
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying any metrics</span>
-<span class='co'># data by keeping the dataMetrics parameter its default value of NULL.</span>
+    <pre class="examples"><div class='input'><span class='co'># Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying </span>
+<span class='co'># any metrics data by keeping the dataMetrics parameter its default value of NULL.</span>
 
 <span class='fu'>data</span>(<span class='no'>soybean_ir_sub</span>)
 <span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>] <span class='kw'>=</span> <span class='fu'>log</span>(<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>] + <span class='fl'>1</span>)
@@ -242,21 +242,22 @@
 <span class='co'># Example 2: Overlay genes with FDR &lt; 1e-4 as orange parallel coordinate lines.</span>
 
 <span class='fu'>data</span>(<span class='no'>soybean_ir_sub_metrics</span>)
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-4</span>,
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>,
+  <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-4</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotPCP-2.png' alt='' width='700' height='700' /></div><div class='input'>
-<span class='co'># Example 3: Overlay the ten most significant genes (lowest FDR values) as blue parallel </span>
-<span class='co'># coordinate lines.</span>
+<span class='co'># Example 3: Overlay the ten most significant genes (lowest FDR values) as blue </span>
+<span class='co'># parallel coordinate lines.</span>
 
 <span class='no'>geneList</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span><span class='kw'>[[</span><span class='st'>"N_P"</span>]][<span class='fl'>1</span>:<span class='fl'>10</span>,]$<span class='no'>ID</span>
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
+  <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotPCP-3.png' alt='' width='700' height='700' /></div><div class='input'>
-<span class='co'># Example 4: Repeat this same procedure, only now set the hover parameter to TRUE to allow us </span>
-<span class='co'># to hover over blue parallel coordinate lines and determine their individual IDs.</span>
+<span class='co'># Example 4: Repeat this same procedure, only now set the hover parameter to TRUE </span>
+<span class='co'># to allow us to hover over blue parallel coordinate lines and determine their </span>
+<span class='co'># individual IDs.</span>
 
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>,
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
+  <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

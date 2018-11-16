@@ -258,47 +258,50 @@
 <span class='co'># Create standardized version of data (need for some examples)</span>
 <span class='fu'>library</span>(<span class='no'>matrixStats</span>)
 <span class='fu'>library</span>(<span class='no'>ggplot2</span>)
-<span class='no'>soybean_cn_sub_st</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='fu'>t</span>(<span class='fu'>apply</span>(<span class='fu'>as.matrix</span>(<span class='no'>soybean_cn_sub</span>[,-<span class='fl'>1</span>]), <span class='fl'>1</span>, <span class='no'>scale</span>)))
+<span class='no'>soybean_cn_sub_st</span> <span class='kw'>&lt;-</span> <span class='fu'>as.data.frame</span>(<span class='fu'>t</span>(<span class='fu'>apply</span>(<span class='fu'>as.matrix</span>(<span class='no'>soybean_cn_sub</span>[,-<span class='fl'>1</span>]), <span class='fl'>1</span>,
+  <span class='no'>scale</span>)))
 <span class='no'>soybean_cn_sub_st</span>$<span class='no'>ID</span> <span class='kw'>&lt;-</span> <span class='fu'>as.character</span>(<span class='no'>soybean_cn_sub</span>$<span class='no'>ID</span>)
 <span class='no'>soybean_cn_sub_st</span> <span class='kw'>&lt;-</span> <span class='no'>soybean_cn_sub_st</span>[,<span class='fu'>c</span>(<span class='fu'>length</span>(<span class='no'>soybean_cn_sub_st</span>),
   <span class='fl'>1</span>:<span class='fu'>length</span>(<span class='no'>soybean_cn_sub_st</span>)-<span class='fl'>1</span>)]
 <span class='fu'>colnames</span>(<span class='no'>soybean_cn_sub_st</span>) <span class='kw'>&lt;-</span> <span class='fu'>colnames</span>(<span class='no'>soybean_cn_sub</span>)
 <span class='no'>nID</span> <span class='kw'>&lt;-</span> <span class='fu'>which</span>(<span class='fu'>is.nan</span>(<span class='no'>soybean_cn_sub_st</span>[,<span class='fl'>2</span>]))
 <span class='no'>soybean_cn_sub_st</span>[<span class='no'>nID</span>,<span class='fl'>2</span>:<span class='fu'>length</span>(<span class='no'>soybean_cn_sub_st</span>)] <span class='kw'>&lt;-</span> <span class='fl'>0</span></div><span class='co'># NOT RUN {</span>
-<span class='co'># Example 1: Plot scatterplot matrix of points. Saves three plots to outDir because saveFile </span>
-<span class='co'># equals TRUE by default.</span>
+<span class='co'># Example 1: Plot scatterplot matrix of points. Saves three plots to outDir because </span>
+<span class='co'># saveFile equals TRUE by default.</span>
 
 <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>)
 <span class='co'># }</span><div class='input'>
-<span class='co'># Example 2: Plot scatterplot matrix of points. Return list of plots so user can tailor them </span>
-<span class='co'># (such as add title) and does not save to outDir because saveFile equals FALSE.</span>
+<span class='co'># Example 2: Plot scatterplot matrix of points. Return list of plots so user can </span>
+<span class='co'># tailor them (such as add title) and does not save to outDir because saveFile </span>
+<span class='co'># equals FALSE.</span>
 
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"pink"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"pink"</span>,
+  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='co'># Determine names of plots in returned list</span>
 <span class='fu'>names</span>(<span class='no'>ret</span>)</div><div class='output co'>#&gt; [1] "S1_S2" "S1_S3" "S2_S3"</div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S2"</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S1 versus S2"</span>)</div><div class='img'><img src='plotSM-1.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S3"</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S1 versus S3"</span>)</div><div class='img'><img src='plotSM-2.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S2_S3"</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S2 versus S3"</span>)</div><div class='img'><img src='plotSM-3.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'># Example 3: Plot standardized data as scatterplot matrix of points.</span>
 
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub_st</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"#00C379"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span>
-  <span class='fl'>FALSE</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub_st</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"#00C379"</span>,
+  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]] + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span>(<span class='st'>"Standardized read counts"</span>) + <span class='fu'><a href='ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span>(<span class='st'>"Standardized read counts"</span>)</div><div class='img'><img src='plotSM-4.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'># Example 4: Plot scatterplot matrix of hexagons.</span>
 
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>5</span>, <span class='kw'>pointSize</span>
-  <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>2</span>]]</div><div class='img'><img src='plotSM-5.png' alt='' width='700' height='700' /></div><div class='input'>
-<span class='co'># Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, first without </span>
-<span class='co'># considering the metrics dataset and then considering it.</span>
+<span class='co'># Example 5: Plot scatterplot matrix of orthogonal distance on the logged data, </span>
+<span class='co'># first without considering the metrics dataset and then considering it.</span>
 
 <span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fu'>log</span>(<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>] + <span class='fl'>1</span>)
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_ir_sub</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"orthogonal"</span>, <span class='kw'>threshOrth</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>,
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-6.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_ir_sub</span>, <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"orthogonal"</span>, <span class='kw'>threshOrth</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_ir_sub</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"orthogonal"</span>, <span class='kw'>threshOrth</span> <span class='kw'>=</span> <span class='fl'>2.5</span>,
   <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-6.png' alt='' width='700' height='700' /></div><div class='input'><span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_ir_sub</span>, <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"orthogonal"</span>,
+  <span class='kw'>threshOrth</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-7.png' alt='' width='700' height='700' /></div><div class='input'>
 <span class='co'># Example 6: Plot scatterplot matrix of fold change.</span>
 
-<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"foldChange"</span>, <span class='kw'>threshFC</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"foldChange"</span>,
+  <span class='kw'>threshFC</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-8.png' alt='' width='700' height='700' /></div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

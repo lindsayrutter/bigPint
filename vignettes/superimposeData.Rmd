@@ -41,8 +41,8 @@ library(bigPint)
 data("soybean_ir_sub")
 data("soybean_ir_sub_metrics")
 soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1] + 1)
-ret <- plotSM(data=soybean_ir_sub, dataMetrics=soybean_ir_sub_metrics, threshVar = "FDR", 
-  threshVal = 1e-10, pointSize = 0.1, saveFile = FALSE)
+ret <- plotSM(data=soybean_ir_sub, dataMetrics=soybean_ir_sub_metrics,
+  threshVar = "FDR", threshVal = 1e-10, pointSize = 0.1, saveFile = FALSE)
 ret[["N_P"]]
 ```
 
@@ -56,7 +56,8 @@ We can alternatively use the `geneList` input object to superimpose a subset of 
 library(dplyr)
 sigGenes = soybean_ir_sub_metrics[["N_P"]] %>% filter(FDR < 1e-10) %>% select(ID)
 sigGenes = sigGenes[,1]
-ret <- plotSM(data=soybean_ir_sub, geneList = sigGenes, pointSize = 0.1, saveFile = FALSE)
+ret <- plotSM(data=soybean_ir_sub, geneList = sigGenes, pointSize = 0.1,
+  saveFile = FALSE)
 ret[["N_P"]]
 ```
 
@@ -64,11 +65,11 @@ We note that the `geneList` object is more flexible than the `dataMetrics` objec
 
 ```{r, eval=TRUE, include=TRUE}
 library(dplyr)
-sigGenes = soybean_ir_sub_metrics[["N_P"]] %>% filter(FDR < 1e-10) %>% filter(abs(logFC) > 6) %>%   
-  select(ID)
+sigGenes = soybean_ir_sub_metrics[["N_P"]] %>% filter(FDR < 1e-10) %>%   
+  filter(abs(logFC) > 6) %>% select(ID)
 sigGenes = sigGenes[,1]
-ret <- plotSM(data=soybean_ir_sub, geneList = sigGenes, pointSize = 0.5, pointColor = "magenta", 
-  saveFile = FALSE)
+ret <- plotSM(data=soybean_ir_sub, geneList = sigGenes, pointSize = 0.5,
+  pointColor = "magenta", saveFile = FALSE)
 ret[["N_P"]]
 ```
 

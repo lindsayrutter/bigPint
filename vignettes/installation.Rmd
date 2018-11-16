@@ -34,7 +34,7 @@ The `bigPint` package will hopefully also be available on [Bioconductor](https:/
 
 ```{r, eval=FALSE, include=TRUE}
 if (!require("BiocManager"))
-    install.packages("BiocManager")
+  install.packages("BiocManager")
 BiocManager::install("bigPint")
 ```
 

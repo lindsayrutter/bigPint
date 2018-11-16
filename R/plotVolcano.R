@@ -30,33 +30,36 @@
 #' @importFrom plyr mapvalues
 #' @export
 #' @examples
-#' # Example 1: Plot volcano plot with default settings for overlaid points (FDR < 0.05).
+#' # Example 1: Plot volcano plot with default settings for overlaid points
+#' # (FDR < 0.05).
 #' 
 #' data(soybean_ir_sub)
 #' data(soybean_ir_sub_metrics)
-#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointSize = 1, saveFile = FALSE)
+#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointSize = 1,
+#'   saveFile = FALSE)
 #' ret[[1]]
 #' 
 #' # Example 2: Plot volcano plot and overlay points with PValue < 1e-15.
 #' 
-#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", pointSize = 1,
-#'   threshVar = "PValue", threshVal = 1e-15, saveFile = FALSE)
+#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
+#'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15, saveFile = FALSE)
 #' ret[[1]]
 #' 
-#' # Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This time, plot all 
-#' # points (instead of hexagons) for the background.
+#' # Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This time, 
+#' # plot all points (instead of hexagons) for the background.
 #' 
-#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", pointSize = 1,
-#'   threshVar = "PValue", threshVal = 1e-15, option = "allPoints", saveFile = FALSE)
+#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
+#'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15, option = "allPoints", 
+#'   saveFile = FALSE)
 #' ret[[1]]
 #' 
 #' # Example 4: Plot volcano plot with points in background and overlay points with
-#' # PValue < 1e-15. This time, use a value of TRUE for the hover parameter so that you can
-#' # hover over overlaid points and determine their IDs .
+#' # PValue < 1e-15. This time, use a value of TRUE for the hover parameter so that 
+#' # you can hover over overlaid points and determine their IDs .
 #' 
-#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", pointSize = 1,
-#'   threshVar = "PValue", threshVal = 1e-15, option = "allPoints", saveFile = FALSE, 
-#'   hover = TRUE)
+#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
+#'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15, option = "allPoints", 
+#'   saveFile = FALSE, hover = TRUE)
 #' ret[[1]]
 #' 
 

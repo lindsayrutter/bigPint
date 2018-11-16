@@ -21,7 +21,8 @@ Plot interactive volcano plots.
 }
 \examples{
 \dontrun{
-# Example 1: Create interactive volcano plot of logged data using hexagon bins for the background.
+# Example 1: Create interactive volcano plot of logged data using hexagon bins for 
+# the background.
 
 data(soybean_cn_sub)
 data(soybean_cn_sub_metrics)
@@ -29,7 +30,8 @@ plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics)
 }
 
 \dontrun{
-# Example 2: Create interactive volcano plot of logged data using points for the background.
+# Example 2: Create interactive volcano plot of logged data using points for the 
+# background.
 
 plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics, 
   option = "allPoints", pointColor = "magenta")
