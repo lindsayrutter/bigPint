@@ -16,6 +16,9 @@ plotVolcanoApp(data = data, dataMetrics = dataMetrics,
 
 \item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"}
 }
+\value{
+A Shiny application that shows a volcano plot and allows users to overlay genes depending on two values, usually a statistical value (such as P-value) and a magnitude change value (such as log fold change). The user can download a file that contains the gene IDs that pass these thresholds.
+}
 \description{
 Plot interactive volcano plots.
 }

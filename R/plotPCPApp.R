@@ -12,6 +12,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom htmlwidgets onRender
 #' @importFrom utils str
 #' @importFrom dplyr select %>% one_of
+#' @return A Shiny application that shows a parallel coordinate plot and allows users to draw rectangular areas across samples and remove genes that are not inside these areas. The user can download a file that contains the gene IDs that remain.
 #' @export
 #' @examples
 #' \dontrun{

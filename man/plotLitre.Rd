@@ -26,11 +26,14 @@ plotLitre(data = data, dataMetrics = NULL, outDir = getwd(),
 
 \item{threshVal}{INTEGER | Maximum value to threshold significance from threshVar object; default 0.05}
 
-\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn from data as parallel coordinate lines. Use this parameter if you have predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to create genes to be drawn; default NULL}
+\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn from data as litre plots. Use this parameter if you have predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to create genes to be drawn; default NULL}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
 \item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"}
+}
+\value{
+List of n elements of litre plots, where n is the number of genes determined to be superimposed through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these litre plots is saved to the location specified in the outDir parameter as a JPG file.
 }
 \description{
 Plot static litre plots.

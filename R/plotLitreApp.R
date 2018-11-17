@@ -23,6 +23,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom shinydashboard menuItem tabItem dashboardPage dashboardHeader dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
+#' @return A Shiny application that shows a litre plot background and allows users to superimpose the subset of genes determined to be superimposed through the dataMetrics or geneList parameter. The application allows users to order how to sequentially superimpose the genes by columns in the dataMetrics parameter. 
 #' @export
 #' @examples
 #' \dontrun{

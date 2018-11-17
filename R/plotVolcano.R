@@ -28,6 +28,7 @@
 #' @importFrom tidyr gather
 #' @importFrom utils str
 #' @importFrom plyr mapvalues
+#' @return List of n elements of volcano plots, where n is the number of treatment pair combinations in the data object. The subset of genes that are superimposed are determined through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these volcano plots is saved to the location specified in the outDir parameter as a JPG file.
 #' @export
 #' @examples
 #' # Example 1: Plot volcano plot with default settings for overlaid points
@@ -75,7 +76,7 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
   ret = list()
-  for (k in 1:(length(myPairs)-1)){
+  for (k in seq_along(1:(length(myPairs)-1))){
     for (j in (k+1):length(myPairs)){
       group1 = myPairs[k]
       group2 = myPairs[j]
@@ -121,7 +122,7 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
       hexdf$countColor2 <- as.factor(unlist(lapply(as.character(hexdf$countColor), function(x) substring(strsplit(gsub(" ", "", x, fixed = TRUE), ",")[[1]][1], 2))))
       hexdf$countColor2 <- factor(hexdf$countColor2, levels = as.character(sort(as.numeric(levels(hexdf$countColor2)))))
 
-      for (i in 1:(length(levels(hexdf$countColor2))-1)){
+      for (i in seq_along(1:(length(levels(hexdf$countColor2))-1))){
         levels(hexdf$countColor2)[i] <- paste0(levels(hexdf$countColor2)[i],"-",levels(hexdf$countColor2)[i+1])
       }
       levels(hexdf$countColor2)[length(levels(hexdf$countColor2))] <- paste0(levels(hexdf$countColor2)[length(levels(hexdf$countColor2))], "+")
@@ -158,7 +159,7 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
           IDs=curPairSel$ID
           gP <- ggplotly(p)
 
-          for (l in 1:(length(gP[["x"]][["data"]])-1)){
+          for (l in seq_along(1:(length(gP[["x"]][["data"]])-1))){
             gP[["x"]][["data"]][[l]][["hoverinfo"]] <- "none"  
           }
           newText = IDs

@@ -30,6 +30,7 @@
 #' @importFrom grid grid.draw
 #' @seealso
 #' \code{\link[stats]{hclust}}
+#' @return List of n elements each containing a grid of parallel coordinate plots, where n is the number of treatment pair combinations in the data object. If the saveFile parameter has a value of TRUE, then each grid of parallel coordinate plots is saved to the location specified in the outDir parameter as a JPG file. If the verbose parameter has a value of TRUE, then a JPG file for each parallel coordinate plot in each grid, RDS file containing the superimposed IDs for each parallel coordinate plot in each grid, and the JPG file of each grid of parallel coordinate plots is saved to the location specified in the outDir parameter.
 #' @export
 #' @examples
 #' # Example 1: Perform hierarchical clustering of size four using the default 
@@ -110,7 +111,7 @@ plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR", thre
   colGroups <- sapply(colNames, function(x) unlist(strsplit(x,"[.]"))[1])
   
   ret = list()
-  for (i in 1:(length(myPairs)-1)){
+  for (i in seq_along(1:(length(myPairs)-1))){
     for (j in (i+1):length(myPairs)){
       group1 = myPairs[i]
       group2 = myPairs[j]
@@ -158,7 +159,7 @@ plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR", thre
         #colList = rainbow(nC)
         k = cutree(hC, k=nC)
         ###########################
-        plot_clusters = lapply(1:nC, function(j){
+        plot_clusters = lapply(seq_along(1:nC), function(j){
           i = rev(order(table(k)))[j]
           x = as.data.frame(data[which(k==i),])
           x$cluster = "color"
@@ -227,7 +228,7 @@ plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR", thre
         #colList = rainbow(nC)
         k = cutree(hC, k=nC)
         ###########################
-        plot_clusters = lapply(1:nC, function(j){
+        plot_clusters = lapply(seq_along(1:nC), function(j){
           i = rev(order(table(k)))[j]
           x = as.data.frame(cData[which(k==i),])
           x$cluster = "color"

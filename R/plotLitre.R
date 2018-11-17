@@ -12,7 +12,7 @@
 #' @param xbins INTEGER | Number of bins partitioning the range of the plot; default 10
 #'@param threshVar CHARACTER STRING | Name of column in dataMetrics object that is used to threshold significance; default "FDR"
 #' @param threshVal INTEGER | Maximum value to threshold significance from threshVar object; default 0.05
-#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn from data as parallel coordinate lines. Use this parameter if you have predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to create genes to be drawn; default NULL
+#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn from data as litre plots. Use this parameter if you have predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to create genes to be drawn; default NULL
 #' 
 #' @importFrom dplyr filter select %>%
 #' @importFrom GGally ggpairs wrap
@@ -27,6 +27,7 @@
 #' @importFrom utils str
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
+#' @return List of n elements of litre plots, where n is the number of genes determined to be superimposed through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these litre plots is saved to the location specified in the outDir parameter as a JPG file.
 #' @export
 #' @examples
 #' # Example 1: Create one litre plot for each of the 61 genes that have FDR < 1e-10 
@@ -74,7 +75,7 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2, p
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
   ret = list()
-  for (i in 1:(length(myPairs)-1)){
+  for (i in seq_along(1:(length(myPairs)-1))){
     for (j in (i+1):length(myPairs)){
       group1 = myPairs[i]
       group2 = myPairs[j]
@@ -91,8 +92,8 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2, p
       buffer = (maxRange[2]-maxRange[1])/(xbins/2)
       x <- c()
       y <- c()
-      for (i in 1:length(sampleIndex1)){
-        for (j in 1:length(sampleIndex2)){
+      for (i in seq_along(1:length(sampleIndex1))){
+        for (j in seq_along(1:length(sampleIndex2))){
           x <- c(x, unlist(datSel[,(sampleIndex1[i])]))
           y <- c(y, unlist(datSel[,(sampleIndex2[j])]))
         }
@@ -107,7 +108,7 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2, p
       hexdf$countColor2 <- as.factor(unlist(lapply(as.character(hexdf$countColor), function(x) substring(strsplit(gsub(" ", "", x, fixed = TRUE), ",")[[1]][1], 2))))
       hexdf$countColor2 <- factor(hexdf$countColor2, levels = as.character(sort(as.numeric(levels(hexdf$countColor2)))))
       
-      for (i in 1:(length(levels(hexdf$countColor2))-1)){
+      for (i in seq_along(1:(length(levels(hexdf$countColor2))-1))){
         levels(hexdf$countColor2)[i] <- paste0(levels(hexdf$countColor2)[i],"-",levels(hexdf$countColor2)[i+1])
       }
       levels(hexdf$countColor2)[length(levels(hexdf$countColor2))] <- paste0(levels(hexdf$countColor2)[length(levels(hexdf$countColor2))], "+")
@@ -132,7 +133,7 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2, p
         geneList <- dataMetrics[[paste0(myPairs[1],"_",myPairs[2])]][c(rowDEG1, rowDEG2),1]
       }
       
-      for (k in 1:length(geneList)){
+      for (k in seq_along(1:length(geneList))){
         currID = geneList[k]
         currGene = dat %>% filter(ID == currID)
         

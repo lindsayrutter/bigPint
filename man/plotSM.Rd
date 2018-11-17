@@ -36,6 +36,9 @@ plotSM(data = data, dataMetrics = NULL, option = "allPoints",
 
 \item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the scatterplot matrix of all data. Use this parameter if you have predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to create genes to be drawn onto the scatterplot matrix; default NULL; used in all options}
 }
+\value{
+List of n elements of scatterplot matrices, where n is the number of treatment pair combinations in the data object. The subset of genes that are superimposed are determined through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these scatterplot matrices is saved to the location specified in the outDir parameter as a JPG file.
+}
 \description{
 Plot static scatterplot matrix. Optionally, superimpose differentially expressed genes (DEGs) onto scatterplot matrix.
 }

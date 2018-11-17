@@ -32,6 +32,9 @@ plotPCP(data, dataMetrics = NULL, threshVar = "FDR",
 
 \item{vxAxis}{BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical orientation; default FALSE}
 }
+\value{
+List of n elements of parallel coordinate plots, where n is the number of treatment pair combinations in the data object. The background of each plot is a side-by-side boxplot of the full data object, and the parallel coordinate lines on each plot are the subset of genes determined to be superimposed through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each parallel coordinate plot is saved to the location specified in the outDir parameter as a JPG file.
+}
 \description{
 Plot static parallel coordinate plots onto side-by-side boxplot of whole dataset.
 }

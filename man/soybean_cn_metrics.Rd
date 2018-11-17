@@ -4,9 +4,18 @@
 \name{soybean_cn_metrics}
 \alias{soybean_cn_metrics}
 \title{Normalized soybean cotyledon metrics}
-\format{a \code{RData} instance, 1 list per treatment group combination and 1 row per gene}
+\format{a \code{RData} instance, 1 list per treatment group combination 
+and 1 row per gene}
 \description{
-This data contains metrics for normalized RNA-sequencing read counts from soybean cotyledon across three time stages of development. Early stage cotyledons were collected four days after planting and were green but closed. Middle stage cotyledons were collected while green and open, soon after the plant generated its first set of unifoliate leaves. Late stage cotyledons were collected immediately after the initiation of yellowing and shrinking. The metrics include the log fold change, log counts per million, likelihood ratio, p-values, and FDR values for all genes and all pairwise combinations of treatment groups.
+This data contains metrics for normalized RNA-sequencing read
+counts from soybean cotyledon across three time stages of development. 
+Early stage cotyledons were collected four days after planting and were 
+green but closed. Middle stage cotyledons were collected while green and 
+open, soon after the plant generated its first set of unifoliate leaves. 
+Late stage cotyledons were collected immediately after the initiation of 
+yellowing and shrinking. The metrics include the log fold change, log 
+counts per million, likelihood ratio, p-values, and FDR values for all 
+genes and all pairwise combinations of treatment groups.
 }
 \details{
 Normalized soybean cotyledon metrics
@@ -21,6 +30,7 @@ Normalized soybean cotyledon metrics
 }
 }
 \seealso{
-\code{\link{soybean_cn}} for information about the treatment groups
+\code{\link{soybean_cn}} for information about the treatment 
+groups
 }
 \keyword{datasets}

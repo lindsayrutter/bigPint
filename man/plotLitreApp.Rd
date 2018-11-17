@@ -18,6 +18,9 @@ plotLitreApp(data = data, dataMetrics = dataMetrics, geneList = NULL,
 
 \item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"; "allPoints" may be too slow depending on data}
 }
+\value{
+A Shiny application that shows a litre plot background and allows users to superimpose the subset of genes determined to be superimposed through the dataMetrics or geneList parameter. The application allows users to order how to sequentially superimpose the genes by columns in the dataMetrics parameter.
+}
 \description{
 Plot interactive litre plots.
 }

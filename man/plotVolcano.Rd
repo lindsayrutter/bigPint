@@ -39,6 +39,9 @@ plotVolcano(data = data, dataMetrics = dataMetrics,
 
 \item{hover}{BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify IDs; default FALSE}
 }
+\value{
+List of n elements of volcano plots, where n is the number of treatment pair combinations in the data object. The subset of genes that are superimposed are determined through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these volcano plots is saved to the location specified in the outDir parameter as a JPG file.
+}
 \description{
 Plot static volcano plot.
 }

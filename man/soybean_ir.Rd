@@ -6,7 +6,11 @@
 \title{Raw soybean leaves iron-metabolism data}
 \format{a \code{RData} instance, 1 row per gene}
 \description{
-This dataset contains raw RNA-sequencing read counts from a soybean dataset that compared leaves that were exposed to iron-rich (iron-postive) soil conditions versus leaves that were exposed to iron-poor (iron-negative) soil conditions. The data was collected 120 minutes after iron conditions were initiated.
+This dataset contains raw RNA-sequencing read counts from a 
+soybean dataset that compared leaves that were exposed to iron-rich (iron
+-postive) soil conditions versus leaves that were exposed to iron-poor 
+(iron-negative) soil conditions. The data was collected 120 minutes after 
+iron conditions were initiated.
 }
 \details{
 Raw soybean leaves data

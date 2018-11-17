@@ -22,6 +22,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom shinydashboard menuItem tabItem dashboardPage dashboardHeader dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
+#' @return A Shiny application that shows a volcano plot and allows users to overlay genes depending on two values, usually a statistical value (such as P-value) and a magnitude change value (such as log fold change). The user can download a file that contains the gene IDs that pass these thresholds.
 #' @export
 #' @examples
 #' \dontrun{

@@ -6,11 +6,14 @@ Authors@R: c(person("Lindsay", "Rutter", email = "lindsayannerutter@gmail.com", 
   person("Dianne", "Cook", email = "dicook@monash.edu", role = c("aut")))
 License: GPL
 Depends:
-    R (>= 3.4.0)
+    R (>= 3.5)
 Imports:
     dplyr (>= 0.7.2),
     GGally (>= 1.3.2),
     ggplot2 (>= 2.2.1),
+    graphics (>= 3.5.0),
+    grDevices (>= 3.5.0),
+    grid (>= 3.5.0),
     gridExtra (>= 2.3),
     hexbin (>= 1.27.1),
     Hmisc (>= 4.0.3),
@@ -22,8 +25,10 @@ Imports:
     shiny (>= 1.0.5),
     shinycssloaders (>= 0.2.0), 
     shinydashboard (>= 0.6.1),
+    stats (>= 3.5.0),
     stringr (>= 1.3.1),
-    tidyr (>= 0.7.0)
+    tidyr (>= 0.7.0),
+    utils (>= 3.5.0)
 VignetteBuilder: knitr
 Suggests:
     data.table (>= 1.11.8),
@@ -36,6 +41,6 @@ Suggests:
     roxygen2 (>= 3.0.0),
     tibble (>= 1.4.2),
 biocViews: Clustering, DataImport, DifferentialExpression, GeneExpression, MultipleComparison, Normalization, Preprocessing, QualityControl, RNASeq, Sequencing, Software, Transcription, Visualization
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 BugReports: https://github.com/lrutter/bigPint/issues
 URL: URL: https://github.com/lrutter/bigPint

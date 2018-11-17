@@ -340,7 +340,7 @@ In some cases, we may find it easier to plot all the data as individual points i
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster1,
-  saveFile = FALSE, pointSize = 4, pointColor = "#00A600FF", option = "allPoints", 
+  saveFile = FALSE, pointSize = 2, pointColor = "#00A600FF", option = "allPoints", 
   hover = TRUE)
 ret[["S1_S3"]] %>% layout(title=paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
 ```
@@ -349,7 +349,7 @@ We repeat this process for the 23 DEGs from Cluster 2.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster2,
-  saveFile = FALSE, pointSize = 4, pointColor = "#CC00FFFF", option = "allPoints", 
+  saveFile = FALSE, pointSize = 2, pointColor = "#CC00FFFF", option = "allPoints", 
   hover = TRUE)
 ret[["S1_S3"]] %>% layout(title=paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")"))
 ```

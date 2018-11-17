@@ -19,6 +19,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom shinycssloaders withSpinner
 #' @importFrom shinydashboard dashboardSidebar sidebarMenu menuItem dashboardBody tabItems box tabItem dashboardPage dashboardHeader
 #' @importForm GGally ggpairs
+#' @return A Shiny application that shows a scatterplot matrix with hexagon bins and allows users to click on hexagon bins to determine how many genes they each contain. The user can download a file that contains the gene IDs that are located in the clicked hexagon bin.
 #' @export
 #' @examples
 #' \dontrun{

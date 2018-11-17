@@ -313,7 +313,7 @@ We may wish to recreate the above plot but allow us to quickly identify DEGs. Fo
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, geneList = geneList,
-  option = "allPoints", pointColor = "deeppink", pointSize = 3, saveFile = FALSE,
+  option = "allPoints", pointColor = "deeppink", pointSize = 2, saveFile = FALSE,
   hover = TRUE)
 ret[["N_P"]]
 ```

@@ -24,6 +24,7 @@
 #' @importFrom stats lm predict cutree dist hclust
 #' @importFrom tidyr gather
 #' @importFrom utils str
+#' @return List of n elements of parallel coordinate plots, where n is the number of treatment pair combinations in the data object. The background of each plot is a side-by-side boxplot of the full data object, and the parallel coordinate lines on each plot are the subset of genes determined to be superimposed through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each parallel coordinate plot is saved to the location specified in the outDir parameter as a JPG file.
 #' @export
 #' @examples
 #' # Example 1: Plot the side-by-side boxplots of the whole dataset without overlaying 
@@ -69,7 +70,7 @@ plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
   ret=list()
-  for (i in 1:(length(myPairs)-1)){
+  for (i in seq_along(1:(length(myPairs)-1))){
     for (j in (i+1):length(myPairs)){
       group1 = myPairs[i]
       group2 = myPairs[j]

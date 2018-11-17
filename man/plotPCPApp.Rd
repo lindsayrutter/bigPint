@@ -11,6 +11,9 @@ plotPCPApp(data = data, pointColor = "orange")
 
 \item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"}
 }
+\value{
+A Shiny application that shows a parallel coordinate plot and allows users to draw rectangular areas across samples and remove genes that are not inside these areas. The user can download a file that contains the gene IDs that remain.
+}
 \description{
 Plot interactive parallel coordinate plots.
 }

@@ -34,6 +34,7 @@
 #' @importFrom stats lm predict
 #' @importFrom tidyr gather
 #' @importFrom utils str
+#' @return List of n elements of scatterplot matrices, where n is the number of treatment pair combinations in the data object. The subset of genes that are superimposed are determined through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these scatterplot matrices is saved to the location specified in the outDir parameter as a JPG file.
 #' @export
 #' @examples
 #' # Read in data and metrics (need for all examples)
@@ -133,7 +134,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in 1:(length(myPairs)-1)){
+    for (i in seq_along(1:(length(myPairs)-1))){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -151,7 +152,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
       y = data[,c(yChar)]
       
       indexPoints=c()
-      for (i in 1:length(x)){
+      for (i in seq_along(1:length(x))){
         fract = x[i]/y[i]
         if (!is.nan(fract)){
           if(fract > (threshFC + 1) || fract < (1/(threshFC+1))){
@@ -199,7 +200,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in 1:length(ret)){
+      for (i in seq_along(1:length(ret))){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_", threshFC, "_FC.jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])
@@ -235,7 +236,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in 1:(length(myPairs)-1)){
+    for (i in seq_along(1:(length(myPairs)-1))){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -293,7 +294,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in 1:length(ret)){
+      for (i in seq_along(1:length(ret))){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_Hex_", threshVal, ".jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])
@@ -331,7 +332,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in 1:(length(myPairs)-1)){
+    for (i in seq_along(1:(length(myPairs)-1))){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -349,7 +350,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
       y = data[,c(yChar)]
       
       indexPoints=c()
-      for (i in 1:length(x)){
+      for (i in seq_along(1:length(x))){
         if(abs(x[i]-y[i]) > sqrt(2)*threshOrth){
           indexPoints = c(indexPoints, i)
         }
@@ -394,7 +395,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in 1:length(ret)){
+      for (i in seq_along(1:length(ret))){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_", threshOrth, "_Orth.jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])
@@ -459,7 +460,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in 1:(length(myPairs)-1)){
+    for (i in seq_along(1:(length(myPairs)-1))){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -483,7 +484,7 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in 1:length(ret)){
+      for (i in seq_along(1:length(ret))){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_allPoints_", threshVar, "_", threshVal, ".jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])
