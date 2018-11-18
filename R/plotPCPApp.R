@@ -5,14 +5,19 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @description Plot interactive parallel coordinate plots.
 #' 
 #' @param data DATA FRAME | Read counts for parallel coordinate lines
-#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"
+#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
+#' matrix; default "orange"
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly layout
 #' @importFrom ggplot2 ggplot aes_string geom_point xlim ylim scale_x_discrete
-#' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyApp bootstrapPage basicPage req
+#' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyApp 
+#' bootstrapPage basicPage req
 #' @importFrom htmlwidgets onRender
 #' @importFrom utils str
 #' @importFrom dplyr select %>% one_of
-#' @return A Shiny application that shows a parallel coordinate plot and allows users to draw rectangular areas across samples and remove genes that are not inside these areas. The user can download a file that contains the gene IDs that remain.
+#' @return A Shiny application that shows a parallel coordinate plot and allows 
+#' users to draw rectangular areas across samples and remove genes that are not 
+#' inside these areas. The user can download a file that contains the gene IDs 
+#' that remain.
 #' @export
 #' @examples
 #' \dontrun{
@@ -34,7 +39,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' soybean_ir_sub_st[nID,2:length(soybean_ir_sub_st)] = 0
 #' 
 #' library(dplyr, warn.conflicts = FALSE)
-#' plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) %>% 
+#' plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) %>%
 #'   select(ID)
 #' pcpDat = filter(soybean_ir_sub_st, ID %in% plotGenes[,1])
 #' plotPCPApp(data = pcpDat, pointColor = "purple")

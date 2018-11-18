@@ -255,28 +255,25 @@
 <span class='fu'>data</span>(<span class='no'>soybean_ir_sub</span>)
 <span class='fu'>data</span>(<span class='no'>soybean_ir_sub_metrics</span>)
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='no'>soybean_ir_sub</span>, <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>,
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotVolcano-1.png' alt='' width='700' height='700' /></div><div class='input'>
+  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in vapply(colNames, function(x) unlist(strsplit(x, "[.]"))[1]): argument "FUN.VALUE" is missing, with no default</span></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'ret' not found</span></div><div class='input'>
 <span class='co'># Example 2: Plot volcano plot and overlay points with PValue &lt; 1e-15.</span>
 
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='no'>soybean_ir_sub</span>, <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotVolcano-2.png' alt='' width='700' height='700' /></div><div class='input'>
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in vapply(colNames, function(x) unlist(strsplit(x, "[.]"))[1]): argument "FUN.VALUE" is missing, with no default</span></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'ret' not found</span></div><div class='input'>
 <span class='co'># Example 3: Plot volcano plot and overlay points with PValue &lt; 1e-15. This time, </span>
 <span class='co'># plot all points (instead of hexagons) for the background.</span>
 
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='no'>soybean_ir_sub</span>, <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
   <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>,
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotVolcano-3.png' alt='' width='700' height='700' /></div><div class='input'>
+  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in vapply(colNames, function(x) unlist(strsplit(x, "[.]"))[1]): argument "FUN.VALUE" is missing, with no default</span></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'ret' not found</span></div><div class='input'>
 <span class='co'># Example 4: Plot volcano plot with points in background and overlay points with</span>
 <span class='co'># PValue &lt; 1e-15. This time, use a value of TRUE for the hover parameter so that </span>
 <span class='co'># you can hover over overlaid points and determine their IDs .</span>
 
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='no'>soybean_ir_sub</span>, <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
   <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>,
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div></pre>
+  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; <span class='error'>Error in vapply(colNames, function(x) unlist(strsplit(x, "[.]"))[1]): argument "FUN.VALUE" is missing, with no default</span></div><div class='input'><span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'ret' not found</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

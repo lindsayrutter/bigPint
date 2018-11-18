@@ -15,32 +15,49 @@ plotVolcano(data = data, dataMetrics = dataMetrics,
 
 \item{dataMetrics}{LIST | Differential expression metrics}
 
-\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object that is used to threshold significance; default "FDR"}
+\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object that 
+is used to threshold significance; default "FDR"}
 
-\item{threshVal}{INTEGER | Maximum value to threshold significance from threshVar object; default 0.05}
+\item{threshVal}{INTEGER | Maximum value to threshold significance from 
+threshVar object; default 0.05}
 
-\item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the scatterplot matrix of all data. Use this parameter if you have predetermined subset of genes to be superimposed. Otherwise, dataMetrics, threshVar, and threshVal will be used to create genes to be superimposed onto the volcano plot; default NULL}
+\item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the 
+scatterplot matrix of all data. Use this parameter if you have predetermined 
+subset of genes to be superimposed. Otherwise, dataMetrics, threshVar, and 
+threshVal will be used to create genes to be superimposed onto the volcano 
+plot; default NULL}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
-\item{outDir}{CHARACTER STRING | Output directory to save all plots; default current directory}
+\item{outDir}{CHARACTER STRING | Output directory to save all plots; default 
+current directory}
 
-\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"}
+\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
+matrix; default "orange"}
 
 \item{pointSize}{INTEGER | Size of plotted points; default 0.5}
 
-\item{xbins}{INTEGER | Number of bins partitioning the range of the plot; default 10}
+\item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
+default 10}
 
-\item{logFC}{CHARACTER STRING | Name of column in dataMetrics object that contains log fold change values; default "logFC"}
+\item{logFC}{CHARACTER STRING | Name of column in dataMetrics object that 
+contains log fold change values; default "logFC"}
 
-\item{PValue}{CHARACTER STRING | Name of column in dataMetrics object that contains p-values; default "PValue"}
+\item{PValue}{CHARACTER STRING | Name of column in dataMetrics object that 
+contains p-values; default "PValue"}
 
-\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"}
+\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
+plot; default "hexagon"}
 
-\item{hover}{BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify IDs; default FALSE}
+\item{hover}{BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify 
+IDs; default FALSE}
 }
 \value{
-List of n elements of volcano plots, where n is the number of treatment pair combinations in the data object. The subset of genes that are superimposed are determined through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these volcano plots is saved to the location specified in the outDir parameter as a JPG file.
+List of n elements of volcano plots, where n is the number of 
+treatment pair combinations in the data object. The subset of genes that are 
+superimposed are determined through the dataMetrics or geneList parameter. If 
+the saveFile parameter has a value of TRUE, then each of these volcano plots 
+is saved to the location specified in the outDir parameter as a JPG file.
 }
 \description{
 Plot static volcano plot.
@@ -57,25 +74,25 @@ ret[[1]]
 
 # Example 2: Plot volcano plot and overlay points with PValue < 1e-15.
 
-ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
+ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red",
   pointSize = 1, threshVar = "PValue", threshVal = 1e-15, saveFile = FALSE)
 ret[[1]]
 
-# Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This time, 
-# plot all points (instead of hexagons) for the background.
+# Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This 
+# time, plot all points (instead of hexagons) for the background.
 
-ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
-  pointSize = 1, threshVar = "PValue", threshVal = 1e-15, option = "allPoints", 
-  saveFile = FALSE)
+ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red",
+  pointSize = 1, threshVar = "PValue", threshVal = 1e-15,
+  option = "allPoints", saveFile = FALSE)
 ret[[1]]
 
-# Example 4: Plot volcano plot with points in background and overlay points with
-# PValue < 1e-15. This time, use a value of TRUE for the hover parameter so that 
-# you can hover over overlaid points and determine their IDs .
+# Example 4: Plot volcano plot with points in background and overlay points 
+# with PValue < 1e-15. This time, use a value of TRUE for the hover parameter 
+# so that you can hover over overlaid points and determine their IDs.
 
-ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
-  pointSize = 1, threshVar = "PValue", threshVal = 1e-15, option = "allPoints", 
-  saveFile = FALSE, hover = TRUE)
+ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red",
+  pointSize = 1, threshVar = "PValue", threshVal = 1e-15,
+  option = "allPoints", saveFile = FALSE, hover = TRUE)
 ret[[1]]
 
 }

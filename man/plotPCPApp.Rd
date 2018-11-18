@@ -9,10 +9,14 @@ plotPCPApp(data = data, pointColor = "orange")
 \arguments{
 \item{data}{DATA FRAME | Read counts for parallel coordinate lines}
 
-\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"}
+\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
+matrix; default "orange"}
 }
 \value{
-A Shiny application that shows a parallel coordinate plot and allows users to draw rectangular areas across samples and remove genes that are not inside these areas. The user can download a file that contains the gene IDs that remain.
+A Shiny application that shows a parallel coordinate plot and allows 
+users to draw rectangular areas across samples and remove genes that are not 
+inside these areas. The user can download a file that contains the gene IDs 
+that remain.
 }
 \description{
 Plot interactive parallel coordinate plots.
@@ -37,7 +41,7 @@ nID = which(is.nan(soybean_ir_sub_st[,2]))
 soybean_ir_sub_st[nID,2:length(soybean_ir_sub_st)] = 0
 
 library(dplyr, warn.conflicts = FALSE)
-plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) \%>\% 
+plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) \%>\%
   select(ID)
 pcpDat = filter(soybean_ir_sub_st, ID \%in\% plotGenes[,1])
 plotPCPApp(data = pcpDat, pointColor = "purple")

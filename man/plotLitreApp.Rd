@@ -12,21 +12,29 @@ plotLitreApp(data = data, dataMetrics = dataMetrics, geneList = NULL,
 
 \item{dataMetrics}{LIST | Differential expression metrics (required)}
 
-\item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the litre. Use this parameter if you have predetermined subset of genes to be drawn. Otherwise, all genes in the data object can be superimposed on the litre plot; default NULL}
+\item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the litre. 
+Use this parameter if you have predetermined subset of genes to be drawn. 
+Otherwise, all genes in the data object can be superimposed on the litre plot; 
+default NULL}
 
-\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"}
+\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
+matrix; default "orange"}
 
-\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"; "allPoints" may be too slow depending on data}
+\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
+plot; default "hexagon"; "allPoints" may be too slow depending on data}
 }
 \value{
-A Shiny application that shows a litre plot background and allows users to superimpose the subset of genes determined to be superimposed through the dataMetrics or geneList parameter. The application allows users to order how to sequentially superimpose the genes by columns in the dataMetrics parameter.
+A Shiny application that shows a litre plot background and allows users
+to superimpose the subset of genes determined to be superimposed through the 
+dataMetrics or geneList parameter. The application allows users to order how to
+sequentially superimpose the genes by columns in the dataMetrics parameter.
 }
 \description{
 Plot interactive litre plots.
 }
 \examples{
 \dontrun{
-# Example 1: Create an interactive litre plot for the logged data using default 
+# Example 1: Create an interactive litre plot for the logged data using default
 # background of hexagons.
 
 data(soybean_ir_sub)
@@ -35,8 +43,9 @@ soybean_ir_sub_log <- soybean_ir_sub
 soybean_ir_sub_log[,-1] <- log(soybean_ir_sub[,-1]+1)
 plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
 
-# Example 2: Repeat the same process, only now plot background data as individual 
-# points. Note this may be too slow now that all points are drawn in the background.
+# Example 2: Repeat the same process, only now plot background data as 
+individual points. Note this may be too slow now that all points are drawn in 
+the background.
 
 plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics,
   option = "allPoints", pointColor = "red")

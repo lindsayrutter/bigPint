@@ -4,63 +4,82 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics
-#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"
+#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background 
+#' of plot; default "hexagon"
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
-#' @param outDir CHARACTER STRING | Output directory to save all plots; default current directory
+#' @param outDir CHARACTER STRING | Output directory to save all plots; 
+#' default current directory
 #' @param pointSize INTEGER | Size of plotted points; default 2
-#' @param pointColor CHARACTER STRING | Color of gene superimposed on litre plot; default "orange"
-#' @param xbins INTEGER | Number of bins partitioning the range of the plot; default 10
-#'@param threshVar CHARACTER STRING | Name of column in dataMetrics object that is used to threshold significance; default "FDR"
-#' @param threshVal INTEGER | Maximum value to threshold significance from threshVar object; default 0.05
-#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn from data as litre plots. Use this parameter if you have predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to create genes to be drawn; default NULL
-#' 
+#' @param pointColor CHARACTER STRING | Color of gene superimposed on litre 
+#' plot; default "orange"
+#' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
+#' default 10
+#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object 
+#' that is used to threshold significance; default "FDR"
+#' @param threshVal INTEGER | Maximum value to threshold significance from 
+#' threshVar object; default 0.05
+#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn 
+#' from data as litre plots. Use this parameter if you have predetermined 
+#' genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
+#' create genes to be drawn; default NULL
 #' @importFrom dplyr filter select %>%
 #' @importFrom GGally ggpairs wrap
-#' @importFrom ggplot2 ggplot aes_string aes geom_point xlim ylim geom_hex coord_cartesian xlab ylab geom_ribbon geom_boxplot geom_line geom_abline theme_gray ggtitle scale_fill_manual coord_fixed labs element_text
+#' @importFrom ggplot2 ggplot aes_string aes geom_point xlim ylim geom_hex 
+#' coord_cartesian xlab ylab geom_ribbon geom_boxplot geom_line geom_abline 
+#' theme_gray ggtitle scale_fill_manual coord_fixed labs element_text
 #' @importFrom grDevices jpeg dev.off
 #' @importFrom hexbin hexbin hcell2xy
 #' @importFrom htmlwidgets onRender
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly layout
-#' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyApp
+#' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint 
+#' shinyApp
 #' @importFrom stats lm predict
 #' @importFrom tidyr gather crossing
 #' @importFrom utils str
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
-#' @return List of n elements of litre plots, where n is the number of genes determined to be superimposed through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these litre plots is saved to the location specified in the outDir parameter as a JPG file.
+#' @return List of n elements of litre plots, where n is the number of genes 
+#' determined to be superimposed through the dataMetrics or geneList
+#' parameter. If the saveFile parameter has a value of TRUE, then each of 
+#' these litre plots is saved to the location specified in the outDir 
+#' parameter as a JPG file.
 #' @export
 #' @examples
-#' # Example 1: Create one litre plot for each of the 61 genes that have FDR < 1e-10 
-#' # and examine the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
+#' # Example 1: Create litre plots for each of the 61 genes with FDR < 1e-10. 
+#' # Examine the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
 #' 
 #' data(soybean_ir_sub)
 #' soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1]+1)
 #' data(soybean_ir_sub_metrics)
-#' ret <- plotLitre(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics,
-#'   threshVal = 1e-10, saveFile = FALSE)
+#' ret <- plotLitre(data = soybean_ir_sub,
+#'   dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-10,
+#'   saveFile = FALSE)
 #' length(ret)
 #' names(ret)[1]
 #' ret[[1]]
 #' 
-#' # Example 2: Create one litre plot for each of the five most significant genes 
-#' # (lowest FDR values) and view the plot for gene"N_P_Glyma.19G168700.Wm82.a2.v1".
+#' # Example 2: Create litre plots for each of the five most significant genes
+#' # (low FDR values). View plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".
 #' 
 #' geneList = soybean_ir_sub_metrics[["N_P"]][1:5,]$ID
-#' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, pointColor = "deeppink")
+#' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList,
+#'   pointColor = "deeppink")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
-#' # Example 3: Create one litre plot for each of the five most significant genes 
-#' # (lowest FDR values) and view the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1". 
-#' # Use points instead of the default hexagons as the background.
+#' # Example 3: Create one litre plot for each of the five most significant 
+#' # genes (low FDR values). View the plot for gene
+#' # "N_P_Glyma.19G168700.Wm82.a2.v1". Use points instead of the default 
+#' # hexagons as the background.
 #' 
-#' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, pointColor = "deeppink",
-#'   option = "allPoints")
+#' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList,
+#'   pointColor = "deeppink", option = "allPoints")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
 
-plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2, pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05, geneList = NULL, saveFile = TRUE, option = "hexagon"){
+plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,     pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
+    geneList = NULL, saveFile = TRUE, option = "hexagon"){
   
   hexID <- counts <- countColor2 <- ID <- NULL
   
@@ -68,9 +87,11 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2, p
   rm(data)
   
   colNames <- colnames(dat)
-  myPairs <- unique(sapply(colNames, function(x) unlist(strsplit(x,"[.]"))[1]))
+  colGroups <- c()
+  for (i in seq_along(1:length(colNames))){colGroups[i] <-
+    strsplit(colNames[i],"[.]")[[1]][1]}
+  myPairs <- unique(colGroups)
   myPairs <- myPairs[-which(myPairs=="ID")]
-  colGroups <- sapply(colNames, function(x) unlist(strsplit(x,"[.]"))[1])
   
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
@@ -80,11 +101,13 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2, p
       group1 = myPairs[i]
       group2 = myPairs[j]
       
-      sampleIndex <- which(sapply(colnames(dat), function(x) unlist(strsplit(x,"[.]"))[1]) %in% c(group1, group2))
-      datSel = dat[,c(1, sampleIndex)]
+      colInfo <- c()
+      for (i in seq_along(1:length(colNames))){colInfo[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
       
-      sampleIndex1 <- which(sapply(colnames(datSel), function(x) unlist(strsplit(x,"[.]"))[1]) %in% c(group1))
-      sampleIndex2 <- which(sapply(colnames(datSel), function(x) unlist(strsplit(x,"[.]"))[1]) %in% c(group2))
+      sampleIndex1 <- which(colInfo %in% group1)
+      sampleIndex2 <- which(colInfo %in% group2)
+      sampleIndex <- c(sampleIndex1, sampleIndex2)
+      datSel = dat[,c(1, sampleIndex)]
       
       minVal = min(datSel[,-1])
       maxVal = max(datSel[,-1])

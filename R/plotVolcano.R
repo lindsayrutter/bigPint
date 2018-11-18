@@ -4,21 +4,36 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics
-#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"
-#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object that is used to threshold significance; default "FDR"
-#' @param threshVal INTEGER | Maximum value to threshold significance from threshVar object; default 0.05
-#' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the scatterplot matrix of all data. Use this parameter if you have predetermined subset of genes to be superimposed. Otherwise, dataMetrics, threshVar, and threshVal will be used to create genes to be superimposed onto the volcano plot; default NULL
+#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
+#' plot; default "hexagon"
+#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object that 
+#' is used to threshold significance; default "FDR"
+#' @param threshVal INTEGER | Maximum value to threshold significance from 
+#' threshVar object; default 0.05
+#' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
+#' scatterplot matrix of all data. Use this parameter if you have predetermined 
+#' subset of genes to be superimposed. Otherwise, dataMetrics, threshVar, and 
+#' threshVal will be used to create genes to be superimposed onto the volcano 
+#' plot; default NULL
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
-#' @param outDir CHARACTER STRING | Output directory to save all plots; default current directory
-#' @param xbins INTEGER | Number of bins partitioning the range of the plot; default 10
-#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"
+#' @param outDir CHARACTER STRING | Output directory to save all plots; default 
+#' current directory
+#' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
+#' default 10
+#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
+#' matrix; default "orange"
 #' @param pointSize INTEGER | Size of plotted points; default 0.5
-#' @param logFC CHARACTER STRING | Name of column in dataMetrics object that contains log fold change values; default "logFC"
-#' @param PValue CHARACTER STRING | Name of column in dataMetrics object that contains p-values; default "PValue"
-#' @param hover BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify IDs; default FALSE
+#' @param logFC CHARACTER STRING | Name of column in dataMetrics object that 
+#' contains log fold change values; default "logFC"
+#' @param PValue CHARACTER STRING | Name of column in dataMetrics object that 
+#' contains p-values; default "PValue"
+#' @param hover BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify 
+#' IDs; default FALSE
 #' @importFrom dplyr filter select %>%
 #' @importFrom GGally ggpairs wrap
-#' @importFrom ggplot2 ggplot aes_string aes geom_point xlim ylim geom_hex coord_cartesian xlab ylab geom_ribbon geom_boxplot geom_line geom_abline theme_gray ggtitle labs element_text scale_fill_gradientn
+#' @importFrom ggplot2 ggplot aes_string aes geom_point xlim ylim geom_hex 
+#' coord_cartesian xlab ylab geom_ribbon geom_boxplot geom_line geom_abline 
+#' theme_gray ggtitle labs element_text scale_fill_gradientn
 #' @importFrom grDevices jpeg dev.off
 #' @importFrom hexbin hexbin hcell2xy
 #' @importFrom htmlwidgets onRender
@@ -28,7 +43,11 @@
 #' @importFrom tidyr gather
 #' @importFrom utils str
 #' @importFrom plyr mapvalues
-#' @return List of n elements of volcano plots, where n is the number of treatment pair combinations in the data object. The subset of genes that are superimposed are determined through the dataMetrics or geneList parameter. If the saveFile parameter has a value of TRUE, then each of these volcano plots is saved to the location specified in the outDir parameter as a JPG file.
+#' @return List of n elements of volcano plots, where n is the number of 
+#' treatment pair combinations in the data object. The subset of genes that are 
+#' superimposed are determined through the dataMetrics or geneList parameter. If 
+#' the saveFile parameter has a value of TRUE, then each of these volcano plots 
+#' is saved to the location specified in the outDir parameter as a JPG file.
 #' @export
 #' @examples
 #' # Example 1: Plot volcano plot with default settings for overlaid points
@@ -42,25 +61,25 @@
 #' 
 #' # Example 2: Plot volcano plot and overlay points with PValue < 1e-15.
 #' 
-#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
+#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red",
 #'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15, saveFile = FALSE)
 #' ret[[1]]
 #' 
-#' # Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This time, 
-#' # plot all points (instead of hexagons) for the background.
+#' # Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This 
+#' # time, plot all points (instead of hexagons) for the background.
 #' 
-#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
-#'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15, option = "allPoints", 
-#'   saveFile = FALSE)
+#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red",
+#'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15,
+#'   option = "allPoints", saveFile = FALSE)
 #' ret[[1]]
 #' 
-#' # Example 4: Plot volcano plot with points in background and overlay points with
-#' # PValue < 1e-15. This time, use a value of TRUE for the hover parameter so that 
-#' # you can hover over overlaid points and determine their IDs .
+#' # Example 4: Plot volcano plot with points in background and overlay points 
+#' # with PValue < 1e-15. This time, use a value of TRUE for the hover parameter 
+#' # so that you can hover over overlaid points and determine their IDs.
 #' 
-#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red", 
-#'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15, option = "allPoints", 
-#'   saveFile = FALSE, hover = TRUE)
+#' ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, pointColor = "red",
+#'   pointSize = 1, threshVar = "PValue", threshVal = 1e-15,
+#'   option = "allPoints", saveFile = FALSE, hover = TRUE)
 #' ret[[1]]
 #' 
 
@@ -69,9 +88,10 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
   countColor2 <- counts <- hexID <- ID <- NULL
   
   colNames <- colnames(data)
-  myPairs <- unique(sapply(colNames, function(x) unlist(strsplit(x,"[.]"))[1]))
+  colGroups <- c()
+  for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+  myPairs <- unique(colGroups)
   myPairs <- myPairs[-which(myPairs=="ID")]
-  colGroups <- sapply(colNames, function(x) unlist(strsplit(x,"[.]"))[1])
   
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
@@ -131,8 +151,10 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
       clrs <- brewer.pal(length(my_breaks)+3, "Blues")
       clrs <- clrs[3:length(clrs)]
       
-      datSp1 <- sapply(strsplit(levels(hexdf$countColor2), "-"), function(x) x[1])
-      datSp2 <- sapply(strsplit(datSp1, "\\+"), function(x) x[1])
+      datSp1 <- c()
+      for (i in seq_along(1:length(strsplit(levels(hexdf$countColor2), "-")))){datSp1[i] <- strsplit(levels(hexdf$countColor2), "-")[[i]][1]}
+      datSp2 <- c()
+      for (i in seq_along(1:length(strsplit(datSp1, "\\+")))){datSp2[i] <- strsplit(datSp1, "\\+")[[i]][1]}
       
       bin <- mapvalues(hexdf$countColor2, from = levels(hexdf$countColor2), to = datSp2)
       

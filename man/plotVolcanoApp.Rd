@@ -10,22 +10,28 @@ plotVolcanoApp(data = data, dataMetrics = dataMetrics,
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
-\item{dataMetrics}{LIST | Differential expression metrics. This object must contain one column named "logFC" and one column named "PValue".}
+\item{dataMetrics}{LIST | Differential expression metrics. This object must 
+contain one column named "logFC" and one column named "PValue".}
 
-\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"}
+\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
+plot; default "hexagon"}
 
-\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"}
+\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
+matrix; default "orange"}
 }
 \value{
-A Shiny application that shows a volcano plot and allows users to overlay genes depending on two values, usually a statistical value (such as P-value) and a magnitude change value (such as log fold change). The user can download a file that contains the gene IDs that pass these thresholds.
+A Shiny application that shows a volcano plot and allows users to 
+overlay genes depending on two values, usually a statistical value (such as
+P-value) and a magnitude change value (such as log fold change). The user can 
+download a file that contains the gene IDs that pass these thresholds.
 }
 \description{
 Plot interactive volcano plots.
 }
 \examples{
 \dontrun{
-# Example 1: Create interactive volcano plot of logged data using hexagon bins for 
-# the background.
+# Example 1: Create interactive volcano plot of logged data using hexagon bins 
+# for the background.
 
 data(soybean_cn_sub)
 data(soybean_cn_sub_metrics)
@@ -33,8 +39,8 @@ plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics)
 }
 
 \dontrun{
-# Example 2: Create interactive volcano plot of logged data using points for the 
-# background.
+# Example 2: Create interactive volcano plot of logged data using points for 
+# the background.
 
 plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics, 
   option = "allPoints", pointColor = "magenta")

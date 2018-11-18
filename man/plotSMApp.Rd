@@ -9,18 +9,22 @@ plotSMApp(data = data, xbins = 10)
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
-\item{xbins}{INTEGER | Number of bins partitioning the range of the plot; default 10}
+\item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
+default 10}
 }
 \value{
-A Shiny application that shows a scatterplot matrix with hexagon bins and allows users to click on hexagon bins to determine how many genes they each contain. The user can download a file that contains the gene IDs that are located in the clicked hexagon bin.
+A Shiny application that shows a scatterplot matrix with hexagon bins 
+and allows users to click on hexagon bins to determine how many genes they each
+contain. The user can download a file that contains the gene IDs that are 
+located in the clicked hexagon bin.
 }
 \description{
 Plot interactive scatterplot matrices.
 }
 \examples{
 \dontrun{
-# Example: Create interactive scatterplot matrix for first two treatment groups of 
-# data.
+# Example: Create interactive scatterplot matrix for first two treatment groups
+# of data.
 
 data(soybean_cn_sub)
 soybean_cn_sub <- soybean_cn_sub[,1:7]

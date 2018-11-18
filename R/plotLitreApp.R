@@ -6,12 +6,19 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics (required)
-#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of plot; default "hexagon"; "allPoints" may be too slow depending on data
-#' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the litre. Use this parameter if you have predetermined subset of genes to be drawn. Otherwise, all genes in the data object can be superimposed on the litre plot; default NULL
-#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot matrix; default "orange"
+#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
+#' plot; default "hexagon"; "allPoints" may be too slow depending on data
+#' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the litre. 
+#' Use this parameter if you have predetermined subset of genes to be drawn. 
+#' Otherwise, all genes in the data object can be superimposed on the litre plot; 
+#' default NULL
+#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
+#' matrix; default "orange"
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly config
 #' @importFrom ggplot2 ggplot aes_string aes xlim ylim geom_boxplot theme
-#' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyUI sliderInput shinyServer shinyApp HTML br reactiveValues strong em div p img observeEvent selectInput selectizeInput numericInput actionButton 
+#' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyUI 
+#' sliderInput shinyServer shinyApp HTML br reactiveValues strong em div p img 
+#' observeEvent selectInput selectizeInput numericInput actionButton 
 #' @importFrom htmlwidgets onRender
 #' @importFrom utils str
 #' @importFrom tidyr gather
@@ -20,14 +27,18 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom stringr str_replace str_trim
 #' @importFrom dplyr %>% select
 #' @importFrom shinycssloaders withSpinner
-#' @importFrom shinydashboard menuItem tabItem dashboardPage dashboardHeader dashboardSidebar sidebarMenu tabItems box
+#' @importFrom shinydashboard menuItem tabItem dashboardPage dashboardHeader 
+#' dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
-#' @return A Shiny application that shows a litre plot background and allows users to superimpose the subset of genes determined to be superimposed through the dataMetrics or geneList parameter. The application allows users to order how to sequentially superimpose the genes by columns in the dataMetrics parameter. 
+#' @return A Shiny application that shows a litre plot background and allows users
+#' to superimpose the subset of genes determined to be superimposed through the 
+#' dataMetrics or geneList parameter. The application allows users to order how to
+#' sequentially superimpose the genes by columns in the dataMetrics parameter. 
 #' @export
 #' @examples
 #' \dontrun{
-#' # Example 1: Create an interactive litre plot for the logged data using default 
+#' # Example 1: Create an interactive litre plot for the logged data using default
 #' # background of hexagons.
 #' 
 #' data(soybean_ir_sub)
@@ -36,8 +47,9 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' soybean_ir_sub_log[,-1] <- log(soybean_ir_sub[,-1]+1)
 #' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
 #' 
-#' # Example 2: Repeat the same process, only now plot background data as individual 
-#' # points. Note this may be too slow now that all points are drawn in the background.
+#' # Example 2: Repeat the same process, only now plot background data as 
+#' individual points. Note this may be too slow now that all points are drawn in 
+#' the background.
 #' 
 #' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics,
 #'   option = "allPoints", pointColor = "red")
