@@ -88,7 +88,8 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,  
   
   colNames <- colnames(dat)
   colGroups <- c()
-  for (i in seq_along(1:length(colNames))){colGroups[i] <-
+  seqVec <- seq(1,length(colNames))
+  for (i in seq_along(seqVec)){colGroups[i] <-
     strsplit(colNames[i],"[.]")[[1]][1]}
   myPairs <- unique(colGroups)
   myPairs <- myPairs[-which(myPairs=="ID")]
@@ -96,13 +97,16 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,  
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
   ret = list()
-  for (i in seq_along(1:(length(myPairs)-1))){
+  seqVec <- seq(1,length(myPairs)-1)
+  for (i in seq_along(seqVec)){
     for (j in (i+1):length(myPairs)){
       group1 = myPairs[i]
       group2 = myPairs[j]
       
       colInfo <- c()
-      for (i in seq_along(1:length(colNames))){colInfo[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+      seqVec <- seq(1, length(colNames))
+      for (i in seq_along(seqVec)){
+        colInfo[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
       
       sampleIndex1 <- which(colInfo %in% group1)
       sampleIndex2 <- which(colInfo %in% group2)
@@ -115,8 +119,10 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,  
       buffer = (maxRange[2]-maxRange[1])/(xbins/2)
       x <- c()
       y <- c()
-      for (i in seq_along(1:length(sampleIndex1))){
-        for (j in seq_along(1:length(sampleIndex2))){
+      seqVec <- seq(1, length(sampleIndex1))
+      for (i in seq_along(seqVec)){
+        seqVec <- seq(1, length(sampleIndex2))
+        for (j in seq_along(seqVec)){
           x <- c(x, unlist(datSel[,(sampleIndex1[i])]))
           y <- c(y, unlist(datSel[,(sampleIndex2[j])]))
         }
@@ -131,7 +137,8 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,  
       hexdf$countColor2 <- as.factor(unlist(lapply(as.character(hexdf$countColor), function(x) substring(strsplit(gsub(" ", "", x, fixed = TRUE), ",")[[1]][1], 2))))
       hexdf$countColor2 <- factor(hexdf$countColor2, levels = as.character(sort(as.numeric(levels(hexdf$countColor2)))))
       
-      for (i in seq_along(1:(length(levels(hexdf$countColor2))-1))){
+      seqVec <- seq(1, length(levels(hexdf$countColor2))-1)
+      for (i in seq_along(seqVec)){
         levels(hexdf$countColor2)[i] <- paste0(levels(hexdf$countColor2)[i],"-",levels(hexdf$countColor2)[i+1])
       }
       levels(hexdf$countColor2)[length(levels(hexdf$countColor2))] <- paste0(levels(hexdf$countColor2)[length(levels(hexdf$countColor2))], "+")
@@ -156,7 +163,8 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,  
         geneList <- dataMetrics[[paste0(myPairs[1],"_",myPairs[2])]][c(rowDEG1, rowDEG2),1]
       }
       
-      for (k in seq_along(1:length(geneList))){
+      seqVec <- seq(1,length(geneList))
+      for (k in seq_along(seqVec)){
         currID = geneList[k]
         currGene = dat %>% filter(ID == currID)
         

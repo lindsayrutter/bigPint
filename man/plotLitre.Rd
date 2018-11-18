@@ -14,57 +14,59 @@ plotLitre(data = data, dataMetrics = NULL, outDir = getwd(),
 
 \item{dataMetrics}{LIST | Differential expression metrics}
 
-\item{outDir}{CHARACTER STRING | Output directory to save all plots; default 
-current directory}
+\item{outDir}{CHARACTER STRING | Output directory to save all plots; 
+default current directory}
 
 \item{pointSize}{INTEGER | Size of plotted points; default 2}
 
-\item{pointColor}{CHARACTER STRING | Color of gene superimposed on litre plot;
-default "orange"}
+\item{pointColor}{CHARACTER STRING | Color of gene superimposed on litre 
+plot; default "orange"}
 
 \item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
 default 10}
 
-\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object that 
-is used to threshold significance; default "FDR"}
+\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object 
+that is used to threshold significance; default "FDR"}
 
 \item{threshVal}{INTEGER | Maximum value to threshold significance from 
 threshVar object; default 0.05}
 
-\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn from 
-data as litre plots. Use this parameter if you have predetermined genes to be 
-drawn. Otherwise, use dataMetrics, threshVar, and threshVal to create genes to
-be drawn; default NULL}
+\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn 
+from data as litre plots. Use this parameter if you have predetermined 
+genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
+create genes to be drawn; default NULL}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
-\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
-plot; default "hexagon"}
+\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background 
+of plot; default "hexagon"}
 }
 \value{
 List of n elements of litre plots, where n is the number of genes 
-determined to be superimposed through the dataMetrics or geneList parameter. 
-If the saveFile parameter has a value of TRUE, then each of these litre plots 
-is saved to the location specified in the outDir parameter as a JPG file.
+determined to be superimposed through the dataMetrics or geneList
+parameter. If the saveFile parameter has a value of TRUE, then each of 
+these litre plots is saved to the location specified in the outDir 
+parameter as a JPG file.
 }
 \description{
 Plot static litre plots.
 }
 \examples{
-# Example 1: Create one litre plot for each of the 61 genes with FDR < 1e-10 
-# and examine the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
+# Example 1: Create litre plots for each of the 61 genes with FDR < 1e-10. 
+# Examine the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
 
 data(soybean_ir_sub)
 soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1]+1)
 data(soybean_ir_sub_metrics)
-ret <- plotLitre(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics,
-  threshVal = 1e-10, saveFile = FALSE)
+ret <- plotLitre(data = soybean_ir_sub,
+  dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-10,
+  saveFile = FALSE)
 length(ret)
 names(ret)[1]
 ret[[1]]
 
-# Example 2: Create one litre plot for each of the five most significant genes
-# (low FDR values). View the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".
+# Example 2: Create litre plots for each of the five most significant genes
+# (low FDR values). View plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".
 
 geneList = soybean_ir_sub_metrics[["N_P"]][1:5,]$ID
 ret <- plotLitre(data = soybean_ir_sub, geneList = geneList,
@@ -72,9 +74,10 @@ ret <- plotLitre(data = soybean_ir_sub, geneList = geneList,
 names(ret)
 ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 
-# Example 3: Create one litre plot for each of the five most significant genes
-# (low FDR values). View the plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1". 
-# Use points instead of the default hexagons as the background.
+# Example 3: Create one litre plot for each of the five most significant 
+# genes (low FDR values). View the plot for gene
+# "N_P_Glyma.19G168700.Wm82.a2.v1". Use points instead of the default 
+# hexagons as the background.
 
 ret <- plotLitre(data = soybean_ir_sub, geneList = geneList,
   pointColor = "deeppink", option = "allPoints")

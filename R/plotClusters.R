@@ -140,23 +140,25 @@
 #' 
 
 plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR", 
-    threshVal=0.05, outDir=getwd(), colList = rainbow(nC), 
-    aggMethod = "ward.D"  , yAxisLabel = "Count", xAxisLabel = "Sample", 
-    lineSize = 0.1, lineAlpha = 0.5, clusterAllData = TRUE, verbose=FALSE, 
-    saveFile = TRUE, vxAxis = FALSE, geneList = NULL){
+threshVal=0.05, outDir=getwd(), colList = rainbow(nC), aggMethod = "ward.D", 
+yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1, lineAlpha = 0.5, 
+clusterAllData = TRUE, verbose=FALSE, saveFile = TRUE, vxAxis = FALSE,
+geneList = NULL){
 
-    key <- val <- ID <- rainbow <- NULL
-    
-    colNames <- colnames(data)
-    colGroups <- c()
-    for (i in seq_along(1:length(colNames))){colGroups[i] <- 
+key <- val <- ID <- rainbow <- NULL
+
+colNames <- colnames(data)
+colGroups <- c()
+seqVec <- seq(1, length(colNames))
+for (i in seq_along(seqVec)){colGroups[i] <- 
     strsplit(colNames[i],"[.]")[[1]][1]}
-    myPairs <- unique(colGroups)
-    myPairs <- myPairs[-which(myPairs=="ID")] 
+myPairs <- unique(colGroups)
+myPairs <- myPairs[-which(myPairs=="ID")] 
 
-    ret = list()
-    for (i in seq_along(1:(length(myPairs)-1))){
-        for (j in (i+1):length(myPairs)){
+ret = list()
+seqVec <- length(myPairs)-1
+for (i in seq_along(seqVec)){
+    for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
         fData <- cbind(ID=data$ID, data[,which(colGroups %in% 
@@ -180,13 +182,13 @@ plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR",
             cData <- fData[which(fData$ID %in% geneList),]  
         }
         else{
-          cData <- fData
+            cData <- fData
         }
         
         plotName <- paste0(group1,"_",group2)
         
-        # geneList variable takes precedence. Create metricPair to only select 
-        # geneList IDs
+        # geneList variable takes precedence. Create metricPair to only
+        # select geneList IDs
         if(!is.null(geneList)){
             metricPair = data.frame(ID = data$ID, FDR = 1)
             metricPair$ID = as.character(metricPair$ID)
@@ -196,194 +198,41 @@ plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR",
             dataMetrics = 1
         }
         
-        # Check if there are even any genes that pass the threshold. Then, 
-        # perform clustering on whole dataset and assigned significant genes to
-        # those clusters from the full dataset.
+        # Check if there are even any genes that pass the threshold. 
+        # Then, perform clustering on whole dataset and assigned 
+        # significant genes to those clusters from the full dataset.
         if (nrow(data)>=nC && clusterAllData == TRUE){
-          dendo = data
-          rownames(dendo) = NULL
-          d = suppressWarnings(dist(as.matrix(dendo)))
-          hC = hclust(d, method=aggMethod)
-          
-          #colList = rainbow(nC)
-          k = cutree(hC, k=nC)
-          ###########################
-          plot_clusters = lapply(seq_along(1:nC), function(j){
-            i = rev(order(table(k)))[j]
-            x = as.data.frame(data[which(k==i),])
-            x$cluster = "color"
-            x$cluster2 = factor(x$cluster)
-            xNames = x$ID
-            if (!is.null(dataMetrics)){
-                metricFDR = metricPair[which(as.character(metricPair$ID) %in% 
-                xNames),]
-                sigID = metricFDR[which(metricFDR[[threshVar]]<=threshVal),]$ID
-                xSig = x[which(xNames %in% sigID),]
-                xSigNames = rownames(xSig)
-                nGenes = nrow(xSig)            
-            }
-            else{
-                xSig = x
-                xSigNames = rownames(x)
-                nGenes = nrow(x)
-            }
-  
-            if (verbose==TRUE){
-                IDs = as.character(sigID)
-                saveRDS(IDs, file = paste(outDir, "/", plotName, "_", nC, "_", 
-                j, ".rds", sep=""))
-            }
-            
-            xSig$ID = xSigNames
-            if (nrow(xSig)>0){
-                lastTwoIndices = c(ncol(xSig) -1, ncol(xSig))
-                xSig = xSig[, -lastTwoIndices]
-    
-                pcpDat <- melt(xSig, id.vars="ID")
-                colnames(pcpDat) <- c("ID", "Sample", "Count")
-                pcpDat$Sample <- as.character(pcpDat$Sample)
-                pcpDat$ID <- as.factor(pcpDat$ID)
-                
-                p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + 
-                geom_boxplot() + geom_line(data=pcpDat,
-                aes_string(x = 'Sample', y = 'Count', group = 'ID'), colour = colList[j],
-                alpha=lineAlpha, size = lineSize) + ylab(yAxisLabel) +
-                xlab(xAxisLabel) + ggtitle(paste("Cluster ", j, " Genes (n=", 
-                format(nGenes, big.mark=",", scientific=FALSE), ")",sep="")) +
-                theme(plot.title = element_text(hjust = 0.5, size=14,
-                face="plain"), axis.text=element_text(size=11),
-                axis.title=element_text(size=14))
-            }
-            else{
-              p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
-              geom_boxplot() + ylab(yAxisLabel) + xlab(xAxisLabel) +
-              ggtitle(paste("Cluster ", j, " Genes (n=", format(nGenes,
-              big.mark=",", scientific=FALSE), ")",sep="")) +
-              theme(plot.title = element_text(hjust = 0.5, size=14,
-              face="plain"), axis.text=element_text(size=11),
-              axis.title=element_text(size=14))            
-            }
-            if (vxAxis == TRUE){
-              p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
-            }
-            if (verbose==TRUE){
-              fileName = paste(outDir, "/", plotName, "_", nC, "_", j, ".jpg",
-              sep="")
-              jpeg(fileName)
-              plot(p)
-              invisible(dev.off()) 
-            }
-            p
-          })
-          p = arrangeGrob(grobs=plot_clusters, ncol=2)
-          
-          if (saveFile == TRUE || verbose == TRUE){
-            fileName = paste(outDir, "/", plotName, "_", nC, ".jpg", sep="")
-            jpeg(fileName)
-            grid.draw(p)
-            invisible(dev.off())
-          }
-          ret[[paste0(plotName, "_", nC)]] = p
+            ret <- helperCadTRUE(data, dataMetrics, metricPair, aggMethod, nC,
+            threshVar, threshVal, verbose, vxAxis, saveFile, boxDat,
+            xAxisLabel, yAxisLabel, lineAlpha, lineSize, ret, plotName, outDir,
+            colList)
         }
+        
         # Check if there are even any genes that pass the threshold. Then, 
         # perform clustering on just the significant genes.
         if (nrow(cData)>=nC && clusterAllData == FALSE){
-          dendo = cData
-          rownames(dendo) = NULL
-          d = suppressWarnings(dist(as.matrix(dendo)))
-          hC = hclust(d, method=aggMethod)
-          
-          #colList = rainbow(nC)
-          k = cutree(hC, k=nC)
-          ###########################
-          plot_clusters = lapply(seq_along(1:nC), function(j){
-            i = rev(order(table(k)))[j]
-            x = as.data.frame(cData[which(k==i),])
-            x$cluster = "color"
-            x$cluster2 = factor(x$cluster)
-            x$ID = factor(x$ID)
-            xNames = x$ID
-  
-            if (!is.null(dataMetrics)){
-              metricFDR = metricPair[which(as.character(metricPair$ID) %in% 
-              xNames),]
-              sigID = metricFDR[which(metricFDR[[threshVar]]<=threshVal),]$ID
-              xSig = x[which(xNames %in% sigID),]
-              xSigNames = rownames(xSig)
-              nGenes = nrow(xSig)            
-            }
-            else{
-              xSig = x
-              xSigNames = rownames(x)
-              nGenes = nrow(x)
-            }
-            
-            if (verbose==TRUE){
-              IDs = as.character(xNames)
-              saveRDS(IDs, file = paste(outDir, "/", plotName, "_", nC, "_",
-              j, ".rds", sep=""))
-            }
-            
-            xSig$ID = xSigNames
-            lastTwoIndices = c(ncol(xSig) -1, ncol(xSig))
-            xSig = xSig[, -lastTwoIndices]
-            
-            pcpDat <- melt(xSig, id.vars="ID")
-            colnames(pcpDat) <- c("ID", "Sample", "Count")
-            pcpDat$Sample <- as.character(pcpDat$Sample)
-            pcpDat$ID <- as.factor(pcpDat$ID)
-            
-            p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
-            geom_boxplot() + geom_line(data=pcpDat, aes_string(x = 'Sample',
-            y = 'Count', group = 'ID'), colour = colList[j], alpha=lineAlpha,
-            size = lineSize) + ylab(yAxisLabel) + xlab(xAxisLabel) +
-            ggtitle(paste("Cluster ", j, " Genes (n=", format(nGenes,
-            big.mark=",", scientific=FALSE), ")",sep="")) +
-            theme(plot.title = element_text(hjust = 0.5, size=14,
-            face="plain"), axis.text=element_text(size=11),
-            axis.title=element_text(size=14))
-            
-            if (vxAxis == TRUE){
-              p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
-            }
-            
-            if (verbose==TRUE){
-              fileName = paste(outDir, "/", plotName, "_", nC, "_", j, ".jpg",
-              sep="")
-              jpeg(fileName)
-              plot(p)
-              invisible(dev.off()) 
-            }
-            p
-          })
-          p = arrangeGrob(grobs=plot_clusters, ncol=2)
-          
-          if (saveFile == TRUE || verbose == TRUE){
-            fileName = paste(outDir, "/", plotName, "_", nC, ".jpg", sep="")
-            jpeg(fileName)
-            grid.draw(p)
-            invisible(dev.off())
-          }
-          ret[[paste0(plotName, "_", nC)]] = p
+            ret <- helperCadFALSE(cData, dataMetrics, metricPair, aggMethod,
+            nC, threshVar, threshVal, verbose, vxAxis, saveFile, boxDat,
+            xAxisLabel, yAxisLabel, lineAlpha, lineSize, ret, plotName, outDir,
+            colList)
         }
         
         # Indicate if no significant genes existed
         if (nrow(data)<nC && clusterAllData == TRUE){
-          print("Not enough data to cluster by that many groups")
+            print("Not enough data to cluster by that many groups")
         }
         
         # Indicate if not enough significant genes existed
         if (nrow(cData)==0){
-          print(paste0(group1, "_", group2,
-          ": There were no significant genes"))
+            print(paste0(group1, "_", group2,
+            ": There were no significant genes"))
         }
         else if (nrow(cData)<nC && clusterAllData == FALSE){
-          print(paste0(group1, "_", group2,
-          ": Not enough significant genes (",nrow(cData),
-          ",) to cluster by that many groups (", nC, ")"))
+            print(paste0(group1, "_", group2,
+            ": Not enough significant genes (" ,nrow(cData),
+            ",) to cluster by that many groups (", nC, ")"))
         }
-        
-      }
     }
-    invisible(ret)
+}
+invisible(ret)
 }

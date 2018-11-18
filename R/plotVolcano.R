@@ -89,14 +89,16 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
   
   colNames <- colnames(data)
   colGroups <- c()
-  for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+  seqVec = seq(1, length(colNames))
+  for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
   myPairs <- unique(colGroups)
   myPairs <- myPairs[-which(myPairs=="ID")]
   
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
   ret = list()
-  for (k in seq_along(1:(length(myPairs)-1))){
+  seqVec = seq(1, length(myPairs)-1)
+  for (k in seq_along(seqVec)){
     for (j in (k+1):length(myPairs)){
       group1 = myPairs[k]
       group2 = myPairs[j]
@@ -142,7 +144,8 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
       hexdf$countColor2 <- as.factor(unlist(lapply(as.character(hexdf$countColor), function(x) substring(strsplit(gsub(" ", "", x, fixed = TRUE), ",")[[1]][1], 2))))
       hexdf$countColor2 <- factor(hexdf$countColor2, levels = as.character(sort(as.numeric(levels(hexdf$countColor2)))))
 
-      for (i in seq_along(1:(length(levels(hexdf$countColor2))-1))){
+      seqVec = seq(1, length(levels(hexdf$countColor2))-1)
+      for (i in seq_along(seqVec)){
         levels(hexdf$countColor2)[i] <- paste0(levels(hexdf$countColor2)[i],"-",levels(hexdf$countColor2)[i+1])
       }
       levels(hexdf$countColor2)[length(levels(hexdf$countColor2))] <- paste0(levels(hexdf$countColor2)[length(levels(hexdf$countColor2))], "+")
@@ -152,9 +155,11 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
       clrs <- clrs[3:length(clrs)]
       
       datSp1 <- c()
-      for (i in seq_along(1:length(strsplit(levels(hexdf$countColor2), "-")))){datSp1[i] <- strsplit(levels(hexdf$countColor2), "-")[[i]][1]}
+      seqVec = seq(1, length(strsplit(levels(hexdf$countColor2), "-")))
+      for (i in seq_along(seqVec)){datSp1[i] <- strsplit(levels(hexdf$countColor2), "-")[[i]][1]}
       datSp2 <- c()
-      for (i in seq_along(1:length(strsplit(datSp1, "\\+")))){datSp2[i] <- strsplit(datSp1, "\\+")[[i]][1]}
+      seqVec = seq(1, length(strsplit(datSp1, "\\+")))
+      for (i in seq_along(seqVec)){datSp2[i] <- strsplit(datSp1, "\\+")[[i]][1]}
       
       bin <- mapvalues(hexdf$countColor2, from = levels(hexdf$countColor2), to = datSp2)
       
@@ -181,7 +186,8 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics, threshVar = "FDR"
           IDs=curPairSel$ID
           gP <- ggplotly(p)
 
-          for (l in seq_along(1:(length(gP[["x"]][["data"]])-1))){
+          seqVec = seq(1, length(gP[["x"]][["data"]])-1)
+          for (l in seq_along(seqVec)){
             gP[["x"]][["data"]][[l]][["hoverinfo"]] <- "none"  
           }
           newText = IDs

@@ -302,8 +302,8 @@ hoverinfo: 'text',
       width: 2
       },
       opacity: 0.9,
-text: drawLines.geneID,
-hoverinfo: 'text',
+      text: drawLines.geneID,
+      hoverinfo: 'text',
       }
       Traces.push(traceLine);
       Plotly.addTraces(el.id, Traces);

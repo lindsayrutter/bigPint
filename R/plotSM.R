@@ -151,7 +151,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     
     colNames <- colnames(dat)
     colGroups <- c()
-    for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+    seqVec <- seq(1, length(colNames))
+    for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
     myPairs <- unique(colGroups)
     myPairs <- myPairs[-which(myPairs=="ID")]
     
@@ -160,7 +161,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in seq_along(1:(length(myPairs)-1))){
+    seqVec <- seq(1, length(myPairs)-1)
+    for (i in seq_along(seqVec)){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -178,7 +180,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
       y = data[,c(yChar)]
       
       indexPoints=c()
-      for (i in seq_along(1:length(x))){
+      seqVec = seq(1, length(x))
+      for (i in seq_along(seqVec)){
         fract = x[i]/y[i]
         if (!is.nan(fract)){
           if(fract > (threshFC + 1) || fract < (1/(threshFC+1))){
@@ -190,7 +193,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     
       colNames <- colnames(data)
       colGroups <- c()
-      for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+      seqVec <- seq(1, length(colNames))
+      for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
       myPairs <- unique(colGroups)
       myPairs <- myPairs[-which(myPairs=="ID")]
       
@@ -228,7 +232,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in seq_along(1:length(ret))){
+      seqVec = seq(1, length(ret))
+      for (i in seq_along(seqVec)){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_", threshFC, "_FC.jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])
@@ -249,7 +254,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     
     colNames <- colnames(dat)
     colGroups <- c()
-    for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+    seqVec = seq(1, length(colNames))
+    for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
     myPairs <- unique(colGroups)
     myPairs <- myPairs[-which(myPairs=="ID")]
     
@@ -265,7 +271,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in seq_along(1:(length(myPairs)-1))){
+    seqVec = seq(1, length(myPairs)-1)
+    for (i in seq_along(seqVec)){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -295,7 +302,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
       if (!is.null(dataMetrics)){
         colNames <- colnames(data)
         colGroups <- c()
-        for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+        seqVec = seq(1, length(colNames))
+        for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
         myPairs <- unique(colGroups)
         myPairs <- myPairs[-which(myPairs=="ID")]
         
@@ -327,7 +335,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in seq_along(1:length(ret))){
+      seqVec = seq(1, length(ret))
+      for (i in seq_along(seqVec)){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_Hex_", threshVal, ".jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])
@@ -357,7 +366,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     
     colNames <- colnames(dat)
     colGroups <- c()
-    for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+    seqVec = seq(1, length(colNames))
+    for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
     myPairs <- unique(colGroups)
     myPairs <- myPairs[-which(myPairs=="ID")]
     
@@ -366,7 +376,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in seq_along(1:(length(myPairs)-1))){
+    seqVec = seq(1, length(myPairs)-1)
+    for (i in seq_along(seqVec)){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -384,7 +395,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
       y = data[,c(yChar)]
       
       indexPoints=c()
-      for (i in seq_along(1:length(x))){
+      seqVec = seq(1, length(x))
+      for (i in seq_along(seqVec)){
         if(abs(x[i]-y[i]) > sqrt(2)*threshOrth){
           indexPoints = c(indexPoints, i)
         }
@@ -393,7 +405,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
       
       colNames <- colnames(data)
       colGroups <- c()
-      for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+      seqVec = seq(1, length(colNames))
+      for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
       myPairs <- unique(colGroups)
       myPairs <- myPairs[-which(myPairs=="ID")]
       
@@ -431,7 +444,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in seq_along(1:length(ret))){
+      seqVec = seq(1, length(ret))
+      for (i in seq_along(seqVec)){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_", threshOrth, "_Orth.jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])
@@ -450,7 +464,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     
     colNames <- colnames(dat)
     colGroups <- c()
-    for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+    seqVec = seq(1, length(colNames))
+    for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
     myPairs <- unique(colGroups)
     myPairs <- myPairs[-which(myPairs=="ID")]
     
@@ -477,7 +492,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
       else if (!is.null(dataMetrics)){
         colNames <- colnames(data)
         colGroups <- c()
-        for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+        seqVec = seq(1, length(colNames))
+        for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
         myPairs <- unique(colGroups)
         myPairs <- myPairs[-which(myPairs=="ID")]
         
@@ -501,7 +517,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     k=1
     names_list = list()
     data_list = list()
-    for (i in seq_along(1:(length(myPairs)-1))){
+    seqVec = seq(1, length(myPairs)-1)
+    for (i in seq_along(seqVec)){
       for (j in (i+1):length(myPairs)){
         group1 = myPairs[i]
         group2 = myPairs[j]
@@ -525,7 +542,8 @@ plotSM = function(data=data, dataMetrics=NULL, option="allPoints", saveFile = TR
     names(ret) <- names_list
     
     if (saveFile == TRUE){
-      for (i in seq_along(1:length(ret))){
+      seqVec = seq(1, length(ret))
+      for (i in seq_along(seqVec)){
         fileName = paste0(outDir, "/", names(ret[i]), "_degSM_allPoints_", threshVar, "_", threshVal, ".jpg")
         jpeg(filename=fileName, height=900, width=900)
         print(ret[[i]])

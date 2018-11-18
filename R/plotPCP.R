@@ -88,14 +88,16 @@ plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05
   
   colNames <- colnames(data)
   colGroups <- c()
-  for (i in seq_along(1:length(colNames))){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
+  seqVec <- seq(1, length(colNames))
+  for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
   myPairs <- unique(colGroups)
   myPairs <- myPairs[-which(myPairs=="ID")]
   
   ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
   
   ret=list()
-  for (i in seq_along(1:(length(myPairs)-1))){
+  seqVec <- seq(1, length(myPairs)-1)
+  for (i in seq_along(seqVec)){
     for (j in (i+1):length(myPairs)){
       group1 = myPairs[i]
       group2 = myPairs[j]
