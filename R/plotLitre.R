@@ -78,109 +78,89 @@
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
 
-plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,     pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
-    geneList = NULL, saveFile = TRUE, option = "hexagon"){
-  
-  hexID <- counts <- countColor2 <- ID <- NULL
-  
-  dat <- data
-  rm(data)
-  
-  colNames <- colnames(dat)
-  colGroups <- c()
-  seqVec <- seq(1,length(colNames))
-  for (i in seq_along(seqVec)){colGroups[i] <-
-    strsplit(colNames[i],"[.]")[[1]][1]}
-  myPairs <- unique(colGroups)
-  myPairs <- myPairs[-which(myPairs=="ID")]
-  
-  ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
-  
-  ret = list()
-  seqVec <- seq(1,length(myPairs)-1)
-  for (i in seq_along(seqVec)){
+plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,
+pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
+geneList = NULL, saveFile = TRUE, option = "hexagon"){
+
+hexID <- counts <- countColor2 <- ID <- NULL
+myPairs <- helperMakePairs(data)[["myPairs"]]
+colGroups <- helperMakePairs(data)[["colGroups"]]
+
+ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
+
+ret = list()
+seqVec <- seq(1,length(myPairs)-1)
+for (i in seq_along(seqVec)){
     for (j in (i+1):length(myPairs)){
-      group1 = myPairs[i]
-      group2 = myPairs[j]
-      
-      colInfo <- c()
-      seqVec <- seq(1, length(colNames))
-      for (i in seq_along(seqVec)){
-        colInfo[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
-      
-      sampleIndex1 <- which(colInfo %in% group1)
-      sampleIndex2 <- which(colInfo %in% group2)
-      sampleIndex <- c(sampleIndex1, sampleIndex2)
-      datSel = dat[,c(1, sampleIndex)]
-      
-      minVal = min(datSel[,-1])
-      maxVal = max(datSel[,-1])
-      maxRange = c(minVal, maxVal)
-      buffer = (maxRange[2]-maxRange[1])/(xbins/2)
-      x <- c()
-      y <- c()
-      seqVec <- seq(1, length(sampleIndex1))
-      for (i in seq_along(seqVec)){
-        seqVec <- seq(1, length(sampleIndex2))
-        for (j in seq_along(seqVec)){
-          x <- c(x, unlist(datSel[,(sampleIndex1[i])]))
-          y <- c(y, unlist(datSel[,(sampleIndex2[j])]))
+        group1 = myPairs[i]
+        group2 = myPairs[j]
+        si1 <- which(colGroups %in% group1)
+        si2 <- which(colGroups %in% group2)
+        si <- c(si1, si2)
+        datSel = data[,c(1, si)]
+        
+        hexdf = helperMakeHex(datSel, si1, si2, xbins)[["hexdf"]]
+        maxRange = helperMakeHex(datSel, si1, si2, xbins)[["maxRange"]]
+        clrs = helperMakeHex(datSel, si1, si2, xbins)[["clrs"]]
+        my_breaks = helperMakeHex(datSel, si1, si2, xbins)[["my_breaks"]]
+        x = helperMakeHex(datSel, si1, si2, xbins)[["x"]]
+        y = helperMakeHex(datSel, si1, si2, xbins)[["y"]]
+        
+        if (option == "hexagon"){
+            p <- ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts,
+            fill=countColor2)) + geom_hex(stat="identity") +
+            scale_fill_manual(labels = as.character(my_breaks),
+            values = rev(clrs), name = "Gene count") +
+            geom_abline(intercept = 0, color = "red", size = 0.25) + 
+            labs(x = paste0("Read count ", "(", group1, ")"),
+            y = paste0("Read count ", "(", group2, ")")) +
+            theme(axis.text=element_text(size=15),
+            axis.title=element_text(size=15),
+            legend.title=element_text(size=15),
+            legend.text=element_text(size=15)) +
+            coord_fixed(ratio=1)   
         }
-      }
-      
-      h <- hexbin(x=x, y=y, xbins=xbins, shape=1, IDs=TRUE, xbnds=maxRange, ybnds=maxRange)
-      hexdf <- data.frame (hcell2xy (h),  hexID = h@cell, counts = h@count)
-      attr(hexdf, "cID") <- h@cID
-      
-      # By default, groups into six equal-sized bins
-      hexdf$countColor <- cut2(hexdf$counts, g=6, oneval=FALSE)
-      hexdf$countColor2 <- as.factor(unlist(lapply(as.character(hexdf$countColor), function(x) substring(strsplit(gsub(" ", "", x, fixed = TRUE), ",")[[1]][1], 2))))
-      hexdf$countColor2 <- factor(hexdf$countColor2, levels = as.character(sort(as.numeric(levels(hexdf$countColor2)))))
-      
-      seqVec <- seq(1, length(levels(hexdf$countColor2))-1)
-      for (i in seq_along(seqVec)){
-        levels(hexdf$countColor2)[i] <- paste0(levels(hexdf$countColor2)[i],"-",levels(hexdf$countColor2)[i+1])
-      }
-      levels(hexdf$countColor2)[length(levels(hexdf$countColor2))] <- paste0(levels(hexdf$countColor2)[length(levels(hexdf$countColor2))], "+")
-    
-      my_breaks = levels(hexdf$countColor2)
-      clrs <- brewer.pal(length(my_breaks)+3, "Blues")
-      clrs <- clrs[3:length(clrs)]
-      
-      # Generate background hexagon plot for this pair of treatments
-      
-      if (option == "hexagon"){
-        p <- ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts, fill=countColor2)) + geom_hex(stat="identity") + scale_fill_manual(labels = as.character(my_breaks), values = rev(clrs), name = "Gene count") + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", group1, ")"), y = paste0("Read count ", "(", group2, ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1)   
-      }
-      else{
-        mainPoints = data.frame(x=x, y=y)
-        p <- ggplot(mainPoints, aes(x=x, y=y)) + geom_point(size = pointSize) + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", group1, ")"), y = paste0("Read count ", "(", group2, ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1)
-      }
-    
-      if (is.null(geneList)){
-        rowDEG1 <- which(dataMetrics[[paste0(myPairs[1],"_",myPairs[2])]][threshVar] < threshVal)
-        rowDEG2 <- which(dataMetrics[[paste0(myPairs[2],"_",myPairs[1])]][threshVar] < threshVal)
-        geneList <- dataMetrics[[paste0(myPairs[1],"_",myPairs[2])]][c(rowDEG1, rowDEG2),1]
-      }
-      
-      seqVec <- seq(1,length(geneList))
-      for (k in seq_along(seqVec)){
-        currID = geneList[k]
-        currGene = dat %>% filter(ID == currID)
-        
-        sampleComb = as.data.frame(crossing(as.numeric(currGene[sampleIndex1]), as.numeric(currGene[sampleIndex2])))
-        colnames(sampleComb) = c("x", "y")
-        
-        pg <- p + geom_point(data = sampleComb, aes(x=x, y=y), inherit.aes = FALSE, color = pointColor, size = pointSize) + ggtitle(currGene$ID)
-        
-        if (saveFile == TRUE){
-          jpeg(filename=paste0(outDir, "/", group1, "_", group2, "_", currGene$ID, "_litre.jpg"), height=700, width=1100)
-          print(pg)
-          dev.off()
+        else{
+            mainPoints = data.frame(x=x, y=y)
+            p <- ggplot(mainPoints, aes(x=x, y=y)) +
+            geom_point(size = pointSize) + geom_abline(intercept = 0,
+            color = "red", size = 0.25) + labs(x = paste0("Read count ", "(",
+            group1, ")"), y = paste0("Read count ", "(", group2, ")")) +
+            theme(axis.text=element_text(size=15),
+            axis.title=element_text(size=15),
+            legend.title=element_text(size=15),
+            legend.text=element_text(size=15)) +
+            coord_fixed(ratio=1)
         }
-        ret[[paste0(group1, "_", group2, "_", currGene$ID)]] <- pg
-      }
+        if (is.null(geneList)){
+            rowDEG1 <- which(dataMetrics[[paste0(myPairs[1],"_",myPairs[2])]]
+            [threshVar] < threshVal)
+            rowDEG2 <- which(dataMetrics[[paste0(myPairs[2],"_",myPairs[1])]]
+            [threshVar] < threshVal)
+            geneList <- dataMetrics[[paste0(myPairs[1], "_",
+            myPairs[2])]][c(rowDEG1, rowDEG2),1]
+        }
+        seqVec <- seq(1,length(geneList))
+        for (k in seq_along(seqVec)){
+            currID = geneList[k]
+            currGene = data %>% filter(ID == currID)
+            sampleComb = as.data.frame(crossing(as.numeric(currGene[si1]),
+            as.numeric(currGene[si2])))
+            colnames(sampleComb) = c("x", "y")
+            
+            pg <- p + geom_point(data = sampleComb, aes(x=x, y=y),
+            inherit.aes = FALSE, color = pointColor, size = pointSize) +
+            ggtitle(currGene$ID)
+            
+            if (saveFile == TRUE){
+                jpeg(filename=paste0(outDir, "/", group1, "_", group2, "_",
+                currGene$ID, "_litre.jpg"), height=700, width=1100)
+                print(pg)
+                dev.off()
+            }
+            ret[[paste0(group1, "_", group2, "_", currGene$ID)]] <- pg
+        }
     }
-  }
-  invisible(ret)
+}
+invisible(ret)
 }

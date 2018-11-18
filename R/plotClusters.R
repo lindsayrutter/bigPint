@@ -146,14 +146,8 @@ clusterAllData = TRUE, verbose=FALSE, saveFile = TRUE, vxAxis = FALSE,
 geneList = NULL){
 
 key <- val <- ID <- rainbow <- NULL
-
-colNames <- colnames(data)
-colGroups <- c()
-seqVec <- seq(1, length(colNames))
-for (i in seq_along(seqVec)){colGroups[i] <- 
-    strsplit(colNames[i],"[.]")[[1]][1]}
-myPairs <- unique(colGroups)
-myPairs <- myPairs[-which(myPairs=="ID")] 
+myPairs <- helperMakePairs(data)[["myPairs"]]
+colGroups <- helperMakePairs(data)[["colGroups"]]
 
 ret = list()
 seqVec <- length(myPairs)-1

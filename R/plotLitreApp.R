@@ -8,10 +8,10 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @param dataMetrics LIST | Differential expression metrics (required)
 #' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
 #' plot; default "hexagon"; "allPoints" may be too slow depending on data
-#' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the litre. 
-#' Use this parameter if you have predetermined subset of genes to be drawn. 
-#' Otherwise, all genes in the data object can be superimposed on the litre plot; 
-#' default NULL
+#' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the
+#' litre. Use this parameter if you have predetermined subset of genes to be
+#' drawn. Otherwise, all genes in the data object can be superimposed on the
+#' litre plot; default NULL
 #' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
 #' matrix; default "orange"
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly config
@@ -31,15 +31,16 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
-#' @return A Shiny application that shows a litre plot background and allows users
-#' to superimpose the subset of genes determined to be superimposed through the 
-#' dataMetrics or geneList parameter. The application allows users to order how to
-#' sequentially superimpose the genes by columns in the dataMetrics parameter. 
+#' @return A Shiny application that shows a litre plot background and allows
+#' users to superimpose the subset of genes determined to be superimposed
+#' through the dataMetrics or geneList parameter. The application allows users
+#' to order how to sequentially superimpose the genes by columns in the
+#' dataMetrics parameter. 
 #' @export
 #' @examples
 #' \dontrun{
-#' # Example 1: Create an interactive litre plot for the logged data using default
-#' # background of hexagons.
+#' # Example 1: Create an interactive litre plot for the logged data using
+#' # default background of hexagons.
 #' 
 #' data(soybean_ir_sub)
 #' data(soybean_ir_sub_metrics)
@@ -48,8 +49,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
 #' 
 #' # Example 2: Repeat the same process, only now plot background data as 
-#' individual points. Note this may be too slow now that all points are drawn in 
-#' the background.
+#' # individual points. Note this may be too slow now that all points are drawn
+#' # in the background.
 #' 
 #' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics,
 #'   option = "allPoints", pointColor = "red")
