@@ -1,14 +1,14 @@
 #' @title Plot static parallel coordinate plots
 #' 
-#' @description Plot static parallel coordinate plots onto side-by-side boxplot 
+#' @description Plot static parallel coordinate plots onto side-by-side boxplot
 #' of whole dataset.
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics; If both geneList 
-#' and dataMetrics are NULL, then no genes will be overlaid onto the side-by-side
-#' boxplot; default NULL
-#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object that 
-#' is used to threshold significance; default "FDR"
+#' and dataMetrics are NULL, then no genes will be overlaid onto the
+#' side-by-side boxplot; default NULL
+#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
+#' that is used to threshold significance; default "FDR"
 #' @param threshVal INTEGER | Maximum value to threshold significance from 
 #' threshVar object; default 0.05
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
@@ -20,7 +20,8 @@
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @param outDir CHARACTER STRING | Output directory to save all plots; default 
 #' current directory
-#' @param lineSize INTEGER | Line width of parallel coordinate lines; default 0.1
+#' @param lineSize INTEGER | Line width of parallel coordinate lines;
+#' default 0.1
 #' @param lineColor CHARACTER STRING | Color of parallel coordinate lines; 
 #' default "orange"
 #' @param vxAxis BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical 
@@ -40,18 +41,18 @@
 #' @importFrom stats lm predict cutree dist hclust
 #' @importFrom tidyr gather
 #' @importFrom utils str
-#' @return List of n elements of parallel coordinate plots, where n is the number
-#' of treatment pair combinations in the data object. The background of each plot
-#' is a side-by-side boxplot of the full data object, and the parallel coordinate
-#' lines on each plot are the subset of genes determined to be superimposed 
-#' through the dataMetrics or geneList parameter. If the saveFile parameter has a
-#' value of TRUE, then each parallel coordinate plot is saved to the location 
-#' specified in the outDir parameter as a JPG file.
+#' @return List of n elements of parallel coordinate plots, where n is the
+#' number of treatment pair combinations in the data object. The background of
+#' each plot is a side-by-side boxplot of the full data object, and the
+#' parallel coordinate lines on each plot are the subset of genes determined to
+#' be superimposed through the dataMetrics or geneList parameter. If the
+#' saveFile parameter has a value of TRUE, then each parallel coordinate plot
+#' is saved to the location specified in the outDir parameter as a JPG file.
 #' @export
 #' @examples
 #' # Example 1: Plot the side-by-side boxplots of the whole dataset without 
-#' # overlaying any metrics data by keeping the dataMetrics parameter its default
-#' # value of NULL.
+#' # overlaying any metrics data by keeping the dataMetrics parameter its
+#' # default value of NULL.
 #' 
 #' data(soybean_ir_sub)
 #' soybean_ir_sub[,-1] = log(soybean_ir_sub[,-1] + 1)
@@ -63,7 +64,7 @@
 #' 
 #' data(soybean_ir_sub_metrics)
 #' ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, 
-#'   threshVal = 1e-4, saveFile = FALSE)
+#'     threshVal = 1e-4, saveFile = FALSE)
 #' ret[[1]]
 #'   
 #' # Example 3: Overlay the ten most significant genes (lowest FDR values) as 
@@ -71,112 +72,113 @@
 #' 
 #' geneList = soybean_ir_sub_metrics[["N_P"]][1:10,]$ID
 #' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, 
-#'   lineColor = "blue", saveFile = FALSE)
+#'     lineColor = "blue", saveFile = FALSE)
 #' ret[[1]]
 #' 
 #' # Example 4: Repeat this same procedure, only now set the hover parameter to 
-#' # TRUE to allow us to hover over blue parallel coordinate lines and determine 
-#' # their individual IDs.
+#' # TRUE to allow us to hover over blue parallel coordinate lines and
+#' # determine their individual IDs.
 #' 
 #' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, 
-#'   lineColor = "blue", saveFile = FALSE, hover = TRUE)
+#'     lineColor = "blue", saveFile = FALSE, hover = TRUE)
 #' ret[[1]]
 
-plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR", threshVal = 0.05, geneList = NULL, lineSize = 0.1, lineColor = "orange", outDir=getwd(), saveFile=TRUE, hover=FALSE, vxAxis=FALSE){
-  
-  key <- val <- ID <- Sample <- Count <- NULL
-  
-  colNames <- colnames(data)
-  colGroups <- c()
-  seqVec <- seq(1, length(colNames))
-  for (i in seq_along(seqVec)){colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]}
-  myPairs <- unique(colGroups)
-  myPairs <- myPairs[-which(myPairs=="ID")]
-  
-  ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
-  
-  ret=list()
-  seqVec <- seq(1, length(myPairs)-1)
-  for (i in seq_along(seqVec)){
-    for (j in (i+1):length(myPairs)){
-      group1 = myPairs[i]
-      group2 = myPairs[j]
-      datSel <- cbind(ID=data$ID, data[,which(colGroups %in% c(group1, group2))])
-      datSel$ID <- as.character(datSel$ID)
-      boxDat <- datSel %>% gather(key, val, -c(ID))
-      colnames(boxDat) <- c("ID", "Sample", "Count")
-      
-      userOrder <- unique(boxDat$Sample)
-      boxDat$Sample <- as.factor(boxDat$Sample)
-      levels(boxDat$Sample) <- userOrder
-      
-      if (!is.null(geneList)){
-        pcpDat <- datSel[which(datSel$ID %in% geneList),]
-        pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
-        colnames(pcpDat2) <- c("ID", "Sample", "Count")
-        p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample', y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
-        
-        if (vxAxis == TRUE){
-          p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
-        }
+plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR",
+    threshVal = 0.05, geneList = NULL, lineSize = 0.1, lineColor = "orange",
+    outDir=getwd(), saveFile=TRUE, hover=FALSE, vxAxis=FALSE){
 
-        if (hover == TRUE){
-          gP <- ggplotly(p)
-          gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
-          oldText = gP[["x"]][["data"]][[2]][["text"]]
-          newText = unlist(lapply(oldText, function(x) strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
-          gP[["x"]][["data"]][[2]][["text"]] <- newText
+key <- val <- ID <- Sample <- Count <- NULL
+myPairs <- helperMakePairs(data)[["myPairs"]]
+colGroups <- helperMakePairs(data)[["colGroups"]]
+ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
+
+ret=list()
+seqVec <- seq(1, length(myPairs)-1)
+for (i in seq_along(seqVec)){
+    for (j in (i+1):length(myPairs)){
+        group1 = myPairs[i]
+        group2 = myPairs[j]
+        datSel <- cbind(ID=data$ID, data[,which(colGroups %in%
+        c(group1, group2))])
+        datSel$ID <- as.character(datSel$ID)
+        boxDat <- datSel %>% gather(key, val, -c(ID))
+        colnames(boxDat) <- c("ID", "Sample", "Count")
+        userOrder <- unique(boxDat$Sample)
+        boxDat$Sample <- as.factor(boxDat$Sample)
+        levels(boxDat$Sample) <- userOrder
+        
+        if (!is.null(geneList)){
+            pcpDat <- datSel[which(datSel$ID %in% geneList),]
+            pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
+            colnames(pcpDat2) <- c("ID", "Sample", "Count")
+            p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
+            geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample',
+            y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
+            
+            if (vxAxis == TRUE){
+                p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+            }
+            
+            if (hover == TRUE){
+                gP <- ggplotly(p)
+                gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
+                oldText = gP[["x"]][["data"]][[2]][["text"]]
+                newText = unlist(lapply(oldText, function(x)
+                strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
+                gP[["x"]][["data"]][[2]][["text"]] <- newText
+            }
         }
-        
-      }
-      else if(!is.null(dataMetrics)){
-        rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]][threshVar] < threshVal)
-        rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]][threshVar] < threshVal)
-        rowDEG <- c(rowDEG1, rowDEG2)
-        degID1 <- dataMetrics[[paste0(group1,"_",group2)]][rowDEG,]$ID
-        degID2 <- dataMetrics[[paste0(group2,"_",group1)]][rowDEG,]$ID
-        degID <- c(as.character(degID1), as.character(degID2))
-        pcpDat <- datSel[which(datSel$ID %in% degID),]
-        pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
-        colnames(pcpDat2) <- c("ID", "Sample", "Count")
-        p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample', y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
-        
-        if (vxAxis == TRUE){
-          p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+        else if(!is.null(dataMetrics)){
+            rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]]
+            [threshVar] < threshVal)
+            rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
+            [threshVar] < threshVal)
+            rowDEG <- c(rowDEG1, rowDEG2)
+            degID1 <- dataMetrics[[paste0(group1,"_",group2)]][rowDEG,]$ID
+            degID2 <- dataMetrics[[paste0(group2,"_",group1)]][rowDEG,]$ID
+            degID <- c(as.character(degID1), as.character(degID2))
+            pcpDat <- datSel[which(datSel$ID %in% degID),]
+            pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
+            colnames(pcpDat2) <- c("ID", "Sample", "Count")
+            p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
+            geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample',
+            y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
+            
+            if (vxAxis == TRUE){
+                p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+            }
+            
+            if (hover == TRUE){
+                gP <- ggplotly(p)
+                gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
+                oldText = gP[["x"]][["data"]][[2]][["text"]]
+                newText = unlist(lapply(oldText, function(x)
+                strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
+                gP[["x"]][["data"]][[2]][["text"]] <- newText
+            }
+            
+        }else{
+            p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
+            geom_boxplot()
+            
+            if (vxAxis == TRUE){
+                p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+            }
         }
-        
-        if (hover == TRUE){
-          gP <- ggplotly(p)
-          gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
-          oldText = gP[["x"]][["data"]][[2]][["text"]]
-          newText = unlist(lapply(oldText, function(x) strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
-          gP[["x"]][["data"]][[2]][["text"]] <- newText
+        if (saveFile == TRUE){
+            fileName = paste0(outDir, "/", group1, "_", group2, "_deg_pcp_",
+            threshVal, ".jpg")
+            jpeg(filename=fileName, height=900, width=900)
+            print(p)
+            dev.off()
         }
-        
-      }else{
-        p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot()
-        
-        if (vxAxis == TRUE){
-          p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
-        }
-        
-      }
-      
-      if (saveFile == TRUE){
-        fileName = paste0(outDir, "/", group1, "_", group2, "_deg_pcp_", threshVal, ".jpg")
-        jpeg(filename=fileName, height=900, width=900)
-        print(p)
-        dev.off()
-      }
-      
-      if (hover ==FALSE){
+        if (hover ==FALSE){
         ret[[paste0(group1, "_", group2)]] <- p     
-      }
-      else{
+        }
+        else{
         ret[[paste0(group1, "_", group2)]] <- gP        
-      }
-      
     }
-  }
-  invisible(ret)
+}
+}
+invisible(ret)
 }

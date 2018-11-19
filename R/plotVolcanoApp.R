@@ -30,13 +30,13 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @importFrom RColorBrewer brewer.pal
 #' @return A Shiny application that shows a volcano plot and allows users to 
 #' overlay genes depending on two values, usually a statistical value (such as
-#' P-value) and a magnitude change value (such as log fold change). The user can 
-#' download a file that contains the gene IDs that pass these thresholds.
+#' P-value) and a magnitude change value (such as log fold change). The user
+#' can download a file that contains the gene IDs that pass these thresholds.
 #' @export
 #' @examples
 #' \dontrun{
-#' # Example 1: Create interactive volcano plot of logged data using hexagon bins 
-#' # for the background.
+#' # Example 1: Create interactive volcano plot of logged data using hexagon
+#' # bins for the background.
 #' 
 #' data(soybean_cn_sub)
 #' data(soybean_cn_sub_metrics)
@@ -52,14 +52,16 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' }
 #' 
 
-plotVolcanoApp = function(data=data, dataMetrics=dataMetrics, option="hexagon", pointColor = "orange"){
-  appDir <- system.file("shiny-examples", "plotVolcanoApp", package = "bigPint")
-  if (appDir == "") {
-    stop("Could not find example directory. Try re-installing `bigPint`.", call. = FALSE)
-  }
-  PKGENVIR$DATA <- data # put the data into envir
-  PKGENVIR$DATAMETRICS <- dataMetrics # put the data into envir
-  PKGENVIR$OPTION <- option # put the option into envir
-  PKGENVIR$POINTCOLOR <- pointColor # put the pointColor into envir  
-  shiny::runApp(appDir, display.mode = "normal")
+plotVolcanoApp = function(data=data, dataMetrics=dataMetrics, option="hexagon",
+pointColor = "orange"){
+appDir <- system.file("shiny-examples", "plotVolcanoApp", package = "bigPint")
+if (appDir == "") {
+    stop("Could not find example directory. Try re-installing `bigPint`.",
+    call. = FALSE)
+}
+PKGENVIR$DATA <- data # put the data into envir
+PKGENVIR$DATAMETRICS <- dataMetrics # put the data into envir
+PKGENVIR$OPTION <- option # put the option into envir
+PKGENVIR$POINTCOLOR <- pointColor # put the pointColor into envir  
+shiny::runApp(appDir, display.mode = "normal")
 }

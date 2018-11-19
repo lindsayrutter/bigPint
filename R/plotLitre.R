@@ -52,8 +52,8 @@
 #' soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1]+1)
 #' data(soybean_ir_sub_metrics)
 #' ret <- plotLitre(data = soybean_ir_sub,
-#'   dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-10,
-#'   saveFile = FALSE)
+#'     dataMetrics = soybean_ir_sub_metrics, threshVal = 1e-10,
+#'     saveFile = FALSE)
 #' length(ret)
 #' names(ret)[1]
 #' ret[[1]]
@@ -63,7 +63,7 @@
 #' 
 #' geneList = soybean_ir_sub_metrics[["N_P"]][1:5,]$ID
 #' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList,
-#'   pointColor = "deeppink")
+#'     pointColor = "deeppink")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
@@ -73,14 +73,14 @@
 #' # hexagons as the background.
 #' 
 #' ret <- plotLitre(data = soybean_ir_sub, geneList = geneList,
-#'   pointColor = "deeppink", option = "allPoints")
+#'     pointColor = "deeppink", option = "allPoints")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
 
 plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,
-pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
-geneList = NULL, saveFile = TRUE, option = "hexagon"){
+  pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
+  geneList = NULL, saveFile = TRUE, option = "hexagon"){
 
 hexID <- counts <- countColor2 <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
@@ -133,12 +133,12 @@ for (i in seq_along(seqVec)){
             coord_fixed(ratio=1)
         }
         if (is.null(geneList)){
-            rowDEG1 <- which(dataMetrics[[paste0(myPairs[1],"_",myPairs[2])]]
+            rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]]
             [threshVar] < threshVal)
-            rowDEG2 <- which(dataMetrics[[paste0(myPairs[2],"_",myPairs[1])]]
+            rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
             [threshVar] < threshVal)
-            geneList <- dataMetrics[[paste0(myPairs[1], "_",
-            myPairs[2])]][c(rowDEG1, rowDEG2),1]
+            geneList <- dataMetrics[[paste0(group1, "_",
+            group2)]][c(rowDEG1, rowDEG2),1]
         }
         seqVec <- seq(1,length(geneList))
         for (k in seq_along(seqVec)){

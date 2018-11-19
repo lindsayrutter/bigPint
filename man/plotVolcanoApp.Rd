@@ -22,16 +22,16 @@ matrix; default "orange"}
 \value{
 A Shiny application that shows a volcano plot and allows users to 
 overlay genes depending on two values, usually a statistical value (such as
-P-value) and a magnitude change value (such as log fold change). The user can 
-download a file that contains the gene IDs that pass these thresholds.
+P-value) and a magnitude change value (such as log fold change). The user
+can download a file that contains the gene IDs that pass these thresholds.
 }
 \description{
 Plot interactive volcano plots.
 }
 \examples{
 \dontrun{
-# Example 1: Create interactive volcano plot of logged data using hexagon bins 
-# for the background.
+# Example 1: Create interactive volcano plot of logged data using hexagon
+# bins for the background.
 
 data(soybean_cn_sub)
 data(soybean_cn_sub_metrics)

@@ -13,11 +13,11 @@ plotPCP(data, dataMetrics = NULL, threshVar = "FDR",
 \item{data}{DATA FRAME | Read counts}
 
 \item{dataMetrics}{LIST | Differential expression metrics; If both geneList 
-and dataMetrics are NULL, then no genes will be overlaid onto the side-by-side
-boxplot; default NULL}
+and dataMetrics are NULL, then no genes will be overlaid onto the
+side-by-side boxplot; default NULL}
 
-\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object that 
-is used to threshold significance; default "FDR"}
+\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
+that is used to threshold significance; default "FDR"}
 
 \item{threshVal}{INTEGER | Maximum value to threshold significance from 
 threshVar object; default 0.05}
@@ -29,7 +29,8 @@ threshVal will be considered for overlaid genes. If both geneList and
 dataMetrics are NULL, then no genes will be overlaid onto the side-by-side 
 boxplot; default NULL}
 
-\item{lineSize}{INTEGER | Line width of parallel coordinate lines; default 0.1}
+\item{lineSize}{INTEGER | Line width of parallel coordinate lines;
+default 0.1}
 
 \item{lineColor}{CHARACTER STRING | Color of parallel coordinate lines; 
 default "orange"}
@@ -46,22 +47,22 @@ IDs; default FALSE}
 orientation; default FALSE}
 }
 \value{
-List of n elements of parallel coordinate plots, where n is the number
-of treatment pair combinations in the data object. The background of each plot
-is a side-by-side boxplot of the full data object, and the parallel coordinate
-lines on each plot are the subset of genes determined to be superimposed 
-through the dataMetrics or geneList parameter. If the saveFile parameter has a
-value of TRUE, then each parallel coordinate plot is saved to the location 
-specified in the outDir parameter as a JPG file.
+List of n elements of parallel coordinate plots, where n is the
+number of treatment pair combinations in the data object. The background of
+each plot is a side-by-side boxplot of the full data object, and the
+parallel coordinate lines on each plot are the subset of genes determined to
+be superimposed through the dataMetrics or geneList parameter. If the
+saveFile parameter has a value of TRUE, then each parallel coordinate plot
+is saved to the location specified in the outDir parameter as a JPG file.
 }
 \description{
-Plot static parallel coordinate plots onto side-by-side boxplot 
+Plot static parallel coordinate plots onto side-by-side boxplot
 of whole dataset.
 }
 \examples{
 # Example 1: Plot the side-by-side boxplots of the whole dataset without 
-# overlaying any metrics data by keeping the dataMetrics parameter its default
-# value of NULL.
+# overlaying any metrics data by keeping the dataMetrics parameter its
+# default value of NULL.
 
 data(soybean_ir_sub)
 soybean_ir_sub[,-1] = log(soybean_ir_sub[,-1] + 1)
@@ -73,7 +74,7 @@ ret[[1]]
 
 data(soybean_ir_sub_metrics)
 ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, 
-  threshVal = 1e-4, saveFile = FALSE)
+    threshVal = 1e-4, saveFile = FALSE)
 ret[[1]]
   
 # Example 3: Overlay the ten most significant genes (lowest FDR values) as 
@@ -81,14 +82,14 @@ ret[[1]]
 
 geneList = soybean_ir_sub_metrics[["N_P"]][1:10,]$ID
 ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, 
-  lineColor = "blue", saveFile = FALSE)
+    lineColor = "blue", saveFile = FALSE)
 ret[[1]]
 
 # Example 4: Repeat this same procedure, only now set the hover parameter to 
-# TRUE to allow us to hover over blue parallel coordinate lines and determine 
-# their individual IDs.
+# TRUE to allow us to hover over blue parallel coordinate lines and
+# determine their individual IDs.
 
 ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, 
-  lineColor = "blue", saveFile = FALSE, hover = TRUE)
+    lineColor = "blue", saveFile = FALSE, hover = TRUE)
 ret[[1]]
 }

@@ -53,18 +53,21 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' # in the background.
 #' 
 #' plotLitreApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics,
-#'   option = "allPoints", pointColor = "red")
+#' option = "allPoints", pointColor = "red")
 #' }
 
-plotLitreApp = function(data=data, dataMetrics=dataMetrics, geneList = NULL, pointColor = "orange", option = "hexagon"){
-  appDir <- system.file("shiny-examples", "plotLitreApp", package = "bigPint")
-  if (appDir == "") {
-    stop("Could not find example directory. Try re-installing `bigPint`.", call. = FALSE)
-  }
-  PKGENVIR$DATA <- data # put the data into envir
-  PKGENVIR$DATAMETRICS <- dataMetrics # put the data into envir
-  PKGENVIR$GENELIST <- geneList # put the data into envir
-  PKGENVIR$POINTCOLOR <- pointColor # put the data into envir
-  PKGENVIR$OPTION <- option # put the data into envir
-  shiny::runApp(appDir, display.mode = "normal")
+plotLitreApp = function(data=data, dataMetrics=dataMetrics, geneList = NULL,
+pointColor = "orange", option = "hexagon"){
+
+appDir <- system.file("shiny-examples", "plotLitreApp", package = "bigPint")
+if (appDir == "") {
+    stop("Could not find example directory. Try re-installing `bigPint`.",
+    call. = FALSE)
+}
+PKGENVIR$DATA <- data # put the data into envir
+PKGENVIR$DATAMETRICS <- dataMetrics # put the data into envir
+PKGENVIR$GENELIST <- geneList # put the data into envir
+PKGENVIR$POINTCOLOR <- pointColor # put the data into envir
+PKGENVIR$OPTION <- option # put the data into envir
+shiny::runApp(appDir, display.mode = "normal")
 }
