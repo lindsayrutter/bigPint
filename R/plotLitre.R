@@ -79,8 +79,8 @@
 #' 
 
 plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,
-  pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
-  geneList = NULL, saveFile = TRUE, option = "hexagon"){
+    pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
+    geneList = NULL, saveFile = TRUE, option = "hexagon"){
 
 hexID <- counts <- countColor2 <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]

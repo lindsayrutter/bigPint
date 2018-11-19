@@ -5,11 +5,11 @@
 \title{Plot static parallel coordinate clusters}
 \usage{
 plotClusters(data, dataMetrics = NULL, nC = 4, threshVar = "FDR",
-  threshVal = 0.05, outDir = getwd(), colList = rainbow(nC),
-  aggMethod = "ward.D", yAxisLabel = "Count", xAxisLabel = "Sample",
-  lineSize = 0.1, lineAlpha = 0.5, clusterAllData = TRUE,
-  verbose = FALSE, saveFile = TRUE, vxAxis = FALSE,
-  geneList = NULL)
+    threshVal = 0.05, outDir = getwd(), colList = rainbow(nC),
+    aggMethod = "ward.D", yAxisLabel = "Count", xAxisLabel = "Sample",
+    lineSize = 0.1, lineAlpha = 0.5, clusterAllData = TRUE,
+    verbose = FALSE, saveFile = TRUE, vxAxis = FALSE,
+    geneList = NULL)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
