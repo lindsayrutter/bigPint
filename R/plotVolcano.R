@@ -3,7 +3,9 @@
 #' @description Plot static volcano plot.
 #' 
 #' @param data DATA FRAME | Read counts
-#' @param dataMetrics LIST | Differential expression metrics
+#' @param dataMetrics LIST | Differential expression metrics. This object
+#' must contain one column named "logFC" and one column named "PValue",
+#' unless geneList is not NULL
 #' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background
 #' of plot; default "hexagon"
 #' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
