@@ -5,9 +5,9 @@
 \title{Plot static litre plots}
 \usage{
 plotLitre(data = data, dataMetrics = NULL, outDir = getwd(),
-  pointSize = 2, pointColor = "orange", xbins = 10,
-  threshVar = "FDR", threshVal = 0.05, geneList = NULL,
-  saveFile = TRUE, option = "hexagon")
+    pointSize = 2, pointColor = "orange", xbins = 10,
+    threshVar = "FDR", threshVal = 0.05, geneList = NULL,
+    saveFile = TRUE, option = "hexagon")
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}

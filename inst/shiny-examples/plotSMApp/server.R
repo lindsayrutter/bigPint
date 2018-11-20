@@ -224,4 +224,4 @@ hoverinfo: 'text',
     }
   )
   
-  }
+}

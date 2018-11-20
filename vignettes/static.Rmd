@@ -249,7 +249,7 @@ ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.7,
 ret[[1]]
 ```
 
-We may wish to recreate the above plot but allow us to quickly identify each of the ten genes. We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotPCP()` function. The capabilities in the interactive parallel coordinate plot (`plotPCPApp()`[https://lrutter.github.io/bigPint/reference/plotPCPApp.html]) extend upon this functionality.
+We may wish to recreate the above plot but allow us to quickly identify each of the ten genes. We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotPCP()` function. The capabilities in the interactive parallel coordinate plot [plotPCPApp()](https://lrutter.github.io/bigPint/reference/plotPCPApp.html) extend upon this functionality.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.4, 
@@ -309,7 +309,7 @@ ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, geneList = geneList,
 ret[["N_P"]]
 ```
 
-We may wish to recreate the above plot but allow us to quickly identify DEGs. For instance, there is one DEG in the top-left corner of the plot that appears as an outlier in terms of magnitude change and statistical significance. Which gene is it? We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotVolcano()` function. The capabilities in the interactive volcano plot (`plotVolcanoApp()`[https://lrutter.github.io/bigPint/reference/plotVolcanoApp.html]) extend upon this functionality.
+We may wish to recreate the above plot but allow us to quickly identify DEGs. For instance, there is one DEG in the top-left corner of the plot that appears as an outlier in terms of magnitude change and statistical significance. Which gene is it? We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotVolcano()` function. The capabilities in the interactive volcano plot [plotVolcanoApp()](https://lrutter.github.io/bigPint/reference/plotVolcanoApp.html]) extend upon this functionality.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, geneList = geneList,

@@ -6,7 +6,7 @@ Authors@R: c(person("Lindsay", "Rutter", email = "lindsayannerutter@gmail.com", 
   person("Dianne", "Cook", email = "dicook@monash.edu", role = c("aut")))
 License: GPL
 Depends:
-    R (>= 3.5)
+    R (>= 3.6)
 Imports:
     dplyr (>= 0.7.2),
     GGally (>= 1.3.2),

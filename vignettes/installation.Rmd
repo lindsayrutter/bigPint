@@ -75,3 +75,11 @@ ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, saveFile = FALSE)
 names(ret)
 ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 ```
+
+## Session info
+
+Below is the output of `sessionInfo()` on the system from which this document was compiled running pandoc 1.19.2.1:
+
+```{r, eval=TRUE, include=TRUE}
+sessionInfo()
+```

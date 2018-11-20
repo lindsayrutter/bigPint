@@ -5,9 +5,9 @@
 \title{Plot static parallel coordinate plots}
 \usage{
 plotPCP(data, dataMetrics = NULL, threshVar = "FDR",
-  threshVal = 0.05, geneList = NULL, lineSize = 0.1,
-  lineColor = "orange", outDir = getwd(), saveFile = TRUE,
-  hover = FALSE, vxAxis = FALSE)
+    threshVal = 0.05, geneList = NULL, lineSize = 0.1,
+    lineColor = "orange", outDir = getwd(), saveFile = TRUE,
+    hover = FALSE, vxAxis = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
