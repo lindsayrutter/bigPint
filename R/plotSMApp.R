@@ -29,21 +29,22 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' that are located in the clicked hexagon bin.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Example: Create interactive scatterplot matrix for first two treatment
 #' # groups of data.
 #' 
 #' data(soybean_cn_sub)
 #' soybean_cn_sub <- soybean_cn_sub[,1:7]
-#' plotSMApp(data=soybean_cn_sub)
+#' app <- plotSMApp(data=soybean_cn_sub)
+#' if (interactive()) {
+#'     shiny::runApp(app)
 #' }
 
 plotSMApp = function(data=data, xbins=10){
-    appDir <- system.file("shiny-examples", "plotSMApp", package = "bigPint")
-    if (appDir == "") {
-        stop("Could not find example directory. Try re-installing `bigPint`.",
-        call. = FALSE)
-    }
-    PKGENVIR$DATA <- data # put the data into envir
-    shiny::runApp(appDir, display.mode = "normal")
+appDir <- system.file("shiny-examples", "plotSMApp", package = "bigPint")
+if (appDir == "") {
+    stop("Could not find example directory. Try re-installing `bigPint`.",
+    call. = FALSE)
+}
+PKGENVIR$DATA <- data # put the data into envir
+return(appDir)
 }

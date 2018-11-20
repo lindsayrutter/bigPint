@@ -58,7 +58,7 @@
 #' soybean_ir_sub[,-1] = log(soybean_ir_sub[,-1] + 1)
 #' ret <- plotPCP(data = soybean_ir_sub, saveFile = FALSE)
 #' ret[[1]]
-#'
+#' 
 #' # Example 2: Overlay genes with FDR < 1e-4 as orange parallel coordinate
 #' # lines.
 #' 
@@ -66,7 +66,7 @@
 #' ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, 
 #'     threshVal = 1e-4, saveFile = FALSE)
 #' ret[[1]]
-#'   
+#' 
 #' # Example 3: Overlay the ten most significant genes (lowest FDR values) as 
 #' # blue parallel coordinate lines.
 #' 
@@ -82,6 +82,7 @@
 #' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, 
 #'     lineColor = "blue", saveFile = FALSE, hover = TRUE)
 #' ret[[1]]
+#' 
 
 plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR",
     threshVal = 0.05, geneList = NULL, lineSize = 0.1, lineColor = "orange",

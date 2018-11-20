@@ -5,11 +5,11 @@
 #' 
 ##' @details There are seven options:
 ##' \itemize{
-##'  \item{"foldChange": }{Plots DEGs onto scatterplot matrix of fold changes}
-##'  \item{"orthogonal": }{Plots DEGs onto scatterplot matrix of orthogonal 
-##'  distance}
-##'  \item{"hexagon": }{Plot DEGs onto scatterplot matrix of hexagon binning}
-##'  \item{"allPoints": }{Plot DEGs onto scatterplot matrix of all data points}
+##' \item{"foldChange": }{Plots DEGs onto scatterplot matrix of fold changes}
+##' \item{"orthogonal": }{Plots DEGs onto scatterplot matrix of orthogonal 
+##' distance}
+##' \item{"hexagon": }{Plot DEGs onto scatterplot matrix of hexagon binning}
+##' \item{"allPoints": }{Plot DEGs onto scatterplot matrix of all data points}
 ##' } 
 #' 
 #' @param data DATA FRAME | Read counts
@@ -101,7 +101,7 @@
 #' ret[["S2_S3"]] + ggtitle("S2 versus S3")
 #' 
 #' # Example 3: Plot standardized data as scatterplot matrix of points.
-#'
+#' 
 #' ret <- plotSM(soybean_cn_sub_st, soybean_cn_sub_metrics,
 #'     pointColor = "#00C379", saveFile = FALSE)
 #' ret[[1]] + xlab("Standardized read counts") +
@@ -124,12 +124,13 @@
 #' ret <- plotSM(soybean_ir_sub, soybean_ir_sub_metrics, option = "orthogonal", 
 #'     threshOrth = 2.5, pointSize = 0.2, saveFile = FALSE)
 #' ret[[1]]
-#'
+#' 
 #' # Example 6: Plot scatterplot matrix of fold change.
 #' 
 #' ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange", 
 #'     threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
 #' ret[[1]]
+#' 
 
 plotSM = function(data=data, dataMetrics=NULL, option="allPoints",
 saveFile = TRUE, outDir=getwd(), pointSize=0.5, pointColor = "orange",

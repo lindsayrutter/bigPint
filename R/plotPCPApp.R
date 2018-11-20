@@ -20,9 +20,9 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' that remain.
 #' @export
 #' @examples
-#' \dontrun{
 #' # Example: Create interactive parallel coordinate plot for genes that have
-#' # FDR < 0.01 and logFC < -4.
+#' # FDR < 0.01 and logFC < -4. Standardize genes to have an average of zero
+#' # and a standard deviation of one.
 #' 
 #' data(soybean_ir_sub)
 #' data(soybean_ir_sub_metrics)
@@ -30,19 +30,22 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' # Create standardized version of data
 #' library(matrixStats)
 #' soybean_ir_sub_st = as.data.frame(t(apply(as.matrix(soybean_ir_sub[,-1]), 1,
-#'   scale)))
+#'     scale)))
 #' soybean_ir_sub_st$ID = as.character(soybean_ir_sub$ID)
 #' soybean_ir_sub_st = soybean_ir_sub_st[,c(length(soybean_ir_sub_st),
-#'   1:length(soybean_ir_sub_st)-1)]
+#'     1:length(soybean_ir_sub_st)-1)]
 #' colnames(soybean_ir_sub_st) = colnames(soybean_ir_sub)
 #' nID = which(is.nan(soybean_ir_sub_st[,2]))
 #' soybean_ir_sub_st[nID,2:length(soybean_ir_sub_st)] = 0
 #' 
 #' library(dplyr, warn.conflicts = FALSE)
 #' plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01,
-#'   logFC < -4) %>% select(ID)
+#'     logFC < -4) %>% select(ID)
 #' pcpDat = filter(soybean_ir_sub_st, ID %in% plotGenes[,1])
-#' plotPCPApp(data = pcpDat, pointColor = "purple")
+#' 
+#' app <- plotPCPApp(data = pcpDat, pointColor = "purple")
+#' if (interactive()) {
+#'     shiny::runApp(app, display.mode = "normal")
 #' }
 
 plotPCPApp = function(data = data, pointColor = "orange"){
@@ -53,5 +56,5 @@ if (appDir == "") {
 }
 PKGENVIR$DATA <- data # put the data into envir
 PKGENVIR$POINTCOLOR <- pointColor # put the pointColor into envir
-shiny::runApp(appDir, display.mode = "normal")
+return(appDir)
 }

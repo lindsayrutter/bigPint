@@ -29,21 +29,24 @@ can download a file that contains the gene IDs that pass these thresholds.
 Plot interactive volcano plots.
 }
 \examples{
-\dontrun{
 # Example 1: Create interactive volcano plot of logged data using hexagon
 # bins for the background.
 
 data(soybean_cn_sub)
 data(soybean_cn_sub_metrics)
-plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics)
+app <- plotVolcanoApp(data = soybean_cn_sub,
+    dataMetrics = soybean_cn_sub_metrics)
+if (interactive()) {
+    shiny::runApp(app)
 }
 
-\dontrun{
 # Example 2: Create interactive volcano plot of logged data using points for 
 # the background.
 
-plotVolcanoApp(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics, 
-  option = "allPoints", pointColor = "magenta")
+app <- plotVolcanoApp(data = soybean_cn_sub,
+    dataMetrics = soybean_cn_sub_metrics, option = "allPoints",
+    pointColor = "magenta")
+if (interactive()) {
+    shiny::runApp(app)
 }
-
 }

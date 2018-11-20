@@ -130,14 +130,6 @@
 #' # that contain the IDs within each cluster, and images of the conglomerate 
 #' # clusters to outDir (default current working directory).
 #' 
-#' \dontrun{
-#' plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics,
-#'     nC=4, colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"),
-#'     lineSize = 0.5, lineAlpha = 1, clusterAllData = FALSE,
-#'     aggMethod = "average", yAxisLabel = "Standardized read count",
-#'     verbose = TRUE)
-#' }
-#'
 plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR", 
     threshVal=0.05, outDir=getwd(), colList = rainbow(nC),
     aggMethod = "ward.D", yAxisLabel = "Count", xAxisLabel = "Sample",

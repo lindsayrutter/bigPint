@@ -6,15 +6,15 @@ date: '`r Sys.Date()`'
 package: bigPint
 bibliography: bigPint.bib
 output:
-  BiocStyle::html_document:
+    BiocStyle::html_document:
     toc_float: true
     tidy: TRUE
 vignette: >
-  \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{"bigPint Vignette"}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
-  %\VignettePackage{bigPint}
+    \usepackage[utf8]{inputenc}
+    %\VignetteIndexEntry{"bigPint Vignette"}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+    %\VignettePackage{bigPint}
 ---
 
 ```{r setup, include=FALSE}
@@ -36,7 +36,7 @@ reproducible code that provide:
 - How to produce static `bigPint` plots
 - How to produce interactive `bigPint` plots
 - How to perform hierarchical clustering and use the clusters in `bigPint` 
-  functions
+    functions
 - A recommended RNA-seq visualization pipeline with example code for you to 
-  follow
+    follow
 

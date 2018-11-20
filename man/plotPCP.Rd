@@ -76,7 +76,7 @@ data(soybean_ir_sub_metrics)
 ret <- plotPCP(data = soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, 
     threshVal = 1e-4, saveFile = FALSE)
 ret[[1]]
-  
+
 # Example 3: Overlay the ten most significant genes (lowest FDR values) as 
 # blue parallel coordinate lines.
 
@@ -92,4 +92,5 @@ ret[[1]]
 ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, 
     lineColor = "blue", saveFile = FALSE, hover = TRUE)
 ret[[1]]
+
 }

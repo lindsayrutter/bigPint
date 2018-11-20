@@ -67,11 +67,11 @@ differentially expressed genes (DEGs) onto scatterplot matrix.
 \details{
 There are seven options:
 \itemize{
- \item{"foldChange": }{Plots DEGs onto scatterplot matrix of fold changes}
- \item{"orthogonal": }{Plots DEGs onto scatterplot matrix of orthogonal 
- distance}
- \item{"hexagon": }{Plot DEGs onto scatterplot matrix of hexagon binning}
- \item{"allPoints": }{Plot DEGs onto scatterplot matrix of all data points}
+\item{"foldChange": }{Plots DEGs onto scatterplot matrix of fold changes}
+\item{"orthogonal": }{Plots DEGs onto scatterplot matrix of orthogonal 
+distance}
+\item{"hexagon": }{Plot DEGs onto scatterplot matrix of hexagon binning}
+\item{"allPoints": }{Plot DEGs onto scatterplot matrix of all data points}
 }
 }
 \examples{
@@ -143,4 +143,5 @@ ret[[1]]
 ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange", 
     threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
 ret[[1]]
+
 }
