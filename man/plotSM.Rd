@@ -5,9 +5,9 @@
 \title{Plot static scatterplot matrices}
 \usage{
 plotSM(data = data, dataMetrics = NULL, option = "allPoints",
-    saveFile = TRUE, outDir = getwd(), pointSize = 0.5,
-    pointColor = "orange", xbins = 10, threshFC = 3, threshOrth = 3,
-    threshVar = "FDR", threshVal = 0.05, geneList = NULL)
+  saveFile = TRUE, outDir = getwd(), pointSize = 0.5,
+  pointColor = "orange", xbins = 10, threshFC = 3, threshOrth = 3,
+  threshVar = "FDR", threshVal = 0.05, geneList = NULL)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}

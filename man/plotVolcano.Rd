@@ -5,10 +5,10 @@
 \title{Plot static volcano plot}
 \usage{
 plotVolcano(data = data, dataMetrics = dataMetrics,
-    threshVar = "FDR", threshVal = 0.05, geneList = NULL,
-    saveFile = TRUE, outDir = getwd(), pointColor = "orange",
-    pointSize = 0.5, xbins = 10, logFC = "logFC", PValue = "PValue",
-    option = "hexagon", hover = FALSE)
+  threshVar = "FDR", threshVal = 0.05, geneList = NULL,
+  saveFile = TRUE, outDir = getwd(), pointColor = "orange",
+  pointSize = 0.5, xbins = 10, logFC = "logFC", PValue = "PValue",
+  option = "hexagon", hover = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
