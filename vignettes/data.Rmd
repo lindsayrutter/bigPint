@@ -55,15 +55,15 @@ As demonstrated above, the `data` object must meet the following conditions:
 * Contain at least two treatment groups and at least two replicates per treatment group
 * Its first column must
     + Be called "ID"
-    + Be of type `chr`
+    + Be of class `character`
     + Contain the names of the genes (or a unique set of names in general)
 * Each of the rest of its columns must
     + Contain the read counts for a given sample (or quantitative values in general)
     + Be of class `integer` or `numeric`
-    + Be called in a three-part format (such as "A.3"), where
-        - The first part indicates the treatment group name and must begin with an alphabet character. Examples include "A", "AR", and "A9"
+    + Be called in a three-part format (such as "A.3" or "S4.1") that matches the Perl expression "^[a-zA-Z0-9]+\\.[0-9]+", where
+        - The first part indicates the treatment group name and must contain alphanumeric characters. Examples include "A", "AR", and "A9"
         - The second part consists of a dot "." to serve as a delimeter
-        - The third part indicates the replicate number and must consist of a number
+        - The third part indicates the replicate number and must consist of numbers
 
 It is important that the names of all columns except the first follow the three-part format delineated above. All functions in the `bigPint` package require this format to successfully produce plots.
 

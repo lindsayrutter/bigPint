@@ -54,19 +54,15 @@ ________________________________________________________________________________
 As demonstrated in the two examples above, the `dataMetrics` object must meet the following conditions:
 
 * Be of type `list`
-* Contain a number of elements equal to the number of pairwise treatment combinations in the `data` object. For example, the `soybean_ir_sub_metrics` object contains two list elements and the `soybean_cn_sub_metrics` object contains three list elements.
-* Have each list element be called in a three-part format (such as "N_P"), where
-    + The first part indicates the first treatment group name
-    + The second part consists of an underscore "_" to serve as a delimeter
-    + The third part indicates the second treatment group name
+* Contain a number of elements equal to the number of pairwise treatment combinations in the `data` object. For example, the `soybean_ir_sub_metrics` object contains one list element ("N_P") and the `soybean_cn_sub_metrics` object contains three list elements ("S1_S2", "S1_S3", "S2_S3").
 * Have each list element
     + Be of type `data.frame`
-    + Contain a column called "ID" of type `chr` consisting of the names of the genes
-    + Contain at least one column of type `num` or `int` consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called "logFC", "logCPM", "LR", "PValue", and "FDR".
-    + Be called in a three-part format (such as "N_P" or "S2_S3"), where
-        - The first part indicates the first treatment group name
-        - The second part consists of an underscore "_" to serve as a delimeter
-        - The third part indicates the second treatment group name
+    + Be called in a three-part format (such as "N_P" or "S2_S3") that matches the Perl expression "^[a-zA-Z0-9]+_[a-zA-Z0-9]+", where
+      - The first part indicates the first treatment group alphameric name
+      - The second part consists of an underscore "_" to serve as a delimeter
+      - The third part indicates the second treatment group alphameric name
+    + Contain a first column called "ID" of class `character` consisting of the unique names of the genes
+    + Contain at least one column of class `numeric` or `integer` consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called "logFC", "logCPM", "LR", "PValue", and "FDR".
 
 You can quickly double-check the names of the list elements in your `dataMetrics` object as follows:
 

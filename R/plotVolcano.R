@@ -93,6 +93,7 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics,
     outDir = getwd(), pointColor = "orange", pointSize = 0.5, xbins = 10,
     logFC = "logFC", PValue = "PValue", option = "hexagon", hover = FALSE){
 
+helperTestData(data)
 countColor2 <- counts <- hexID <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]

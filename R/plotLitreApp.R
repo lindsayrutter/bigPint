@@ -65,6 +65,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 plotLitreApp = function(data=data, dataMetrics=dataMetrics, geneList = NULL,
 pointColor = "orange", option = "hexagon"){
 
+helperTestData(data)  
+
 appDir <- system.file("shiny-examples", "plotLitreApp", package = "bigPint")
 if (appDir == "") {
     stop("Could not find example directory. Try re-installing `bigPint`.",

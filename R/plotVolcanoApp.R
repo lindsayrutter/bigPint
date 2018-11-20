@@ -57,6 +57,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 
 plotVolcanoApp = function(data=data, dataMetrics=dataMetrics, option="hexagon",
 pointColor = "orange"){
+  
+helperTestData(data)
 appDir <- system.file("shiny-examples", "plotVolcanoApp", package = "bigPint")
 if (appDir == "") {
     stop("Could not find example directory. Try re-installing `bigPint`.",

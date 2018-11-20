@@ -137,6 +137,8 @@ saveFile = TRUE, outDir=getwd(), pointSize=0.5, pointColor = "orange",
 xbins=10, threshFC=3, threshOrth=3, threshVar="FDR", threshVal=0.05,
 geneList = NULL){
 
+helperTestData(data)
+  
 if (option=="foldChange"){ 
 
 ret <- helperSMFC(data, dataMetrics, outDir, pointSize, threshFC, threshVar,

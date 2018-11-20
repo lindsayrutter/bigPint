@@ -41,6 +41,9 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 
 plotSMApp = function(data=data, xbins=10){
 appDir <- system.file("shiny-examples", "plotSMApp", package = "bigPint")
+
+helperTestData(data)
+
 if (appDir == "") {
     stop("Could not find example directory. Try re-installing `bigPint`.",
     call. = FALSE)

@@ -88,6 +88,7 @@ plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR",
     threshVal = 0.05, geneList = NULL, lineSize = 0.1, lineColor = "orange",
     outDir=getwd(), saveFile=TRUE, hover=FALSE, vxAxis=FALSE){
 
+helperTestData(data)
 key <- val <- ID <- Sample <- Count <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
