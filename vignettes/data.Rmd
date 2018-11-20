@@ -59,7 +59,7 @@ As demonstrated above, the `data` object must meet the following conditions:
     + Contain the names of the genes (or a unique set of names in general)
 * Each of the rest of its columns must
     + Contain the read counts for a given sample (or quantitative values in general)
-    + Be of type `int` or `num`
+    + Be of class `integer` or `numeric`
     + Be called in a three-part format (such as "A.3"), where
         - The first part indicates the treatment group name and must begin with an alphabet character. Examples include "A", "AR", and "A9"
         - The second part consists of a dot "." to serve as a delimeter

@@ -31,6 +31,7 @@ Imports:
     utils (>= 3.5.0)
 VignetteBuilder: knitr
 Suggests:
+    BiocGenerics (>= 0.29.1),
     data.table (>= 1.11.8),
     EDASeq (>= 2.14.0),
     edgeR (>= 3.22.2),
@@ -39,6 +40,7 @@ Suggests:
     matrixStats (>= 0.53.1),
     rmarkdown (>= 1.10),
     roxygen2 (>= 3.0.0),
+    RUnit (>= 0.4.32),
     tibble (>= 1.4.2),
 biocViews: Clustering, DataImport, DifferentialExpression, GeneExpression, MultipleComparison, Normalization, Preprocessing, QualityControl, RNASeq, Sequencing, Software, Transcription, Visualization
 RoxygenNote: 6.1.1
