@@ -80,11 +80,10 @@
 #' nID <- which(is.nan(soybean_cn_sub_st[,2]))
 #' soybean_cn_sub_st[nID,2:length(soybean_cn_sub_st)] <- 0
 #' 
-#' \dontrun{
-#' 
 #' # Example 1: Plot scatterplot matrix of points. Saves three plots to outDir 
 #' # because saveFile equals TRUE by default.
 #' 
+#' \dontrun{
 #' plotSM(soybean_cn_sub, soybean_cn_sub_metrics)
 #' }
 #' 

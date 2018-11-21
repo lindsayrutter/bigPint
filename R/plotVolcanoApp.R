@@ -59,8 +59,8 @@ plotVolcanoApp = function(data=data, dataMetrics=dataMetrics, option="hexagon",
 pointColor = "orange"){
   
 helperTestData(data)
-if (is.null(geneList) && !is.null(dataMetrics)){
-  helperTestDataMetricsVolcano(data, dataMetrics, threshVar, "PValue", "logFC")
+if (!is.null(dataMetrics)){
+  helperTestDataMetricsVolcanoApp(data, dataMetrics, "PValue", "logFC")
 }
   
 appDir <- system.file("shiny-examples", "plotVolcanoApp", package = "bigPint")
