@@ -4,12 +4,13 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics. This object
-#' must contain one column named "logFC" and one column named "PValue",
+#' must contain one column with magnitude changes (for the logFC parameter)
+#' and one column with statistical values (for the PValue parameter),
 #' unless geneList is not NULL
 #' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background
 #' of plot; default "hexagon"
 #' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
-#' that is used to threshold significance; default "FDR"
+#' that is used to determine genes to be overlaid; default "FDR"
 #' @param threshVal INTEGER | Maximum value to threshold significance from 
 #' threshVar object; default 0.05
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
