@@ -144,7 +144,12 @@ plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR",
     lineSize = 0.1, lineAlpha = 0.5, clusterAllData = TRUE, verbose=FALSE,
     saveFile = TRUE, vxAxis = FALSE, geneList = NULL){
 
+# Check that input parameters fit required formats
 helperTestData(data)
+if (is.null(geneList)){
+  helperTestDataMetrics(data, dataMetrics, threshVar)
+}
+
 key <- val <- ID <- rainbow <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]

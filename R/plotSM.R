@@ -137,7 +137,11 @@ saveFile = TRUE, outDir=getwd(), pointSize=0.5, pointColor = "orange",
 xbins=10, threshFC=3, threshOrth=3, threshVar="FDR", threshVal=0.05,
 geneList = NULL){
 
+# Check that input parameters fit required formats
 helperTestData(data)
+if (is.null(geneList) && !is.null(dataMetrics)){
+  helperTestDataMetrics(data, dataMetrics, threshVar)
+}
   
 if (option=="foldChange"){ 
 

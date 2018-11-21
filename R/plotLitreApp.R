@@ -65,7 +65,10 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 plotLitreApp = function(data=data, dataMetrics=dataMetrics, geneList = NULL,
 pointColor = "orange", option = "hexagon"){
 
-helperTestData(data)  
+helperTestData(data)
+if (is.null(geneList) && !is.null(dataMetrics)){
+  helperTestDataMetrics(data, dataMetrics, threshVar)
+}
 
 appDir <- system.file("shiny-examples", "plotLitreApp", package = "bigPint")
 if (appDir == "") {
