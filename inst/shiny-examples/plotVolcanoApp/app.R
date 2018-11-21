@@ -125,6 +125,11 @@ server <- function(input, output, session) {
   curPairDF <- eventReactive(input$selPair, {
     validate(need(length(input$selPair) == 2, "Select a pair of treatments."))
     curPairDF <- dataMetrics[[paste0(input$selPair[1], "_", input$selPair[2])]]
+    
+    if (is.null(curPairDF)){
+      curPairDF <- dataMetrics[[paste0(input$selPair[2], "_", input$selPair[1])]]      
+    }
+    
     cpd0 = which(curPairDF[["PValue"]]==0)
     curPairDF[["PValue"]][cpd0] = sort(unique(curPairDF[["PValue"]]))[2]
     curPairDF

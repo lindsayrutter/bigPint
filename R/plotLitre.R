@@ -85,9 +85,9 @@ plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){
-  helperTestDataMetrics(data, dataMetrics, threshVar)
+    helperTestDataMetrics(data, dataMetrics, threshVar)
 }
-  
+
 hexID <- counts <- countColor2 <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]

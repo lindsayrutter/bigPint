@@ -57,10 +57,10 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 
 plotVolcanoApp = function(data=data, dataMetrics=dataMetrics, option="hexagon",
 pointColor = "orange"){
-  
+
 helperTestData(data)
 if (!is.null(dataMetrics)){
-  helperTestDataMetricsVolcanoApp(data, dataMetrics, "PValue", "logFC")
+    helperTestDataMetricsVolcanoApp(data, dataMetrics, "PValue", "logFC")
 }
   
 appDir <- system.file("shiny-examples", "plotVolcanoApp", package = "bigPint")

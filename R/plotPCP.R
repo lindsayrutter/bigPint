@@ -91,9 +91,9 @@ plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR",
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){
-  helperTestDataMetrics(data, dataMetrics, threshVar)
+    helperTestDataMetrics(data, dataMetrics, threshVar)
 }
-  
+
 key <- val <- ID <- Sample <- Count <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]

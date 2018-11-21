@@ -67,7 +67,7 @@ pointColor = "orange", option = "hexagon"){
 
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){
-  helperTestDataMetricsLitreApp(data, dataMetrics)
+    helperTestDataMetricsLitreApp(data, dataMetrics)
 }
 
 appDir <- system.file("shiny-examples", "plotLitreApp", package = "bigPint")

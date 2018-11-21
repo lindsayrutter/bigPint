@@ -49,7 +49,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' }
 
 plotPCPApp = function(data = data, pointColor = "orange"){
-  
+
 helperTestData(data)
 appDir <- system.file("shiny-examples", "plotPCPApp", package = "bigPint")
 if (appDir == "") {

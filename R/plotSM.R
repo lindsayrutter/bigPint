@@ -139,10 +139,10 @@ geneList = NULL){
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){
-  helperTestDataMetrics(data, dataMetrics, threshVar)
+    helperTestDataMetrics(data, dataMetrics, threshVar)
 }
-  
-if (option=="foldChange"){ 
+
+if (option=="foldChange"){
 
 ret <- helperSMFC(data, dataMetrics, outDir, pointSize, threshFC, threshVar,
 threshVal)

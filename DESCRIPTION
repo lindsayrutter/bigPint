@@ -18,6 +18,7 @@ Imports:
     hexbin (>= 1.27.1),
     Hmisc (>= 4.0.3),
     htmlwidgets (>= 0.9),
+    methods (>= 3.6.0),
     plotly (>= 4.7.1),
     plyr (>= 1.8.4),
     RColorBrewer (>= 1.1.2),

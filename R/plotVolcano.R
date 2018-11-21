@@ -99,9 +99,10 @@ plotVolcano = function(data = data, dataMetrics = dataMetrics,
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){
-  helperTestDataMetricsVolcano(data, dataMetrics, threshVar, PValue, logFC)
+    helperTestDataMetricsVolcano(data, dataMetrics, threshVar, PValue,
+    logFC)
 }
-  
+
 countColor2 <- counts <- hexID <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
