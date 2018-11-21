@@ -50,7 +50,6 @@ body <- shinydashboard::dashboardBody(
          shiny::numericInput("binSize", "Hexagon size:", value = 10, min = 1),
          shiny::numericInput("pointSize", "Point size:", value = 2, min = 1),
          shiny::actionButton("goButton", "Plot gene!"))),
-         #shiny::actionButton("saveLitre", "Save litre plot"))),
         column(width = 8,
           shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("hexPlot")), collapsible = FALSE, background = "black", title = "Litre plot", status = "primary", solidHeader = TRUE))),
       
@@ -113,6 +112,9 @@ server <- function(input, output, session) {
   
   metricDF <- eventReactive(c(input$selPair, input$selMetric, input$selOrder), {
     metricDF <- dataMetrics[[paste0(input$selPair[1], "_", input$selPair[2])]]
+    if (nrow(metricDF = 0)){
+      metricDF <- dataMetrics[[paste0(input$selPair[2], "_", input$selPair[1])]]      
+    }
     
     if (!is.null(geneList)){
       metricDF <- metricDF[which(metricDF$ID %in% geneList),]

@@ -1,7 +1,9 @@
 helperTestData <- function(data){
   
-  generalMessage = "For more information about formatting the dataMetrics
-  objects, see https://lrutter.github.io/bigPint/articles/data.html"
+  print("here 1")
+  
+  generalMessage = "For more information about formatting the data
+  object, see https://lrutter.github.io/bigPint/articles/data.html"
   
   logicClass = vapply(data[,-1], function(x) class(x) %in% c("numeric",
   "integer"), logical(length=1))

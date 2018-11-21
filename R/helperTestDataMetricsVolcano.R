@@ -1,4 +1,4 @@
-helperTestData <- function(data, dataMetrics, threshVar, PValue, logFC){
+helperTestDataMetricsVolcano <- function(data, dataMetrics, threshVar, PValue, logFC){
   
   generalMessage = "For more information about formatting the dataMetrics
   objects, see https://lrutter.github.io/bigPint/articles/dataMetrics.html.
@@ -31,7 +31,7 @@ helperTestData <- function(data, dataMetrics, threshVar, PValue, logFC){
   logicDF <- lapply(dataMetrics, function(x) class(x) == "data.frame")
   logicID <- lapply(dataMetrics, function(x) colnames(x)[1] == "ID")
   logicIDChar <- lapply(dataMetrics, function(x) class(x[,1]) == "character")
-  logicIDUniq <- lapply(dataMetrics, function(x) anyDuplicated(x[,1])>0)
+  logicIDDup <- lapply(dataMetrics, function(x) anyDuplicated(x[,1])>0)
   logicListName = grep("^[a-zA-Z0-9]+_[a-zA-Z0-9]+", metricNames, perl=TRUE)
   logicThresh <- lapply(dataMetrics, function(x) threshVar %in% colnames(x))
   logicPValue <- lapply(dataMetrics, function(x) PValue %in% colnames(x))
@@ -68,7 +68,8 @@ helperTestData <- function(data, dataMetrics, threshVar, PValue, logFC){
   }
   metric12 = c(metric1, metric2)
   metrict = table(metric12)
-  numListName = sum(metrict==(combnMetrics-1))
+  ddMSame = sort(unique(metric12)) == sort(uGroups)
+  numListName = sum(metrict==(nGroups-1))
     
   if (!class(dataMetrics) == "list"){ 
     stop(paste0("Data metrics object must be of class 'list'. ", generalMessage))
@@ -90,7 +91,7 @@ helperTestData <- function(data, dataMetrics, threshVar, PValue, logFC){
     stop(paste0("The first column of each list element in the data metrics
     object must be of class 'character'. ", generalMessage))
   }  
-  else if (!all(logicIDUniq == TRUE)){
+  else if (all(logicIDDup == TRUE)){
     stop(paste0("The first column of each list element in the data metrics
     object must contain unique items. ", generalMessage))
   }   
@@ -98,7 +99,7 @@ helperTestData <- function(data, dataMetrics, threshVar, PValue, logFC){
     stop(paste0("The name of each list element in the data metrics object
     must match the Perl expression ^[a-zA-Z0-9]+_[a-zA-Z0-9]+. ", generalMessage))
   }   
-  else if (numListName != combnMetrics){
+  else if (numListName != nGroups){
     stop(paste0("The name of each list element in the data metrics object must
     match the Perl expression ^[a-zA-Z0-9]+_[a-zA-Z0-9]+. Each pattern [a-zA-Z0-9]
     should be the alphanumeric name of a treatment group in the data object. ",
@@ -110,6 +111,10 @@ helperTestData <- function(data, dataMetrics, threshVar, PValue, logFC){
     (for example: 'A_A'). The names of each list element in the data metrics
     object should have different treatment groups names on both sides of the
     underscore (for example: 'A_B'). ", generalMessage))
+  }
+  else if (!all(ddMSame == TRUE)){
+    stop(paste0("The names of the list elements in the data metrics object
+    must include the treatment groups from the data object. ", generalMessage))    
   }
   else if (!all(logicThresh == TRUE)){
     stop(paste0("At least one column in each list element in the data metrics object

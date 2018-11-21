@@ -13,10 +13,13 @@ plotVolcano(data = data, dataMetrics = dataMetrics,
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
-\item{dataMetrics}{LIST | Differential expression metrics}
+\item{dataMetrics}{LIST | Differential expression metrics. This object
+must contain one column with magnitude changes (for the logFC parameter)
+and one column with statistical values (for the PValue parameter),
+unless geneList is not NULL}
 
 \item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
-that is used to threshold significance; default "FDR"}
+that is used to determine genes to be overlaid; default "FDR"}
 
 \item{threshVal}{INTEGER | Maximum value to threshold significance from 
 threshVar object; default 0.05}

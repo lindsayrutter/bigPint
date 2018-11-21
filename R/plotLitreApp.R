@@ -48,7 +48,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' app <- plotLitreApp(data = soybean_ir_sub_log,
 #'     dataMetrics = soybean_ir_sub_metrics)
 #' if (interactive()) {
-#'     shiny::runApp(app, port = 1234, launch.browser=TRUE)
+#'     shiny::runApp(app, port = 1234, launch.browser = TRUE)
 #' }
 #' 
 #' # Example 2: Repeat the same process, only now plot background data as 
