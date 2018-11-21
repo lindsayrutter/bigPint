@@ -1,9 +1,7 @@
-helperTestDataMetricsVolcano <- function(data, dataMetrics, threshVar, PValue, logFC){
+helperTestDataMetricsLitreApp <- function(data, dataMetrics){
   
   generalMessage = "For more information about formatting the dataMetrics
-  objects, see https://lrutter.github.io/bigPint/articles/dataMetrics.html.
-  Note that volcano plots require that each element in the dataMetrics object
-  has additional two columns, a PValue column and a logFC column."
+  object, see https://lrutter.github.io/bigPint/articles/dataMetrics.html"
   
   colNames = colnames(data[,-1])
   
@@ -33,27 +31,6 @@ helperTestDataMetricsVolcano <- function(data, dataMetrics, threshVar, PValue, l
   logicIDChar <- lapply(dataMetrics, function(x) class(x[,1]) == "character")
   logicIDDup <- lapply(dataMetrics, function(x) anyDuplicated(x[,1])>0)
   logicListName = grep("^[a-zA-Z0-9]+_[a-zA-Z0-9]+", metricNames, perl=TRUE)
-  logicThresh <- lapply(dataMetrics, function(x) threshVar %in% colnames(x))
-  logicPValue <- lapply(dataMetrics, function(x) PValue %in% colnames(x))
-  logicFC <- lapply(dataMetrics, function(x) logFC %in% colnames(x))
-    
-  if (all(logicThresh == TRUE) && all(logicPValue == TRUE) && all(logicFC == TRUE)){
-    logicThreshQuant = c()
-    logicPValueQuant = c()
-    logicFCQuant = c()
-    seqVec <- seq(1,length(metricNames))
-    for (i in seq_along(seqVec)){
-      indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar)
-      logicThreshQuant[i] <- class(dataMetrics[[i]][[indexThresh]]) %in%
-      c("numeric", "integer")
-      indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue)
-      logicPValueQuant[i] <- class(dataMetrics[[i]][[indexPValue]]) %in%
-      c("numeric", "integer")
-      indexFC <- which(colnames(dataMetrics[[i]]) %in% logFC)
-      logicFCQuant[i] <- class(dataMetrics[[i]][[indexFC]]) %in%
-      c("numeric", "integer")
-    }
-  }
   
   if (all(logicListName == seq(1:length(metricNames)))){
     metric1 = c()
@@ -115,34 +92,5 @@ helperTestDataMetricsVolcano <- function(data, dataMetrics, threshVar, PValue, l
   else if (!all(ddMSame == TRUE)){
     stop(paste0("The names of the list elements in the data metrics object
     must include the treatment groups from the data object. ", generalMessage))    
-  }
-  else if (!all(logicThresh == TRUE)){
-    stop(paste0("At least one column in each list element in the data metrics object
-    should have the same name as the threshVar object. ", generalMessage))
-  }
-  else if (!all(logicFC == TRUE)){
-    stop(paste0("For volcano plots, at least one column in each list element in
-    the data metrics object should have the same name as the logFC object. ",
-    generalMessage))
-  }
-  else if (!all(logicPValue == TRUE)){
-    stop(paste0("For volcano plots, at least one column in each list element in
-    the data metrics object should have the same name as the PValue object. ",
-    generalMessage))
-  }
-  else if (!all(logicThreshQuant == TRUE)){
-    stop(paste0("The column in each list element in the data metrics object that has
-    the same name as the threshVar object should be of class 'numeric' or 
-    'integer'. ", generalMessage))    
-  }
-  else if (!all(logicFCQuant == TRUE)){
-    stop(paste0("For volcano plots, the column in each list element in the data
-    metrics object that has the same name as the logFC object should be of class
-    'numeric' or'integer'. ", generalMessage))    
-  }
-  else if (!all(logicPValueQuant == TRUE)){
-    stop(paste0("For volcano plots, the column in each list element in the data
-    metrics object that has the same name as the PValue object should be of class
-    'numeric' or 'integer'. ", generalMessage))    
   }
 }

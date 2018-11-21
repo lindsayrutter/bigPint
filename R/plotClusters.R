@@ -146,7 +146,7 @@ plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR",
 
 # Check that input parameters fit required formats
 helperTestData(data)
-if (is.null(geneList)){
+if (is.null(geneList) && !is.null(dataMetrics)){
   helperTestDataMetrics(data, dataMetrics, threshVar)
 }
 

@@ -112,7 +112,7 @@ server <- function(input, output, session) {
   
   metricDF <- eventReactive(c(input$selPair, input$selMetric, input$selOrder), {
     metricDF <- dataMetrics[[paste0(input$selPair[1], "_", input$selPair[2])]]
-    if (nrow(metricDF = 0)){
+    if (is.null(metricDF)){
       metricDF <- dataMetrics[[paste0(input$selPair[2], "_", input$selPair[1])]]      
     }
     

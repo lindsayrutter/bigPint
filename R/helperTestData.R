@@ -1,7 +1,5 @@
 helperTestData <- function(data){
   
-  print("here 1")
-  
   generalMessage = "For more information about formatting the data
   object, see https://lrutter.github.io/bigPint/articles/data.html"
   

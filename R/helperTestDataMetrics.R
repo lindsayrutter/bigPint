@@ -83,7 +83,7 @@ helperTestDataMetrics <- function(data, dataMetrics, threshVar){
     stop(paste0("The first column of each list element in the data metrics
     object must contain unique items. ", generalMessage))
   }   
-  else if (!all(logicListName == TRUE)){
+  else if (length(metricNames) != length(logicListName)){
     stop(paste0("The name of each list element in the data metrics object
     must match the Perl expression ^[a-zA-Z0-9]+_[a-zA-Z0-9]+. ", generalMessage))
   }   
@@ -93,7 +93,7 @@ helperTestDataMetrics <- function(data, dataMetrics, threshVar){
     should be the alphanumeric name of a treatment group in the data object. ",
     generalMessage))
   }
-  else if (!all(logicListName == TRUE)){
+  else if (!all(logicListName == seq(1:length(metricNames)))){
     stop(paste0("The name of at least one of the list elements in the data metrics
     object repeats the same treatment group name on both sides of the underscore
     (for example: 'A_A'). The names of each list element in the data metrics
