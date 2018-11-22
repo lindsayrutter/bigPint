@@ -12,7 +12,7 @@ Nu <- function(){
     rnorm(1:100)
 }
 Le <- function(){
-    sample(letters, 100, replace = T)
+    sample(letters, 100, replace = TRUE)
 }
 Ch <- function(d){
     d$ID = as.character(d$ID)
@@ -28,11 +28,8 @@ dME <- function(){
 # Test for case of dataMetrics with one list element
 d = data.frame(ID = ID(), A.1 = Nu(), A.2 = Nu(), B.1 = Nu(), B.2 = Nu())
 d = Ch(d)
-dME = data.frame(ID = ID(), FDR = Nu(), logFC = Nu(), PVal = Nu(),
-Qvar = Nu())
-dME = Ch(dME)
 dM = list()
-dM[["A_B"]] = dME
+dM[["A_B"]] = dME()
 
 dMFail1 = d
 dMFail2 = dM

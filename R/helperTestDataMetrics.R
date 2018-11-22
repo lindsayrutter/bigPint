@@ -5,8 +5,8 @@ generalMessage = "For more information about formatting the dataMetrics
 object, see https://lrutter.github.io/bigPint/articles/dataMetrics.html"
 
 if (!methods::is(dataMetrics, "list")){ 
-  stop(paste0("Data metrics object must be of class 'list'. ",
-  generalMessage))
+    stop(paste0("Data metrics object must be of class 'list'. ",
+    generalMessage))
 }
 
 colNames = colnames(data[,-1])

@@ -45,7 +45,7 @@ if (!all(logicDF == TRUE)){
 
 logicID <- lapply(dataMetrics, function(x) colnames(x)[1] == "ID")
 logicIDChar <- lapply(dataMetrics, function(x) methods::is(x[,1],
-             "character"))
+"character"))
 logicIDDup <- lapply(dataMetrics, function(x) anyDuplicated(x[,1])>0)
 logicListName = grep("^[a-zA-Z0-9]+_[a-zA-Z0-9]+", metricNames, perl=TRUE)
 logicPValue <- lapply(dataMetrics, function(x) PValue %in% colnames(x))

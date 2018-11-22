@@ -11,7 +11,7 @@ Nu <- function(){
     rnorm(1:100)
 }
 Le <- function(){
-    sample(letters, 100, replace = T)
+    sample(letters, 100, replace = TRUE)
 }
 Ch <- function(d){
     d$ID = as.character(d$ID)
