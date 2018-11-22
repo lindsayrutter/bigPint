@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot interactive litre plots</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lrutter/bigPint/blob/master/R/plotLitreApp.R'><code>R/plotLitreApp.R</code></a></small>
     <div class="hidden name"><code>plotLitreApp.Rd</code></div>
     </div>
 
@@ -176,7 +176,7 @@
     </div>
 
     <pre class="usage"><span class='fu'>plotLitreApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>dataMetrics</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>)</pre>
+  <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -203,8 +203,8 @@ matrix; default "orange"</p></td>
     </tr>
     <tr>
       <th>option</th>
-      <td><p>CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
-plot; default "hexagon"; "allPoints" may be too slow depending on data</p></td>
+      <td><p>CHARACTER STRING ["hexagon" | "allPoints"] | The background
+of plot; default "hexagon"; "allPoints" may be too slow depending on data</p></td>
     </tr>
     </table>
     
@@ -228,7 +228,7 @@ dataMetrics parameter.</p>
 <span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitreApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_log</span>,
     <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>)
 <span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
-    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/runApp'>runApp</a></span>(<span class='no'>app</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>1234</span>, <span class='kw'>launch.browser</span><span class='kw'>=</span><span class='fl'>TRUE</span>)
+    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/runApp'>runApp</a></span>(<span class='no'>app</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>1234</span>, <span class='kw'>launch.browser</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
 }
 
 <span class='co'># Example 2: Repeat the same process, only now plot background data as </span>

@@ -7,29 +7,29 @@
 #' must contain one column with magnitude changes (for the logFC parameter)
 #' and one column with statistical values (for the PValue parameter),
 #' unless geneList is not NULL
-#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background
-#' of plot; default "hexagon"
-#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
-#' that is used to determine genes to be overlaid; default "FDR"
-#' @param threshVal INTEGER | Maximum value to threshold significance from 
-#' threshVar object; default 0.05
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 #' scatterplot matrix of all data. Use this parameter if you have
 #' predetermined subset of genes to be superimposed. Otherwise, dataMetrics,
 #' threshVar, and threshVal will be used to create genes to be superimposed
 #' onto the volcano plot; default NULL
-#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
-#' @param outDir CHARACTER STRING | Output directory to save all plots;
-#' default current directory
-#' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
-#' default 10
-#' @param pointColor CHARACTER STRING | Color of overlaid points on
-#' scatterplot matrix; default "orange"
-#' @param pointSize INTEGER | Size of plotted points; default 0.5
+#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
+#' that is used to determine genes to be overlaid; default "FDR"
+#' @param threshVal INTEGER | Maximum value to threshold significance from 
+#' threshVar object; default 0.05
+#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background
+#' of plot; default "hexagon"
 #' @param logFC CHARACTER STRING | Name of column in dataMetrics object that 
 #' contains log fold change values; default "logFC"
 #' @param PValue CHARACTER STRING | Name of column in dataMetrics object that 
 #' contains p-values; default "PValue"
+#' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
+#' default 10
+#' @param pointSize INTEGER | Size of plotted points; default 0.5
+#' @param pointColor CHARACTER STRING | Color of overlaid points on
+#' scatterplot matrix; default "orange"
+#' @param outDir CHARACTER STRING | Output directory to save all plots;
+#' default current directory
+#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @param hover BOOLEAN [TRUE | FALSE] | Allow to hover over points to
 #' identify IDs; default FALSE
 #' @importFrom dplyr filter select %>%
@@ -92,9 +92,9 @@
 #' 
 
 plotVolcano = function(data = data, dataMetrics = dataMetrics,
-    threshVar = "FDR", threshVal = 0.05, geneList = NULL, saveFile=TRUE,
-    outDir = getwd(), pointColor = "orange", pointSize = 0.5, xbins = 10,
-    logFC = "logFC", PValue = "PValue", option = "hexagon", hover = FALSE){
+    geneList = NULL, threshVar = "FDR", threshVal = 0.05, option = "hexagon",
+    logFC = "logFC", PValue = "PValue", xbins = 10, pointSize = 0.5,
+    pointColor = "orange", outDir = getwd(), saveFile=TRUE, hover = FALSE){
 
 # Check that input parameters fit required formats
 helperTestData(data)

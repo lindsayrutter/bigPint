@@ -167,7 +167,7 @@ each cluster to .rds files for later use." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot static parallel coordinate clusters</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lrutter/bigPint/blob/master/R/plotClusters.R'><code>R/plotClusters.R</code></a></small>
     <div class="hidden name"><code>plotClusters.Rd</code></div>
     </div>
 
@@ -179,12 +179,12 @@ each cluster to .rds files for later use.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plotClusters</span>(<span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>nC</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>,
-    <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>colList</span> <span class='kw'>=</span> <span class='fu'>rainbow</span>(<span class='no'>nC</span>),
-    <span class='kw'>aggMethod</span> <span class='kw'>=</span> <span class='st'>"ward.D"</span>, <span class='kw'>yAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Count"</span>, <span class='kw'>xAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Sample"</span>,
-    <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>lineAlpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-    <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>plotClusters</span>(<span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>nC</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>colList</span> <span class='kw'>=</span> <span class='fu'>rainbow</span>(<span class='no'>nC</span>), <span class='kw'>aggMethod</span> <span class='kw'>=</span> <span class='st'>"ward.D"</span>,
+  <span class='kw'>yAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Count"</span>, <span class='kw'>xAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Sample"</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
+  <span class='kw'>lineAlpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(),
+  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -198,8 +198,12 @@ each cluster to .rds files for later use.</p>
       <td><p>LIST | Differential expression metrics; default NULL</p></td>
     </tr>
     <tr>
-      <th>nC</th>
-      <td><p>INTEGER | Number of clusters; default 4</p></td>
+      <th>geneList</th>
+      <td><p>CHARACTER ARRAY | List of ID values of genes to be drawn 
+from data as parallel coordinate lines. Use this parameter if you have 
+predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
+and threshVal to create genes to be overlaid as parallel coordinate lines; 
+default NULL</p></td>
     </tr>
     <tr>
       <th>threshVar</th>
@@ -212,9 +216,18 @@ that is used to threshold significance; default "FDR"</p></td>
 threshVar object; default 0.05</p></td>
     </tr>
     <tr>
-      <th>outDir</th>
-      <td><p>CHARACTER STRING | Output directory to save all images; 
-default current directory</p></td>
+      <th>clusterAllData</th>
+      <td><p>BOOLEAN [TRUE | FALSE] | Create clusters based on 
+the whole dataset and then assign significant genes to those clusters; 
+default is TRUE. If FALSE, create clusters based on just the significant 
+genes. With either option, the side-by-side boxplot will represent the 
+whole dataset (from data input) and the parallel coordinate lines will 
+represent only the significant genes (those that pass threshVal for 
+threshVar)</p></td>
+    </tr>
+    <tr>
+      <th>nC</th>
+      <td><p>INTEGER | Number of clusters; default 4</p></td>
     </tr>
     <tr>
       <th>colList</th>
@@ -248,37 +261,24 @@ default 0.1</p></td>
 lines, default 0.5</p></td>
     </tr>
     <tr>
-      <th>clusterAllData</th>
-      <td><p>BOOLEAN [TRUE | FALSE] | Create clusters based on 
-the whole dataset and then assign significant genes to those clusters; 
-default is TRUE. If FALSE, create clusters based on just the significant 
-genes. With either option, the side-by-side boxplot will represent the 
-whole dataset (from data input) and the parallel coordinate lines will 
-represent only the significant genes (those that pass threshVal for 
-threshVar)</p></td>
+      <th>vxAxis</th>
+      <td><p>BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical
+orientation; default FALSE</p></td>
     </tr>
     <tr>
-      <th>verbose</th>
-      <td><p>BOOLEAN [TRUE | FALSE] | Print each cluster from each 
-cluster size into separate files and print the associated IDs of each 
-cluster from each cluster size into separate .rds files; default is FALSE</p></td>
+      <th>outDir</th>
+      <td><p>CHARACTER STRING | Output directory to save all images; 
+default current directory</p></td>
     </tr>
     <tr>
       <th>saveFile</th>
       <td><p>BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE</p></td>
     </tr>
     <tr>
-      <th>vxAxis</th>
-      <td><p>BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical
-orientation; default FALSE</p></td>
-    </tr>
-    <tr>
-      <th>geneList</th>
-      <td><p>CHARACTER ARRAY | List of ID values of genes to be drawn 
-from data as parallel coordinate lines. Use this parameter if you have 
-predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
-and threshVal to create genes to be overlaid as parallel coordinate lines; 
-default NULL</p></td>
+      <th>verbose</th>
+      <td><p>BOOLEAN [TRUE | FALSE] | Print each cluster from each 
+cluster size into separate files and print the associated IDs of each 
+cluster from each cluster size into separate .rds files; default is FALSE</p></td>
     </tr>
     </table>
     
@@ -358,6 +358,13 @@ to the location specified in the outDir parameter.</p>
 # that contain the IDs within each cluster, and images of the conglomerate 
 # clusters to outDir (default current working directory).
 
+</div><span class='co'># NOT RUN {</span>
+<span class='fu'>plotClusters</span>(<span class='kw'>data</span><span class='kw'>=</span><span class='no'>soybean_cn_sub_st</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_cn_sub_metrics</span>,
+  <span class='kw'>nC</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>colList</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"#00A600FF"</span>, <span class='st'>"#CC00FFFF"</span>, <span class='st'>"red"</span>, <span class='st'>"darkorange"</span>),
+  <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>lineAlpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>aggMethod</span> <span class='kw'>=</span> <span class='st'>"average"</span>, <span class='kw'>yAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Standardized read count"</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='co'># }</span><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

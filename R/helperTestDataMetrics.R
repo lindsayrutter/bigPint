@@ -125,10 +125,10 @@ else if (!all(refIDs == TRUE)){
     in the data object. ", generalMessage))
 }
 else if (!all(metricNotSame)){
-  stop(paste0("The name of at least one of the list elements in the data
-  metrics object repeats the same treatment group name on both sides of
-  the underscore (for example: 'A_A'). The names of each list element in
-  the data metrics object should have different treatment groups names on
-  both sides of the underscore (for example: 'A_B'). ", generalMessage))
+    stop(paste0("The name of at least one of the list elements in the data
+    metrics object repeats the same treatment group name on both sides of
+    the underscore (for example: 'A_A'). The names of each list element in
+    the data metrics object should have different treatment groups names on
+    both sides of the underscore (for example: 'A_B'). ", generalMessage))
 }
 }

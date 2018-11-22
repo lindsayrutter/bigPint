@@ -20,8 +20,8 @@ litre plot; default NULL}
 \item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
 matrix; default "orange"}
 
-\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
-plot; default "hexagon"; "allPoints" may be too slow depending on data}
+\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background
+of plot; default "hexagon"; "allPoints" may be too slow depending on data}
 }
 \value{
 A Shiny application that shows a litre plot background and allows

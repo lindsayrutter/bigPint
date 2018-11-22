@@ -55,16 +55,16 @@ dMFail10 = dM
 dMFail10[["A_B"]][["ID"]][[100]] = "ID101"
 
 test_data <- function() {
-  checkException(helperTestDataMetricsLitreApp(d, dMFail1))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail2))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail3))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail4))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail5))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail6))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail7))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail8))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail9))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail10))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail1))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail2))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail3))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail4))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail5))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail6))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail7))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail8))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail9))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail10))
 }
 
 # Test for case of dataMetrics with three list elements
@@ -96,13 +96,13 @@ dMFail10 = dM
 names(dMFail10) = c("A_A", "B_B", "C_C")
 
 test_data <- function() {
-  checkException(helperTestDataMetricsLitreApp(d, dMFail2))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail3))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail4))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail5))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail6))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail7))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail8))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail9))
-  checkException(helperTestDataMetricsLitreApp(d, dMFail10))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail2))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail3))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail4))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail5))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail6))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail7))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail8))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail9))
+    checkException(helperTestDataMetricsLitreApp(d, dMFail10))
 }

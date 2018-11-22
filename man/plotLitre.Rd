@@ -4,18 +4,29 @@
 \alias{plotLitre}
 \title{Plot static litre plots}
 \usage{
-plotLitre(data = data, dataMetrics = NULL, outDir = getwd(),
+plotLitre(data = data, dataMetrics = NULL, geneList = NULL,
+  threshVar = "FDR", threshVal = 0.05, option = "hexagon",
   pointSize = 2, pointColor = "orange", xbins = 10,
-  threshVar = "FDR", threshVal = 0.05, geneList = NULL,
-  saveFile = TRUE, option = "hexagon")
+  outDir = getwd(), saveFile = TRUE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
-\item{dataMetrics}{LIST | Differential expression metrics}
+\item{dataMetrics}{LIST | Differential expression metrics; default NULL}
 
-\item{outDir}{CHARACTER STRING | Output directory to save all plots; 
-default current directory}
+\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn 
+from data as litre plots. Use this parameter if you have predetermined 
+genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
+create genes to be drawn; default NULL}
+
+\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object 
+that is used to threshold significance; default "FDR"}
+
+\item{threshVal}{INTEGER | Maximum value to threshold significance from 
+threshVar object; default 0.05}
+
+\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background 
+of plot; default "hexagon"}
 
 \item{pointSize}{INTEGER | Size of plotted points; default 2}
 
@@ -25,21 +36,10 @@ plot; default "orange"}
 \item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
 default 10}
 
-\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object 
-that is used to threshold significance; default "FDR"}
-
-\item{threshVal}{INTEGER | Maximum value to threshold significance from 
-threshVar object; default 0.05}
-
-\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn 
-from data as litre plots. Use this parameter if you have predetermined 
-genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
-create genes to be drawn; default NULL}
+\item{outDir}{CHARACTER STRING | Output directory to save all plots; 
+default current directory}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
-
-\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background 
-of plot; default "hexagon"}
 }
 \value{
 List of n elements of litre plots, where n is the number of genes 

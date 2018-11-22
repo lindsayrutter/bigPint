@@ -165,7 +165,7 @@
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot static litre plots</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lrutter/bigPint/blob/master/R/plotLitre.R'><code>R/plotLitre.R</code></a></small>
     <div class="hidden name"><code>plotLitre.Rd</code></div>
     </div>
 
@@ -175,10 +175,10 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>plotLitre</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(),
-    <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-    <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>)</pre>
+    <pre class="usage"><span class='fu'>plotLitre</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>,
+  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -189,12 +189,29 @@
     </tr>
     <tr>
       <th>dataMetrics</th>
-      <td><p>LIST | Differential expression metrics</p></td>
+      <td><p>LIST | Differential expression metrics; default NULL</p></td>
     </tr>
     <tr>
-      <th>outDir</th>
-      <td><p>CHARACTER STRING | Output directory to save all plots; 
-default current directory</p></td>
+      <th>geneList</th>
+      <td><p>CHARACTER ARRAY | List of ID values of genes to be drawn 
+from data as litre plots. Use this parameter if you have predetermined 
+genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
+create genes to be drawn; default NULL</p></td>
+    </tr>
+    <tr>
+      <th>threshVar</th>
+      <td><p>CHARACTER STRING | Name of column in dataMetrics object 
+that is used to threshold significance; default "FDR"</p></td>
+    </tr>
+    <tr>
+      <th>threshVal</th>
+      <td><p>INTEGER | Maximum value to threshold significance from 
+threshVar object; default 0.05</p></td>
+    </tr>
+    <tr>
+      <th>option</th>
+      <td><p>CHARACTER STRING ["hexagon" | "allPoints"] | The background 
+of plot; default "hexagon"</p></td>
     </tr>
     <tr>
       <th>pointSize</th>
@@ -211,30 +228,13 @@ plot; default "orange"</p></td>
 default 10</p></td>
     </tr>
     <tr>
-      <th>threshVar</th>
-      <td><p>CHARACTER STRING | Name of column in dataMetrics object 
-that is used to threshold significance; default "FDR"</p></td>
-    </tr>
-    <tr>
-      <th>threshVal</th>
-      <td><p>INTEGER | Maximum value to threshold significance from 
-threshVar object; default 0.05</p></td>
-    </tr>
-    <tr>
-      <th>geneList</th>
-      <td><p>CHARACTER ARRAY | List of ID values of genes to be drawn 
-from data as litre plots. Use this parameter if you have predetermined 
-genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
-create genes to be drawn; default NULL</p></td>
+      <th>outDir</th>
+      <td><p>CHARACTER STRING | Output directory to save all plots; 
+default current directory</p></td>
     </tr>
     <tr>
       <th>saveFile</th>
       <td><p>BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE</p></td>
-    </tr>
-    <tr>
-      <th>option</th>
-      <td><p>CHARACTER STRING ["hexagon" | "allPoints"] | The background 
-of plot; default "hexagon"</p></td>
     </tr>
     </table>
     

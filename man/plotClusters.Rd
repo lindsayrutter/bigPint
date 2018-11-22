@@ -4,19 +4,23 @@
 \alias{plotClusters}
 \title{Plot static parallel coordinate clusters}
 \usage{
-plotClusters(data, dataMetrics = NULL, nC = 4, threshVar = "FDR",
-  threshVal = 0.05, outDir = getwd(), colList = rainbow(nC),
-  aggMethod = "ward.D", yAxisLabel = "Count", xAxisLabel = "Sample",
-  lineSize = 0.1, lineAlpha = 0.5, clusterAllData = TRUE,
-  verbose = FALSE, saveFile = TRUE, vxAxis = FALSE,
-  geneList = NULL)
+plotClusters(data, dataMetrics = NULL, geneList = NULL,
+  threshVar = "FDR", threshVal = 0.05, clusterAllData = TRUE,
+  nC = 4, colList = rainbow(nC), aggMethod = "ward.D",
+  yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
+  lineAlpha = 0.5, vxAxis = FALSE, outDir = getwd(),
+  saveFile = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
 \item{dataMetrics}{LIST | Differential expression metrics; default NULL}
 
-\item{nC}{INTEGER | Number of clusters; default 4}
+\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn 
+from data as parallel coordinate lines. Use this parameter if you have 
+predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
+and threshVal to create genes to be overlaid as parallel coordinate lines; 
+default NULL}
 
 \item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object 
 that is used to threshold significance; default "FDR"}
@@ -24,8 +28,15 @@ that is used to threshold significance; default "FDR"}
 \item{threshVal}{INTEGER | Maximum value to threshold significance from 
 threshVar object; default 0.05}
 
-\item{outDir}{CHARACTER STRING | Output directory to save all images; 
-default current directory}
+\item{clusterAllData}{BOOLEAN [TRUE | FALSE] | Create clusters based on 
+the whole dataset and then assign significant genes to those clusters; 
+default is TRUE. If FALSE, create clusters based on just the significant 
+genes. With either option, the side-by-side boxplot will represent the 
+whole dataset (from data input) and the parallel coordinate lines will 
+represent only the significant genes (those that pass threshVal for 
+threshVar)}
+
+\item{nC}{INTEGER | Number of clusters; default 4}
 
 \item{colList}{CHARACTER ARRAY | List of colors for each cluster; default 
 is rainbow(nC)}
@@ -46,28 +57,17 @@ default 0.1}
 \item{lineAlpha}{INTEGER | Alpha value of plotted parallel coordinate 
 lines, default 0.5}
 
-\item{clusterAllData}{BOOLEAN [TRUE | FALSE] | Create clusters based on 
-the whole dataset and then assign significant genes to those clusters; 
-default is TRUE. If FALSE, create clusters based on just the significant 
-genes. With either option, the side-by-side boxplot will represent the 
-whole dataset (from data input) and the parallel coordinate lines will 
-represent only the significant genes (those that pass threshVal for 
-threshVar)}
+\item{vxAxis}{BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical
+orientation; default FALSE}
+
+\item{outDir}{CHARACTER STRING | Output directory to save all images; 
+default current directory}
+
+\item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
 \item{verbose}{BOOLEAN [TRUE | FALSE] | Print each cluster from each 
 cluster size into separate files and print the associated IDs of each 
 cluster from each cluster size into separate .rds files; default is FALSE}
-
-\item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
-
-\item{vxAxis}{BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical
-orientation; default FALSE}
-
-\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn 
-from data as parallel coordinate lines. Use this parameter if you have 
-predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
-and threshVal to create genes to be overlaid as parallel coordinate lines; 
-default NULL}
 }
 \value{
 List of n elements each containing a grid of parallel coordinate 

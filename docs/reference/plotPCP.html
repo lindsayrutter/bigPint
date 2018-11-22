@@ -166,7 +166,7 @@ of whole dataset." />
   <div class="col-md-9 contents">
     <div class="page-header">
     <h1>Plot static parallel coordinate plots</h1>
-    
+    <small class="dont-index">Source: <a href='https://github.com/lrutter/bigPint/blob/master/R/plotPCP.R'><code>R/plotPCP.R</code></a></small>
     <div class="hidden name"><code>plotPCP.Rd</code></div>
     </div>
 
@@ -177,10 +177,9 @@ of whole dataset.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>plotPCP</span>(<span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>,
-    <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-    <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-    <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+    <pre class="usage"><span class='fu'>plotPCP</span>(<span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>,
+  <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>,
+  <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -196,6 +195,15 @@ and dataMetrics are NULL, then no genes will be overlaid onto the
 side-by-side boxplot; default NULL</p></td>
     </tr>
     <tr>
+      <th>geneList</th>
+      <td><p>CHARACTER ARRAY | List of gene IDs to be drawn onto the 
+scatterplot matrix of all data. If this parameter is defined, these will be 
+the overlaid genes to be drawn. After that, dataMetrics, threshVar, and 
+threshVal will be considered for overlaid genes. If both geneList and 
+dataMetrics are NULL, then no genes will be overlaid onto the side-by-side 
+boxplot; default NULL</p></td>
+    </tr>
+    <tr>
       <th>threshVar</th>
       <td><p>CHARACTER STRING | Name of column in dataMetrics object
 that is used to threshold significance; default "FDR"</p></td>
@@ -206,15 +214,6 @@ that is used to threshold significance; default "FDR"</p></td>
 threshVar object; default 0.05</p></td>
     </tr>
     <tr>
-      <th>geneList</th>
-      <td><p>CHARACTER ARRAY | List of gene IDs to be drawn onto the 
-scatterplot matrix of all data. If this parameter is defined, these will be 
-the overlaid genes to be drawn. After that, dataMetrics, threshVar, and 
-threshVal will be considered for overlaid genes. If both geneList and 
-dataMetrics are NULL, then no genes will be overlaid onto the side-by-side 
-boxplot; default NULL</p></td>
-    </tr>
-    <tr>
       <th>lineSize</th>
       <td><p>INTEGER | Line width of parallel coordinate lines;
 default 0.1</p></td>
@@ -223,6 +222,11 @@ default 0.1</p></td>
       <th>lineColor</th>
       <td><p>CHARACTER STRING | Color of parallel coordinate lines; 
 default "orange"</p></td>
+    </tr>
+    <tr>
+      <th>vxAxis</th>
+      <td><p>BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical 
+orientation; default FALSE</p></td>
     </tr>
     <tr>
       <th>outDir</th>
@@ -237,11 +241,6 @@ current directory</p></td>
       <th>hover</th>
       <td><p>BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify 
 IDs; default FALSE</p></td>
-    </tr>
-    <tr>
-      <th>vxAxis</th>
-      <td><p>BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical 
-orientation; default FALSE</p></td>
     </tr>
     </table>
     

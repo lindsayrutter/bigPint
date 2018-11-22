@@ -8,8 +8,8 @@ Note that volcano plots require that each element in the dataMetrics object
 has additional two columns, a PValue column and a logFC column."
 
 if (!methods::is(dataMetrics, "list")){ 
-  stop(paste0("Data metrics object must be of class 'list'. ",
-  generalMessage))
+    stop(paste0("Data metrics object must be of class 'list'. ",
+    generalMessage))
 }
 
 colNames = colnames(data[,-1])
@@ -21,15 +21,15 @@ methods::is(x, "integer"), logical(length=1))
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
 
 if (all(logicPerl == seq(1,length(colNames)))){
-  colGroups = c()
-  colReps = c()
-  for (i in seq_along(seqVec)){
-    colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
-    colReps[i] <- strsplit(colNames[i],"[.]")[[1]][2]
-  }
-  uGroups = unique(colGroups)
-  nGroups = length(unique(colGroups))
-  logicReps = vapply(uGroups, function(x)
+    colGroups = c()
+    colReps = c()
+    for (i in seq_along(seqVec)){
+        colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
+        colReps[i] <- strsplit(colNames[i],"[.]")[[1]][2]
+    }
+    uGroups = unique(colGroups)
+    nGroups = length(unique(colGroups))
+    logicReps = vapply(uGroups, function(x)
     length(which(colGroups %in% x))>1,
     logical(length=1))
 }
@@ -39,8 +39,8 @@ combnMetrics = (nGroups * (nGroups-1))/2
 logicDF <- lapply(dataMetrics, function(x) methods::is(x, "data.frame"))
 
 if (!all(logicDF == TRUE)){
-  stop(paste0("Each list element in data metrics object must be of class
-  'data.frame'. ", generalMessage))
+    stop(paste0("Each list element in data metrics object must be of class
+    'data.frame'. ", generalMessage))
 }
 
 logicID <- lapply(dataMetrics, function(x) colnames(x)[1] == "ID")
@@ -62,15 +62,15 @@ all(logicFC == TRUE)){
     logicFCQuant = c()
     seqVec <- seq(1,length(metricNames))
     for (i in seq_along(seqVec)){
-    indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar)
-    logicThreshQuant[i] <- methods::is(dataMetrics[[i]][[indexThresh]],
-    "numeric") || methods::is(dataMetrics[[i]][[indexThresh]], "integer")
-    indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue)
-    logicPValueQuant[i] <- methods::is(dataMetrics[[i]][[indexPValue]],
-    "numeric") || methods::is(dataMetrics[[i]][[indexPValue]], "integer")
-    indexFC <- which(colnames(dataMetrics[[i]]) %in% logFC)
-    logicFCQuant[i] <- methods::is(dataMetrics[[i]][[indexFC]],
-    "numeric") || methods::is(dataMetrics[[i]][[indexFC]], "integer")
+        indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar)
+        logicThreshQuant[i] <- methods::is(dataMetrics[[i]][[indexThresh]],
+        "numeric") || methods::is(dataMetrics[[i]][[indexThresh]], "integer")
+        indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue)
+        logicPValueQuant[i] <- methods::is(dataMetrics[[i]][[indexPValue]],
+        "numeric") || methods::is(dataMetrics[[i]][[indexPValue]], "integer")
+        indexFC <- which(colnames(dataMetrics[[i]]) %in% logFC)
+        logicFCQuant[i] <- methods::is(dataMetrics[[i]][[indexFC]],
+        "numeric") || methods::is(dataMetrics[[i]][[indexFC]], "integer")
     }
 }
 
@@ -159,10 +159,10 @@ else if (!all(refIDs == TRUE)){
     in the data object. ", generalMessage))
 }
 else if (!all(metricNotSame)){
-  stop(paste0("The name of at least one of the list elements in the data
-  metrics object repeats the same treatment group name on both sides of
-  the underscore (for example: 'A_A'). The names of each list element in
-  the data metrics object should have different treatment groups names on
-  both sides of the underscore (for example: 'A_B'). ", generalMessage))
+    stop(paste0("The name of at least one of the list elements in the data
+    metrics object repeats the same treatment group name on both sides of
+    the underscore (for example: 'A_A'). The names of each list element in
+    the data metrics object should have different treatment groups names on
+    both sides of the underscore (for example: 'A_B'). ", generalMessage))
 }
 }

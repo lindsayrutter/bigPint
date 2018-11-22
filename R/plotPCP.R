@@ -7,25 +7,25 @@
 #' @param dataMetrics LIST | Differential expression metrics; If both geneList 
 #' and dataMetrics are NULL, then no genes will be overlaid onto the
 #' side-by-side boxplot; default NULL
-#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
-#' that is used to threshold significance; default "FDR"
-#' @param threshVal INTEGER | Maximum value to threshold significance from 
-#' threshVar object; default 0.05
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 #' scatterplot matrix of all data. If this parameter is defined, these will be 
 #' the overlaid genes to be drawn. After that, dataMetrics, threshVar, and 
 #' threshVal will be considered for overlaid genes. If both geneList and 
 #' dataMetrics are NULL, then no genes will be overlaid onto the side-by-side 
 #' boxplot; default NULL
-#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
-#' @param outDir CHARACTER STRING | Output directory to save all plots; default 
-#' current directory
+#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
+#' that is used to threshold significance; default "FDR"
+#' @param threshVal INTEGER | Maximum value to threshold significance from 
+#' threshVar object; default 0.05
 #' @param lineSize INTEGER | Line width of parallel coordinate lines;
 #' default 0.1
 #' @param lineColor CHARACTER STRING | Color of parallel coordinate lines; 
 #' default "orange"
 #' @param vxAxis BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical 
 #' orientation; default FALSE
+#' @param outDir CHARACTER STRING | Output directory to save all plots; default 
+#' current directory
+#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @param hover BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify 
 #' IDs; default FALSE
 #' @importFrom dplyr filter select %>%
@@ -84,9 +84,10 @@
 #' ret[[1]]
 #' 
 
-plotPCP = function(data, dataMetrics = NULL, threshVar = "FDR",
-    threshVal = 0.05, geneList = NULL, lineSize = 0.1, lineColor = "orange",
-    outDir=getwd(), saveFile=TRUE, hover=FALSE, vxAxis=FALSE){
+plotPCP = function(data, dataMetrics = NULL, geneList = NULL,
+    threshVar = "FDR", threshVal = 0.05, lineSize = 0.1,
+    lineColor = "orange", vxAxis=FALSE, outDir=getwd(), saveFile=TRUE,
+    hover=FALSE){
 
 # Check that input parameters fit required formats
 helperTestData(data)

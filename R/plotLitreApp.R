@@ -6,14 +6,14 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics (required)
-#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
-#' plot; default "hexagon"; "allPoints" may be too slow depending on data
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the
 #' litre. Use this parameter if you have predetermined subset of genes to be
 #' drawn. Otherwise, all genes in the data object can be superimposed on the
 #' litre plot; default NULL
 #' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
 #' matrix; default "orange"
+#' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background
+#' of plot; default "hexagon"; "allPoints" may be too slow depending on data
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly config
 #' @importFrom ggplot2 ggplot aes_string aes xlim ylim geom_boxplot theme
 #' @importFrom shiny verbatimTextOutput fluidPage reactive renderPrint shinyUI 

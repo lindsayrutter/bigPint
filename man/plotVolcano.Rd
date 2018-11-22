@@ -4,11 +4,11 @@
 \alias{plotVolcano}
 \title{Plot static volcano plot}
 \usage{
-plotVolcano(data = data, dataMetrics = dataMetrics,
-  threshVar = "FDR", threshVal = 0.05, geneList = NULL,
-  saveFile = TRUE, outDir = getwd(), pointColor = "orange",
-  pointSize = 0.5, xbins = 10, logFC = "logFC", PValue = "PValue",
-  option = "hexagon", hover = FALSE)
+plotVolcano(data = data, dataMetrics = dataMetrics, geneList = NULL,
+  threshVar = "FDR", threshVal = 0.05, option = "hexagon",
+  logFC = "logFC", PValue = "PValue", xbins = 10, pointSize = 0.5,
+  pointColor = "orange", outDir = getwd(), saveFile = TRUE,
+  hover = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
@@ -18,30 +18,20 @@ must contain one column with magnitude changes (for the logFC parameter)
 and one column with statistical values (for the PValue parameter),
 unless geneList is not NULL}
 
-\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
-that is used to determine genes to be overlaid; default "FDR"}
-
-\item{threshVal}{INTEGER | Maximum value to threshold significance from 
-threshVar object; default 0.05}
-
 \item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 scatterplot matrix of all data. Use this parameter if you have
 predetermined subset of genes to be superimposed. Otherwise, dataMetrics,
 threshVar, and threshVal will be used to create genes to be superimposed
 onto the volcano plot; default NULL}
 
-\item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
+\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
+that is used to determine genes to be overlaid; default "FDR"}
 
-\item{outDir}{CHARACTER STRING | Output directory to save all plots;
-default current directory}
+\item{threshVal}{INTEGER | Maximum value to threshold significance from 
+threshVar object; default 0.05}
 
-\item{pointColor}{CHARACTER STRING | Color of overlaid points on
-scatterplot matrix; default "orange"}
-
-\item{pointSize}{INTEGER | Size of plotted points; default 0.5}
-
-\item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
-default 10}
+\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background
+of plot; default "hexagon"}
 
 \item{logFC}{CHARACTER STRING | Name of column in dataMetrics object that 
 contains log fold change values; default "logFC"}
@@ -49,8 +39,18 @@ contains log fold change values; default "logFC"}
 \item{PValue}{CHARACTER STRING | Name of column in dataMetrics object that 
 contains p-values; default "PValue"}
 
-\item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background
-of plot; default "hexagon"}
+\item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
+default 10}
+
+\item{pointSize}{INTEGER | Size of plotted points; default 0.5}
+
+\item{pointColor}{CHARACTER STRING | Color of overlaid points on
+scatterplot matrix; default "orange"}
+
+\item{outDir}{CHARACTER STRING | Output directory to save all plots;
+default current directory}
+
+\item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
 \item{hover}{BOOLEAN [TRUE | FALSE] | Allow to hover over points to
 identify IDs; default FALSE}

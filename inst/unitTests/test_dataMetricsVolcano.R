@@ -1,4 +1,4 @@
-# This tests the twelve main types of error thrown in
+# This tests sixteen main types of error thrown in
 # helperTestDataMetricsVolcano.R when a user inputs a dataMetrics object
 # that does not fit the expected form
 

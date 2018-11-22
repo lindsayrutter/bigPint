@@ -7,17 +7,22 @@ objects, see https://lrutter.github.io/bigPint/articles/dataMetrics.html.
 Note that volcano plots require that each element in the dataMetrics object
 has additional two columns, a PValue column and a logFC column."
 
+if (!methods::is(dataMetrics, "list")){ 
+    stop(paste0("Data metrics object must be of class 'list'. ",
+    generalMessage))
+}
+
 colNames = colnames(data[,-1])
+seqVec <- seq(1,length(colNames))
 
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))
 
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
 
-if (all(logicPerl == seq(1, length(colNames)))){
+if (all(logicPerl == seq(1,length(colNames)))){
     colGroups = c()
     colReps = c()
-    seqVec <- seq(1,length(colNames))
     for (i in seq_along(seqVec)){
         colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
         colReps[i] <- strsplit(colNames[i],"[.]")[[1]][2]
@@ -32,13 +37,22 @@ if (all(logicPerl == seq(1, length(colNames)))){
 metricNames = names(dataMetrics)
 combnMetrics = (nGroups * (nGroups-1))/2
 logicDF <- lapply(dataMetrics, function(x) methods::is(x, "data.frame"))
+
+if (!all(logicDF == TRUE)){
+    stop(paste0("Each list element in data metrics object must be of class
+    'data.frame'. ", generalMessage))
+}
+
 logicID <- lapply(dataMetrics, function(x) colnames(x)[1] == "ID")
 logicIDChar <- lapply(dataMetrics, function(x) methods::is(x[,1],
-"character"))
+             "character"))
 logicIDDup <- lapply(dataMetrics, function(x) anyDuplicated(x[,1])>0)
 logicListName = grep("^[a-zA-Z0-9]+_[a-zA-Z0-9]+", metricNames, perl=TRUE)
 logicPValue <- lapply(dataMetrics, function(x) PValue %in% colnames(x))
 logicFC <- lapply(dataMetrics, function(x) logFC %in% colnames(x))
+
+refID = sort(data$ID)
+refIDs = lapply(dataMetrics, function(x) all(sort(x[,1]) == refID))
 
 if (all(logicPValue == TRUE) && all(logicFC == TRUE)){
     logicPValueQuant = c()
@@ -47,12 +61,10 @@ if (all(logicPValue == TRUE) && all(logicFC == TRUE)){
     for (i in seq_along(seqVec)){
         indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue)
         logicPValueQuant[i] <- methods::is(dataMetrics[[i]][[indexPValue]],
-        "numeric") ||
-        methods::is(dataMetrics[[i]][[indexPValue]], "integer")
+        "numeric") || methods::is(dataMetrics[[i]][[indexPValue]], "integer")
         indexFC <- which(colnames(dataMetrics[[i]]) %in% logFC)
         logicFCQuant[i] <- methods::is(dataMetrics[[i]][[indexFC]],
-        "numeric") ||
-        methods::is(dataMetrics[[i]][[indexFC]], "integer")
+        "numeric") || methods::is(dataMetrics[[i]][[indexFC]], "integer")
     }
 }
 
@@ -72,18 +84,10 @@ metrict = table(metric12)
 ddMSame = sort(unique(metric12)) == sort(uGroups)
 numListName = sum(metrict==(nGroups-1))
 
-if (!methods::is(dataMetrics, "list")){ 
-    stop(paste0("Data metrics object must be of class 'list'. ",
-    generalMessage))
-}
-else if (length(dataMetrics) != combnMetrics){
-    stop(paste0("There should be ", combnMetrics, "list elements in the
-    data metrics object to represent each pairwise combination of the",
-    nGroups, "treatment groups in the data object. ", generalMessage))
-}
-else if (!all(logicDF == TRUE)){
-    stop(paste0("Each list element in data metrics object must be of class
-    'data.frame'. ", generalMessage))
+if (length(dataMetrics) != combnMetrics){
+    stop(paste0("There should be ", combnMetrics, " list elements in the
+    data metrics object to represent each pairwise combination of the ",
+    nGroups, " treatment groups in the data object. ", generalMessage))
 }
 else if (!all(logicID == TRUE)){
     stop(paste0("The first column of each list element in the data metrics
@@ -93,7 +97,7 @@ else if (!all(logicIDChar == TRUE)){
     stop(paste0("The first column of each list element in the data metrics
     object must be of class 'character'. ", generalMessage))
 }  
-else if (all(logicIDDup == TRUE)){
+else if (!all(logicIDDup != TRUE)){
     stop(paste0("The first column of each list element in the data metrics
     object must contain unique items. ", generalMessage))
 }   
@@ -107,13 +111,6 @@ else if (numListName != nGroups){
     must match the Perl expression ^[a-zA-Z0-9]+_[a-zA-Z0-9]+. Each pattern
     [a-zA-Z0-9] should be the alphanumeric name of a treatment group in the
     data object. ", generalMessage))
-}
-else if (!all(logicListName == seq(1, length(metricNames)))){
-    stop(paste0("The name of at least one of the list elements in the data
-    metrics object repeats the same treatment group name on both sides of
-    the underscore (for example: 'A_A'). The names of each list element in
-    the data metrics object should have different treatment groups names on
-    both sides of the underscore (for example: 'A_B'). ", generalMessage))
 }
 else if (!all(ddMSame == TRUE)){
     stop(paste0("The names of the list elements in the data metrics object
@@ -139,5 +136,17 @@ else if (!all(logicPValueQuant == TRUE)){
     stop(paste0("For volcano plots, the column in each list element in the
     data metrics object that has the same name as the PValue object should
     be of class 'numeric' or 'integer'. ", generalMessage))    
+}
+else if (!all(refIDs == TRUE)){
+    stop(paste0("The ID column in each list element in the data metrics
+    object must contain the same IDs (regardless of order) as the ID column
+    in the data object. ", generalMessage))
+}
+else if (!all(metricNotSame)){
+    stop(paste0("The name of at least one of the list elements in the data
+    metrics object repeats the same treatment group name on both sides of
+    the underscore (for example: 'A_A'). The names of each list element in
+    the data metrics object should have different treatment groups names on
+    both sides of the underscore (for example: 'A_B'). ", generalMessage))
 }
 }

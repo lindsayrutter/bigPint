@@ -2,20 +2,20 @@
 # when a user inputs a data object that does not fit the expected form
 
 ID <- function(){
-  paste0("ID", 1:100)
+    paste0("ID", 1:100)
 }
 IDRep <- function(){
-  paste0("ID", c(1:99, 1))
+    paste0("ID", c(1:99, 1))
 }
 Nu <- function(){
-  rnorm(1:100)
+    rnorm(1:100)
 }
 Le <- function(){
-  sample(letters, 100, replace = T)
+    sample(letters, 100, replace = T)
 }
 Ch <- function(d){
-  d$ID = as.character(d$ID)
-  return(as.data.frame(d))
+    d$ID = as.character(d$ID)
+    return(as.data.frame(d))
 }
 
 dFail1 = list(ID = ID())
@@ -39,13 +39,13 @@ B.1 = Nu())
 dFail9 = Ch(dFail)
 
 test_data <- function() {
-  checkException(helperTestData(dFail1))
-  checkException(helperTestData(dFail2))
-  checkException(helperTestData(dFail3))
-  checkException(helperTestData(dFail4))  
-  checkException(helperTestData(dFail5))
-  checkException(helperTestData(dFail6))
-  checkException(helperTestData(dFail7))
-  checkException(helperTestData(dFail8))
-  checkException(helperTestData(dFail9))
+    checkException(helperTestData(dFail1))
+    checkException(helperTestData(dFail2))
+    checkException(helperTestData(dFail3))
+    checkException(helperTestData(dFail4))  
+    checkException(helperTestData(dFail5))
+    checkException(helperTestData(dFail6))
+    checkException(helperTestData(dFail7))
+    checkException(helperTestData(dFail8))
+    checkException(helperTestData(dFail9))
 }

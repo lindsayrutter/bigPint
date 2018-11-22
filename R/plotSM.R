@@ -14,33 +14,33 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics; default NULL
-#' @param option CHARACTER STRING ["foldChange" | "orthogonal" | "hexagon" | 
-#' "allPoints"] | The type of plot; default "allPoints"
-#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
-#' that is used to threshold significance; default "FDR"; used in all options
-#' @param threshVal INTEGER | Maximum value to threshold significance from 
-#' threshVar object; default 0.05; used in all options
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 #' scatterplot matrix of all data. Use this parameter if you have predetermined 
 #' genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
 #' create genes to be drawn onto the scatterplot matrix; default NULL; used in 
 #' "hexagon" and "allPoints"
-#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE; 
-#' used in all options
-#' @param outDir CHARACTER STRING | Output directory to save all plots; default 
-#' current directory; used in all options
-#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
-#' matrix; default "orange"; used for DEGs in "hexagon" and "allPoints" and
-#' used for all points in "foldChange" and "orthogonal"
-#' @param pointSize INTEGER | Size of plotted points; default 0.5; used for
-#' DEGs in "hexagon" and "allPoints" and used for all points in "foldChange"
-#' and "orthogonal"
+#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object
+#' that is used to threshold significance; default "FDR"; used in all options
+#' @param threshVal INTEGER | Maximum value to threshold significance from 
+#' threshVar object; default 0.05; used in all options
+#' @param option CHARACTER STRING ["foldChange" | "orthogonal" | "hexagon" | 
+#' "allPoints"] | The type of plot; default "allPoints"
 #' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
 #' default 10; used in option "hexagon"
 #' @param threshFC INTEGER | Threshold of fold change; default 3; used in
 #' option "foldChange"
 #' @param threshOrth INTEGER | Threshold of orthogonal distance; default 3;
 #' used in option "orthogonal"
+#' @param pointSize INTEGER | Size of plotted points; default 0.5; used for
+#' DEGs in "hexagon" and "allPoints" and used for all points in "foldChange"
+#' and "orthogonal"
+#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
+#' matrix; default "orange"; used for DEGs in "hexagon" and "allPoints" and
+#' used for all points in "foldChange" and "orthogonal"
+#' @param outDir CHARACTER STRING | Output directory to save all plots; default 
+#' current directory; used in all options
+#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE; 
+#' used in all options
 #' @importFrom dplyr filter select %>%
 #' @importFrom GGally ggpairs wrap
 #' @importFrom ggplot2 ggplot aes_string aes geom_point xlim ylim geom_hex 
@@ -131,10 +131,10 @@
 #' ret[[1]]
 #' 
 
-plotSM = function(data=data, dataMetrics=NULL, option="allPoints",
-saveFile = TRUE, outDir=getwd(), pointSize=0.5, pointColor = "orange",
-xbins=10, threshFC=3, threshOrth=3, threshVar="FDR", threshVal=0.05,
-geneList = NULL){
+plotSM = function(data=data, dataMetrics=NULL, geneList = NULL,
+    threshVar="FDR", threshVal=0.05, option="allPoints", xbins=10,
+    threshFC=3, threshOrth=3, pointSize=0.5, pointColor = "orange",
+    outDir=getwd(), saveFile = TRUE){
 
 # Check that input parameters fit required formats
 helperTestData(data)

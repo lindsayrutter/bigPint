@@ -129,9 +129,9 @@
       <h1>Data object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2018-11-20</h4>
+            <h4 class="date">2018-11-21</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/lrutter/bigPint/blob/master/vignettes/data.Rmd"><code>vignettes/data.Rmd</code></a></small>
       <div class="hidden name"><code>data.Rmd</code></div>
 
     </div>
@@ -191,7 +191,7 @@
 <li>Its first column must
 <ul>
 <li>Be called “ID”</li>
-<li>Be of type <code>chr</code>
+<li>Be of class <code>character</code>
 </li>
 <li>Contain the names of the genes (or a unique set of names in general)</li>
 </ul>
@@ -199,19 +199,19 @@
 <li>Each of the rest of its columns must
 <ul>
 <li>Contain the read counts for a given sample (or quantitative values in general)</li>
-<li>Be of type <code>int</code> or <code>num</code>
+<li>Be of class <code>integer</code> or <code>numeric</code>
 </li>
-<li>Be called in a three-part format (such as “A.3”), where
+<li>Be called in a three-part format (such as “A.3” or “S4.1”) that matches the Perl expression <code>^[a-zA-Z0-9]+\\.[0-9]+</code>, where
 <ul>
-<li>The first part indicates the treatment group name and must begin with an alphabet character. Examples include “A”, “AR”, and “A9”</li>
+<li>The first part indicates the treatment group name and must contain alphanumeric characters. Examples include “A”, “AR”, and “A9”</li>
 <li>The second part consists of a dot “.” to serve as a delimeter</li>
-<li>The third part indicates the replicate number and must consist of a number</li>
+<li>The third part indicates the replicate number and must consist of numbers</li>
 </ul>
 </li>
 </ul>
 </li>
 </ul>
-<p>It is important that the names of all columns except the first follow the three-part format delineated above. All functions in the <code>bigPint</code> package require this format to successfully produce plots.</p>
+<p>It is important that the names of all columns except the first follow the three-part format delineated above. All functions in the <code>bigPint</code> package require this format to successfully produce plots. If your <code>data</code> object does not fit this format, <code>bigPint</code> will likely throw an informative error about why your format was not recognized.</p>
 <hr>
 </div>
 <div id="example-three-treatments" class="section level2">

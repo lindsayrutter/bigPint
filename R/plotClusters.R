@@ -6,18 +6,15 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics; default NULL
-#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
-#' @param nC INTEGER | Number of clusters; default 4
+#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn 
+#' from data as parallel coordinate lines. Use this parameter if you have 
+#' predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
+#' and threshVal to create genes to be overlaid as parallel coordinate lines; 
+#' default NULL
 #' @param threshVar CHARACTER STRING | Name of column in dataMetrics object 
 #' that is used to threshold significance; default "FDR"
 #' @param threshVal INTEGER | Maximum value to threshold significance from 
 #' threshVar object; default 0.05
-#' @param lineSize INTEGER | Size of plotted parallel coordinate lines; 
-#' default 0.1
-#' @param lineAlpha INTEGER | Alpha value of plotted parallel coordinate 
-#' lines, default 0.5
-#' @param colList CHARACTER ARRAY | List of colors for each cluster; default 
-#' is rainbow(nC)
 #' @param clusterAllData BOOLEAN [TRUE | FALSE] | Create clusters based on 
 #' the whole dataset and then assign significant genes to those clusters; 
 #' default is TRUE. If FALSE, create clusters based on just the significant 
@@ -25,25 +22,28 @@
 #' whole dataset (from data input) and the parallel coordinate lines will 
 #' represent only the significant genes (those that pass threshVal for 
 #' threshVar)
+#' @param nC INTEGER | Number of clusters; default 4
+#' @param colList CHARACTER ARRAY | List of colors for each cluster; default 
+#' is rainbow(nC)
 #' @param aggMethod CHARACTER STRING ["ward.D" | "ward.D2" | "single" | 
 #' "complete" | "average" | "mcquitty" | "median" | "centroid"] | The 
 #' agglomeration method to be used in the hierarchical clustering; default 
 #' "ward.D"
+#' @param yAxisLabel CHARACTER STRING | Vertical axis label; default "Count"
 #' @param xAxisLabel CHARACTER STRING | Horizontal axis label; default 
 #' "Sample"
-#' @param yAxisLabel CHARACTER STRING | Vertical axis label; default "Count"
+#' @param lineSize INTEGER | Size of plotted parallel coordinate lines; 
+#' default 0.1
+#' @param lineAlpha INTEGER | Alpha value of plotted parallel coordinate 
+#' lines, default 0.5
 #' @param vxAxis BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical
 #' orientation; default FALSE
+#' @param outDir CHARACTER STRING | Output directory to save all images; 
+#' default current directory
+#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @param verbose BOOLEAN [TRUE | FALSE] | Print each cluster from each 
 #' cluster size into separate files and print the associated IDs of each 
 #' cluster from each cluster size into separate .rds files; default is FALSE
-#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn 
-#' from data as parallel coordinate lines. Use this parameter if you have 
-#' predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
-#' and threshVal to create genes to be overlaid as parallel coordinate lines; 
-#' default NULL
-#' @param outDir CHARACTER STRING | Output directory to save all images; 
-#' default current directory
 #' @importFrom dplyr %>%
 #' @importFrom tidyr gather
 #' @importFrom ggplot2 ggplot element_text
@@ -138,11 +138,11 @@
 #'   verbose = TRUE)
 #' }
 #' 
-plotClusters <- function(data, dataMetrics = NULL, nC = 4, threshVar="FDR", 
-    threshVal=0.05, outDir=getwd(), colList = rainbow(nC),
-    aggMethod = "ward.D", yAxisLabel = "Count", xAxisLabel = "Sample",
-    lineSize = 0.1, lineAlpha = 0.5, clusterAllData = TRUE, verbose=FALSE,
-    saveFile = TRUE, vxAxis = FALSE, geneList = NULL){
+plotClusters <- function(data, dataMetrics = NULL, geneList = NULL,
+    threshVar="FDR", threshVal=0.05, clusterAllData = TRUE, nC = 4, 
+    colList = rainbow(nC), aggMethod = "ward.D", yAxisLabel = "Count",
+    xAxisLabel = "Sample", lineSize = 0.1, lineAlpha = 0.5, vxAxis = FALSE,
+    outDir=getwd(), saveFile = TRUE, verbose=FALSE){
 
 # Check that input parameters fit required formats
 helperTestData(data)

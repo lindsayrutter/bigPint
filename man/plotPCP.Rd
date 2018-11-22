@@ -4,10 +4,9 @@
 \alias{plotPCP}
 \title{Plot static parallel coordinate plots}
 \usage{
-plotPCP(data, dataMetrics = NULL, threshVar = "FDR",
-  threshVal = 0.05, geneList = NULL, lineSize = 0.1,
-  lineColor = "orange", outDir = getwd(), saveFile = TRUE,
-  hover = FALSE, vxAxis = FALSE)
+plotPCP(data, dataMetrics = NULL, geneList = NULL, threshVar = "FDR",
+  threshVal = 0.05, lineSize = 0.1, lineColor = "orange",
+  vxAxis = FALSE, outDir = getwd(), saveFile = TRUE, hover = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
@@ -16,12 +15,6 @@ plotPCP(data, dataMetrics = NULL, threshVar = "FDR",
 and dataMetrics are NULL, then no genes will be overlaid onto the
 side-by-side boxplot; default NULL}
 
-\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
-that is used to threshold significance; default "FDR"}
-
-\item{threshVal}{INTEGER | Maximum value to threshold significance from 
-threshVar object; default 0.05}
-
 \item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 scatterplot matrix of all data. If this parameter is defined, these will be 
 the overlaid genes to be drawn. After that, dataMetrics, threshVar, and 
@@ -29,11 +22,20 @@ threshVal will be considered for overlaid genes. If both geneList and
 dataMetrics are NULL, then no genes will be overlaid onto the side-by-side 
 boxplot; default NULL}
 
+\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
+that is used to threshold significance; default "FDR"}
+
+\item{threshVal}{INTEGER | Maximum value to threshold significance from 
+threshVar object; default 0.05}
+
 \item{lineSize}{INTEGER | Line width of parallel coordinate lines;
 default 0.1}
 
 \item{lineColor}{CHARACTER STRING | Color of parallel coordinate lines; 
 default "orange"}
+
+\item{vxAxis}{BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical 
+orientation; default FALSE}
 
 \item{outDir}{CHARACTER STRING | Output directory to save all plots; default 
 current directory}
@@ -42,9 +44,6 @@ current directory}
 
 \item{hover}{BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify 
 IDs; default FALSE}
-
-\item{vxAxis}{BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical 
-orientation; default FALSE}
 }
 \value{
 List of n elements of parallel coordinate plots, where n is the

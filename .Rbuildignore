@@ -32,3 +32,4 @@ vignettes/static.Rmd
 vignettes/superimposeData.Rmd
 README.md
 _pkgdown.yml
+NEWS.md

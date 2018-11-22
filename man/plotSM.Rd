@@ -4,32 +4,30 @@
 \alias{plotSM}
 \title{Plot static scatterplot matrices}
 \usage{
-plotSM(data = data, dataMetrics = NULL, option = "allPoints",
-  saveFile = TRUE, outDir = getwd(), pointSize = 0.5,
-  pointColor = "orange", xbins = 10, threshFC = 3, threshOrth = 3,
-  threshVar = "FDR", threshVal = 0.05, geneList = NULL)
+plotSM(data = data, dataMetrics = NULL, geneList = NULL,
+  threshVar = "FDR", threshVal = 0.05, option = "allPoints",
+  xbins = 10, threshFC = 3, threshOrth = 3, pointSize = 0.5,
+  pointColor = "orange", outDir = getwd(), saveFile = TRUE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
 \item{dataMetrics}{LIST | Differential expression metrics; default NULL}
 
+\item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the 
+scatterplot matrix of all data. Use this parameter if you have predetermined 
+genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
+create genes to be drawn onto the scatterplot matrix; default NULL; used in 
+"hexagon" and "allPoints"}
+
+\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
+that is used to threshold significance; default "FDR"; used in all options}
+
+\item{threshVal}{INTEGER | Maximum value to threshold significance from 
+threshVar object; default 0.05; used in all options}
+
 \item{option}{CHARACTER STRING ["foldChange" | "orthogonal" | "hexagon" | 
 "allPoints"] | The type of plot; default "allPoints"}
-
-\item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE; 
-used in all options}
-
-\item{outDir}{CHARACTER STRING | Output directory to save all plots; default 
-current directory; used in all options}
-
-\item{pointSize}{INTEGER | Size of plotted points; default 0.5; used for
-DEGs in "hexagon" and "allPoints" and used for all points in "foldChange"
-and "orthogonal"}
-
-\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
-matrix; default "orange"; used for DEGs in "hexagon" and "allPoints" and
-used for all points in "foldChange" and "orthogonal"}
 
 \item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
 default 10; used in option "hexagon"}
@@ -40,17 +38,19 @@ option "foldChange"}
 \item{threshOrth}{INTEGER | Threshold of orthogonal distance; default 3;
 used in option "orthogonal"}
 
-\item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object
-that is used to threshold significance; default "FDR"; used in all options}
+\item{pointSize}{INTEGER | Size of plotted points; default 0.5; used for
+DEGs in "hexagon" and "allPoints" and used for all points in "foldChange"
+and "orthogonal"}
 
-\item{threshVal}{INTEGER | Maximum value to threshold significance from 
-threshVar object; default 0.05; used in all options}
+\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
+matrix; default "orange"; used for DEGs in "hexagon" and "allPoints" and
+used for all points in "foldChange" and "orthogonal"}
 
-\item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the 
-scatterplot matrix of all data. Use this parameter if you have predetermined 
-genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
-create genes to be drawn onto the scatterplot matrix; default NULL; used in 
-"hexagon" and "allPoints"}
+\item{outDir}{CHARACTER STRING | Output directory to save all plots; default 
+current directory; used in all options}
+
+\item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE; 
+used in all options}
 }
 \value{
 List of n elements of scatterplot matrices, where n is the number of 

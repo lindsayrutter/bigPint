@@ -3,25 +3,25 @@
 #' @description Plot static litre plots.
 #' 
 #' @param data DATA FRAME | Read counts
-#' @param dataMetrics LIST | Differential expression metrics
+#' @param dataMetrics LIST | Differential expression metrics; default NULL
+#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn 
+#' from data as litre plots. Use this parameter if you have predetermined 
+#' genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
+#' create genes to be drawn; default NULL
+#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object 
+#' that is used to threshold significance; default "FDR"
+#' @param threshVal INTEGER | Maximum value to threshold significance from 
+#' threshVar object; default 0.05 
 #' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background 
 #' of plot; default "hexagon"
-#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
-#' @param outDir CHARACTER STRING | Output directory to save all plots; 
-#' default current directory
 #' @param pointSize INTEGER | Size of plotted points; default 2
 #' @param pointColor CHARACTER STRING | Color of gene superimposed on litre 
 #' plot; default "orange"
 #' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
 #' default 10
-#' @param threshVar CHARACTER STRING | Name of column in dataMetrics object 
-#' that is used to threshold significance; default "FDR"
-#' @param threshVal INTEGER | Maximum value to threshold significance from 
-#' threshVar object; default 0.05
-#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn 
-#' from data as litre plots. Use this parameter if you have predetermined 
-#' genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
-#' create genes to be drawn; default NULL
+#' @param outDir CHARACTER STRING | Output directory to save all plots; 
+#' default current directory
+#' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @importFrom dplyr filter select %>%
 #' @importFrom GGally ggpairs wrap
 #' @importFrom ggplot2 ggplot aes_string aes geom_point xlim ylim geom_hex 
@@ -78,9 +78,9 @@
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
 
-plotLitre = function(data=data, dataMetrics=NULL, outDir=getwd(), pointSize=2,
-    pointColor = "orange", xbins=10, threshVar="FDR", threshVal=0.05,
-    geneList = NULL, saveFile = TRUE, option = "hexagon"){
+plotLitre = function(data=data, dataMetrics=NULL, geneList = NULL, 
+    threshVar="FDR", threshVal=0.05, option = "hexagon", pointSize=2,
+    pointColor = "orange", xbins=10, outDir=getwd(), saveFile = TRUE){
 
 # Check that input parameters fit required formats
 helperTestData(data)

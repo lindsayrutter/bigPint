@@ -129,9 +129,9 @@
       <h1>Data metrics object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2018-11-20</h4>
+            <h4 class="date">2018-11-21</h4>
       
-      
+      <small class="dont-index">Source: <a href="https://github.com/lrutter/bigPint/blob/master/vignettes/dataMetrics.Rmd"><code>vignettes/dataMetrics.Rmd</code></a></small>
       <div class="hidden name"><code>dataMetrics.Rmd</code></div>
 
     </div>
@@ -184,27 +184,20 @@
 <ul>
 <li>Be of type <code>list</code>
 </li>
-<li>Contain a number of elements equal to the number of pairwise treatment combinations in the <code>data</code> object. For example, the <code>soybean_ir_sub_metrics</code> object contains two list elements and the <code>soybean_cn_sub_metrics</code> object contains three list elements.</li>
-<li>Have each list element be called in a three-part format (such as “N_P”), where
-<ul>
-<li>The first part indicates the first treatment group name</li>
-<li>The second part consists of an underscore "_" to serve as a delimeter</li>
-<li>The third part indicates the second treatment group name</li>
-</ul>
-</li>
+<li>Contain a number of elements equal to the number of pairwise treatment combinations in the <code>data</code> object. For example, the <code>soybean_ir_sub_metrics</code> object contains one list element (“N_P”) and the <code>soybean_cn_sub_metrics</code> object contains three list elements (“S1_S2”, “S1_S3”, “S2_S3”).</li>
 <li>Have each list element
 <ul>
 <li>Be of type <code>data.frame</code>
 </li>
-<li>Contain a column called “ID” of type <code>chr</code> consisting of the names of the genes</li>
-<li>Contain at least one column of type <code>num</code> or <code>int</code> consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called “logFC”, “logCPM”, “LR”, “PValue”, and “FDR”.</li>
-<li>Be called in a three-part format (such as “N_P” or “S2_S3”), where
+<li>Be called in a three-part format (such as “N_P” or “S2_S3”) that matches the Perl expression <code>^[a-zA-Z0-9]+_[a-zA-Z0-9]+</code>, where
 <ul>
-<li>The first part indicates the first treatment group name</li>
+<li>The first part indicates the first treatment group alphameric name</li>
 <li>The second part consists of an underscore "_" to serve as a delimeter</li>
-<li>The third part indicates the second treatment group name</li>
+<li>The third part indicates the second treatment group alphameric name</li>
 </ul>
 </li>
+<li>Contain a first column called “ID” of class <code>character</code> consisting of the unique names of the genes</li>
+<li>Contain at least one column of class <code>numeric</code> or <code>integer</code> consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called “logFC”, “logCPM”, “LR”, “PValue”, and “FDR”.</li>
 </ul>
 </li>
 </ul>
@@ -213,6 +206,7 @@
 <pre><code>## [1] "N_P"</code></pre>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">names</span>(soybean_cn_sub_metrics)</a></code></pre></div>
 <pre><code>## [1] "S1_S2" "S1_S3" "S2_S3"</code></pre>
+<p>If your <code>dataMetrics</code> object does not fit this format, <code>bigPint</code> will likely throw an informative error about why your format was not recognized.</p>
 <hr>
 </div>
 <div id="references" class="section level2 unnumbered">

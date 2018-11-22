@@ -4,8 +4,8 @@ generalMessage = "For more information about formatting the data
 object, see https://lrutter.github.io/bigPint/articles/data.html"
 
 if (!methods::is(data, "data.frame")){ 
-  stop(paste0("Data object must be of class 'data.frame'. ",
-  generalMessage))
+    stop(paste0("Data object must be of class 'data.frame'. ",
+    generalMessage))
 }
 
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
@@ -17,7 +17,7 @@ seqVec <- seq(1,length(colNames))
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
 
 if (!all(logicPerl == seq(1, length(colNames)))){
-  stop(paste0("In the data object, the names of all columns but the first
+    stop(paste0("In the data object, the names of all columns but the first
     must match the Perl expression '^[a-zA-Z0-9]+\\.[0-9]+'", generalMessage))
 }
 
