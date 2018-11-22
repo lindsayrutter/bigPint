@@ -4,6 +4,11 @@ helperTestDataMetrics <- function(data, dataMetrics, threshVar){
 generalMessage = "For more information about formatting the dataMetrics
 object, see https://lrutter.github.io/bigPint/articles/dataMetrics.html"
 
+if (!methods::is(dataMetrics, "list")){ 
+  stop(paste0("Data metrics object must be of class 'list'. ",
+  generalMessage))
+}
+
 colNames = colnames(data[,-1])
 seqVec <- seq(1,length(colNames))
 
@@ -24,11 +29,6 @@ if (all(logicPerl == seq(1,length(colNames)))){
     logicReps = vapply(uGroups, function(x)
     length(which(colGroups %in% x))>1,
     logical(length=1))
-}
-
-if (!methods::is(dataMetrics, "list")){ 
-    stop(paste0("Data metrics object must be of class 'list'. ",
-    generalMessage))
 }
 
 metricNames = names(dataMetrics)
@@ -81,7 +81,6 @@ if (length(dataMetrics) != combnMetrics){
     data metrics object to represent each pairwise combination of the ",
     nGroups, " treatment groups in the data object. ", generalMessage))
 }
-
 else if (!all(logicID == TRUE)){
     stop(paste0("The first column of each list element in the data metrics
     object must be called 'ID'. ", generalMessage))
