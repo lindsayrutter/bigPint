@@ -3,6 +3,11 @@ helperTestData <- function(data){
 generalMessage = "For more information about formatting the data
 object, see https://lrutter.github.io/bigPint/articles/data.html"
 
+if (!methods::is(data, "data.frame")){ 
+  stop(paste0("Data object must be of class 'data.frame'. ",
+  generalMessage))
+}
+
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))
 
@@ -10,6 +15,11 @@ colNames = colnames(data[,-1])
 seqVec <- seq(1,length(colNames))
 
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
+
+if (!all(logicPerl == seq(1, length(colNames)))){
+  stop(paste0("In the data object, the names of all columns but the first
+    must match the Perl expression '^[a-zA-Z0-9]+\\.[0-9]+'", generalMessage))
+}
 
 if (all(logicPerl == seq(1, length(colNames)))){
     colGroups = c()
@@ -25,16 +35,12 @@ if (all(logicPerl == seq(1, length(colNames)))){
     logical(length=1))
 }
 
-if (!methods::is(data, "data.frame")){ 
-    stop(paste0("Data object must be of class 'data.frame'. ",
-    generalMessage))
-}
-else if (colnames(data)[1] != "ID"){
+if (colnames(data)[1] != "ID"){
     stop(paste0("First column of data object must be called 'ID'. ",
     generalMessage))
 }
 else if (!methods::is(data[,1], "character")){
-    stop(paste0("First column of data object must be of class 'character'.",
+    stop(paste0("First column of data object must be of class 'character'. ",
     generalMessage))    
 }
 else if (anyDuplicated(data[,1])>0){
@@ -50,10 +56,6 @@ else if (ncol(data) < 5){
 else if (!all(logicClass == TRUE)){
     stop(paste0("All columns but the first must be of class 'integer' or
     'numeric' in the data object. ", generalMessage))
-}
-else if (all(logicPerl != seq(1, length(colNames)))){
-    stop(paste0("In the data object, the names of all columns but the first
-    must match the Perl expression '^[a-zA-Z0-9]+\\.[0-9]+'", generalMessage))
 }
 else if (length(uGroups) < 2){
     stop(paste0("There must be at least two treatment groups in the

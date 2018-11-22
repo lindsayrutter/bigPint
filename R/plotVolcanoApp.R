@@ -62,7 +62,7 @@ helperTestData(data)
 if (!is.null(dataMetrics)){
     helperTestDataMetricsVolcanoApp(data, dataMetrics, "PValue", "logFC")
 }
-  
+
 appDir <- system.file("shiny-examples", "plotVolcanoApp", package = "bigPint")
 if (appDir == "") {
     stop("Could not find example directory. Try re-installing `bigPint`.",
