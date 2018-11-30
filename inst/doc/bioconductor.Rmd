@@ -1,0 +1,42 @@
+---
+title: 'bigPint Vignette'
+author:
+- name: Lindsay Rutter
+date: '`r Sys.Date()`'
+package: bigPint
+bibliography: bigPint.bib
+output:
+    BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+    \usepackage[utf8]{inputenc}
+    %\VignetteIndexEntry{"bigPint Vignette"}
+    %\VignetteEngine{knitr::rmarkdown}
+    %\VignetteEncoding{UTF-8}
+    %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## Accessing the vignette
+
+Welcome to the `bigPint` package! If you are a new user, please visit the 
+package website at [https://lrutter.github.io/bigPint/](https://lrutter.github.
+io/bigPint/). There, you will find a general overview of the `bigPint` package 
+and the motivations behind it. You will also find ten short vignette articles 
+that we recommend reading in order. These short vignette articles consist of 
+reproducible code that provide:
+
+- An introduction to `bigPint` plots and how to interpret them
+- A guide to installing the `bigPint` package
+- Expected formats of two input objects in most `bigPint` functions
+- How to produce static `bigPint` plots
+- How to produce interactive `bigPint` plots
+- How to perform hierarchical clustering and use the clusters in `bigPint` 
+    functions
+- A recommended RNA-seq visualization pipeline with example code for you to 
+    follow
+
