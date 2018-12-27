@@ -95,12 +95,6 @@ cols.combn <- combn(myPairs, 2, simplify = FALSE) ### ADDED
 
 ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
 
-# ret = list()
-# seqVec <- seq(1,length(myPairs)-1)
-# for (i in seq_along(seqVec)){
-#     for (j in (i+1):length(myPairs)){
-#         group1 = myPairs[i]
-#         group2 = myPairs[j]
 ret <- lapply(cols.combn, function(x){
     group1 = x[1]
     group2 = x[2]
@@ -150,9 +144,9 @@ ret <- lapply(cols.combn, function(x){
             geneList <- dataMetrics[[paste0(group1, "_",
             group2)]][c(rowDEG1, rowDEG2),1]
         }
-        seqVec <- seq(1,length(geneList))
-        for (k in seq_along(seqVec)){
-            currID = geneList[k]
+
+        ret <- lapply(geneList, function(x) {
+            currID = x
             currGene = data %>% filter(ID == currID)
             sampleComb = as.data.frame(crossing(as.numeric(currGene[si1]),
             as.numeric(currGene[si2])))
@@ -168,10 +162,14 @@ ret <- lapply(cols.combn, function(x){
                 print(ret)
                 dev.off()
             }
-            #ret[[paste0(group1, "_", group2, "_", currGene$ID)]] <- pg
-            return(ret) # ret returns nothing, return(ret) only returns first
-        }
+            return(list(plot = ret, name = paste0(group1, "_", group2, "_", currGene$ID)))
     })
+})
 
-invisible(ret)
+    ret <- ret[[1]]
+    
+    retPlots <- lapply(ret, function(x) {x$plot})
+    retNames <- lapply(ret, function(x) {x$name})
+    names(retPlots) <- retNames
+invisible(retPlots)
 }
