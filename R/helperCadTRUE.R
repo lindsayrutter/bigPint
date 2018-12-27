@@ -1,6 +1,6 @@
 helperCadTRUE <- function(data, dataMetrics, metricPair, aggMethod, nC,
 threshVar, threshVal, verbose, vxAxis, saveFile, boxDat, xAxisLabel,
-yAxisLabel, lineAlpha, lineSize, ret, plotName, outDir, colList) {
+yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
     dendo = data
     rownames(dendo) = NULL
     d = suppressWarnings(dist(as.matrix(dendo)))
@@ -77,13 +77,13 @@ yAxisLabel, lineAlpha, lineSize, ret, plotName, outDir, colList) {
 
     p = arrangeGrob(grobs=plot_clusters, ncol=2)
 
-if (saveFile == TRUE || verbose == TRUE){
-    fileName = paste(outDir, "/", plotName, "_", nC, ".jpg", sep="")
-    jpeg(fileName)
-    grid.draw(p)
-    invisible(dev.off())
-}
-ret[[paste0(plotName, "_", nC)]] = p
-return(ret)
+    if (saveFile == TRUE || verbose == TRUE){
+        fileName = paste(outDir, "/", plotName, "_", nC, ".jpg", sep="")
+        jpeg(fileName)
+        grid.draw(p)
+        invisible(dev.off())
+    }
+# ret[[paste0(plotName, "_", nC)]] = p
+    return(p)
 }
 

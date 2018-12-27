@@ -91,15 +91,19 @@ if (is.null(geneList) && !is.null(dataMetrics)){
 hexID <- counts <- countColor2 <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
+cols.combn <- combn(myPairs, 2, simplify = FALSE) ### ADDED
 
 ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
 
-ret = list()
-seqVec <- seq(1,length(myPairs)-1)
-for (i in seq_along(seqVec)){
-    for (j in (i+1):length(myPairs)){
-        group1 = myPairs[i]
-        group2 = myPairs[j]
+# ret = list()
+# seqVec <- seq(1,length(myPairs)-1)
+# for (i in seq_along(seqVec)){
+#     for (j in (i+1):length(myPairs)){
+#         group1 = myPairs[i]
+#         group2 = myPairs[j]
+ret <- lapply(cols.combn, function(x){
+    group1 = x[1]
+    group2 = x[2]
         si1 <- which(colGroups %in% group1)
         si2 <- which(colGroups %in% group2)
         si <- c(si1, si2)
@@ -154,19 +158,20 @@ for (i in seq_along(seqVec)){
             as.numeric(currGene[si2])))
             colnames(sampleComb) = c("x", "y")
             
-            pg <- p + geom_point(data = sampleComb, aes(x=x, y=y),
+            ret <- p + geom_point(data = sampleComb, aes(x=x, y=y),
             inherit.aes = FALSE, color = pointColor, size = pointSize) +
             ggtitle(currGene$ID)
             
             if (saveFile == TRUE){
                 jpeg(filename=paste0(outDir, "/", group1, "_", group2, "_",
                 currGene$ID, "_litre.jpg"), height=700, width=1100)
-                print(pg)
+                print(ret)
                 dev.off()
             }
-            ret[[paste0(group1, "_", group2, "_", currGene$ID)]] <- pg
+            #ret[[paste0(group1, "_", group2, "_", currGene$ID)]] <- pg
+            return(ret) # ret returns nothing, return(ret) only returns first
         }
-    }
-}
+    })
+
 invisible(ret)
 }

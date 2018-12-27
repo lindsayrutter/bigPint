@@ -153,85 +153,93 @@ if (is.null(geneList) && !is.null(dataMetrics)){
 key <- val <- ID <- rainbow <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
+cols.combn <- combn(myPairs, 2, simplify = FALSE) ### ADDED
 
-ret = list()
-seqVec <- length(myPairs)-1
-for (i in seq_along(seqVec)){
-    for (j in (i+1):length(myPairs)){
-        group1 = myPairs[i]
-        group2 = myPairs[j]
-        fData <- cbind(ID=data$ID, data[,which(colGroups %in% 
-        c(group1, group2))])
-        
-        boxDat <- fData %>% gather(key, val, c(-ID))
-        colnames(boxDat) <- c("ID", "Sample", "Count")
-        
-        userOrder <- unique(boxDat$Sample)
-        boxDat$Sample <- as.factor(boxDat$Sample)
-        levels(boxDat$Sample) <- userOrder
-        
-        if (!is.null(dataMetrics) && is.null(geneList)){
-            metricPair = dataMetrics[[paste0(group1,"_",group2)]]
-            metricPair = metricPair[order(metricPair[threshVar]),]
-            threshID <- metricPair[which(metricPair[threshVar] <=
-            threshVal),]$ID
-            cData <- fData[which(fData$ID %in% threshID),]  
-        } 
-        else if (!is.null(geneList)){
-            cData <- fData[which(fData$ID %in% geneList),]  
-        }
-        else{
-            cData <- fData
-        }
-        
-        plotName <- paste0(group1,"_",group2)
-        
-        # geneList variable takes precedence. Create metricPair to only
-        # select geneList IDs
-        if(!is.null(geneList)){
-            metricPair = data.frame(ID = data$ID, FDR = 1)
-            metricPair$ID = as.character(metricPair$ID)
-            metricPair[which(metricPair$ID %in% geneList), ]$FDR = 0.1
-            threshVar = "FDR"
-            threshVal = 0.5
-            dataMetrics = 1
-        }
-        
-        # Check if there are even any genes that pass the threshold. 
-        # Then, perform clustering on whole dataset and assigned 
-        # significant genes to those clusters from the full dataset.
-        if (nrow(data)>=nC && clusterAllData == TRUE){
-            ret <- helperCadTRUE(data, dataMetrics, metricPair, aggMethod,
-            nC, threshVar, threshVal, verbose, vxAxis, saveFile, boxDat,
-            xAxisLabel, yAxisLabel, lineAlpha, lineSize, ret, plotName,
-            outDir, colList)
-        }
-        
-        # Check if there are even any genes that pass the threshold. Then, 
-        # perform clustering on just the significant genes.
-        if (nrow(cData)>=nC && clusterAllData == FALSE){
-            ret <- helperCadFALSE(cData, dataMetrics, metricPair,
-            aggMethod, nC, threshVar, threshVal, verbose, vxAxis,
-            saveFile, boxDat, xAxisLabel, yAxisLabel, lineAlpha, lineSize,
-            ret, plotName, outDir, colList)
-        }
-        
-        # Indicate if no significant genes existed
-        if (nrow(data)<nC && clusterAllData == TRUE){
-            print("Not enough data to cluster by that many groups")
-        }
-        
-        # Indicate if not enough significant genes existed
-        if (nrow(cData)==0){
-            print(paste0(group1, "_", group2,
-            ": There were no significant genes"))
-        }
-        else if (nrow(cData)<nC && clusterAllData == FALSE){
-            print(paste0(group1, "_", group2,
-            ": Not enough significant genes (" ,nrow(cData),
-            ",) to cluster by that many groups (", nC, ")"))
-        }
+ret <- lapply(cols.combn, function(x){
+    group1 = x[1]
+    group2 = x[2]
+    fData <- cbind(ID=data$ID, data[,which(colGroups %in% 
+    c(group1, group2))])
+    
+    boxDat <- fData %>% gather(key, val, c(-ID))
+    colnames(boxDat) <- c("ID", "Sample", "Count")
+    
+    userOrder <- unique(boxDat$Sample)
+    boxDat$Sample <- as.factor(boxDat$Sample)
+    levels(boxDat$Sample) <- userOrder
+    
+    if (!is.null(dataMetrics) && is.null(geneList)){
+        metricPair = dataMetrics[[paste0(group1,"_",group2)]]
+        metricPair = metricPair[order(metricPair[threshVar]),]
+        threshID <- metricPair[which(metricPair[threshVar] <=
+        threshVal),]$ID
+        cData <- fData[which(fData$ID %in% threshID),]  
+    } 
+    else if (!is.null(geneList)){
+        cData <- fData[which(fData$ID %in% geneList),]  
     }
-}
+    else{
+        cData <- fData
+    }
+    
+    plotName <- paste0(group1,"_",group2)
+    
+    # geneList variable takes precedence. Create metricPair to only
+    # select geneList IDs
+    if(!is.null(geneList)){
+        metricPair = data.frame(ID = data$ID, FDR = 1)
+        metricPair$ID = as.character(metricPair$ID)
+        metricPair[which(metricPair$ID %in% geneList), ]$FDR = 0.1
+        threshVar = "FDR"
+        threshVal = 0.5
+        dataMetrics = 1
+    }
+    
+    # Check if there are even any genes that pass the threshold. 
+    # Then, perform clustering on whole dataset and assigned 
+    # significant genes to those clusters from the full dataset.
+    if (nrow(data)>=nC && clusterAllData == TRUE){
+        p <- helperCadTRUE(data, dataMetrics, metricPair, aggMethod,
+        nC, threshVar, threshVal, verbose, vxAxis, saveFile, boxDat,
+        xAxisLabel, yAxisLabel, lineAlpha, lineSize, plotName,
+        outDir, colList=colList)
+        return(p)
+    }
+    
+    # Check if there are even any genes that pass the threshold. Then, 
+    # perform clustering on just the significant genes.
+    if (nrow(cData)>=nC && clusterAllData == FALSE){
+        p <- helperCadFALSE(cData, dataMetrics, metricPair,
+        aggMethod, nC, threshVar, threshVal, verbose, vxAxis,
+        saveFile, boxDat, xAxisLabel, yAxisLabel, lineAlpha, lineSize,
+        plotName, outDir, colList=colList) # took out ret
+        #attributes(p) <- paste0(plotName, "_", nC) #name, attr, attributes
+        return(p)
+    }
+    
+    # Indicate if no significant genes existed
+    if (nrow(data)<nC && clusterAllData == TRUE){
+        print("Not enough data to cluster by that many groups")
+    }
+    
+    # Indicate if not enough significant genes existed
+    if (nrow(cData)==0){
+        print(paste0(group1, "_", group2,
+        ": There were no significant genes"))
+    }
+    else if (nrow(cData)<nC && clusterAllData == FALSE){
+        print(paste0(group1, "_", group2,
+        ": Not enough significant genes (" ,nrow(cData),
+        ",) to cluster by that many groups (", nC, ")"))
+    }
+})
+
+plotNames <- lapply(cols.combn, function(x){
+    group1 = x[1]
+    group2 = x[2]
+    paste0(group1,"_",group2,"_",nC)
+})
+
+names(ret) <- plotNames
 invisible(ret)
 }

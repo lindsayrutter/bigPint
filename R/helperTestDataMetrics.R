@@ -1,6 +1,9 @@
 #' @importFrom methods is
 helperTestDataMetrics <- function(data, dataMetrics, threshVar){
 
+colNames = colnames(data[,-1])
+seqVec <- seq_along(colNames)
+    
 generalMessage = "For more information about formatting the dataMetrics
 object, see https://lrutter.github.io/bigPint/articles/dataMetrics.html"
 
@@ -9,21 +12,18 @@ if (!methods::is(dataMetrics, "list")){
     generalMessage))
 }
 
-colNames = colnames(data[,-1])
-seqVec <- seq(1,length(colNames))
-
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))
 
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
 
-if (all(logicPerl == seq(1,length(colNames)))){
-    colGroups = c()
-    colReps = c()
-    for (i in seq_along(seqVec)){
-        colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
-        colReps[i] <- strsplit(colNames[i],"[.]")[[1]][2]
-    }
+if (all(logicPerl == seqVec)){
+    colGroups <- vapply(seqVec, function(i){
+        strsplit(colNames[i],"[.]")[[1]][1]
+    }, character(1))
+    colReps <- vapply(seqVec, function(i){
+        strsplit(colNames[i],"[.]")[[1]][2]
+    }, character(1))
     uGroups = unique(colGroups)
     nGroups = length(unique(colGroups))
     logicReps = vapply(uGroups, function(x)

@@ -1,5 +1,8 @@
 helperTestData <- function(data){
 
+colNames = colnames(data[,-1])
+seqVec <- seq_along(colNames)
+    
 generalMessage = "For more information about formatting the data
 object, see https://lrutter.github.io/bigPint/articles/data.html"
 
@@ -11,23 +14,28 @@ if (!methods::is(data, "data.frame")){
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))
 
-colNames = colnames(data[,-1])
-seqVec <- seq(1,length(colNames))
-
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
 
-if (!all(logicPerl == seq(1, length(colNames)))){
+if (!all(logicPerl == seqVec)){
     stop(paste0("In the data object, the names of all columns but the first
     must match the Perl expression '^[a-zA-Z0-9]+\\.[0-9]+'", generalMessage))
 }
 
-if (all(logicPerl == seq(1, length(colNames)))){
-    colGroups = c()
-    colReps = c()
-    for (i in seq_along(seqVec)){
-        colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
-        colReps[i] <- strsplit(colNames[i],"[.]")[[1]][2]
-    }
+if (all(logicPerl == seqVec)){
+    # colGroups = c()
+    # colReps = c()
+    # for (i in seq_along(seqVec)){
+    #     colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
+    #     colReps[i] <- strsplit(colNames[i],"[.]")[[1]][2]
+    # }
+    colGroups <- vapply(seqVec, function(i){
+        strsplit(colNames[i],"[.]")[[1]][1]
+    }, character(1))
+    colReps <- vapply(seqVec, function(i){
+        strsplit(colNames[i],"[.]")[[1]][2]
+    }, character(1))
+    
+    
     uGroups = unique(colGroups)
     nGroups = length(unique(colGroups))
     

@@ -1,6 +1,6 @@
 helperCadFALSE <- function(cData, dataMetrics, metricPair, aggMethod, nC,
 threshVar, threshVal, verbose, vxAxis, saveFile, boxDat, xAxisLabel,
-yAxisLabel, lineAlpha, lineSize, ret, plotName, outDir, colList) {
+yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) { #took out ret
     dendo = cData
     rownames(dendo) = NULL
     d = suppressWarnings(dist(as.matrix(dendo)))
@@ -76,6 +76,9 @@ yAxisLabel, lineAlpha, lineSize, ret, plotName, outDir, colList) {
         grid.draw(p)
         invisible(dev.off())
     }
-    ret[[paste0(plotName, "_", nC)]] = p
-    return(ret)
+    # ret = list()
+    # ret[[paste0(plotName, "_", nC)]] = p
+    #ret <- list(paste0(plotName, "_", nC) = p)
+    #return(ret)
+    return(p)
 }

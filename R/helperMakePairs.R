@@ -1,10 +1,11 @@
 helperMakePairs <- function(data){
 colNames <- colnames(data)
-colGroups <- c()
-seqVec <- seq(1,length(colNames))
-for (i in seq_along(seqVec)){
-    colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
-}
+
+seqVec <- seq_along(colNames)
+colGroups <- vapply(seqVec, function(i){
+    strsplit(colNames[i],"[.]")[[1]][1]
+}, character(1))
+
 myPairs <- unique(colGroups)
 if ("ID" %in% colNames){
     myPairs <- myPairs[-which(myPairs=="ID")] 
