@@ -51,25 +51,25 @@ refID = sort(data$ID)
 refIDs = lapply(dataMetrics, function(x) all(sort(x[,1]) == refID))
 
 if (all(logicThresh == TRUE)){
-    logicThreshQuant = c()
-    seqVec <- seq(1,length(metricNames))
-    for (i in seq_along(seqVec)){
-        index <- which(colnames(dataMetrics[[i]]) %in% threshVar)
-        logicThreshQuant[i] <- methods::is(dataMetrics[[i]][[index]],
-        "numeric") || methods::is(dataMetrics[[i]][[index]], "integer")
-    }
+    seqVec <- seq_along(metricNames)
+    logicThreshQuant <- vapply(seqVec, function(i){
+    indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar);
+    methods::is(dataMetrics[[i]][[indexThresh]],
+    "numeric") || methods::is(dataMetrics[[i]][[indexThresh]], "integer")
+    }, logical(1))
 }
 
-if (all(logicListName == seq(1,length(metricNames)))){
-    metric1 = c()
-    metric2 = c()
-    metricNotSame = c()
-    seqVec <- seq(1,length(metricNames))
-    for (i in seq_along(seqVec)){
-        metric1[i] <- strsplit(metricNames[i],"[_]")[[1]][1]
-        metric2[i] <- strsplit(metricNames[i],"[_]")[[1]][2]
-        metricNotSame[i] <- (metric1[i] != metric2[i])
-    }
+if (all(logicListName == seq_along(metricNames))){
+    seqVec <- seq_along(metricNames)
+    metric1 <- vapply(seqVec, function(i){
+        strsplit(metricNames[i],"[_]")[[1]][1]
+    }, character(1))
+    metric2 <- vapply(seqVec, function(i){
+        strsplit(metricNames[i],"[_]")[[1]][2]
+    }, character(1))
+    metricNotSame <- vapply(seqVec, function(i){
+        metric1[i] != metric2[i]
+    }, logical(1))
 }
 metric12 = c(metric1, metric2)
 metrict = table(metric12)

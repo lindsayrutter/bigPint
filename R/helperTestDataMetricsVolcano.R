@@ -79,7 +79,7 @@ all(logicFC == TRUE)){
     }, logical(1))
 }
 
-if (all(logicListName == seq(1, length(metricNames)))){
+if (all(logicListName == seq_along(metricNames))){
     seqVec <- seq_along(metricNames)
     metric1 <- vapply(seqVec, function(i){
         strsplit(metricNames[i],"[_]")[[1]][1]

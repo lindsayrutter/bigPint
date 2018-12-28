@@ -5,14 +5,14 @@ generalMessage = "For more information about formatting the dataMetrics
 object, see https://lrutter.github.io/bigPint/articles/dataMetrics.html"
 
 colNames = colnames(data[,-1])
-seqVec <- seq(1,length(colNames))
+seqVec <- seq_along(colNames)
 
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))
 
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
 
-if (all(logicPerl == seq(1,length(colNames)))){
+if (all(logicPerl == seqVec)){
     colGroups <- vapply(seqVec, function(i){
         strsplit(colNames[i],"[.]")[[1]][1]
     }, character(1))
@@ -50,7 +50,7 @@ logicListName = grep("^[a-zA-Z0-9]+_[a-zA-Z0-9]+", metricNames, perl=TRUE)
 refID = sort(data$ID)
 refIDs = lapply(dataMetrics, function(x) all(sort(x[,1]) == refID))
 
-if (all(logicListName == seq(1,length(metricNames)))){
+if (all(logicListName == seq_along(metricNames))){
     seqVec <- seq_along(metricNames)
     metric1 <- vapply(seqVec, function(i){
         strsplit(metricNames[i],"[_]")[[1]][1]

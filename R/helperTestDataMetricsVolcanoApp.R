@@ -13,14 +13,14 @@ if (!methods::is(dataMetrics, "list")){
 }
 
 colNames = colnames(data[,-1])
-seqVec <- seq(1,length(colNames))
+seqVec <- seq_along(colNames)
 
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))
 
 logicPerl = grep("^[a-zA-Z0-9]+\\.[0-9]+", colNames, perl=TRUE)
 
-if (all(logicPerl == seq(1,length(colNames)))){
+if (all(logicPerl == seq_along(colNames))){
     colGroups <- vapply(seqVec, function(i){
         strsplit(colNames[i],"[.]")[[1]][1]
     }, character(1))
@@ -75,7 +75,7 @@ if (all(logicPValue == TRUE) && all(logicFC == TRUE)){
     }, logical(1))
 }
 
-if (all(logicListName == seq(1, length(metricNames)))){
+if (all(logicListName == seq_along(metricNames))){
     seqVec <- seq_along(metricNames)
     metric1 <- vapply(seqVec, function(i){
         strsplit(metricNames[i],"[_]")[[1]][1]

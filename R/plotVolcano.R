@@ -195,7 +195,7 @@ ret <- lapply(cols.combn, function(x){
         if (hover == TRUE){
             IDs = curPairSel$ID
             gP <- ggplotly(p)
-            seqVec = seq(1, length(gP[["x"]][["data"]])-1)
+            seqVec = seq(length(gP[["x"]][["data"]])-1)
             for (l in seq_along(seqVec)){
             gP[["x"]][["data"]][[l]][["hoverinfo"]] <- "none"}
             newText = IDs

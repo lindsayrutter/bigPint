@@ -7,7 +7,7 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) { #took out ret
     hC = hclust(d, method=aggMethod)
     k = cutree(hC, k=nC)
     
-    seqVec = seq(1, nC)
+    seqVec = seq(nC)
     plot_clusters = lapply(seq_along(seqVec), function(j){
         i = rev(order(table(k)))[j]
         x = as.data.frame(cData[which(k==i),])
