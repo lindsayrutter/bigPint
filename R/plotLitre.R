@@ -98,78 +98,77 @@ ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
 ret <- lapply(cols.combn, function(x){
     group1 = x[1]
     group2 = x[2]
-        si1 <- which(colGroups %in% group1)
-        si2 <- which(colGroups %in% group2)
-        si <- c(si1, si2)
-        datSel = data[,c(1, si)]
-        
-        hexdf = helperMakeHex(datSel, si1, si2, xbins)[["hexdf"]]
-        maxRange = helperMakeHex(datSel, si1, si2, xbins)[["maxRange"]]
-        clrs = helperMakeHex(datSel, si1, si2, xbins)[["clrs"]]
-        my_breaks = helperMakeHex(datSel, si1, si2, xbins)[["my_breaks"]]
-        x = helperMakeHex(datSel, si1, si2, xbins)[["x"]]
-        y = helperMakeHex(datSel, si1, si2, xbins)[["y"]]
-        
-        if (option == "hexagon"){
-            p <- ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts,
-            fill=countColor2)) + geom_hex(stat="identity") +
-            scale_fill_manual(labels = as.character(my_breaks),
-            values = rev(clrs), name = "Gene count") +
-            geom_abline(intercept = 0, color = "red", size = 0.25) + 
-            labs(x = paste0("Read count ", "(", group1, ")"),
-            y = paste0("Read count ", "(", group2, ")")) +
-            theme(axis.text=element_text(size=15),
-            axis.title=element_text(size=15),
-            legend.title=element_text(size=15),
-            legend.text=element_text(size=15)) +
-            coord_fixed(ratio=1)   
-        }
-        else{
-            mainPoints = data.frame(x=x, y=y)
-            p <- ggplot(mainPoints, aes(x=x, y=y)) +
-            geom_point(size = pointSize) + geom_abline(intercept = 0,
-            color = "red", size = 0.25) + labs(x = paste0("Read count ", "(",
-            group1, ")"), y = paste0("Read count ", "(", group2, ")")) +
-            theme(axis.text=element_text(size=15),
-            axis.title=element_text(size=15),
-            legend.title=element_text(size=15),
-            legend.text=element_text(size=15)) +
-            coord_fixed(ratio=1)
-        }
-        if (is.null(geneList)){
-            rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]]
-            [threshVar] < threshVal)
-            rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
-            [threshVar] < threshVal)
-            geneList <- dataMetrics[[paste0(group1, "_",
-            group2)]][c(rowDEG1, rowDEG2),1]
-        }
+    si1 <- which(colGroups %in% group1)
+    si2 <- which(colGroups %in% group2)
+    si <- c(si1, si2)
+    datSel = data[,c(1, si)]
+    
+    hexdf = helperMakeHex(datSel, si1, si2, xbins)[["hexdf"]]
+    maxRange = helperMakeHex(datSel, si1, si2, xbins)[["maxRange"]]
+    clrs = helperMakeHex(datSel, si1, si2, xbins)[["clrs"]]
+    my_breaks = helperMakeHex(datSel, si1, si2, xbins)[["my_breaks"]]
+    x = helperMakeHex(datSel, si1, si2, xbins)[["x"]]
+    y = helperMakeHex(datSel, si1, si2, xbins)[["y"]]
+    
+    if (option == "hexagon"){
+        p <- ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts,
+        fill=countColor2)) + geom_hex(stat="identity") +
+        scale_fill_manual(labels = as.character(my_breaks),
+        values = rev(clrs), name = "Gene count") +
+        geom_abline(intercept = 0, color = "red", size = 0.25) + 
+        labs(x = paste0("Read count ", "(", group1, ")"),
+        y = paste0("Read count ", "(", group2, ")")) +
+        theme(axis.text=element_text(size=15),
+        axis.title=element_text(size=15),
+        legend.title=element_text(size=15),
+        legend.text=element_text(size=15)) +
+        coord_fixed(ratio=1)   
+    }
+    else{
+        mainPoints = data.frame(x=x, y=y)
+        p <- ggplot(mainPoints, aes(x=x, y=y)) +
+        geom_point(size = pointSize) + geom_abline(intercept = 0,
+        color = "red", size = 0.25) + labs(x = paste0("Read count ", "(",
+        group1, ")"), y = paste0("Read count ", "(", group2, ")")) +
+        theme(axis.text=element_text(size=15),
+        axis.title=element_text(size=15),
+        legend.title=element_text(size=15),
+        legend.text=element_text(size=15)) +
+        coord_fixed(ratio=1)
+    }
+    if (is.null(geneList)){
+        rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]]
+        [threshVar] < threshVal)
+        rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
+        [threshVar] < threshVal)
+        geneList <- dataMetrics[[paste0(group1, "_",
+        group2)]][c(rowDEG1, rowDEG2),1]
+    }
 
-        ret <- lapply(geneList, function(x) {
-            currID = x
-            currGene = data %>% filter(ID == currID)
-            sampleComb = as.data.frame(crossing(as.numeric(currGene[si1]),
-            as.numeric(currGene[si2])))
-            colnames(sampleComb) = c("x", "y")
-            
-            ret <- p + geom_point(data = sampleComb, aes(x=x, y=y),
-            inherit.aes = FALSE, color = pointColor, size = pointSize) +
-            ggtitle(currGene$ID)
-            
-            if (saveFile == TRUE){
-                jpeg(filename=paste0(outDir, "/", group1, "_", group2, "_",
-                currGene$ID, "_litre.jpg"), height=700, width=1100)
-                print(ret)
-                dev.off()
-            }
-            return(list(plot = ret, name = paste0(group1, "_", group2, "_", currGene$ID)))
+    ret <- lapply(geneList, function(x) {
+        currID = x
+        currGene = data %>% filter(ID == currID)
+        sampleComb = as.data.frame(crossing(as.numeric(currGene[si1]),
+        as.numeric(currGene[si2])))
+        colnames(sampleComb) = c("x", "y")
+        
+        ret <- p + geom_point(data = sampleComb, aes(x=x, y=y),
+        inherit.aes = FALSE, color = pointColor, size = pointSize) +
+        ggtitle(currGene$ID)
+        
+        if (saveFile == TRUE){
+            jpeg(filename=paste0(outDir, "/", group1, "_", group2, "_",
+            currGene$ID, "_litre.jpg"), height=700, width=1100)
+            print(ret)
+            dev.off()
+        }
+        return(list(plot = ret, name = paste0(group1, "_", group2, "_",
+        currGene$ID)))
     })
 })
-
-    ret <- ret[[1]]
-    
-    retPlots <- lapply(ret, function(x) {x$plot})
-    retNames <- lapply(ret, function(x) {x$name})
-    names(retPlots) <- retNames
+ret <- ret[[1]]
+retPlots <- lapply(ret, function(x) {x$plot})
+retNames <- lapply(ret, function(x) {x$name})
+names(retPlots) <- retNames
 invisible(retPlots)
 }

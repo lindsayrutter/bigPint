@@ -51,22 +51,6 @@ else if (!is.null(dataMetrics)){
 p
 }
 
-# k=1
-# names_list = list()
-# data_list = list()
-# seqVec = seq(1, length(myPairs)-1)
-# for (i in seq_along(seqVec)){
-#     for (j in (i+1):length(myPairs)){
-#         group1 = myPairs[i]
-#         group2 = myPairs[j]
-#         datSel <- cbind(ID=data$ID, data[,which(colGroups %in%
-#         c(group1, group2))])
-#         data_list[[k]] <- datSel
-#         names_list[[k]] <- paste0(group1,"_",group2)
-#         k = k +1
-#     }
-# }
-
 cols.combn <- combn(myPairs, 2, simplify = FALSE)
 data_list <- lapply(cols.combn, function(x) {data %>% select(ID,
 starts_with(x[1]), starts_with(x[2]))})
@@ -82,6 +66,5 @@ return(p)
 
 ret <- lapply(data_list, function(x) my_fn2(x))
 names(ret) <- names_list
-
 return(ret)
 }

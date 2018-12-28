@@ -98,95 +98,95 @@ if (is.null(geneList) && !is.null(dataMetrics)){
 key <- val <- ID <- Sample <- Count <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
+cols.combn <- combn(myPairs, 2, simplify = FALSE) ### ADDED
 ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
 
-ret=list()
-seqVec <- seq(1, length(myPairs)-1)
-for (i in seq_along(seqVec)){
-    for (j in (i+1):length(myPairs)){
-        group1 = myPairs[i]
-        group2 = myPairs[j]
-        datSel <- cbind(ID=data$ID, data[,which(colGroups %in%
-        c(group1, group2))])
-        datSel$ID <- as.character(datSel$ID)
-        boxDat <- datSel %>% gather(key, val, -c(ID))
-        colnames(boxDat) <- c("ID", "Sample", "Count")
-        userOrder <- unique(boxDat$Sample)
-        boxDat$Sample <- as.factor(boxDat$Sample)
-        levels(boxDat$Sample) <- userOrder
+ret <- lapply(cols.combn, function(x){
+    group1 = x[1]
+    group2 = x[2]
+    datSel <- cbind(ID=data$ID, data[,which(colGroups %in%
+    c(group1, group2))])
+    datSel$ID <- as.character(datSel$ID)
+    boxDat <- datSel %>% gather(key, val, -c(ID))
+    colnames(boxDat) <- c("ID", "Sample", "Count")
+    userOrder <- unique(boxDat$Sample)
+    boxDat$Sample <- as.factor(boxDat$Sample)
+    levels(boxDat$Sample) <- userOrder
+    
+    if (!is.null(geneList)){
+        pcpDat <- datSel[which(datSel$ID %in% geneList),]
+        pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
+        colnames(pcpDat2) <- c("ID", "Sample", "Count")
+        p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
+        geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample',
+        y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
         
-        if (!is.null(geneList)){
-            pcpDat <- datSel[which(datSel$ID %in% geneList),]
-            pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
-            colnames(pcpDat2) <- c("ID", "Sample", "Count")
-            p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
-            geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample',
-            y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
-            
-            if (vxAxis == TRUE){
-                p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
-            }
-            
-            if (hover == TRUE){
-                gP <- ggplotly(p)
-                gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
-                oldText = gP[["x"]][["data"]][[2]][["text"]]
-                newText = unlist(lapply(oldText, function(x)
-                strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
-                gP[["x"]][["data"]][[2]][["text"]] <- newText
-            }
+        if (vxAxis == TRUE){
+            p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
         }
-        else if(!is.null(dataMetrics)){
-            rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]]
-            [threshVar] < threshVal)
-            rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
-            [threshVar] < threshVal)
-            rowDEG <- c(rowDEG1, rowDEG2)
-            degID1 <- dataMetrics[[paste0(group1,"_",group2)]][rowDEG,]$ID
-            degID2 <- dataMetrics[[paste0(group2,"_",group1)]][rowDEG,]$ID
-            degID <- c(as.character(degID1), as.character(degID2))
-            pcpDat <- datSel[which(datSel$ID %in% degID),]
-            pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
-            colnames(pcpDat2) <- c("ID", "Sample", "Count")
-            p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
-            geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample',
-            y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
-            
-            if (vxAxis == TRUE){
-                p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
-            }
-            
-            if (hover == TRUE){
-                gP <- ggplotly(p)
-                gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
-                oldText = gP[["x"]][["data"]][[2]][["text"]]
-                newText = unlist(lapply(oldText, function(x)
-                strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
-                gP[["x"]][["data"]][[2]][["text"]] <- newText
-            }
-            
-        }else{
-            p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
-            geom_boxplot()
-            
-            if (vxAxis == TRUE){
-                p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
-            }
+        
+        if (hover == TRUE){
+            gP <- ggplotly(p)
+            gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
+            oldText = gP[["x"]][["data"]][[2]][["text"]]
+            newText = unlist(lapply(oldText, function(x)
+            strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
+            gP[["x"]][["data"]][[2]][["text"]] <- newText
         }
-        if (saveFile == TRUE){
-            fileName = paste0(outDir, "/", group1, "_", group2, "_deg_pcp_",
-            threshVal, ".jpg")
-            jpeg(filename=fileName, height=900, width=900)
-            print(p)
-            dev.off()
-        }
-        if (hover ==FALSE){
-        ret[[paste0(group1, "_", group2)]] <- p     
-        }
-        else{
-        ret[[paste0(group1, "_", group2)]] <- gP        
     }
-}
-}
-invisible(ret)
+    else if(!is.null(dataMetrics)){
+        rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]]
+        [threshVar] < threshVal)
+        rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
+        [threshVar] < threshVal)
+        rowDEG <- c(rowDEG1, rowDEG2)
+        degID1 <- dataMetrics[[paste0(group1,"_",group2)]][rowDEG,]$ID
+        degID2 <- dataMetrics[[paste0(group2,"_",group1)]][rowDEG,]$ID
+        degID <- c(as.character(degID1), as.character(degID2))
+        pcpDat <- datSel[which(datSel$ID %in% degID),]
+        pcpDat2 <- pcpDat %>% gather(key, val, -c(ID))
+        colnames(pcpDat2) <- c("ID", "Sample", "Count")
+        p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
+        geom_boxplot() + geom_line(data=pcpDat2, aes_string(x = 'Sample',
+        y = 'Count', group = 'ID'), size = lineSize, color = lineColor)
+        
+        if (vxAxis == TRUE){
+            p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+        }
+        
+        if (hover == TRUE){
+            gP <- ggplotly(p)
+            gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"  
+            oldText = gP[["x"]][["data"]][[2]][["text"]]
+            newText = unlist(lapply(oldText, function(x)
+            strsplit(trimws(strsplit(x, ":")[[1]][2]), "<br")[[1]][1]))
+            gP[["x"]][["data"]][[2]][["text"]] <- newText
+        }
+        
+    }else{
+        p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) +
+        geom_boxplot()
+        
+        if (vxAxis == TRUE){
+            p <- p + theme(axis.text.x = element_text(angle=90, hjust=1))
+        }
+    }
+    if (saveFile == TRUE){
+        fileName = paste0(outDir, "/", group1, "_", group2, "_deg_pcp_",
+        threshVal, ".jpg")
+        jpeg(filename=fileName, height=900, width=900)
+        print(p)
+        dev.off()
+    }
+    if (hover ==FALSE){
+        return(list(plot = p, name = paste0(group1, "_", group2)))
+    }
+    else{
+        return(list(plot = gP, name = paste0(group1, "_", group2)))       
+    }
+})
+retPlots <- lapply(ret, function(x) {x$plot})
+retNames <- lapply(ret, function(x) {x$name})
+names(retPlots) <- retNames
+invisible(retPlots)
 }

@@ -22,12 +22,6 @@ if (!all(logicPerl == seqVec)){
 }
 
 if (all(logicPerl == seqVec)){
-    # colGroups = c()
-    # colReps = c()
-    # for (i in seq_along(seqVec)){
-    #     colGroups[i] <- strsplit(colNames[i],"[.]")[[1]][1]
-    #     colReps[i] <- strsplit(colNames[i],"[.]")[[1]][2]
-    # }
     colGroups <- vapply(seqVec, function(i){
         strsplit(colNames[i],"[.]")[[1]][1]
     }, character(1))

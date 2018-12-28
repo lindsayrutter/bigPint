@@ -2,6 +2,7 @@
 helperTestDataMetricsVolcano <- function(data, dataMetrics, threshVar,
 PValue, logFC){
 
+colNames = colnames(data[,-1])
 seqVec <- seq_along(colNames)
     
 generalMessage = "For more information about formatting the dataMetrics
@@ -13,8 +14,6 @@ if (!methods::is(dataMetrics, "list")){
     stop(paste0("Data metrics object must be of class 'list'. ",
     generalMessage))
 }
-
-colNames = colnames(data[,-1])
 
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))
@@ -60,20 +59,7 @@ refIDs = lapply(dataMetrics, function(x) all(sort(x[,1]) == refID))
 if (all(logicThresh == TRUE) && all(logicPValue == TRUE) &&
 all(logicFC == TRUE)){
     seqVec <- seq_along(metricNames)
-    # logicThreshQuant = c()
-    # logicPValueQuant = c()
-    # logicFCQuant = c()
-    # for (i in seq_along(seqVec)){
-    #     indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar)
-    #     logicThreshQuant[i] <- methods::is(dataMetrics[[i]][[indexThresh]],
-    #     "numeric") || methods::is(dataMetrics[[i]][[indexThresh]], "integer")
-    #     indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue)
-    #     logicPValueQuant[i] <- methods::is(dataMetrics[[i]][[indexPValue]],
-    #     "numeric") || methods::is(dataMetrics[[i]][[indexPValue]], "integer")
-    #     indexFC <- which(colnames(dataMetrics[[i]]) %in% logFC)
-    #     logicFCQuant[i] <- methods::is(dataMetrics[[i]][[indexFC]],
-    #     "numeric") || methods::is(dataMetrics[[i]][[indexFC]], "integer")
-    # }
+
     logicThreshQuant <- vapply(seqVec, function(i){
         indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar);
         methods::is(dataMetrics[[i]][[indexThresh]],
@@ -94,15 +80,6 @@ all(logicFC == TRUE)){
 }
 
 if (all(logicListName == seq(1, length(metricNames)))){
-    # metric1 = c()
-    # metric2 = c()
-    # metricNotSame = c()
-    # seqVec <- seq(1,length(metricNames))
-    # for (i in seq_along(seqVec)){
-    #     metric1[i] <- strsplit(metricNames[i],"[_]")[[1]][1]
-    #     metric2[i] <- strsplit(metricNames[i],"[_]")[[1]][2]
-    #     metricNotSame[i] <- (metric1[i] != metric2[i])
-    # }
     seqVec <- seq_along(metricNames)
     metric1 <- vapply(seqVec, function(i){
         strsplit(metricNames[i],"[_]")[[1]][1]

@@ -14,22 +14,6 @@ myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
 ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
 
-# k=1
-# names_list = list()
-# data_list = list()
-# seqVec <- seq(1, length(myPairs)-1)
-# for (i in seq_along(seqVec)){
-#     for (j in (i+1):length(myPairs)){
-#         group1 = myPairs[i]
-#         group2 = myPairs[j]
-#         datSel <- cbind(ID=data$ID, data[,which(colGroups %in%
-#         c(group1, group2))])
-#         data_list[[k]] <- datSel
-#         names_list[[k]] <- paste0(group1,"_",group2)
-#         k = k +1
-#     }
-# }
-
 cols.combn <- combn(myPairs, 2, simplify = FALSE)
 data_list <- lapply(cols.combn, function(x) {data %>% select(ID,
 starts_with(x[1]), starts_with(x[2]))})
@@ -42,7 +26,8 @@ x = data[,c(xChar)]
 y = data[,c(yChar)]
 seqVec <- seq_along(x)
 fract <- x/y
-indexPoints <- which(!is.nan(fract) & (fract > (threshFC+1) | fract < (1/(threshFC+1))))
+indexPoints <- which(!is.nan(fract) & (fract > (threshFC+1) |
+fract < (1/(threshFC+1))))
 
 plotPoints = data[indexPoints,]
 

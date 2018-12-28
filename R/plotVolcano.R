@@ -106,116 +106,115 @@ if (is.null(geneList) && !is.null(dataMetrics)){
 countColor2 <- counts <- hexID <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
+cols.combn <- combn(myPairs, 2, simplify = FALSE) ### ADDED
 ifelse(!dir.exists(outDir), dir.create(outDir), FALSE)
 
-ret = list()
-seqVec = seq(1, length(myPairs)-1)
-for (k in seq_along(seqVec)){
-    for (j in (k+1):length(myPairs)){
-        group1 = myPairs[k]
-        group2 = myPairs[j]
-        datSel = cbind(ID=data$ID, data[,which(colGroups %in%
-        c(group1, group2))])
-        curPairDF1 = dataMetrics[[paste0(group1, "_", group2)]]
-        curPairDF2 = dataMetrics[[paste0(group2, "_", group1)]]
+ret <- lapply(cols.combn, function(x){
+    group1 = x[1]
+    group2 = x[2]
+    datSel = cbind(ID=data$ID, data[,which(colGroups %in%
+    c(group1, group2))])
+    curPairDF1 = dataMetrics[[paste0(group1, "_", group2)]]
+    curPairDF2 = dataMetrics[[paste0(group2, "_", group1)]]
+    
+    if (!is.null(curPairDF1)){curPairDF = curPairDF1}
+    if (!is.null(curPairDF2)){curPairDF = curPairDF2}
+    
+    cpd0 = which(curPairDF[[PValue]]==0)
+    curPairDF[[PValue]][cpd0] = sort(unique(curPairDF[[PValue]]))[2]
+    xMax = max(curPairDF[[logFC]])
+    xMin = min(curPairDF[[logFC]])
+    yMax = -log(min(curPairDF[[PValue]]))
+    yMin = -log(max(curPairDF[[PValue]]))
+    fcMax = ceiling(max(exp(xMax), 1/exp(xMin)))
+    curPairSel = curPairDF[which(curPairDF[[threshVar]] < threshVal),]
+    degData = filter(datSel, ID %in% curPairSel$ID)
+    if (!is.null(geneList)){
+        curPairSel = curPairDF[which(curPairDF$ID %in% geneList),]
+        degData = filter(datSel, ID %in% geneList)
+    }
+    
+    x = curPairDF[[logFC]]
+    y = -log(curPairDF[[PValue]])
+    x2 = curPairSel[[logFC]]
+    y2 = -log(curPairSel[[PValue]])
+    h = hexbin(x=x, y=y, xbins=xbins, shape=3, IDs=TRUE,
+    xbnds=c(xMin, xMax), ybnds=c(yMin, yMax))
+    hexdf = helperMakeHexDF(h)[["hexdf"]]
+    clrs = helperMakeHexDF(h)[["clrs"]]
+    my_breaks = helperMakeHexDF(h)[["my_breaks"]]
+    
+    seqVec = seq_along(strsplit(levels(hexdf$countColor2), "-"))
+    datSp1 <- vapply(seqVec, function(x){strsplit(levels(hexdf$countColor2),
+    "-")[[x]][1]}, character(1))
+    
+    seqVec = seq_along(strsplit(datSp1, "\\+"))
+    datSp2 <- vapply(seqVec, function(x){strsplit(datSp1, "\\+")[[x]][1]},
+    character(1))
+    bin <- mapvalues(hexdf$countColor2, from = levels(hexdf$countColor2),
+    to = datSp2)
+    hexdf$bin <- as.integer(bin)
+    
+    if (option == "allPoints"){
+        mainPoints = data.frame(x=x, y=y)
+        overlayPoints = data.frame(x=x2, y=y2)
+        p <- ggplot(mainPoints, aes(x=x, y=y)) + geom_point(size =
+        pointSize) + geom_point(data = overlayPoints, aes_string(x=x2,
+        y=y2), colour = pointColor, size = pointSize) +
+        theme(axis.text=element_text(size=15),
+        axis.title=element_text(size=15),
+        legend.title=element_text(size=15),
+        legend.text=element_text(size=15)) +
+        coord_cartesian(xlim = c(xMin, xMax), ylim = c(yMin, yMax)) +
+        xlab(logFC) + ylab(paste0("-log10(", PValue, ")"))
         
-        if (!is.null(curPairDF1)){curPairDF = curPairDF1}
-        if (!is.null(curPairDF2)){curPairDF = curPairDF2}
-        
-        cpd0 = which(curPairDF[[PValue]]==0)
-        curPairDF[[PValue]][cpd0] = sort(unique(curPairDF[[PValue]]))[2]
-        xMax = max(curPairDF[[logFC]])
-        xMin = min(curPairDF[[logFC]])
-        yMax = -log(min(curPairDF[[PValue]]))
-        yMin = -log(max(curPairDF[[PValue]]))
-        fcMax = ceiling(max(exp(xMax), 1/exp(xMin)))
-        curPairSel = curPairDF[which(curPairDF[[threshVar]] < threshVal),]
-        degData = filter(datSel, ID %in% curPairSel$ID)
-        if (!is.null(geneList)){
-            curPairSel = curPairDF[which(curPairDF$ID %in% geneList),]
-            degData = filter(datSel, ID %in% geneList)
-        }
-        
-        x = curPairDF[[logFC]]
-        y = -log(curPairDF[[PValue]])
-        x2 = curPairSel[[logFC]]
-        y2 = -log(curPairSel[[PValue]])
-        h = hexbin(x=x, y=y, xbins=xbins, shape=3, IDs=TRUE,
-        xbnds=c(xMin, xMax), ybnds=c(yMin, yMax))
-        hexdf = helperMakeHexDF(h)[["hexdf"]]
-        clrs = helperMakeHexDF(h)[["clrs"]]
-        my_breaks = helperMakeHexDF(h)[["my_breaks"]]
-        
-        datSp1 <- c()
-        seqVec = seq(1, length(strsplit(levels(hexdf$countColor2), "-")))
-        for (i in seq_along(seqVec)){datSp1[i] <-
-        strsplit(levels(hexdf$countColor2), "-")[[i]][1]}
-        datSp2 <- c()
-        seqVec = seq(1, length(strsplit(datSp1, "\\+")))
-        for (i in seq_along(seqVec)){datSp2[i] <-
-        strsplit(datSp1, "\\+")[[i]][1]}
-        bin <- mapvalues(hexdf$countColor2, from = levels(hexdf$countColor2),
-        to = datSp2)
-        hexdf$bin <- as.integer(bin)
-        
-        if (option == "allPoints"){
-            mainPoints = data.frame(x=x, y=y)
-            overlayPoints = data.frame(x=x2, y=y2)
-            p <- ggplot(mainPoints, aes(x=x, y=y)) + geom_point(size =
-            pointSize) + geom_point(data = overlayPoints, aes_string(x=x2,
-            y=y2), colour = pointColor, size = pointSize) +
-            theme(axis.text=element_text(size=15),
-            axis.title=element_text(size=15),
-            legend.title=element_text(size=15),
-            legend.text=element_text(size=15)) +
-            coord_cartesian(xlim = c(xMin, xMax), ylim = c(yMin, yMax)) +
-            xlab(logFC) + ylab(paste0("-log10(", PValue, ")"))
-            
-            if (hover == TRUE){
-                IDs=curPairSel$ID
-                gP <- ggplotly(p)
-                gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"
-                newText = IDs
-                gP[["x"]][["data"]][[2]][["text"]] <- newText
-            }
-        }
-        else{
-            overlayPoints = data.frame(x=x2, y=y2)
-            p <- ggplot(hexdf, aes(x=x, y=y)) + geom_hex(stat="identity",
-            aes(fill=bin)) + scale_fill_gradientn(colors=rev(clrs[-1]),
-            guide="legend", labels=levels(hexdf$countColor2), name="Count") +
-            theme(axis.text=element_text(size=15), axis.title=
-            element_text(size=15), legend.title=element_text(size=15),
-            legend.text=element_text(size=15)) + coord_cartesian(xlim =
-            c(xMin,xMax), ylim=c(yMin,yMax)) + geom_point(data=overlayPoints,
-            aes_string(x=x2, y=y2), color = pointColor, size = pointSize,
-            inherit.aes=FALSE) + xlab(logFC) +
-            ylab(paste0("-log10(", PValue, ")"))
-            
-            if (hover == TRUE){
-                IDs = curPairSel$ID
-                gP <- ggplotly(p)
-                seqVec = seq(1, length(gP[["x"]][["data"]])-1)
-                for (l in seq_along(seqVec)){
-                gP[["x"]][["data"]][[l]][["hoverinfo"]] <- "none"}
-                newText = IDs
-                gP[["x"]][["data"]][[length(gP[["x"]][["data"]])]][["text"]] <-
-                newText 
-            }
-        }
-        if (saveFile == TRUE){
-            jpeg(filename=paste0(outDir, "/", group1, "_", group2,
-            "_degVolcano.jpg"), height=700, width=1100)
-            print(p)
-            dev.off()
-        }
-        if (hover == FALSE){
-            ret[[paste0(group1, "_", group2)]] <- p     
-        }
-        else{
-            ret[[paste0(group1, "_", group2)]] <- gP        
+        if (hover == TRUE){
+            IDs=curPairSel$ID
+            gP <- ggplotly(p)
+            gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"
+            newText = IDs
+            gP[["x"]][["data"]][[2]][["text"]] <- newText
         }
     }
-}
-invisible(ret)
+    else{
+        overlayPoints = data.frame(x=x2, y=y2)
+        p <- ggplot(hexdf, aes(x=x, y=y)) + geom_hex(stat="identity",
+        aes(fill=bin)) + scale_fill_gradientn(colors=rev(clrs[-1]),
+        guide="legend", labels=levels(hexdf$countColor2), name="Count") +
+        theme(axis.text=element_text(size=15), axis.title=
+        element_text(size=15), legend.title=element_text(size=15),
+        legend.text=element_text(size=15)) + coord_cartesian(xlim =
+        c(xMin,xMax), ylim=c(yMin,yMax)) + geom_point(data=overlayPoints,
+        aes_string(x=x2, y=y2), color = pointColor, size = pointSize,
+        inherit.aes=FALSE) + xlab(logFC) +
+        ylab(paste0("-log10(", PValue, ")"))
+        
+        if (hover == TRUE){
+            IDs = curPairSel$ID
+            gP <- ggplotly(p)
+            seqVec = seq(1, length(gP[["x"]][["data"]])-1)
+            for (l in seq_along(seqVec)){
+            gP[["x"]][["data"]][[l]][["hoverinfo"]] <- "none"}
+            newText = IDs
+            gP[["x"]][["data"]][[length(gP[["x"]][["data"]])]][["text"]] <-
+            newText 
+        }
+    }
+    if (saveFile == TRUE){
+        jpeg(filename=paste0(outDir, "/", group1, "_", group2,
+        "_degVolcano.jpg"), height=700, width=1100)
+        print(p)
+        dev.off()
+    }
+    if (hover == FALSE){
+        return(list(plot = p, name = paste0(group1, "_", group2)))    
+    }
+    else{
+        return(list(plot = gP, name = paste0(group1, "_", group2)))        
+    }
+})
+retPlots <- lapply(ret, function(x) {x$plot})
+retNames <- lapply(ret, function(x) {x$name})
+names(retPlots) <- retNames
+invisible(retPlots)
 }

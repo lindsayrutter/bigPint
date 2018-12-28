@@ -153,7 +153,7 @@ if (is.null(geneList) && !is.null(dataMetrics)){
 key <- val <- ID <- rainbow <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
-cols.combn <- combn(myPairs, 2, simplify = FALSE) ### ADDED
+cols.combn <- combn(myPairs, 2, simplify = FALSE)
 
 ret <- lapply(cols.combn, function(x){
     group1 = x[1]

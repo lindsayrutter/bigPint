@@ -56,17 +56,6 @@ refIDs = lapply(dataMetrics, function(x) all(sort(x[,1]) == refID))
 
 if (all(logicPValue == TRUE) && all(logicFC == TRUE)){
     seqVec <- seq_along(metricNames)
-    # logicPValueQuant = c()
-    # logicFCQuant = c()
-    # seqVec <- seq(1,length(metricNames))
-    # for (i in seq_along(seqVec)){
-    #     indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue)
-    #     logicPValueQuant[i] <- methods::is(dataMetrics[[i]][[indexPValue]],
-    #     "numeric") || methods::is(dataMetrics[[i]][[indexPValue]], "integer")
-    #     indexFC <- which(colnames(dataMetrics[[i]]) %in% logFC)
-    #     logicFCQuant[i] <- methods::is(dataMetrics[[i]][[indexFC]],
-    #     "numeric") || methods::is(dataMetrics[[i]][[indexFC]], "integer")
-    # }
     logicThreshQuant <- vapply(seqVec, function(i){
         indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar);
         methods::is(dataMetrics[[i]][[indexThresh]],
@@ -87,15 +76,6 @@ if (all(logicPValue == TRUE) && all(logicFC == TRUE)){
 }
 
 if (all(logicListName == seq(1, length(metricNames)))){
-    # metric1 = c()
-    # metric2 = c()
-    # metricNotSame = c()
-    # seqVec <- seq(1,length(metricNames))
-    # for (i in seq_along(seqVec)){
-    #     metric1[i] <- strsplit(metricNames[i],"[_]")[[1]][1]
-    #     metric2[i] <- strsplit(metricNames[i],"[_]")[[1]][2]
-    #     metricNotSame[i] <- (metric1[i] != metric2[i])
-    # }
     seqVec <- seq_along(metricNames)
     metric1 <- vapply(seqVec, function(i){
         strsplit(metricNames[i],"[_]")[[1]][1]
