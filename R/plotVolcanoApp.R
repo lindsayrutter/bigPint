@@ -55,9 +55,11 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #'     shiny::runApp(app)
 #' }
 
-plotVolcanoApp = function(data=data, dataMetrics=dataMetrics, option="hexagon",
-pointColor = "orange"){
+plotVolcanoApp = function(data=data, dataMetrics=dataMetrics,
+    option=c("hexagon", "allPoints"), pointColor = "orange"){
 
+option <- match.arg(option)
+    
 helperTestData(data)
 if (!is.null(dataMetrics)){
     helperTestDataMetricsVolcanoApp(data, dataMetrics, "PValue", "logFC")

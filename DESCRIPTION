@@ -4,7 +4,7 @@ Title: Big multivariate data plotted interactively
 Description: Methods for visualizing large multivariate datasets using static and interactive scatterplot matrices, parallel coordinate plots, volcano plots, and litre plots. Includes examples for visualizing RNA-sequencing datasets and differentially expressed genes.
 Authors@R: c(person("Lindsay", "Rutter", email = "lindsayannerutter@gmail.com", role = c("aut","cre")),
   person("Dianne", "Cook", email = "dicook@monash.edu", role = c("aut")))
-License: GPL
+License: GPL-3
 Depends: R (>= 3.6)
 Imports: dplyr (>= 0.7.2), GGally (>= 1.3.2), ggplot2 (>= 2.2.1),
         graphics (>= 3.5.0), grDevices (>= 3.5.0), grid (>= 3.5.0),

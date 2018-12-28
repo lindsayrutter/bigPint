@@ -79,9 +79,12 @@
 #' 
 
 plotLitre = function(data=data, dataMetrics=NULL, geneList = NULL, 
-    threshVar="FDR", threshVal=0.05, option = "hexagon", pointSize=2,
-    pointColor = "orange", xbins=10, outDir=getwd(), saveFile = TRUE){
+    threshVar="FDR", threshVal=0.05, option = c("hexagon", "allPoints"), 
+    pointSize=2, pointColor = "orange", xbins=10, outDir=getwd(),
+    saveFile = TRUE){
 
+option <- match.arg(option)
+    
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){

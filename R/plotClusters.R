@@ -140,10 +140,14 @@
 #' 
 plotClusters <- function(data, dataMetrics = NULL, geneList = NULL,
     threshVar="FDR", threshVal=0.05, clusterAllData = TRUE, nC = 4, 
-    colList = rainbow(nC), aggMethod = "ward.D", yAxisLabel = "Count",
-    xAxisLabel = "Sample", lineSize = 0.1, lineAlpha = 0.5, vxAxis = FALSE,
-    outDir=getwd(), saveFile = TRUE, verbose=FALSE){
+    colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2", "single",
+    "complete", "average", "mcquitty", "median", "centroid"),
+    yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
+    lineAlpha = 0.5, vxAxis = FALSE, outDir=getwd(), saveFile = TRUE,
+    verbose=FALSE){
 
+aggMethod <- match.arg(aggMethod)
+    
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){

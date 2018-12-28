@@ -92,10 +92,13 @@
 #' 
 
 plotVolcano = function(data = data, dataMetrics = dataMetrics,
-    geneList = NULL, threshVar = "FDR", threshVal = 0.05, option = "hexagon",
-    logFC = "logFC", PValue = "PValue", xbins = 10, pointSize = 0.5,
-    pointColor = "orange", outDir = getwd(), saveFile=TRUE, hover = FALSE){
+    geneList = NULL, threshVar = "FDR", threshVal = 0.05,
+    option = c("hexagon", "allPoints"), logFC = "logFC", PValue = "PValue",
+    xbins = 10, pointSize = 0.5, pointColor = "orange", outDir = getwd(), 
+    saveFile=TRUE, hover = FALSE){
 
+option <- match.arg(option)
+    
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){

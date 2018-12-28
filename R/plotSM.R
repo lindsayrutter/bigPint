@@ -132,10 +132,12 @@
 #' 
 
 plotSM = function(data=data, dataMetrics=NULL, geneList = NULL,
-    threshVar="FDR", threshVal=0.05, option="allPoints", xbins=10,
-    threshFC=3, threshOrth=3, pointSize=0.5, pointColor = "orange",
-    outDir=getwd(), saveFile = TRUE){
+    threshVar="FDR", threshVal=0.05, option=c("allPoints", "foldChange",
+    "orthogonal", "hexagon"), xbins=10, threshFC=3, threshOrth=3,
+    pointSize=0.5, pointColor = "orange", outDir=getwd(), saveFile = TRUE){
 
+option <- match.arg(option)
+    
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){

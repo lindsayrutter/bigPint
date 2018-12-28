@@ -63,8 +63,10 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' }
 
 plotLitreApp = function(data=data, dataMetrics=dataMetrics, geneList = NULL,
-pointColor = "orange", option = "hexagon"){
+pointColor = "orange", option = c("hexagon", "allPoints")){
 
+option <- match.arg(option)
+    
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){
     helperTestDataMetricsLitreApp(data, dataMetrics)
