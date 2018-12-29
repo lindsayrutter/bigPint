@@ -1,3 +1,5 @@
+#' @importFrom utils combn
+#' @importFrom dplyr starts_with 
 helperSMOrth <- function(data, dataMetrics, outDir, pointSize,
 threshOrth, threshVar, threshVal){
 

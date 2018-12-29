@@ -38,6 +38,7 @@
 #' @importFrom utils str
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
+#' @importFrom utils combn
 #' @return List of n elements of litre plots, where n is the number of genes 
 #' determined to be superimposed through the dataMetrics or geneList
 #' parameter. If the saveFile parameter has a value of TRUE, then each of 

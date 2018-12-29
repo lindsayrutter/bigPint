@@ -1,3 +1,5 @@
+#' @importFrom utils combn
+#' @importFrom dplyr starts_with 
 helperSMHex <- function(data, dataMetrics, outDir, pointSize, pointColor,
 xbins, threshVar, threshVal, geneList){
 

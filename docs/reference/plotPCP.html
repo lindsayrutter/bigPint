@@ -70,7 +70,7 @@ of whole dataset." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.5</span>
       </span>
     </div>
 
@@ -179,7 +179,8 @@ of whole dataset.</p>
 
     <pre class="usage"><span class='fu'>plotPCP</span>(<span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>,
   <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>,
-  <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -231,7 +232,7 @@ orientation; default FALSE</p></td>
     <tr>
       <th>outDir</th>
       <td><p>CHARACTER STRING | Output directory to save all plots; default 
-current directory</p></td>
+tempdir()</p></td>
     </tr>
     <tr>
       <th>saveFile</th>

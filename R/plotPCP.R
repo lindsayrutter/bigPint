@@ -41,6 +41,7 @@
 #' @importFrom stats lm predict cutree dist hclust
 #' @importFrom tidyr gather
 #' @importFrom utils str
+#' @importFrom utils combn
 #' @return List of n elements of parallel coordinate plots, where n is the
 #' number of treatment pair combinations in the data object. The background of
 #' each plot is a side-by-side boxplot of the full data object, and the

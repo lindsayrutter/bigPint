@@ -12,7 +12,7 @@ levels = as.character(sort(as.numeric(levels(hexdf$countColor2)))))
 seqVec <- seq_along(levels(hexdf$countColor2)[-1])
 newNames <- vapply(seqVec, function(x){paste0(levels(hexdf$countColor2)[x],
 "-", levels(hexdf$countColor2)[x+1])}, character(1))
-levels(hexdf$countColor2)[1:length(levels(hexdf$countColor2))-1] <- newNames
+levels(hexdf$countColor2)[seq_along(levels(hexdf$countColor2)[-1])] <- newNames
 levels(hexdf$countColor2)[length(levels(hexdf$countColor2))] <-
 paste0(levels(hexdf$countColor2)[length(levels(hexdf$countColor2))], "+")
 

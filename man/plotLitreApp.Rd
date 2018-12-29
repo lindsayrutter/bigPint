@@ -5,7 +5,7 @@
 \title{Plot interactive litre plots}
 \usage{
 plotLitreApp(data = data, dataMetrics = dataMetrics, geneList = NULL,
-  pointColor = "orange", option = c("hexagon", "allPoints"))
+    pointColor = "orange", option = c("hexagon", "allPoints"))
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}

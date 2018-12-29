@@ -1,3 +1,5 @@
+#' @importFrom utils combn
+#' @importFrom dplyr starts_with 
 helperSMFC <- function(data, dataMetrics, outDir, pointSize, threshFC,
 threshVar, threshVal){
 

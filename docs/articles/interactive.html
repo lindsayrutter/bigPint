@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.5</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@
       <h1>Producing interactive plots</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2018-11-22</h4>
+            <h4 class="date">2018-12-28</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lrutter/bigPint/blob/master/vignettes/interactive.Rmd"><code>vignettes/interactive.Rmd</code></a></small>
       <div class="hidden name"><code>interactive.Rmd</code></div>
@@ -164,7 +164,10 @@
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(bigPint)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">data</span>(<span class="st">"soybean_cn_sub"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">soybean_cn_sub &lt;-<span class="st"> </span>soybean_cn_sub[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4"><span class="kw"><a href="../reference/plotSMApp.html">plotSMApp</a></span>(<span class="dt">data=</span>soybean_cn_sub)</a></code></pre></div>
+<a class="sourceLine" id="cb1-4" data-line-number="4">app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSMApp.html">plotSMApp</a></span>(<span class="dt">data=</span>soybean_cn_sub)</a>
+<a class="sourceLine" id="cb1-5" data-line-number="5"><span class="cf">if</span> (<span class="kw">interactive</span>()) {</a>
+<a class="sourceLine" id="cb1-6" data-line-number="6">    shiny<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(app)</a>
+<a class="sourceLine" id="cb1-7" data-line-number="7">}</a></code></pre></div>
 <p>Upon running the code above in your R session, an interactive window will open. By default, you will first see an “About” tab that explains the application. Simply click on the “Application” tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly <a href="https://bigpint.shinyapps.io/smplot">here</a>).</p>
 <iframe width="690" height="600" src="https://bigpint.shinyapps.io/smplot" style="border: 3px black solid;" allowfullscreen>
 </iframe>
@@ -178,7 +181,11 @@
 <a class="sourceLine" id="cb2-2" data-line-number="2"><span class="kw">data</span>(<span class="st">"soybean_ir_sub_metrics"</span>)</a>
 <a class="sourceLine" id="cb2-3" data-line-number="3">soybean_ir_sub_log &lt;-<span class="st"> </span>soybean_ir_sub</a>
 <a class="sourceLine" id="cb2-4" data-line-number="4">soybean_ir_sub_log[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw">log</span>(soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>]<span class="op">+</span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb2-5" data-line-number="5"><span class="kw"><a href="../reference/plotLitreApp.html">plotLitreApp</a></span>(<span class="dt">data=</span>soybean_ir_sub_log, <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</a></code></pre></div>
+<a class="sourceLine" id="cb2-5" data-line-number="5">app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotLitreApp.html">plotLitreApp</a></span>(<span class="dt">data=</span>soybean_ir_sub_log,</a>
+<a class="sourceLine" id="cb2-6" data-line-number="6">    <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</a>
+<a class="sourceLine" id="cb2-7" data-line-number="7"><span class="cf">if</span> (<span class="kw">interactive</span>()) {</a>
+<a class="sourceLine" id="cb2-8" data-line-number="8">    shiny<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(app, <span class="dt">port =</span> <span class="dv">1234</span>, <span class="dt">launch.browser =</span> <span class="ot">TRUE</span>)</a>
+<a class="sourceLine" id="cb2-9" data-line-number="9">}</a></code></pre></div>
 <p>Upon running the code above in your R session, an interactive window will open. By default, you will first see an “About” tab that explains the application. Simply click on the “Application” tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly <a href="https://bigpint.shinyapps.io/litre/">here</a>).</p>
 <iframe width="690" height="600" src="https://bigpint.shinyapps.io/litre/" style="border: 3px black solid;" allowfullscreen>
 </iframe>
@@ -200,7 +207,10 @@
 <a class="sourceLine" id="cb3-10" data-line-number="10">plotGenes =<span class="st"> </span><span class="kw">filter</span>(soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]], FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>, logFC <span class="op">&lt;</span><span class="st"> </span><span class="dv">-4</span>) <span class="op">%&gt;%</span><span class="st"> </span></a>
 <a class="sourceLine" id="cb3-11" data-line-number="11"><span class="st">  </span><span class="kw">select</span>(ID)</a>
 <a class="sourceLine" id="cb3-12" data-line-number="12">pcpDat =<span class="st"> </span><span class="kw">filter</span>(soybean_ir_sub_st, ID <span class="op">%in%</span><span class="st"> </span>plotGenes[,<span class="dv">1</span>])</a>
-<a class="sourceLine" id="cb3-13" data-line-number="13"><span class="kw"><a href="../reference/plotPCPApp.html">plotPCPApp</a></span>(<span class="dt">data =</span> pcpDat)</a></code></pre></div>
+<a class="sourceLine" id="cb3-13" data-line-number="13">app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotPCPApp.html">plotPCPApp</a></span>(<span class="dt">data =</span> pcpDat)</a>
+<a class="sourceLine" id="cb3-14" data-line-number="14"><span class="cf">if</span> (<span class="kw">interactive</span>()) {</a>
+<a class="sourceLine" id="cb3-15" data-line-number="15">    shiny<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(app, <span class="dt">display.mode =</span> <span class="st">"normal"</span>)</a>
+<a class="sourceLine" id="cb3-16" data-line-number="16">}</a></code></pre></div>
 <p>Upon running the code above in your R session, an interactive window will open. By default, you will first see an “About” tab that explains the application. Simply click on the “Application” tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly <a href="https://bigpint.shinyapps.io/pcplot/">here</a>).</p>
 <iframe width="690" height="600" src="https://bigpint.shinyapps.io/pcplot/" style="border: 3px black solid;" allowfullscreen>
 </iframe>
@@ -210,7 +220,11 @@
 <h2 class="hasAnchor">
 <a href="#volcano-plot-app" class="anchor"></a>Volcano plot app</h2>
 <p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lrutter.github.io/bigPint/reference/plotVolcanoApp.html">plotVolcanoApp()</a>. The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being logged <span class="citation">(Lauter and Graham 2016)</span>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="../reference/plotVolcanoApp.html">plotVolcanoApp</a></span>(<span class="dt">data =</span> soybean_ir_sub_log, <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotVolcanoApp.html">plotVolcanoApp</a></span>(<span class="dt">data =</span> soybean_ir_sub_log,</a>
+<a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</a>
+<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="cf">if</span> (<span class="kw">interactive</span>()) {</a>
+<a class="sourceLine" id="cb4-4" data-line-number="4">    shiny<span class="op">::</span><span class="kw"><a href="http://www.rdocumentation.org/packages/shiny/topics/runApp">runApp</a></span>(app)</a>
+<a class="sourceLine" id="cb4-5" data-line-number="5">}</a></code></pre></div>
 <p>Upon running the code above in your R session, an interactive window will open. By default, you will first see an “About” tab that explains the application. Simply click on the “Application” tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly <a href="https://bigpint.shinyapps.io/volcano/">here</a>).</p>
 <iframe width="690" height="600" src="https://bigpint.shinyapps.io/volcano/" style="border: 3px black solid;" allowfullscreen>
 </iframe>

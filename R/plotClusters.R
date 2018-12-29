@@ -53,6 +53,7 @@
 #' @importFrom graphics plot
 #' @importFrom utils write.table
 #' @importFrom grid grid.draw
+#' @importFrom utils combn
 #' @seealso
 #' \code{\link[stats]{hclust}}
 #' @return List of n elements each containing a grid of parallel coordinate 

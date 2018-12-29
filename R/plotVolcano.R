@@ -47,6 +47,7 @@
 #' @importFrom tidyr gather
 #' @importFrom utils str
 #' @importFrom plyr mapvalues
+#' @importFrom utils combn
 #' @return List of n elements of volcano plots, where n is the number of 
 #' treatment pair combinations in the data object. The subset of genes that
 #' are superimposed are determined through the dataMetrics or geneList

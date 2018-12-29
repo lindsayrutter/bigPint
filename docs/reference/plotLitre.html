@@ -69,7 +69,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.0</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.5</span>
       </span>
     </div>
 
@@ -176,9 +176,9 @@
     </div>
 
     <pre class="usage"><span class='fu'>plotLitre</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>,
-  <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
-  <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>getwd</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
+  <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"hexagon"</span>,
+  <span class='st'>"allPoints"</span>), <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>2</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>10</span>,
+  <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -230,7 +230,7 @@ default 10</p></td>
     <tr>
       <th>outDir</th>
       <td><p>CHARACTER STRING | Output directory to save all plots; 
-default current directory</p></td>
+default tempdir()</p></td>
     </tr>
     <tr>
       <th>saveFile</th>
