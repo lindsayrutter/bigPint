@@ -38,7 +38,7 @@
 #' matrix; default "orange"; used for DEGs in "hexagon" and "allPoints" and
 #' used for all points in "foldChange" and "orthogonal"
 #' @param outDir CHARACTER STRING | Output directory to save all plots; default 
-#' current directory; used in all options
+#' tempdir(); used in all options
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE; 
 #' used in all options
 #' @importFrom dplyr filter select %>%
@@ -134,7 +134,7 @@
 plotSM = function(data=data, dataMetrics=NULL, geneList = NULL,
     threshVar="FDR", threshVal=0.05, option=c("allPoints", "foldChange",
     "orthogonal", "hexagon"), xbins=10, threshFC=3, threshOrth=3,
-    pointSize=0.5, pointColor = "orange", outDir=getwd(), saveFile = TRUE){
+    pointSize=0.5, pointColor = "orange", outDir=tempdir(), saveFile = TRUE){
 
 option <- match.arg(option)
     

@@ -56,11 +56,6 @@ refIDs = lapply(dataMetrics, function(x) all(sort(x[,1]) == refID))
 
 if (all(logicPValue == TRUE) && all(logicFC == TRUE)){
     seqVec <- seq_along(metricNames)
-    logicThreshQuant <- vapply(seqVec, function(i){
-        indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar);
-        methods::is(dataMetrics[[i]][[indexThresh]],
-        "numeric") || methods::is(dataMetrics[[i]][[indexThresh]], "integer")
-    }, logical(1))
     
     logicPValueQuant <- vapply(seqVec, function(i){
         indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue);

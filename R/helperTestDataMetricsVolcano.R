@@ -59,12 +59,6 @@ refIDs = lapply(dataMetrics, function(x) all(sort(x[,1]) == refID))
 if (all(logicThresh == TRUE) && all(logicPValue == TRUE) &&
 all(logicFC == TRUE)){
     seqVec <- seq_along(metricNames)
-
-    logicThreshQuant <- vapply(seqVec, function(i){
-        indexThresh <- which(colnames(dataMetrics[[i]]) %in% threshVar);
-        methods::is(dataMetrics[[i]][[indexThresh]],
-        "numeric") || methods::is(dataMetrics[[i]][[indexThresh]], "integer")
-    }, logical(1))
     
     logicPValueQuant <- vapply(seqVec, function(i){
         indexPValue <- which(colnames(dataMetrics[[i]]) %in% PValue);
@@ -143,11 +137,6 @@ else if (!all(logicPValue == TRUE)){
     stop(paste0("For volcano plots, at least one column in each list element
     in the data metrics object should have the same name as the PValue
     object. ", generalMessage))
-}
-else if (!all(logicThreshQuant == TRUE)){
-    stop(paste0("The column in each list element in the data metrics object
-    that has the same name as the threshVar object should be of class
-    'numeric' or 'integer'. ", generalMessage))    
 }
 else if (!all(logicFCQuant == TRUE)){
     stop(paste0("For volcano plots, the column in each list element in the

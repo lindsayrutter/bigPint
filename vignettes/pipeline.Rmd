@@ -194,7 +194,7 @@ ret <- plotPCP(data_st, dataMetrics, threshVal = 0.1, lineSize = 0.3,
 ret[["S1_S3"]] %>% layout(title="DEGs (FDR < 0.1)")
 ```
 
-While the parallel coordinate plot above confirms that the DEG calls appear reliable, some users may find that superimposing *all* DEGs at once will create `bigPint` plots that are difficult to interpret. This is especially true in datasets with low signal:to:noise ratios and/or large number of DEGs. In these cases, it can be helpful to perform hierarchical clustering on the DEGs to group them into more manageable sizes of similar patterns and then examine these plots for each separate cluster. Here, we create two DEG clusters and examine their parallel coordinate plots. We see that the first cluster captured 41 DEGs with larger expression in the S1 group and the second cluster captured 23 DEGs with larger expression in the S3 group. Because we set the `verbose` parameter to a value of TRUE, we also generate .rds files that contain the gene IDs within these clusters in `outDir`, which is the current working directory by default. We will use these .rds files in the last three steps. 
+While the parallel coordinate plot above confirms that the DEG calls appear reliable, some users may find that superimposing *all* DEGs at once will create `bigPint` plots that are difficult to interpret. This is especially true in datasets with low signal:to:noise ratios and/or large number of DEGs. In these cases, it can be helpful to perform hierarchical clustering on the DEGs to group them into more manageable sizes of similar patterns and then examine these plots for each separate cluster. Here, we create two DEG clusters and examine their parallel coordinate plots. We see that the first cluster captured 41 DEGs with larger expression in the S1 group and the second cluster captured 23 DEGs with larger expression in the S3 group. Because we set the `verbose` parameter to a value of TRUE, we also generate .rds files that contain the gene IDs within these clusters in `outDir`, which is tempdir() by default. You can find the exact pathway of your temporary directory by typing `tempdir()` into your R console. We will use these .rds files in the last three steps. 
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotClusters(data_st, dataMetrics, threshVal = 0.1, nC = 2,
@@ -227,11 +227,11 @@ S1S3Cluster2 <- c("Glyma01g24710.1", "Glyma17g09850.1", "Glyma04g37510.1", "Glym
 ```
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-S1S3Cluster1 <- readRDS("S1_S3_2_1.rds")
+S1S3Cluster1 <- readRDS(paste0(tempdir(), "/S1_S3_2_1.rds"))
 ```
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-S1S3Cluster2 <- readRDS("S1_S3_2_2.rds")
+S1S3Cluster2 <- readRDS(paste0(tempdir(), "/S1_S3_2_2.rds"))
 ```
 
 We can quickly check that these .rds files indeed contain the gene IDs for the 41 DEGs in Cluster 1 and 23 DEGs in Cluster 2.
@@ -313,15 +313,21 @@ ret[[1]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), "): ",
 We only investigated one DEG (the one with the lowest FDR) from each cluster. One way to enhance the usefulness of litre plots is to allow users to flip through the genes quickly and take note of any DEGs that may have questionable patterns. This is best achieved with interactivity. To accomplish this, the user can use the [`plotLitreApp()` function](https://lrutter.github.io/bigPint/reference/plotLitreApp.html). Below is an example of creating an interactive litre plot of the standardized data that allows the user to flip through all 41 DEGs in Cluster 1. The vignette will not open this application. Please run the below code to view this application.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-plotLitreApp(data = data_st, dataMetrics = dataMetrics, geneList = S1S3Cluster1,
-  pointColor = "#00A600FF")
+app <- plotLitreApp(data = data_st, dataMetrics = dataMetrics,
+    geneList = S1S3Cluster1, pointColor = "#00A600FF")
+if (interactive()) {
+    shiny::runApp(app)
+}
 ```
 
 We can also flip through all 23 DEGs in Cluster 2 by creating the following interactive litre plot.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-plotLitreApp(data = data_st, dataMetrics = dataMetrics, geneList = S1S3Cluster2,
-  pointColor = "#CC00FFFF")
+app <- plotLitreApp(data = data_st, dataMetrics = dataMetrics,
+    geneList = S1S3Cluster2, pointColor = "#CC00FFFF")
+if (interactive()) {
+    shiny::runApp(app)
+}
 ```
 
 ____________________________________________________________________________________

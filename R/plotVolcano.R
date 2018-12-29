@@ -28,7 +28,7 @@
 #' @param pointColor CHARACTER STRING | Color of overlaid points on
 #' scatterplot matrix; default "orange"
 #' @param outDir CHARACTER STRING | Output directory to save all plots;
-#' default current directory
+#' default tempdir()
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @param hover BOOLEAN [TRUE | FALSE] | Allow to hover over points to
 #' identify IDs; default FALSE
@@ -94,7 +94,7 @@
 plotVolcano = function(data = data, dataMetrics = dataMetrics,
     geneList = NULL, threshVar = "FDR", threshVal = 0.05,
     option = c("hexagon", "allPoints"), logFC = "logFC", PValue = "PValue",
-    xbins = 10, pointSize = 0.5, pointColor = "orange", outDir = getwd(), 
+    xbins = 10, pointSize = 0.5, pointColor = "orange", outDir = tempdir(), 
     saveFile=TRUE, hover = FALSE){
 
 option <- match.arg(option)

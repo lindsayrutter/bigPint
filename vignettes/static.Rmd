@@ -23,9 +23,9 @@ knitr::opts_chunk$set(echo=TRUE)
 
 ## Accessing static plots
 
-Static plots can be saved as list objects in `R` and/or as JPG files to a directory chosen by the user. The benefit of saving plots as list objects is that users can then tailor the plots further, such as adding titles or changing label sizes. The benefit of saving plots as JPG files to a directory is that the user can more easily share the plots with other users. By default, the `bigPint` package will save static plots as both list objects in `R` and JPG files to the current directory.
+Static plots can be saved as list objects in `R` and/or as JPG files to a directory chosen by the user. The benefit of saving plots as list objects is that users can then tailor the plots further, such as adding titles or changing label sizes. The benefit of saving plots as JPG files to a directory is that the user can more easily share the plots with other users. By default, the `bigPint` package will save static plots as both list objects in `R` and JPG files to a temporary directory (located at `tempdir()`).
 
-Below is an example using all the default saving options for a static plot and an example dataset [@soybeanIR]. We input the ten genes with the lowest FDR values into the `plotLitre()` function. This creates ten static litre plots, one for each gene. By default, these static plots are saved as JPG files in the current directory.   
+Below is an example using all the default saving options for a static plot and an example dataset [@soybeanIR]. We input the ten genes with the lowest FDR values into the `plotLitre()` function. This creates ten static litre plots, one for each gene. By default, these static plots are saved as JPG files in a temporary directory.   
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 library(bigPint)
@@ -134,11 +134,7 @@ nID <- which(is.nan(soybean_cn_sub_st[,2]))
 soybean_cn_sub_st[nID,2:length(soybean_cn_sub_st)] <- 0
 ```
 
-     
-
-Our first example uses all package defaults. It creates a scatterplot matrix of points. Since we inputted a `dataMetrics` object, the software will create a subset of data to be superimposed for which the default column name of "FDR" is less than the default threshold value of 0.05. The `soybean_cn_sub` dataset contains three treatment groups. As a result, it creates three plots as JPG files in the current directory because the input parameter `saveFile` equals TRUE by default.
-
-      
+Our first example uses all package defaults. It creates a scatterplot matrix of points. Since we inputted a `dataMetrics` object, the software will create a subset of data to be superimposed for which the default column name of "FDR" is less than the default threshold value of 0.05. The `soybean_cn_sub` dataset contains three treatment groups. As a result, it creates three plots as JPG files in a temporary directory because the input parameter `saveFile` equals TRUE by default. You can find your temporary directory by typing `tempdir()` into your R console.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 plotSM(soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics)

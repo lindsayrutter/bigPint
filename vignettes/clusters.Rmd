@@ -126,7 +126,7 @@ plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, nC=4,
   yAxisLabel = "Standardized read count", verbose = TRUE)
 ```
 
-Running the command above will save the following files into the `outDir` location (current working directory by default): 
+Running the command above will save numerous files into the `outDir` location. The default location is a temporary directory. You can find the exact pathway of this temporary directory by simply typing `tempdir()` into your R console. This temporary directory and the files within it remain the same until you close your R session; at that point, a new temporary directory will be created. After running the above command, you should find the following files in your temporary directory: 
 
 - S1_S2_4_1.rds (10 gene IDs in Cluster 1 in S1 versus S2 comparison)
 - S1_S2_4_1.jpg (Individual plot of Cluster 1 in S1 versus S2 comparison)
@@ -155,7 +155,7 @@ S1S3Cluster1 <- c("Glyma18g00690.1", "Glyma08g44110.1", "Glyma01g26570.1", "Glym
 ```
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-S1S3Cluster1 <- readRDS("S1_S3_4_1.rds")
+S1S3Cluster1 <- readRDS(paste0(tempdir(), "/S1_S3_4_1.rds"))
 ```
 
 And check its contents contain the 19 gene IDs.

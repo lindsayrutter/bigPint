@@ -24,7 +24,7 @@
 #' @param vxAxis BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical 
 #' orientation; default FALSE
 #' @param outDir CHARACTER STRING | Output directory to save all plots; default 
-#' current directory
+#' tempdir()
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @param hover BOOLEAN [TRUE | FALSE] | Allow to hover over points to identify 
 #' IDs; default FALSE
@@ -86,7 +86,7 @@
 
 plotPCP = function(data, dataMetrics = NULL, geneList = NULL,
     threshVar = "FDR", threshVal = 0.05, lineSize = 0.1,
-    lineColor = "orange", vxAxis=FALSE, outDir=getwd(), saveFile=TRUE,
+    lineColor = "orange", vxAxis=FALSE, outDir=tempdir(), saveFile=TRUE,
     hover=FALSE){
 
 # Check that input parameters fit required formats

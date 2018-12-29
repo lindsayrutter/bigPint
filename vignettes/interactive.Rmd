@@ -44,7 +44,10 @@ Interactive scatterplot matrices can be generated with the `bigPint` function [p
 library(bigPint)
 data("soybean_cn_sub")
 soybean_cn_sub <- soybean_cn_sub[,1:7]
-plotSMApp(data=soybean_cn_sub)
+app <- plotSMApp(data=soybean_cn_sub)
+if (interactive()) {
+    shiny::runApp(app)
+}
 ```
 
 Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/smplot)).
@@ -62,7 +65,11 @@ data("soybean_ir_sub")
 data("soybean_ir_sub_metrics")
 soybean_ir_sub_log <- soybean_ir_sub
 soybean_ir_sub_log[,-1] <- log(soybean_ir_sub[,-1]+1)
-plotLitreApp(data=soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
+app <- plotLitreApp(data=soybean_ir_sub_log,
+    dataMetrics = soybean_ir_sub_metrics)
+if (interactive()) {
+    shiny::runApp(app, port = 1234, launch.browser = TRUE)
+}
 ```
 
 Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/litre/)).
@@ -88,7 +95,10 @@ soybean_ir_sub_st[nID,2:length(soybean_ir_sub_st)] = 0
 plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) %>% 
   select(ID)
 pcpDat = filter(soybean_ir_sub_st, ID %in% plotGenes[,1])
-plotPCPApp(data = pcpDat)
+app <- plotPCPApp(data = pcpDat)
+if (interactive()) {
+    shiny::runApp(app, display.mode = "normal")
+}
 ```
 
 Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/pcplot/)).
@@ -102,7 +112,11 @@ ________________________________________________________________________________
 Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-plotVolcanoApp(data = soybean_ir_sub_log, dataMetrics = soybean_ir_sub_metrics)
+app <- plotVolcanoApp(data = soybean_ir_sub_log,
+    dataMetrics = soybean_ir_sub_metrics)
+if (interactive()) {
+    shiny::runApp(app)
+}
 ```
 
 Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/volcano/)).

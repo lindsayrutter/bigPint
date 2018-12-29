@@ -20,7 +20,7 @@
 #' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
 #' default 10
 #' @param outDir CHARACTER STRING | Output directory to save all plots; 
-#' default current directory
+#' default tempdir()
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @importFrom dplyr filter select %>%
 #' @importFrom GGally ggpairs wrap
@@ -80,7 +80,7 @@
 
 plotLitre = function(data=data, dataMetrics=NULL, geneList = NULL, 
     threshVar="FDR", threshVal=0.05, option = c("hexagon", "allPoints"), 
-    pointSize=2, pointColor = "orange", xbins=10, outDir=getwd(),
+    pointSize=2, pointColor = "orange", xbins=10, outDir=tempdir(),
     saveFile = TRUE){
 
 option <- match.arg(option)

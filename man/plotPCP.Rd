@@ -6,7 +6,8 @@
 \usage{
 plotPCP(data, dataMetrics = NULL, geneList = NULL, threshVar = "FDR",
   threshVal = 0.05, lineSize = 0.1, lineColor = "orange",
-  vxAxis = FALSE, outDir = getwd(), saveFile = TRUE, hover = FALSE)
+  vxAxis = FALSE, outDir = tempdir(), saveFile = TRUE,
+  hover = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
@@ -38,7 +39,7 @@ default "orange"}
 orientation; default FALSE}
 
 \item{outDir}{CHARACTER STRING | Output directory to save all plots; default 
-current directory}
+tempdir()}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 

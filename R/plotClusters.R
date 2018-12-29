@@ -39,7 +39,7 @@
 #' @param vxAxis BOOLEAN [TRUE | FALSE] | Flip x-axis text labels to vertical
 #' orientation; default FALSE
 #' @param outDir CHARACTER STRING | Output directory to save all images; 
-#' default current directory
+#' default tempdir()
 #' @param saveFile BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE
 #' @param verbose BOOLEAN [TRUE | FALSE] | Print each cluster from each 
 #' cluster size into separate files and print the associated IDs of each 
@@ -128,7 +128,7 @@
 #' # Example 5: Run the same analysis, only now set the verbose parameter to 
 #' # value TRUE. This will save images of each individual cluster, .rds files 
 #' # that contain the IDs within each cluster, and images of the conglomerate 
-#' # clusters to outDir (default current working directory).
+#' # clusters to outDir (default tempdir()).
 #' 
 #' \dontrun{
 #' plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics,
@@ -143,7 +143,7 @@ plotClusters <- function(data, dataMetrics = NULL, geneList = NULL,
     colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2", "single",
     "complete", "average", "mcquitty", "median", "centroid"),
     yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
-    lineAlpha = 0.5, vxAxis = FALSE, outDir=getwd(), saveFile = TRUE,
+    lineAlpha = 0.5, vxAxis = FALSE, outDir=tempdir(), saveFile = TRUE,
     verbose=FALSE){
 
 aggMethod <- match.arg(aggMethod)
@@ -206,7 +206,7 @@ ret <- lapply(cols.combn, function(x){
         p <- helperCadTRUE(data, dataMetrics, metricPair, aggMethod,
         nC, threshVar, threshVal, verbose, vxAxis, saveFile, boxDat,
         xAxisLabel, yAxisLabel, lineAlpha, lineSize, plotName,
-        outDir, colList=colList)
+        outDir, colList)
         return(p)
     }
     
@@ -216,8 +216,7 @@ ret <- lapply(cols.combn, function(x){
         p <- helperCadFALSE(cData, dataMetrics, metricPair,
         aggMethod, nC, threshVar, threshVal, verbose, vxAxis,
         saveFile, boxDat, xAxisLabel, yAxisLabel, lineAlpha, lineSize,
-        plotName, outDir, colList=colList) # took out ret
-        #attributes(p) <- paste0(plotName, "_", nC) #name, attr, attributes
+        plotName, outDir, colList)
         return(p)
     }
     

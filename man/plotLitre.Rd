@@ -7,7 +7,7 @@
 plotLitre(data = data, dataMetrics = NULL, geneList = NULL,
   threshVar = "FDR", threshVal = 0.05, option = c("hexagon",
   "allPoints"), pointSize = 2, pointColor = "orange", xbins = 10,
-  outDir = getwd(), saveFile = TRUE)
+  outDir = tempdir(), saveFile = TRUE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
@@ -37,7 +37,7 @@ plot; default "orange"}
 default 10}
 
 \item{outDir}{CHARACTER STRING | Output directory to save all plots; 
-default current directory}
+default tempdir()}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 }

@@ -9,7 +9,7 @@ plotClusters(data, dataMetrics = NULL, geneList = NULL,
   nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
   "single", "complete", "average", "mcquitty", "median", "centroid"),
   yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
-  lineAlpha = 0.5, vxAxis = FALSE, outDir = getwd(),
+  lineAlpha = 0.5, vxAxis = FALSE, outDir = tempdir(),
   saveFile = TRUE, verbose = FALSE)
 }
 \arguments{
@@ -62,7 +62,7 @@ lines, default 0.5}
 orientation; default FALSE}
 
 \item{outDir}{CHARACTER STRING | Output directory to save all images; 
-default current directory}
+default tempdir()}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
@@ -149,7 +149,7 @@ plot(ret[["S1_S3_4"]])
 # Example 5: Run the same analysis, only now set the verbose parameter to 
 # value TRUE. This will save images of each individual cluster, .rds files 
 # that contain the IDs within each cluster, and images of the conglomerate 
-# clusters to outDir (default current working directory).
+# clusters to outDir (default tempdir()).
 
 \dontrun{
 plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics,

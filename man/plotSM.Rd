@@ -8,7 +8,7 @@ plotSM(data = data, dataMetrics = NULL, geneList = NULL,
   threshVar = "FDR", threshVal = 0.05, option = c("allPoints",
   "foldChange", "orthogonal", "hexagon"), xbins = 10, threshFC = 3,
   threshOrth = 3, pointSize = 0.5, pointColor = "orange",
-  outDir = getwd(), saveFile = TRUE)
+  outDir = tempdir(), saveFile = TRUE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
@@ -48,7 +48,7 @@ matrix; default "orange"; used for DEGs in "hexagon" and "allPoints" and
 used for all points in "foldChange" and "orthogonal"}
 
 \item{outDir}{CHARACTER STRING | Output directory to save all plots; default 
-current directory; used in all options}
+tempdir(); used in all options}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE; 
 used in all options}

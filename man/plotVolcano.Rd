@@ -7,7 +7,7 @@
 plotVolcano(data = data, dataMetrics = dataMetrics, geneList = NULL,
   threshVar = "FDR", threshVal = 0.05, option = c("hexagon",
   "allPoints"), logFC = "logFC", PValue = "PValue", xbins = 10,
-  pointSize = 0.5, pointColor = "orange", outDir = getwd(),
+  pointSize = 0.5, pointColor = "orange", outDir = tempdir(),
   saveFile = TRUE, hover = FALSE)
 }
 \arguments{
@@ -48,7 +48,7 @@ default 10}
 scatterplot matrix; default "orange"}
 
 \item{outDir}{CHARACTER STRING | Output directory to save all plots;
-default current directory}
+default tempdir()}
 
 \item{saveFile}{BOOLEAN [TRUE | FALSE] | Save file to outDir; default TRUE}
 
