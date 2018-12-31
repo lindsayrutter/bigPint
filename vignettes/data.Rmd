@@ -31,7 +31,7 @@ ________________________________________________________________________________
 
 The `data` object requires the same particular data frame format for all `bigPint` functions. There should be $n$ rows in the data frame, where $n$ is the number of genes. There should be $p + 1$ columns in the data frame, where $p$ is the number of samples. The first column contains the genes names and the rest of the columns should contain the read counts for all samples of interest. An example of this format is shown below:
 
-```{r, eval=TRUE, include=TRUE}
+```{r, eval=TRUE, include=TRUE, message=FALSE}
 library(bigPint)
 data("soybean_ir_sub")
 head(soybean_ir_sub)
@@ -76,6 +76,10 @@ ________________________________________________________________________________
 Note that the `data` object can contain more than two treatment groups. In this case, the `bigPint` software will automatically create plots for all pairs of treatment groups. An example of this type of dataset is provided in the `bigPint` package and can accessed as follows:
 
 ```{r, eval=TRUE, include=TRUE}
+data(soybean_cn_sub)
+```
+
+```{r, eval=TRUE, include=FALSE}
 data(soybean_cn_sub)
 str(soybean_cn_sub, strict.width = "wrap")
 ```

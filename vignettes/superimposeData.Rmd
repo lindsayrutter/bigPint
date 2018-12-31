@@ -36,7 +36,7 @@ The `dataMetrics` input is NULL by default in `bigPint` package functions. Howev
 
 Below is an example of superimposing genes that have an FDR value less than 1e-10 [@soybeanIR].
 
-```{r, eval=TRUE, include=TRUE}
+```{r, eval=TRUE, include=TRUE, message=FALSE}
 library(bigPint)
 data("soybean_ir_sub")
 data("soybean_ir_sub_metrics")

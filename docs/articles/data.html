@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.5</span>
+        <span class="label label-default" data-toggle="tooltip" data-placement="bottom" title="Released package">0.99.6</span>
       </span>
     </div>
 
@@ -129,7 +129,7 @@
       <h1>Data object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2018-12-28</h4>
+            <h4 class="date">2018-12-31</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lrutter/bigPint/blob/master/vignettes/data.Rmd"><code>vignettes/data.Rmd</code></a></small>
       <div class="hidden name"><code>data.Rmd</code></div>
@@ -148,17 +148,9 @@
 <h2 class="hasAnchor">
 <a href="#example-two-treatments" class="anchor"></a>Example: two treatments</h2>
 <p>The <code>data</code> object requires the same particular data frame format for all <code>bigPint</code> functions. There should be <span class="math inline">\(n\)</span> rows in the data frame, where <span class="math inline">\(n\)</span> is the number of genes. There should be <span class="math inline">\(p + 1\)</span> columns in the data frame, where <span class="math inline">\(p\)</span> is the number of samples. The first column contains the genes names and the rest of the columns should contain the read counts for all samples of interest. An example of this format is shown below:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(bigPint)</a></code></pre></div>
-<pre><code>## Registered S3 methods overwritten by 'ggplot2':
-##   method         from 
-##   [.quosures     rlang
-##   c.quosures     rlang
-##   print.quosures rlang</code></pre>
-<pre><code>## Registered S3 method overwritten by 'GGally':
-##   method from   
-##   +.gg   ggplot2</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw">data</span>(<span class="st">"soybean_ir_sub"</span>)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2"><span class="kw">head</span>(soybean_ir_sub)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(bigPint)</a>
+<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">data</span>(<span class="st">"soybean_ir_sub"</span>)</a>
+<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">head</span>(soybean_ir_sub)</a></code></pre></div>
 <pre><code>##                               ID N.1 N.2 N.3 P.1 P.2 P.3
 ## 14881 Glyma.06G158700.Wm82.a2.v1  48  28  15  29  16   8
 ## 20855 Glyma.08G156000.Wm82.a2.v1   0   0   0   0   0   0
@@ -167,7 +159,7 @@
 ## 11303 Glyma.05G050000.Wm82.a2.v1   0   0   0   0   0   0
 ## 50345 Glyma.18G292300.Wm82.a2.v1 583 669 497 419 467 426</code></pre>
 <p>We can also examine the structure of an example <code>data</code> object as follows:</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">str</span>(soybean_ir_sub, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw">str</span>(soybean_ir_sub, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</a></code></pre></div>
 <pre><code>## 'data.frame':    5604 obs. of  7 variables:
 ## $ ID : chr "Glyma.06G158700.Wm82.a2.v1" "Glyma.08G156000.Wm82.a2.v1"
 ##    "Glyma.12G070600.Wm82.a2.v1" "Glyma.19G045200.Wm82.a2.v1" ...
@@ -218,27 +210,14 @@
 <h2 class="hasAnchor">
 <a href="#example-three-treatments" class="anchor"></a>Example: three treatments</h2>
 <p>Note that the <code>data</code> object can contain more than two treatment groups. In this case, the <code>bigPint</code> software will automatically create plots for all pairs of treatment groups. An example of this type of dataset is provided in the <code>bigPint</code> package and can accessed as follows:</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1"><span class="kw">data</span>(soybean_cn_sub)</a>
-<a class="sourceLine" id="cb8-2" data-line-number="2"><span class="kw">str</span>(soybean_cn_sub, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</a></code></pre></div>
-<pre><code>## 'data.frame':    7332 obs. of  10 variables:
-## $ ID : chr "Glyma06g12670.1" "Glyma08g12390.2" "Glyma12g02076.11"
-##    "Glyma18g53450.1" ...
-## $ S1.1: num 0.802 4.769 3.19 0.802 3.19 ...
-## $ S1.2: num 2.709 5.236 2.902 0.802 2.48 ...
-## $ S1.3: num 1.763 5.167 2.907 0.802 3.262 ...
-## $ S2.1: num 7.716 3.823 3.1 0.802 0.802 ...
-## $ S2.2: num 6.582 3.567 3.284 0.802 2.152 ...
-## $ S2.3: num 7.004 3.296 3.296 0.802 3.93 ...
-## $ S3.1: num 8.557 3.669 3.364 0.802 4.4 ...
-## $ S3.2: num 8.368 4.031 2.731 0.802 3.42 ...
-## $ S3.3: num 8.389 4.269 3.256 0.802 4.144 ...</code></pre>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw">data</span>(soybean_cn_sub)</a></code></pre></div>
 <p>This example dataset contains 7,332 genes and nine samples <span class="citation">(Brown and Hudson 2015)</span>. There are three treatment groups, S1, S2, and S3. Each treatment group contains three replicates. In such cases where the <code>data</code> object contains more than two treatment groups, all functions in the <code>bigPint</code> package (except <code><a href="../reference/plotSMApp.html">plotSMApp()</a></code>) will automatically produce a plot for each pairwise combination of treatment groups.</p>
 <p>For example, <code>bigPint</code> functions will produce plots for S1 versus S2, S1 versus S3, and S2 versus S3 in this case. The same could be accomplished (although less efficiently) by separating the dataset into three separate datasets and running a <code>bigPint</code> function of interest on each of them individually.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb10-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
-<a class="sourceLine" id="cb10-2" data-line-number="2">soybean_cn_sub_S1S2 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>))</a>
-<a class="sourceLine" id="cb10-3" data-line-number="3">soybean_cn_sub_S1S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</a>
-<a class="sourceLine" id="cb10-4" data-line-number="4">soybean_cn_sub_S2S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>), <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">head</span>(soybean_cn_sub_S1S2, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw">library</span>(dplyr)</a>
+<a class="sourceLine" id="cb6-2" data-line-number="2">soybean_cn_sub_S1S2 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>))</a>
+<a class="sourceLine" id="cb6-3" data-line-number="3">soybean_cn_sub_S1S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</a>
+<a class="sourceLine" id="cb6-4" data-line-number="4">soybean_cn_sub_S2S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="http://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>), <span class="kw"><a href="http://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">head</span>(soybean_cn_sub_S1S2, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##                     ID      S1.1     S1.2     S1.3     S2.1     S2.2
 ## 19468  Glyma06g12670.1 0.8024444 2.708884 1.763407 7.716099 6.581990
 ## 27284  Glyma08g12390.2 4.7687202 5.235777 5.166631 3.823472 3.566863
@@ -247,7 +226,7 @@
 ## 19468 7.003538
 ## 27284 3.295619
 ## 42001 3.295619</code></pre>
-<div class="sourceCode" id="cb13"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb13-1" data-line-number="1"><span class="kw">head</span>(soybean_cn_sub_S1S3, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw">head</span>(soybean_cn_sub_S1S3, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##                     ID      S1.1     S1.2     S1.3     S3.1     S3.2
 ## 19468  Glyma06g12670.1 0.8024444 2.708884 1.763407 8.556732 8.367593
 ## 27284  Glyma08g12390.2 4.7687202 5.235777 5.166631 3.669489 4.031427
@@ -256,7 +235,7 @@
 ## 19468 8.389347
 ## 27284 4.269312
 ## 42001 3.255649</code></pre>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">head</span>(soybean_cn_sub_S2S3, <span class="dv">3</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw">head</span>(soybean_cn_sub_S2S3, <span class="dv">3</span>)</a></code></pre></div>
 <pre><code>##                     ID     S2.1     S2.2     S2.3     S3.1     S3.2
 ## 19468  Glyma06g12670.1 7.716099 6.581990 7.003538 8.556732 8.367593
 ## 27284  Glyma08g12390.2 3.823472 3.566863 3.295619 3.669489 4.031427
