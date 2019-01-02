@@ -5,10 +5,10 @@
 \title{Plot static scatterplot matrices}
 \usage{
 plotSM(data = data, dataMetrics = NULL, geneList = NULL,
-  threshVar = "FDR", threshVal = 0.05, option = c("allPoints",
-  "foldChange", "orthogonal", "hexagon"), xbins = 10, threshFC = 3,
-  threshOrth = 3, pointSize = 0.5, pointColor = "orange",
-  outDir = tempdir(), saveFile = TRUE)
+    threshVar = "FDR", threshVal = 0.05, option = c("allPoints",
+    "foldChange", "orthogonal", "hexagon"), xbins = 10, threshFC = 3,
+    threshOrth = 3, pointSize = 0.5, pointColor = "orange",
+    outDir = tempdir(), saveFile = TRUE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}

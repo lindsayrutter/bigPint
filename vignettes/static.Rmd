@@ -140,8 +140,6 @@ Our first example uses all package defaults. It creates a scatterplot matrix of 
 plotSM(soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics)
 ```
 
-      
-
 We can instead return a list of these three plots into our R session and prevent them from saving as JPG files by setting the input parameter `saveFile` to FALSE. The [plotSM()](https://lrutter.github.io/bigPint/reference/plotSM.html) function also contains several aesthetic parameters. Here, we change the default value of the `pointColor` parameter so that the data subset will be superimposed as pink points. 
 
      
