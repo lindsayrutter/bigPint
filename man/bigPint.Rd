@@ -10,5 +10,5 @@ bigPint R API
 }
 \details{
 See the README on
-\href{https://github.com/lrutter/bigPint#readme}{GitHub}
+\href{https://github.com/lindsayrutter/bigPint#readme}{GitHub}
 }

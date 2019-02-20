@@ -5,12 +5,12 @@
 \title{Plot static parallel coordinate clusters}
 \usage{
 plotClusters(data, dataMetrics = NULL, geneList = NULL,
-    threshVar = "FDR", threshVal = 0.05, clusterAllData = TRUE,
-    nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
-    "single", "complete", "average", "mcquitty", "median", "centroid"),
-    yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
-    lineAlpha = 0.5, vxAxis = FALSE, outDir = tempdir(),
-    saveFile = TRUE, verbose = FALSE)
+  threshVar = "FDR", threshVal = 0.05, clusterAllData = TRUE,
+  nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
+  "single", "complete", "average", "mcquitty", "median", "centroid"),
+  yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
+  lineAlpha = 0.5, vxAxis = FALSE, outDir = tempdir(),
+  saveFile = TRUE, verbose = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
@@ -153,10 +153,10 @@ plot(ret[["S1_S3_4"]])
 
 \dontrun{
 plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics,
-    nC=4, colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"),
-    lineSize = 0.5, lineAlpha = 1, clusterAllData = FALSE,
-    aggMethod = "average", yAxisLabel = "Standardized read count",
-    verbose = TRUE)
+  nC=4, colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"),
+  lineSize = 0.5, lineAlpha = 1, clusterAllData = FALSE,
+  aggMethod = "average", yAxisLabel = "Standardized read count",
+  verbose = TRUE)
 }
 
 }
