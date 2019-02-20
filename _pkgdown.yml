@@ -1,9 +1,9 @@
 title: bigPint
-url: http://lrutter.github.io/bigPint
+url: http://lindsayrutter.github.io/bigPint
 
 authors:
   Lindsay Rutter:
-    href: https://github.com/lrutter
+    href: https://github.com/lindsayrutter
   Dianne Cook:
     href: https://github.com/dicook
   
@@ -84,7 +84,7 @@ navbar:
       href: reference/index.html
     - icon: fa-github fa-lg
       text: "github"
-      href: https://github.com/lrutter/bigPint/
+      href: https://github.com/lindsayrutter/bigPint/
       
 runtime: shiny
 

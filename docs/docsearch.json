@@ -2,21 +2,21 @@
   "index_name": "INDEX_NAME",
   "start_urls": [
     {
-      "url": "http://lrutter.github.io/bigPint/index.html",
+      "url": "http://lindsayrutter.github.io/bigPint/index.html",
       "selectors_key": "homepage",
       "tags": [
         "homepage"
       ]
     },
     {
-      "url": "http://lrutter.github.io/bigPint/reference",
+      "url": "http://lindsayrutter.github.io/bigPint/reference",
       "selectors_key": "reference",
       "tags": [
         "reference"
       ]
     },
     {
-      "url": "http://lrutter.github.io/bigPint/articles",
+      "url": "http://lindsayrutter.github.io/bigPint/articles",
       "selectors_key": "articles",
       "tags": [
         "articles"
@@ -30,7 +30,7 @@
     "/articles/index.html"
   ],
   "sitemap_urls": [
-    "http://lrutter.github.io/bigPint/sitemap.xml"
+    "http://lindsayrutter.github.io/bigPint/sitemap.xml"
   ],
   "selectors": {
     "homepage": {
