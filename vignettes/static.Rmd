@@ -118,7 +118,7 @@ ________________________________________________________________________________
 
 ## Static scatterplot matrices
 
-Scatterplot matrices are elegant plots that allow users to quickly observe the variability between all samples in a dataset. Static scatterplot matrices can be generated with the `bigPint` function [plotSM()](https://lrutter.github.io/bigPint/reference/plotSM.html). As can be seen in the associated help file, this function comes with numerous input parameters. We show several examples below, but first we read in our raw data object `soybean_cn_sub` and data metrics object `soybean_cn_sub_metrics` [@brown2015developmental]. We also create a standardized version of our data object `soybean_cn_sub_st`. 
+Scatterplot matrices are elegant plots that allow users to quickly observe the variability between all samples in a dataset. Static scatterplot matrices can be generated with the `bigPint` function [plotSM()](https://lindsayrutter.github.io/bigPint/reference/plotSM.html). As can be seen in the associated help file, this function comes with numerous input parameters. We show several examples below, but first we read in our raw data object `soybean_cn_sub` and data metrics object `soybean_cn_sub_metrics` [@brown2015developmental]. We also create a standardized version of our data object `soybean_cn_sub_st`. 
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 library(matrixStats)
@@ -140,7 +140,7 @@ Our first example uses all package defaults. It creates a scatterplot matrix of 
 plotSM(soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics)
 ```
 
-We can instead return a list of these three plots into our R session and prevent them from saving as JPG files by setting the input parameter `saveFile` to FALSE. The [plotSM()](https://lrutter.github.io/bigPint/reference/plotSM.html) function also contains several aesthetic parameters. Here, we change the default value of the `pointColor` parameter so that the data subset will be superimposed as pink points. 
+We can instead return a list of these three plots into our R session and prevent them from saving as JPG files by setting the input parameter `saveFile` to FALSE. The [plotSM()](https://lindsayrutter.github.io/bigPint/reference/plotSM.html) function also contains several aesthetic parameters. Here, we change the default value of the `pointColor` parameter so that the data subset will be superimposed as pink points. 
 
      
 
@@ -165,7 +165,7 @@ ret <- plotSM(soybean_cn_sub_st, soybean_cn_sub_metrics, pointColor = "#00C379",
 ret[[1]] + xlab("Standardized read counts") + ylab("Standardized read counts")
 ```
 
-As our next three examples show, the [plotSM()](https://lrutter.github.io/bigPint/reference/plotSM.html) function also has an input paramater called `option`. We have thusfar used the default value of "allPoints" for this parameter. However, there are three other options for this parameter that can tailor the scatterplot matrix in other meaningful ways. One option "hexagon" will render the full dataset as hexagon bins as follows.
+As our next three examples show, the [plotSM()](https://lindsayrutter.github.io/bigPint/reference/plotSM.html) function also has an input paramater called `option`. We have thusfar used the default value of "allPoints" for this parameter. However, there are three other options for this parameter that can tailor the scatterplot matrix in other meaningful ways. One option "hexagon" will render the full dataset as hexagon bins as follows.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "hexagon", xbins = 5, 
@@ -209,7 +209,7 @@ ________________________________________________________________________________
 
 ## Static litre plots
 
-Litre plots allow users to quickly superimpose a gene of interest onto the distribution of the full dataset. Static litre plots can be generated with the `bigPint` function [plotLitre()](https://lrutter.github.io/bigPint/reference/plotLitre.html). In this example, we examine the most differentially expressed gene between the S1 and S2 treatment groups in the `soybean_cn_sub_st` dataset. We also now view the standardized read counts.
+Litre plots allow users to quickly superimpose a gene of interest onto the distribution of the full dataset. Static litre plots can be generated with the `bigPint` function [plotLitre()](https://lindsayrutter.github.io/bigPint/reference/plotLitre.html). In this example, we examine the most differentially expressed gene between the S1 and S2 treatment groups in the `soybean_cn_sub_st` dataset. We also now view the standardized read counts.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 geneList = soybean_cn_sub_metrics[["S1_S2"]][1:5,]$ID
@@ -232,7 +232,7 @@ ________________________________________________________________________________
 
 ## Static parallel coordinates
 
-Static parallel coordinate plots can be generated with the `bigPint` function [plotPCP()](https://lrutter.github.io/bigPint/reference/plotPCP.html). Here we create a logged version of the `soybean_ir` object (`soybean_ir_sub_log`) and then superimpose the ten genes with the lowest FDR values as purple lines.
+Static parallel coordinate plots can be generated with the `bigPint` function [plotPCP()](https://lindsayrutter.github.io/bigPint/reference/plotPCP.html). Here we create a logged version of the `soybean_ir` object (`soybean_ir_sub_log`) and then superimpose the ten genes with the lowest FDR values as purple lines.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 soybean_ir_sub_log = soybean_ir_sub
@@ -243,7 +243,7 @@ ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.7,
 ret[[1]]
 ```
 
-We may wish to recreate the above plot but allow us to quickly identify each of the ten genes. We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotPCP()` function. The capabilities in the interactive parallel coordinate plot [plotPCPApp()](https://lrutter.github.io/bigPint/reference/plotPCPApp.html) extend upon this functionality.
+We may wish to recreate the above plot but allow us to quickly identify each of the ten genes. We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotPCP()` function. The capabilities in the interactive parallel coordinate plot [plotPCPApp()](https://lindsayrutter.github.io/bigPint/reference/plotPCPApp.html) extend upon this functionality.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.4, 
@@ -287,7 +287,7 @@ ________________________________________________________________________________
 
 ## Static volcano plots
 
-The `bigPint` function [plotVolcano()](https://lrutter.github.io/bigPint/reference/plotVolcano.html) allows users to plot static volcano plots. Below is an example in which the genes with a FDR values less than 1e-8 are overlaid as orange points onto the full dataset represented as hexbins.
+The `bigPint` function [plotVolcano()](https://lindsayrutter.github.io/bigPint/reference/plotVolcano.html) allows users to plot static volcano plots. Below is an example in which the genes with a FDR values less than 1e-8 are overlaid as orange points onto the full dataset represented as hexbins.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, threshVal = 1e-8,
@@ -303,7 +303,7 @@ ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, geneList = geneList,
 ret[["N_P"]]
 ```
 
-We may wish to recreate the above plot but allow us to quickly identify DEGs. For instance, there is one DEG in the top-left corner of the plot that appears as an outlier in terms of magnitude change and statistical significance. Which gene is it? We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotVolcano()` function. The capabilities in the interactive volcano plot [plotVolcanoApp()](https://lrutter.github.io/bigPint/reference/plotVolcanoApp.html]) extend upon this functionality.
+We may wish to recreate the above plot but allow us to quickly identify DEGs. For instance, there is one DEG in the top-left corner of the plot that appears as an outlier in terms of magnitude change and statistical significance. Which gene is it? We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotVolcano()` function. The capabilities in the interactive volcano plot [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html]) extend upon this functionality.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics, geneList = geneList,

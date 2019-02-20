@@ -28,7 +28,7 @@ rmarkdown::find_external_resources
 
 This section provides a recommended pipeline for researchers who are using the `bigPint` package to visualize RNA-seq data. Researchers may chose to tailor this suggested pipeline accordingly. For instance, if a user is investigating an RNA-seq dataset with a very large number of samples, the scatterplot matrix may be difficult to use on all samples at once. As a result, the user can simply not use the scatterplot matrix or may choose to perform the scatterplot matrix on random subsets of samples.
 
-The first two steps should be performed on the normalized count table (i.e. [Data object](https://lrutter.github.io/bigPint/articles/data.html)) before DEG designation:
+The first two steps should be performed on the normalized count table (i.e. [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html)) before DEG designation:
 
 **1. Create a side-by-side boxplot on full data (before DEG designation)**
 
@@ -40,7 +40,7 @@ The first two steps should be performed on the normalized count table (i.e. [Dat
   - Check that treatment scatterplots have larger variability than replicate scatterplots. If the reverse is seen in some scatterplots, then samples may have been mislabeled.
   - Check for strange geometric features. Streaks of outliers in several scatterplots may require specific normalization techniques. Streaks of outliers in replicate scatterplots may capture genes that were inadvertently differentially expressed due to unintended differences in replicates.
 
-Once the normalized count table (i.e. [Data object](https://lrutter.github.io/bigPint/articles/data.html)) passes the first two steps and any inadequate normalization and/or questionable patterns have been accounted for, then the user should apply a model through packages like [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger], [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated], or [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) [@ritchie2015limma]) to obtain statistical (e.g. p-value) and quantitiatve (e.g. log fold change) values for each gene in the dataset. After that, the user should continue with the last four steps. For these steps, you will need the normalized count table (i.e. [Data object](https://lrutter.github.io/bigPint/articles/data.html)) and the DEG designation table (i.e. [Data metrics object](https://lrutter.github.io/bigPint/articles/dataMetrics.html)).
+Once the normalized count table (i.e. [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html)) passes the first two steps and any inadequate normalization and/or questionable patterns have been accounted for, then the user should apply a model through packages like [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger], [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated], or [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) [@ritchie2015limma]) to obtain statistical (e.g. p-value) and quantitiatve (e.g. log fold change) values for each gene in the dataset. After that, the user should continue with the last four steps. For these steps, you will need the normalized count table (i.e. [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html)) and the DEG designation table (i.e. [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html)).
   
 **3. Perform hierarchical clustering and plot the standardized parallel coordinate lines for each cluster of significant genes.**
 
@@ -62,7 +62,7 @@ ________________________________________________________________________________
 
 ## Step 1: Side-by-side boxplot
 
-First, we will read in our example data, [`soybean_cn_sub`](https://lrutter.github.io/bigPint/reference/soybean_cn_sub.html). This is public RNA-seq data derived from soybean cotyledon at different time points. We will consider two treatment groups (S1 and S3) that each have three replicates [@brown2015developmental]. We will refer to this count table as `data`. Check that your `data` object is in the format `bigPint` expects by refering to the article (i.e. [Data object](https://lrutter.github.io/bigPint/articles/data.html)). An example of the data structure is shown below.
+First, we will read in our example data, [`soybean_cn_sub`](https://lindsayrutter.github.io/bigPint/reference/soybean_cn_sub.html). This is public RNA-seq data derived from soybean cotyledon at different time points. We will consider two treatment groups (S1 and S3) that each have three replicates [@brown2015developmental]. We will refer to this count table as `data`. Check that your `data` object is in the format `bigPint` expects by refering to the article (i.e. [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html)). An example of the data structure is shown below.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 library(bigPint)
@@ -127,22 +127,22 @@ The second case occurs when the scatterplot matrix reveals normalization issues.
 (YPD) [@yeast]. The deviation of genes from the *x=y* line instantly reveals that the RNA-seq dataset was not thoroughly normalized using within-lane normalization (subplot A). However, within-lane normalization followed by between-lane normalization sufficiently normalized the data
 (subplot B). This example shows that the user can work iteratively between graphics and models: They can update model parameters and normalization techniques until their visualizations show that the model now makes sense.
 
-![](https://raw.githubusercontent.com/lrutter/bigPint/master/man/figures/yeastWithinBetween.png)
+![](https://raw.githubusercontent.com/lindsayrutter/bigPint/master/man/figures/yeastWithinBetween.png)
 
 This third case users should look out for are aberrant geometric patterns or streaks of outliers in the scatterplot matrix. Below is scatterplot matrix of public RNA-seq data from soybean leaves after exposure to iron-sufficient (group P) and iron-deficient (group N) hydroponic conditions [@soybeanIR]. Notice a pronounced streak structure in the bottom-right scatterplot (green arrow) that compares two replicates from the P group.
 
 Models cannot reveal such interesting structures that could lead to informative post hoc analyses. For instance, if this structure presented itself in data where the data collection technicians had noted an inadvertent experimental or biological inconsistency between those replicates, then a post hoc hypothesis that these genes might respond to that discrepant condition could be proposed. We note that this would only serve as a hypothesis generator; conventional genetic studies would be necessary to verify any potential role these genes have on this biological process.
 
-![](https://raw.githubusercontent.com/lrutter/bigPint/master/man/figures/sbIRStreak2.png)
+![](https://raw.githubusercontent.com/lindsayrutter/bigPint/master/man/figures/sbIRStreak2.png)
 We provide another example of this third case; below is the scatterplot matrix of a public RNA-seq data of human liver and kidney technical replicates [@Marioni]. The technical replicate scatterplots look precise as is expected since this is technical data. The treatment group scatterplots have more variability around the *x=y* line, as we would also anticipate. However, the treatment scatterplots each contain a pronounced streak of highly-expressed liver-specific genes (highlighted as a blue oval in one example scatterplot). Some researchers have suggested that differences in the distribution of reads between groups may require particularly stringent normalization [@Robinson]. We return to this problem in a later step.
 
-![](https://raw.githubusercontent.com/lrutter/bigPint/master/man/figures/lkSM2.png)
+![](https://raw.githubusercontent.com/lindsayrutter/bigPint/master/man/figures/lkSM2.png)
 
 ____________________________________________________________________________________
 
 ## Step 3: DEG parallel coordinates and clusters
 
-Now that we have examined the normalized data, we can use a model to determine statistical (e.g. p-value) and quantitiatve (e.g. log fold change) values for each gene in the dataset and create our `dataMetrics` object. Be sure that your `dataMetrics` object follows the expected format, which is outlined in the article [Data metrics object](https://lrutter.github.io/bigPint/articles/dataMetrics.html). Below, we use the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) package [@robinson2010edger] to create and view our `dataMetrics` object.
+Now that we have examined the normalized data, we can use a model to determine statistical (e.g. p-value) and quantitiatve (e.g. log fold change) values for each gene in the dataset and create our `dataMetrics` object. Be sure that your `dataMetrics` object follows the expected format, which is outlined in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html). Below, we use the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) package [@robinson2010edger] to create and view our `dataMetrics` object.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 library(edgeR)
@@ -178,7 +178,7 @@ dataMetrics[[paste0(colnames(fit)[1], "_", colnames(fit)[2])]] <- lrt
 str(dataMetrics, strict.width = "wrap")
 ```
 
-At this point, we can view our DEGs (which we consider to be genes with FDR < 0.1). Below we show a standardized parallel coordinate plot and scatterplot matrix with the DEGs superimposed in magenta. The DEGs follow the patterns we expect, which were described in the article [Introduction to bigPint plots](https://lrutter.github.io/bigPint/articles/plotIntro.html). 
+At this point, we can view our DEGs (which we consider to be genes with FDR < 0.1). Below we show a standardized parallel coordinate plot and scatterplot matrix with the DEGs superimposed in magenta. The DEGs follow the patterns we expect, which were described in the article [Introduction to bigPint plots](https://lindsayrutter.github.io/bigPint/articles/plotIntro.html). 
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotPCP(data_st, dataMetrics, threshVal = 0.1, lineSize = 0.3,
@@ -212,7 +212,7 @@ The above parallel coordinate plots show reliability in the DEG designation. How
 
 Indeed, subplot A of the parallel coordinate plot below shows the DEGs from this data after library scale normalization [@Marioni]. The division of DEGs between the two groups was disparate, with 78% of the DEGs being kidney-specific and only 22% of the DEGs being liver-specific. While the parallel coordinate patterns of the liver-specific DEGs appear as expected, the patterns of the kidney-specific DEGs seem to show comparatively larger variability between the replicates. Subplot B shows parallel coordinate plots of the DEGs after TMM normalization. The division of DEGs between the two groups is now more balanced, with 53% of the DEGs being kidney-specific and 47% of the DEGs being liver-specific. Additionally, the parallel coordinate patterns of both the liver-specific and kidney-specific DEGs appear as expected and more consistent with each other. Hence, these parallel coordinate plots could immediately alert users that DEGs may be more reliable for this dataset when TMM normalization is used.
 
-![](https://raw.githubusercontent.com/lrutter/bigPint/master/man/figures/lkClusters.png)
+![](https://raw.githubusercontent.com/lindsayrutter/bigPint/master/man/figures/lkClusters.png)
 
 ____________________________________________________________________________________
 
@@ -310,7 +310,7 @@ ret[[1]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), "): ",
   S1S3Cluster2[1]))
 ```
 
-We only investigated one DEG (the one with the lowest FDR) from each cluster. One way to enhance the usefulness of litre plots is to allow users to flip through the genes quickly and take note of any DEGs that may have questionable patterns. This is best achieved with interactivity. To accomplish this, the user can use the [`plotLitreApp()` function](https://lrutter.github.io/bigPint/reference/plotLitreApp.html). Below is an example of creating an interactive litre plot of the standardized data that allows the user to flip through all 41 DEGs in Cluster 1. The vignette will not open this application. Please run the below code to view this application.
+We only investigated one DEG (the one with the lowest FDR) from each cluster. One way to enhance the usefulness of litre plots is to allow users to flip through the genes quickly and take note of any DEGs that may have questionable patterns. This is best achieved with interactivity. To accomplish this, the user can use the [`plotLitreApp()` function](https://lindsayrutter.github.io/bigPint/reference/plotLitreApp.html). Below is an example of creating an interactive litre plot of the standardized data that allows the user to flip through all 41 DEGs in Cluster 1. The vignette will not open this application. Please run the below code to view this application.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 app <- plotLitreApp(data = data_st, dataMetrics = dataMetrics,
@@ -334,7 +334,7 @@ ________________________________________________________________________________
 
 ## Step 6: DEG volcano plots
 
-It can also be helpful to determine how the magnitude change and significance values of DEGs compare to the rest of the dataset. Do these DEGs only show large magnitude compared to the rest of the data, or do they also have small magnitude changes? The users can quickly obtain this information in visual format using the [`plotVolcano()`](https://lrutter.github.io/bigPint/reference/plotVolcano.html) function. Below we use the default option of plotting all the data as hexagon bins in the background and we superimpose the 41 DEGs from Cluster 1.
+It can also be helpful to determine how the magnitude change and significance values of DEGs compare to the rest of the dataset. Do these DEGs only show large magnitude compared to the rest of the data, or do they also have small magnitude changes? The users can quickly obtain this information in visual format using the [`plotVolcano()`](https://lindsayrutter.github.io/bigPint/reference/plotVolcano.html) function. Below we use the default option of plotting all the data as hexagon bins in the background and we superimpose the 41 DEGs from Cluster 1.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotVolcano(data = data, dataMetrics = dataMetrics, geneList = S1S3Cluster1,

@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo=TRUE)
 
 ## Interpreting plots in this package
 
-The `bigPint` package focuses on four plotting techniques that can uncover a wealth of information in biased multivariate data: scatterplot matrices, litre plots, parallel coordinate plots, and volcano plots. These tools can detect normalization problems, significance designation problems, and common errors in the analysis pipelines. Below, we briefly describe the interpretation of the four visualization methods. While these plots can be used for any multivariate dataset, we focus on the interpretation for RNA-sequencing data. For this purpose, we use a clean dataset [`soybean_cn_sub`](https://lrutter.github.io/bigPint/reference/soybean_cn_sub.html) derived from soybean cotyledon at different time points. We will consider two treatment groups (S1 and S2) that each have three replicates [@brown2015developmental].
+The `bigPint` package focuses on four plotting techniques that can uncover a wealth of information in biased multivariate data: scatterplot matrices, litre plots, parallel coordinate plots, and volcano plots. These tools can detect normalization problems, significance designation problems, and common errors in the analysis pipelines. Below, we briefly describe the interpretation of the four visualization methods. While these plots can be used for any multivariate dataset, we focus on the interpretation for RNA-sequencing data. For this purpose, we use a clean dataset [`soybean_cn_sub`](https://lindsayrutter.github.io/bigPint/reference/soybean_cn_sub.html) derived from soybean cotyledon at different time points. We will consider two treatment groups (S1 and S2) that each have three replicates [@brown2015developmental].
 
 ____________________________________________________________________________________
 
@@ -131,7 +131,7 @@ ret <- plotPCP(data = soybean_cn_sub_st, geneList = geneList, saveFile = FALSE,
 ret[["S1_S2"]]
 ```
 
-The parallel coordinate plot here confirms what we expect for genes with high FDR values: There is inconsistency between replicates and no observable difference between treatment groups. The article [Hierarchical clustering](https://lrutter.github.io/bigPint/articles/clusters.html) demonstrates the use of the parallel coordinate plot to understand general patterns in the dataset.
+The parallel coordinate plot here confirms what we expect for genes with high FDR values: There is inconsistency between replicates and no observable difference between treatment groups. The article [Hierarchical clustering](https://lindsayrutter.github.io/bigPint/articles/clusters.html) demonstrates the use of the parallel coordinate plot to understand general patterns in the dataset.
 
 ____________________________________________________________________________________
 
@@ -147,7 +147,7 @@ ret <- plotVolcano(data = soybean_cn_sub, dataMetrics = soybean_cn_sub_metrics,
 ret[["S1_S2"]]
 ```
 
-While volcano plots are common in other RNA-seq visualization packages, we also include an interactive version in the `bigPint` package, which can be viewed in the article [Producing interactive plots](https://lrutter.github.io/bigPint/articles/interactive.html) or on the help manual for the interactive volcano function, [plotVolcanoApp()](https://lrutter.github.io/bigPint/reference/plotVolcanoApp.html).
+While volcano plots are common in other RNA-seq visualization packages, we also include an interactive version in the `bigPint` package, which can be viewed in the article [Producing interactive plots](https://lindsayrutter.github.io/bigPint/articles/interactive.html) or on the help manual for the interactive volcano function, [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html).
 
 ____________________________________________________________________________________
 

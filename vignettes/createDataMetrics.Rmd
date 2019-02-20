@@ -23,13 +23,13 @@ knitr::opts_chunk$set(echo=TRUE)
 
 ## Data metrics object
 
-Information about the `dataMetrics` object can be found in the article [Data metrics object ](https://lrutter.github.io/bigPint/articles/dataMetrics.html). If a researcher is using the `bigPint` package to plot RNA-seq data, then many will create the `dataMetrics` object using popular RNA-seq packages such as [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger], [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated], and [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) [@ritchie2015limma]. These R packages will output several interesting quantitative variables for each gene in the dataset, such as log fold change, p-value, and FDR. These quantitative variables can be incorporated into the `dataMetrics` object and determine by thresholds what subset of genes will be superimposed onto plots. 
+Information about the `dataMetrics` object can be found in the article [Data metrics object ](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html). If a researcher is using the `bigPint` package to plot RNA-seq data, then many will create the `dataMetrics` object using popular RNA-seq packages such as [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger], [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated], and [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) [@ritchie2015limma]. These R packages will output several interesting quantitative variables for each gene in the dataset, such as log fold change, p-value, and FDR. These quantitative variables can be incorporated into the `dataMetrics` object and determine by thresholds what subset of genes will be superimposed onto plots. 
 
 ____________________________________________________________________________________
 
 ## Example: two treatments
 
-The following example shows how to create the `dataMetrics` object called `soybean_ir_sub_metrics`, which was shown in the article [Data metrics object](https://lrutter.github.io/bigPint/articles/dataMetrics.html) [@soybeanIR]. The dataset from which it is created (`soybean_ir_sub`) contains only two treatment groups, N and P. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
+The following example shows how to create the `dataMetrics` object called `soybean_ir_sub_metrics`, which was shown in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html) [@soybeanIR]. The dataset from which it is created (`soybean_ir_sub`) contains only two treatment groups, N and P. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 library(bigPint)
@@ -84,7 +84,7 @@ ________________________________________________________________________________
 
 ## Example: three treatments
 
-The following example shows how to create the `dataMetrics` object called `soybean_cn_sub_metrics`, which was shown in the article [Data metrics object](https://lrutter.github.io/bigPint/articles/dataMetrics.html)). The dataset from which it is created (`soybean_cn_sub`) contains three treatment groups, S1, S2, and S3 [@brown2015developmental]. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
+The following example shows how to create the `dataMetrics` object called `soybean_cn_sub_metrics`, which was shown in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html)). The dataset from which it is created (`soybean_cn_sub`) contains three treatment groups, S1, S2, and S3 [@brown2015developmental]. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
 
 ```{r, eval=TRUE, include=TRUE}
 library(edgeR)

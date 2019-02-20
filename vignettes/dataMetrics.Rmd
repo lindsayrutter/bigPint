@@ -29,7 +29,7 @@ ________________________________________________________________________________
 
 ## Example: two treatments
 
-As was shown in the article [Data object](https://lrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can examine the structure of its corresponding `dataMetrics` object called `soybean_ir_sub_metrics` as follows:
+As was shown in the article [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can examine the structure of its corresponding `dataMetrics` object called `soybean_ir_sub_metrics` as follows:
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE}
 library(bigPint)

@@ -11,10 +11,10 @@ knitr::opts_chunk$set(
 # bigPint: Make BIG data pint-sized <img src="man/figures/logo.png" align="right" alt="" />
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/lrutter/bigPint/graphs/commit-activity)
+[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/lindsayrutter/bigPint/graphs/commit-activity)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.1-6666ff.svg)](https://cran.r-project.org/)
 [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-blue.svg)](/commits/master)
-[![GitHub issues](https://img.shields.io/github/issues/lrutter/bigPint.svg)](https://GitHub.com/lrutter/bigPint/issues/)
+[![GitHub issues](https://img.shields.io/github/issues/lindsayrutter/bigPint.svg)](https://GitHub.com/lindsayrutter/bigPint/issues/)
 [![packageversion](https://img.shields.io/badge/Package%20version-0.99.0-orange.svg?style=flat-square)](commits/master)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-ff69b4.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
@@ -36,7 +36,7 @@ ________________________________________________________________________________
 
 ## In a nutshell
 
-The `bigPint` software aims to **"Make BIG data pint-sized"**. You can easily create modern and effective plots for your large multivariate datasets. These plots allow you to quickly examine the variability between all samples in your dataset, assess the varability between treatment groups versus between replicate groups, check for normalization issues, and discover outliers in your dataset. They also allow you to superimpose a subset of observations onto your full dataset to better understand how data subsets relates to your whole dataset. Both static and interactive plots are available.
+The `bigPint` software aims to **"Make BIG data pint-sized"**. You can easily create modern and effective plots for your large multivariate datasets. These plots allow you to quickly examine the variability between all samples in your dataset, assess the variability between treatment groups versus between replicate groups, check for normalization issues, and discover outliers in your dataset. They also allow you to superimpose a subset of observations onto your full dataset to better understand how data subsets relates to your whole dataset. Both static and interactive plots are available.
 
 ____________________________________________________________________________________
 

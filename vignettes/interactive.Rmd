@@ -38,7 +38,7 @@ ________________________________________________________________________________
 
 ## Scatterplot matrix app
 
-Interactive scatterplot matrices can be generated with the `bigPint` function [plotSMApp()](https://lrutter.github.io/bigPint/reference/plotSMApp.html). The code below will generate an example interactive litre plot from the soybean cotyledon dataset [@brown2015developmental].
+Interactive scatterplot matrices can be generated with the `bigPint` function [plotSMApp()](https://lindsayrutter.github.io/bigPint/reference/plotSMApp.html). The code below will generate an example interactive litre plot from the soybean cotyledon dataset [@brown2015developmental].
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 library(bigPint)
@@ -58,7 +58,7 @@ ________________________________________________________________________________
 
 ## Litre plot app
 
-Interactive litre plots can be generated with the `bigPint` function [plotLitreApp()](https://lrutter.github.io/bigPint/reference/plotLitreApp.html). The code below will generate an example interactive litre plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
+Interactive litre plots can be generated with the `bigPint` function [plotLitreApp()](https://lindsayrutter.github.io/bigPint/reference/plotLitreApp.html). The code below will generate an example interactive litre plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 data("soybean_ir_sub")
@@ -80,7 +80,7 @@ ________________________________________________________________________________
 
 ## Parallel coordinates app
 
-Users can produce interactive parallel coordinate plots with the `bigPint` function [plotPCPApp()](https://lrutter.github.io/bigPint/reference/plotPCPApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being standardized [@soybeanIR].
+Users can produce interactive parallel coordinate plots with the `bigPint` function [plotPCPApp()](https://lindsayrutter.github.io/bigPint/reference/plotPCPApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being standardized [@soybeanIR].
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 soybean_ir_sub_st = as.data.frame(t(apply(as.matrix(soybean_ir_sub[,-1]), 1, 
@@ -109,7 +109,7 @@ ________________________________________________________________________________
 
 ## Volcano plot app
 
-Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
+Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 app <- plotVolcanoApp(data = soybean_ir_sub_log,

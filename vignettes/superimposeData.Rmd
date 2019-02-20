@@ -29,7 +29,7 @@ ________________________________________________________________________________
 
 ## Option 1: Data metrics object
 
-The `dataMetrics` input is NULL by default in `bigPint` package functions. However, a user can create a `dataMetrics` object as is explained in the article [Creating data metrics object](https://lrutter.github.io/bigPint/articles/createDataMetrics.html). If a user does input a `dataMetrics` object, then two other input parameters will be used, `threshVar` and `threshVal`. These two inputs will be used to create the data subset from the `dataMetrics` input. Below are their definitions in the help files of `bigPint`package functions:
+The `dataMetrics` input is NULL by default in `bigPint` package functions. However, a user can create a `dataMetrics` object as is explained in the article [Creating data metrics object](https://lindsayrutter.github.io/bigPint/articles/createDataMetrics.html). If a user does input a `dataMetrics` object, then two other input parameters will be used, `threshVar` and `threshVal`. These two inputs will be used to create the data subset from the `dataMetrics` input. Below are their definitions in the help files of `bigPint`package functions:
 
 - threshVar `CHARACTER STRING` Name of column in dataMetrics object used to threshold significance; default "FDR"
 - threshVal `INTEGER` Maximum value to threshold significance from threshVar object; default 0.05

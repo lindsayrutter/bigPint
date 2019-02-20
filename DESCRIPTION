@@ -1,5 +1,5 @@
 Package: bigPint
-Version: 0.99.7
+Version: 0.99.8
 Title: Big multivariate data plotted interactively
 Description: Methods for visualizing large multivariate datasets using static and interactive scatterplot matrices, parallel coordinate plots, volcano plots, and litre plots. Includes examples for visualizing RNA-sequencing datasets and differentially expressed genes.
 Authors@R: c(person("Lindsay", "Rutter", email = "lindsayannerutter@gmail.com", role = c("aut","cre")),
@@ -24,8 +24,8 @@ biocViews: Clustering, DataImport, DifferentialExpression,
         Preprocessing, QualityControl, RNASeq, Sequencing, Software,
         Transcription, Visualization
 RoxygenNote: 6.1.1
-BugReports: https://github.com/lrutter/bigPint/issues
-URL: https://github.com/lrutter/bigPint
+BugReports: https://github.com/lindsayrutter/bigPint/issues
+URL: https://github.com/lindsayrutter/bigPint
 NeedsCompilation: no
 Packaged: 2018-11-30 04:06:13 UTC; suzu
 Author: Lindsay Rutter [aut, cre],
