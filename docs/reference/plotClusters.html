@@ -181,12 +181,13 @@ each cluster to .rds files for later use.</p>
     </div>
 
     <pre class="usage"><span class='fu'>plotClusters</span>(<span class='no'>data</span>, <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>, <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
-  <span class='kw'>nC</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>colList</span> <span class='kw'>=</span> <span class='fu'>rainbow</span>(<span class='no'>nC</span>), <span class='kw'>aggMethod</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ward.D"</span>, <span class='st'>"ward.D2"</span>,
-  <span class='st'>"single"</span>, <span class='st'>"complete"</span>, <span class='st'>"average"</span>, <span class='st'>"mcquitty"</span>, <span class='st'>"median"</span>, <span class='st'>"centroid"</span>),
-  <span class='kw'>yAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Count"</span>, <span class='kw'>xAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Sample"</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>,
-  <span class='kw'>lineAlpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>(),
-  <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
+  <span class='kw'>geneLists</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
+  <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>nC</span> <span class='kw'>=</span> <span class='fl'>4</span>, <span class='kw'>colList</span> <span class='kw'>=</span> <span class='fu'>rainbow</span>(<span class='no'>nC</span>),
+  <span class='kw'>aggMethod</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"ward.D"</span>, <span class='st'>"ward.D2"</span>, <span class='st'>"single"</span>, <span class='st'>"complete"</span>, <span class='st'>"average"</span>,
+  <span class='st'>"mcquitty"</span>, <span class='st'>"median"</span>, <span class='st'>"centroid"</span>), <span class='kw'>yAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Count"</span>,
+  <span class='kw'>xAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Sample"</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>lineAlpha</span> <span class='kw'>=</span> <span class='fl'>0.5</span>,
+  <span class='kw'>vxAxis</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>outDir</span> <span class='kw'>=</span> <span class='fu'>tempdir</span>(), <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
+  <span class='kw'>verbose</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,11 +202,21 @@ each cluster to .rds files for later use.</p>
     </tr>
     <tr>
       <th>geneList</th>
-      <td><p>CHARACTER ARRAY | List of ID values of genes to be drawn 
+      <td><p>CHARACTER ARRAY | Array of ID values of genes to be drawn 
 from data as parallel coordinate lines. Use this parameter if you have 
-predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
-and threshVal to create genes to be overlaid as parallel coordinate lines; 
-default NULL</p></td>
+predetermined genes to be drawn. These genes will be clustered. Otherwise, 
+use dataMetrics, threshVar, and threshVal to create clusters to be
+overlaid as parallel coordinate lines; default NULL. See package website
+for examples</p></td>
+    </tr>
+    <tr>
+      <th>geneLists</th>
+      <td><p>LIST | List of ID values of genes already clustered to be #' drawn from data as parallel coordinate lines. Each list item is an array
+of genes ID values that are already grouped as a cluster. Unlike the 
+singular geneList object, the plural geneLists object is not be clustered.
+If you instead wish to cluster genes, use dataMetrics, threshVar, and 
+threshVal or geneList to create clusters to be overlaid as parallel
+coordinate lines; default NULL. See package website for examples</p></td>
     </tr>
     <tr>
       <th>threshVar</th>
@@ -298,7 +309,8 @@ to the location specified in the outDir parameter.</p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/hclust'>hclust</a></code></p></div>
+    <div class='dont-index'><p><code><a href='http://www.rdocumentation.org/packages/stats/topics/hclust'>hclust</a></code>
+<a href='https://lindsayrutter.github.io/bigPint/articles/clusters.html'>https://lindsayrutter.github.io/bigPint/articles/clusters.html</a></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -316,7 +328,7 @@ to the location specified in the outDir parameter.</p>
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotClusters</span>(<span class='kw'>data</span><span class='kw'>=</span><span class='no'>soybean_ir_sub</span>,
     <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>nC</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>colList</span> <span class='kw'>=</span> <span class='no'>colList</span>,
     <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-7</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>plot</span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_4"</span>]])</div><div class='img'><img src='plotClusters-1.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/grid.draw'>grid.draw</a></span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_4"</span>]])</div><div class='input'>
 <span class='co'># Example 2: Perform the same analysis, only now create the four groups by </span>
 <span class='co'># clustering on all genes in the data (n = 5,604). Then, overlay the genes </span>
 <span class='co'># that have FDR &lt; 1e-7 (n = 113) into their corresponding clusters.</span>
@@ -324,13 +336,13 @@ to the location specified in the outDir parameter.</p>
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotClusters</span>(<span class='kw'>data</span><span class='kw'>=</span><span class='no'>soybean_ir_sub</span>,
     <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>nC</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>colList</span> <span class='kw'>=</span> <span class='no'>colList</span>,
     <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-7</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>plot</span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_4"</span>]])</div><div class='img'><img src='plotClusters-2.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/grid.draw'>grid.draw</a></span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_4"</span>]])</div><div class='input'>
 <span class='co'># Example 3: Perform the same analysis, only now overlay all genes in the </span>
 <span class='co'># data by keeping the dataMetrics object as its default value of NULL.</span>
 
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotClusters</span>(<span class='kw'>data</span><span class='kw'>=</span><span class='no'>soybean_ir_sub</span>, <span class='kw'>nC</span><span class='kw'>=</span><span class='fl'>4</span>, <span class='kw'>colList</span> <span class='kw'>=</span> <span class='no'>colList</span>,
     <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
-<span class='fu'>plot</span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_4"</span>]])</div><div class='img'><img src='plotClusters-3.png' alt='' width='700' height='700' /></div><div class='input'>
+<span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/grid.draw'>grid.draw</a></span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"N_P_4"</span>]])</div><div class='input'>
 <span class='co'># Example 4: Visualization of gene clusters is usually performed on</span>
 <span class='co'># standardized data. Here, hierarchical clustering of size four is performed</span>
 <span class='co'># using the agglomeration method "average" on standardized data. Only genes </span>
@@ -353,7 +365,7 @@ to the location specified in the outDir parameter.</p>
     <span class='kw'>colList</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"#00A600FF"</span>, <span class='st'>"#CC00FFFF"</span>, <span class='st'>"red"</span>, <span class='st'>"darkorange"</span>),
     <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>lineAlpha</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>clusterAllData</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='kw'>aggMethod</span> <span class='kw'>=</span> <span class='st'>"average"</span>, <span class='kw'>yAxisLabel</span> <span class='kw'>=</span> <span class='st'>"Standardized read count"</span>,
-    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "S2_S3: There were no significant genes"</div><div class='input'><span class='fu'>names</span>(<span class='no'>ret</span>)</div><div class='output co'>#&gt; [1] "S1_S2_4" "S1_S3_4" "S2_S3_4"</div><div class='input'><span class='fu'>plot</span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S2_4"</span>]])</div><div class='img'><img src='plotClusters-4.png' alt='' width='700' height='700' /></div><div class='input'><span class='fu'>plot</span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S3_4"</span>]])</div><div class='img'><img src='plotClusters-5.png' alt='' width='700' height='700' /></div><div class='input'>
+    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)</div><div class='output co'>#&gt; [1] "S2_S3: There were no significant genes"</div><div class='input'><span class='fu'>names</span>(<span class='no'>ret</span>)</div><div class='output co'>#&gt; [1] "S1_S2_4" "S1_S3_4" "S2_S3_4"</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/grid.draw'>grid.draw</a></span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S2_4"</span>]])</div><div class='input'><span class='fu'><a href='http://www.rdocumentation.org/packages/grid/topics/grid.draw'>grid.draw</a></span>(<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S3_4"</span>]])</div><div class='img'><img src='plotClusters-1.png' alt='' width='700' height='700' /></div><div class='input'>
 # Example 5: Run the same analysis, only now set the verbose parameter to 
 # value TRUE. This will save images of each individual cluster, .rds files 
 # that contain the IDs within each cluster, and images of the conglomerate 

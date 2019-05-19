@@ -130,7 +130,7 @@
       <h1>Producing interactive plots</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2019-02-20</h4>
+            <h4 class="date">2019-05-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/interactive.Rmd"><code>vignettes/interactive.Rmd</code></a></small>
       <div class="hidden name"><code>interactive.Rmd</code></div>
@@ -148,7 +148,7 @@
 <div id="types-of-interactive-plots" class="section level2">
 <h2 class="hasAnchor">
 <a href="#types-of-interactive-plots" class="anchor"></a>Types of interactive plots</h2>
-<p>Currently, there are three interactive plots available in the <code>bigPint</code> package:</p>
+<p>Currently, there are four interactive plots available in the <code>bigPint</code> package:</p>
 <ul>
 <li>Scatterplot matrix</li>
 <li>Litre plots</li>
@@ -161,7 +161,7 @@
 <div id="scatterplot-matrix-app" class="section level2">
 <h2 class="hasAnchor">
 <a href="#scatterplot-matrix-app" class="anchor"></a>Scatterplot matrix app</h2>
-<p>Interactive scatterplot matrices can be generated with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotSMApp.html">plotSMApp()</a>. The code below will generate an example interactive litre plot from the soybean cotyledon dataset <span class="citation">(Brown and Hudson 2015)</span>.</p>
+<p>Interactive scatterplot matrices can be generated with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotSMApp.html">plotSMApp()</a>. The code below will generate an example interactive scatterplot matrix from the soybean cotyledon dataset <span class="citation">(Brown and Hudson 2015)</span>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(bigPint)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">data</span>(<span class="st">"soybean_cn_sub"</span>)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3">soybean_cn_sub &lt;-<span class="st"> </span>soybean_cn_sub[,<span class="dv">1</span><span class="op">:</span><span class="dv">7</span>]</a>
@@ -220,7 +220,7 @@
 <div id="volcano-plot-app" class="section level2">
 <h2 class="hasAnchor">
 <a href="#volcano-plot-app" class="anchor"></a>Volcano plot app</h2>
-<p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html">plotVolcanoApp()</a>. The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being logged <span class="citation">(Lauter and Graham 2016)</span>.</p>
+<p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html">plotVolcanoApp()</a>. The code below will generate an example interactive volcano plot using the soybean iron metabolism dataset after being logged <span class="citation">(Lauter and Graham 2016)</span>.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1">app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotVolcanoApp.html">plotVolcanoApp</a></span>(<span class="dt">data =</span> soybean_ir_sub_log,</a>
 <a class="sourceLine" id="cb4-2" data-line-number="2">    <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</a>
 <a class="sourceLine" id="cb4-3" data-line-number="3"><span class="cf">if</span> (<span class="kw">interactive</span>()) {</a>

@@ -130,7 +130,7 @@
       <h1>Hierarchical clustering</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2019-02-20</h4>
+            <h4 class="date">2019-05-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/clusters.Rmd"><code>vignettes/clusters.Rmd</code></a></small>
       <div class="hidden name"><code>clusters.Rmd</code></div>
@@ -154,7 +154,7 @@
 <div id="approach-1" class="section level2">
 <h2 class="hasAnchor">
 <a href="#approach-1" class="anchor"></a>Approach 1</h2>
-<p>Below, we read in the soybean iron metabolism dataset and perform a logarithm on it <span class="citation">(Lauter and Graham 2016)</span> dataset. We determine that this dataset contains 5,604 genes. We also determine that this dataset has 113 genes that have FDR &lt; 1e-7 (n = 113). We will consider these our 113 significant genes of interest.</p>
+<p>Below, we read in the soybean iron metabolism dataset and perform a logarithm on it <span class="citation">(Lauter and Graham 2016)</span>. We determine that this dataset contains 5,604 genes. We also determine that this dataset has 113 genes that have FDR &lt; 1e-7 (n = 113). We will consider these our 113 significant genes of interest.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw">library</span>(grid)</a>
 <a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw">library</span>(matrixStats)</a>
 <a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw">library</span>(ggplot2)</a>
@@ -172,7 +172,7 @@
 <a class="sourceLine" id="cb5-3" data-line-number="3">  <span class="dt">colList =</span> colList, <span class="dt">clusterAllData =</span> <span class="ot">FALSE</span>, <span class="dt">threshVal =</span> <span class="fl">1e-7</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
 <a class="sourceLine" id="cb5-4" data-line-number="4"><span class="kw">names</span>(ret)</a></code></pre></div>
 <pre><code>## [1] "N_P_4"</code></pre>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw">plot</span>(ret[[<span class="st">"N_P_4"</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.draw">grid.draw</a></span>(ret[[<span class="st">"N_P_4"</span>]])</a></code></pre></div>
 <p><img src="clusters_files/figure-html/unnamed-chunk-2-1.png" width="700.0000032"></p>
 <hr>
 </div>
@@ -182,7 +182,7 @@
 <p>We can perform a similar analysis as we did before, only now we will set the <code>clusterAllData</code> parameter to a value of <code>TRUE</code>. This means our four clusters will be created considering <em>all</em> genes in the data (n = 5,604). The clusters will then represent the four main patterns in the full dataset. After that, we will only overlay the 113 significant genes as parallel coordinate lines across the full dataset represented as side-by-side boxplots. Note that Cluster 1 did not contain any of the 113 significant genes.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb8-1" data-line-number="1">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics, <span class="dt">nC=</span><span class="dv">4</span>,</a>
 <a class="sourceLine" id="cb8-2" data-line-number="2">  <span class="dt">colList =</span> colList, <span class="dt">clusterAllData =</span> <span class="ot">TRUE</span>, <span class="dt">threshVal =</span> <span class="fl">1e-7</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw">plot</span>(ret[[<span class="st">"N_P_4"</span>]])</a></code></pre></div>
+<a class="sourceLine" id="cb8-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.draw">grid.draw</a></span>(ret[[<span class="st">"N_P_4"</span>]])</a></code></pre></div>
 <p><img src="clusters_files/figure-html/unnamed-chunk-3-1.png" width="700.0000032"></p>
 <hr>
 </div>
@@ -192,7 +192,7 @@
 <p>In this last approach, we will perform hierarchical clustering on <em>all</em> 5,604 genes in the data and also overlay <em>all</em> 5,604 genes as parallel coordinate lines. We do not create any subset of genes (such as significant genes) because we leave the <code>dataMetrics</code> object with its default value of <code>NULL</code>.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">nC=</span><span class="dv">4</span>, <span class="dt">colList =</span> colList,</a>
 <a class="sourceLine" id="cb9-2" data-line-number="2">  <span class="dt">clusterAllData =</span> <span class="ot">TRUE</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw">plot</span>(ret[[<span class="st">"N_P_4"</span>]])</a></code></pre></div>
+<a class="sourceLine" id="cb9-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.draw">grid.draw</a></span>(ret[[<span class="st">"N_P_4"</span>]])</a></code></pre></div>
 <p><img src="clusters_files/figure-html/unnamed-chunk-4-1.png" width="700.0000032"></p>
 <p>As a side note, we can use the output from Approach 3 to better understand how Approach 2 worked. Basically, in Approach 2, all 5,604 genes were used in the clustering algorithm to create four clusters. These resulted in the cluster sizes shown in Approach 3: That is, Cluster 1 had 2,334 genes; Cluster 2 had 1,997 genes; Cluster 3 had 1,992 genes; and Cluster 4 had 881 genes. However, at that point, Approach 2 only plotted the 113 significant genes. This means that none of 2,334 genes in Cluster 1 were significant; 44 of the 1,997 genes in Cluster 2 were significant; 33 of the 1,992 genes in Cluster 3 were significant; and 36 of the 881 genes in Cluster 4 were significant.</p>
 <hr>
@@ -218,20 +218,19 @@
 <pre><code>## [1] "S2_S3: There were no significant genes"</code></pre>
 <div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb12-1" data-line-number="1"><span class="kw">names</span>(ret)</a></code></pre></div>
 <pre><code>## [1] "S1_S2_4" "S1_S3_4" "S2_S3_4"</code></pre>
-<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw">plot</span>(ret[[<span class="st">"S1_S2_4"</span>]])</a></code></pre></div>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb14-1" data-line-number="1"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.draw">grid.draw</a></span>(ret[[<span class="st">"S1_S2_4"</span>]])</a>
+<a class="sourceLine" id="cb14-2" data-line-number="2"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.draw">grid.draw</a></span>(ret[[<span class="st">"S1_S3_4"</span>]])</a></code></pre></div>
 <p><img src="clusters_files/figure-html/unnamed-chunk-5-1.png" width="700.0000032"></p>
-<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw">plot</span>(ret[[<span class="st">"S1_S3_4"</span>]])</a></code></pre></div>
-<p><img src="clusters_files/figure-html/unnamed-chunk-5-2.png" width="700.0000032"></p>
 <hr>
 </div>
 <div id="verbose-option" class="section level2">
 <h2 class="hasAnchor">
 <a href="#verbose-option" class="anchor"></a>Verbose option</h2>
 <p>In some cases, users may wish to use the <code><a href="../reference/plotClusters.html">plotClusters()</a></code> function to create clusters and then save these clusters to use for other purposes later, such as overlaying them onto scatterplot matrices, litre plots, and volcano plots. The gene IDs of the parallel coordinate lines in each cluster can be saved as .rds files for this purpose by setting the <code>verbose</code> option to a value of <code>TRUE</code>. Below is an example of this:</p>
-<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1"><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">data=</span>soybean_cn_sub_st, <span class="dt">dataMetrics =</span> soybean_cn_sub_metrics, <span class="dt">nC=</span><span class="dv">4</span>,</a>
-<a class="sourceLine" id="cb16-2" data-line-number="2">  <span class="dt">colList =</span> <span class="kw">c</span>(<span class="st">"#00A600FF"</span>, <span class="st">"#CC00FFFF"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>), <span class="dt">lineSize =</span> <span class="fl">0.5</span>, </a>
-<a class="sourceLine" id="cb16-3" data-line-number="3">  <span class="dt">lineAlpha =</span> <span class="dv">1</span>, <span class="dt">clusterAllData =</span> <span class="ot">FALSE</span>, <span class="dt">aggMethod =</span> <span class="st">"average"</span>,</a>
-<a class="sourceLine" id="cb16-4" data-line-number="4">  <span class="dt">yAxisLabel =</span> <span class="st">"Standardized read count"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb15-1" data-line-number="1"><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">data=</span>soybean_cn_sub_st, <span class="dt">dataMetrics =</span> soybean_cn_sub_metrics, <span class="dt">nC=</span><span class="dv">4</span>,</a>
+<a class="sourceLine" id="cb15-2" data-line-number="2">  <span class="dt">colList =</span> <span class="kw">c</span>(<span class="st">"#00A600FF"</span>, <span class="st">"#CC00FFFF"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>), <span class="dt">lineSize =</span> <span class="fl">0.5</span>, </a>
+<a class="sourceLine" id="cb15-3" data-line-number="3">  <span class="dt">lineAlpha =</span> <span class="dv">1</span>, <span class="dt">clusterAllData =</span> <span class="ot">FALSE</span>, <span class="dt">aggMethod =</span> <span class="st">"average"</span>,</a>
+<a class="sourceLine" id="cb15-4" data-line-number="4">  <span class="dt">yAxisLabel =</span> <span class="st">"Standardized read count"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</a></code></pre></div>
 <p>Running the command above will save numerous files into the <code>outDir</code> location. The default location is a temporary directory. You can find the exact pathway of this temporary directory by simply typing <code>tempdir()</code> into your R console. This temporary directory and the files within it remain the same until you close your R session; at that point, a new temporary directory will be created. After running the above command, you should find the following files in your temporary directory:</p>
 <ul>
 <li>S1_S2_4_1.rds (10 gene IDs in Cluster 1 in S1 versus S2 comparison)</li>
@@ -254,9 +253,9 @@
 <li><p>S1_S3_4.jpg (Plot of all four clusters in S1 versus S3 comparison)</p></li>
 </ul>
 <p>At this point, we can use any of the .rds files to examine the genes represented in the clustered parallel coordinate plots. For instance, we can read in the 19 Cluster 1 genes in the S1 versus S3 comparison as follows:</p>
-<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">S1S3Cluster1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="kw">tempdir</span>(), <span class="st">"/S1_S3_4_1.rds"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb16"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb16-1" data-line-number="1">S1S3Cluster1 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="kw">tempdir</span>(), <span class="st">"/S1_S3_4_1.rds"</span>))</a></code></pre></div>
 <p>And check its contents contain the 19 gene IDs.</p>
-<div class="sourceCode" id="cb18"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb18-1" data-line-number="1">S1S3Cluster1</a></code></pre></div>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb17-1" data-line-number="1">S1S3Cluster1</a></code></pre></div>
 <pre><code>##  [1] "Glyma18g00690.1" "Glyma08g44110.1" "Glyma01g26570.1"
 ##  [4] "Glyma07g09700.1" "Glyma02g40610.1" "Glyma17g17970.1"
 ##  [7] "Glyma19g26250.1" "Glyma10g34630.1" "Glyma14g14220.1"
@@ -265,11 +264,31 @@
 ## [16] "Glyma20g30460.1" "Glyma12g10960.1" "Glyma16g08810.1"
 ## [19] "Glyma18g42630.2"</code></pre>
 <p>Then, we can overlay these 19 genes from Cluster 1 in the S1 versus S3 comparison as points onto the scatterplot matrix. This step can give us another perspective of these 19 genes. We may wish to use the same color (green) that we did in the parallel coordinate plots above and add an informative plot title.</p>
-<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data =</span> soybean_cn_sub_st, <span class="dt">geneList =</span> S1S3Cluster1,</a>
-<a class="sourceLine" id="cb20-2" data-line-number="2">  <span class="dt">pointColor =</span> <span class="st">"#00A600FF"</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb20-3" data-line-number="3">ret[[<span class="st">"S1_S3"</span>]] <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Cluster 1 Genes (n=19)"</span>)</a></code></pre></div>
-<p><img src="clusters_files/figure-html/unnamed-chunk-10-1.png" width="700.0000032"></p>
+<div class="sourceCode" id="cb19"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb19-1" data-line-number="1">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data =</span> soybean_cn_sub_st, <span class="dt">geneList =</span> S1S3Cluster1,</a>
+<a class="sourceLine" id="cb19-2" data-line-number="2">  <span class="dt">pointColor =</span> <span class="st">"#00A600FF"</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
+<a class="sourceLine" id="cb19-3" data-line-number="3">ret[[<span class="st">"S1_S3"</span>]] <span class="op">+</span><span class="st"> </span><span class="kw"><a href="http://www.rdocumentation.org/packages/ggplot2/topics/labs">ggtitle</a></span>(<span class="st">"Cluster 1 Genes (n=19)"</span>)</a></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-13-1.png" width="700.0000032"></p>
 <hr>
+</div>
+<div id="pre-determined-clusters" class="section level2">
+<h2 class="hasAnchor">
+<a href="#pre-determined-clusters" class="anchor"></a>Pre-determined clusters</h2>
+<p>Some users may perform clustering using other software and may wish to simply overlay those clusters as parallel coordinate plots usingn the <code>bigPint</code> package. This can be achieved in the <code><a href="../reference/plotClusters.html">plotClusters()</a></code> function using the <code>geneLists</code> variable. As an example, let us read in three clusters that each contain a character array of gene IDs. These three clusters may have been created in another software package and we simply now wish to plot them out using the <code>bigPint</code> graphics. We see that the first cluster contains 7 gene IDs and the last two clusters each contain 2 gene IDs.</p>
+<div class="sourceCode" id="cb20"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb20-1" data-line-number="1">S1S3Cluster2 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="kw">tempdir</span>(), <span class="st">"/S1_S3_4_2.rds"</span>))</a>
+<a class="sourceLine" id="cb20-2" data-line-number="2">S1S3Cluster3 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="kw">tempdir</span>(), <span class="st">"/S1_S3_4_3.rds"</span>))</a>
+<a class="sourceLine" id="cb20-3" data-line-number="3">S1S3Cluster4 &lt;-<span class="st"> </span><span class="kw">readRDS</span>(<span class="kw">paste0</span>(<span class="kw">tempdir</span>(), <span class="st">"/S1_S3_4_4.rds"</span>))</a></code></pre></div>
+<div class="sourceCode" id="cb21"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb21-1" data-line-number="1">S1S3Cluster2</a></code></pre></div>
+<pre><code>## [1] "Glyma06g12670.1" "Glyma12g32460.1" "Glyma17g09850.1" "Glyma18g52920.1"
+## [5] "Glyma01g24710.1" "Glyma04g39880.1" "Glyma05g27450.2"</code></pre>
+<div class="sourceCode" id="cb23"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb23-1" data-line-number="1">S1S3Cluster3</a></code></pre></div>
+<pre><code>## [1] "Glyma04g37510.1" "Glyma03g19880.1"</code></pre>
+<div class="sourceCode" id="cb25"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb25-1" data-line-number="1">S1S3Cluster4</a></code></pre></div>
+<pre><code>## [1] "Glyma08g11570.1" "Glyma08g19290.1"</code></pre>
+<p>We can now plot these three clusters directly as parallel coordinate lines superimposed on side-by-side boxplots as follows:</p>
+<div class="sourceCode" id="cb27"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb27-1" data-line-number="1">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">data=</span>soybean_cn_sub_st, <span class="dt">geneLists =</span> <span class="kw">list</span>(S1S3Cluster2,</a>
+<a class="sourceLine" id="cb27-2" data-line-number="2">  S1S3Cluster3, S1S3Cluster4), <span class="dt">lineAlpha =</span> <span class="dv">1</span>, <span class="dt">lineSize =</span> <span class="fl">0.5</span>)</a>
+<a class="sourceLine" id="cb27-3" data-line-number="3"><span class="kw"><a href="http://www.rdocumentation.org/packages/grid/topics/grid.draw">grid.draw</a></span>(ret[[<span class="st">"S1_S3_3"</span>]])</a></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-16-1.png" width="700.0000032"></p>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
@@ -299,6 +318,7 @@
       <li><a href="#approach-3">Approach 3</a></li>
       <li><a href="#standardization">Standardization</a></li>
       <li><a href="#verbose-option">Verbose option</a></li>
+      <li><a href="#pre-determined-clusters">Pre-determined clusters</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>
