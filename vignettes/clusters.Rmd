@@ -37,7 +37,7 @@ We will now show examples for each of these three main approaches and discuss a 
 
 ## Approach 1
 
-Below, we read in the soybean iron metabolism dataset and perform a logarithm on it [@soybeanIR] dataset. We determine that this dataset contains 5,604 genes. We also determine that this dataset has 113 genes that have FDR < 1e-7 (n = 113). We will consider these our 113 significant genes of interest.
+Below, we read in the soybean iron metabolism dataset and perform a logarithm on it [@soybeanIR]. We determine that this dataset contains 5,604 genes. We also determine that this dataset has 113 genes that have FDR < 1e-7 (n = 113). We will consider these our 113 significant genes of interest.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 library(grid)
@@ -58,7 +58,7 @@ colList = c("#00A600FF", rainbow(5)[c(1,4,5)])
 ret <- plotClusters(data=soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, nC=4,
   colList = colList, clusterAllData = FALSE, threshVal = 1e-7, saveFile = FALSE)
 names(ret)
-plot(ret[["N_P_4"]])
+grid.draw(ret[["N_P_4"]])
 ```
 
 ____________________________________________________________________________________
@@ -70,7 +70,7 @@ We can perform a similar analysis as we did before, only now we will set the `cl
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 ret <- plotClusters(data=soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, nC=4,
   colList = colList, clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
-plot(ret[["N_P_4"]])
+grid.draw(ret[["N_P_4"]])
 ```
 
 ____________________________________________________________________________________
@@ -82,7 +82,7 @@ In this last approach, we will perform hierarchical clustering on *all* 5,604 ge
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 ret <- plotClusters(data=soybean_ir_sub, nC=4, colList = colList,
   clusterAllData = TRUE, saveFile = FALSE)
-plot(ret[["N_P_4"]])
+grid.draw(ret[["N_P_4"]])
 ```
 
 As a side note, we can use the output from Approach 3 to better understand how Approach 2 worked. Basically, in Approach 2, all 5,604 genes were used in the clustering algorithm to create four clusters. These resulted in the cluster sizes shown in Approach 3: That is, Cluster 1 had 2,334 genes; Cluster 2 had 1,997 genes; Cluster 3 had 1,992 genes; and Cluster 4 had 881 genes. However, at that point, Approach 2 only plotted the 113 significant genes. This means that none of 2,334 genes in Cluster 1 were significant; 44 of the 1,997 genes in Cluster 2 were significant; 33 of the 1,992 genes in Cluster 3 were significant; and 36 of the 881 genes in Cluster 4 were significant.
@@ -109,8 +109,8 @@ ret <- plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics
   lineAlpha = 1, clusterAllData = FALSE, aggMethod = "average",
   yAxisLabel = "Standardized read count", saveFile = FALSE)
 names(ret)
-plot(ret[["S1_S2_4"]])
-plot(ret[["S1_S3_4"]])
+grid.draw(ret[["S1_S2_4"]])
+grid.draw(ret[["S1_S3_4"]])
 ```
 
 ____________________________________________________________________________________
@@ -154,6 +154,18 @@ At this point, we can use any of the .rds files to examine the genes represented
 S1S3Cluster1 <- c("Glyma18g00690.1", "Glyma08g44110.1", "Glyma01g26570.1", "Glyma07g09700.1", "Glyma02g40610.1", "Glyma17g17970.1", "Glyma19g26250.1", "Glyma10g34630.1", "Glyma14g14220.1", "Glyma19g26710.1", "Glyma03g29150.1", "Glyma08g19245.1", "Glyma07g01730.2", "Glyma18g25845.1", "Glyma08g22380.1", "Glyma20g30460.1", "Glyma12g10960.1", "Glyma16g08810.1", "Glyma18g42630.2")
 ```
 
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE}
+S1S3Cluster2 <- c("Glyma06g12670.1", "Glyma12g32460.1", "Glyma17g09850.1", "Glyma18g52920.1", "Glyma01g24710.1", "Glyma04g39880.1", "Glyma05g27450.2")
+```
+
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE}
+S1S3Cluster3 <- c("Glyma04g37510.1", "Glyma03g19880.1")
+```
+
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE}
+S1S3Cluster4 <- c("Glyma08g11570.1", "Glyma08g19290.1")
+```
+
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 S1S3Cluster1 <- readRDS(paste0(tempdir(), "/S1_S3_4_1.rds"))
 ```
@@ -173,5 +185,29 @@ ret[["S1_S3"]] + ggtitle("Cluster 1 Genes (n=19)")
 ```
 
 ____________________________________________________________________________________
+
+## Pre-determined clusters
+
+Some users may perform clustering using other software and may wish to simply overlay those clusters as parallel coordinate plots usingn the `bigPint` package. This can be achieved in the `plotClusters()` function using the `geneLists` variable. As an example, let us read in three clusters that each contain a character array of gene IDs. These three clusters may have been created in another software package and we simply now wish to plot them out using the `bigPint` graphics. We see that the first cluster contains 7 gene IDs and the last two clusters each contain 2 gene IDs.
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster2 <- readRDS(paste0(tempdir(), "/S1_S3_4_2.rds"))
+S1S3Cluster3 <- readRDS(paste0(tempdir(), "/S1_S3_4_3.rds"))
+S1S3Cluster4 <- readRDS(paste0(tempdir(), "/S1_S3_4_4.rds"))
+```
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster2
+S1S3Cluster3
+S1S3Cluster4
+```
+
+We can now plot these three clusters directly as parallel coordinate lines superimposed on side-by-side boxplots as follows:
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(data=soybean_cn_sub_st, geneLists = list(S1S3Cluster2,
+  S1S3Cluster3, S1S3Cluster4), lineAlpha = 1, lineSize = 0.5)
+grid.draw(ret[["S1_S3_3"]])
+```
 
 ## References

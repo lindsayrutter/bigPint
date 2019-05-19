@@ -6,11 +6,18 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics; default NULL
-#' @param geneList CHARACTER ARRAY | List of ID values of genes to be drawn 
+#' @param geneList CHARACTER ARRAY | Array of ID values of genes to be drawn 
 #' from data as parallel coordinate lines. Use this parameter if you have 
-#' predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
-#' and threshVal to create genes to be overlaid as parallel coordinate lines; 
-#' default NULL
+#' predetermined genes to be drawn. These genes will be clustered. Otherwise, 
+#' use dataMetrics, threshVar, and threshVal to create clusters to be
+#' overlaid as parallel coordinate lines; default NULL. See package website
+#' for examples
+#' @param geneLists LIST | List of ID values of genes already clustered to be #' drawn from data as parallel coordinate lines. Each list item is an array
+#' of genes ID values that are already grouped as a cluster. Unlike the 
+#' singular geneList object, the plural geneLists object is not be clustered.
+#' If you instead wish to cluster genes, use dataMetrics, threshVar, and 
+#' threshVal or geneList to create clusters to be overlaid as parallel
+#' coordinate lines; default NULL. See package website for examples
 #' @param threshVar CHARACTER STRING | Name of column in dataMetrics object 
 #' that is used to threshold significance; default "FDR"
 #' @param threshVal INTEGER | Maximum value to threshold significance from 
@@ -56,6 +63,7 @@
 #' @importFrom utils combn
 #' @seealso
 #' \code{\link[stats]{hclust}}
+#' \url{https://lindsayrutter.github.io/bigPint/articles/clusters.html}
 #' @return List of n elements each containing a grid of parallel coordinate 
 #' plots, where n is the number of treatment pair combinations in the data 
 #' object. If the saveFile parameter has a value of TRUE, then each grid of 
@@ -81,7 +89,7 @@
 #' ret <- plotClusters(data=soybean_ir_sub,
 #'     dataMetrics = soybean_ir_sub_metrics, nC=4, colList = colList,
 #'     clusterAllData = FALSE, threshVal = 1e-7, saveFile = FALSE)
-#' plot(ret[["N_P_4"]])
+#' grid.draw(ret[["N_P_4"]])
 #' 
 #' # Example 2: Perform the same analysis, only now create the four groups by 
 #' # clustering on all genes in the data (n = 5,604). Then, overlay the genes 
@@ -90,14 +98,14 @@
 #' ret <- plotClusters(data=soybean_ir_sub,
 #'     dataMetrics = soybean_ir_sub_metrics, nC=4, colList = colList,
 #'     clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
-#' plot(ret[["N_P_4"]])
+#' grid.draw(ret[["N_P_4"]])
 #' 
 #' # Example 3: Perform the same analysis, only now overlay all genes in the 
 #' # data by keeping the dataMetrics object as its default value of NULL.
 #' 
 #' ret <- plotClusters(data=soybean_ir_sub, nC=4, colList = colList,
 #'     clusterAllData = TRUE, saveFile = FALSE)
-#' plot(ret[["N_P_4"]])
+#' grid.draw(ret[["N_P_4"]])
 #' 
 #' # Example 4: Visualization of gene clusters is usually performed on
 #' # standardized data. Here, hierarchical clustering of size four is performed
@@ -123,8 +131,8 @@
 #'     aggMethod = "average", yAxisLabel = "Standardized read count",
 #'     saveFile = FALSE)
 #' names(ret)
-#' plot(ret[["S1_S2_4"]])
-#' plot(ret[["S1_S3_4"]])
+#' grid.draw(ret[["S1_S2_4"]])
+#' grid.draw(ret[["S1_S3_4"]])
 #' 
 #' # Example 5: Run the same analysis, only now set the verbose parameter to 
 #' # value TRUE. This will save images of each individual cluster, .rds files 
@@ -140,9 +148,9 @@
 #' }
 #' 
 plotClusters <- function(data, dataMetrics = NULL, geneList = NULL,
-    threshVar="FDR", threshVal=0.05, clusterAllData = TRUE, nC = 4, 
-    colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2", "single",
-    "complete", "average", "mcquitty", "median", "centroid"),
+    geneLists = NULL, threshVar="FDR", threshVal=0.05, clusterAllData = TRUE, 
+    nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
+    "single", "complete", "average", "mcquitty", "median", "centroid"),
     yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
     lineAlpha = 0.5, vxAxis = FALSE, outDir=tempdir(), saveFile = TRUE,
     verbose=FALSE){
@@ -160,6 +168,12 @@ myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]
 cols.combn <- combn(myPairs, 2, simplify = FALSE)
 
+if (!is.null(geneLists)){
+    nC = length(geneLists)
+    colList = rainbow(nC)
+    seqVec = seq(nC)
+}
+
 ret <- lapply(cols.combn, function(x){
     group1 = x[1]
     group2 = x[2]
@@ -172,6 +186,36 @@ ret <- lapply(cols.combn, function(x){
     userOrder <- unique(boxDat$Sample)
     boxDat$Sample <- as.factor(boxDat$Sample)
     levels(boxDat$Sample) <- userOrder
+    
+    plotName <- paste0(group1,"_",group2)
+    
+    # If geneLists is not NULL
+    # if (!is.null(geneLists)){
+    # nC = length(geneLists)
+    # colList = rainbow(nC)
+    # seqVec = seq(nC)
+    # 
+    # plot_clusters = lapply(seq_along(seqVec), function(j){
+    #     xSigNames = geneLists[[j]]
+    #     xSig = fData %>% filter(ID %in% xSigNames)
+    #     nGenes = nrow(xSig)
+    #     
+    #     pcpDat <- melt(xSig, id.vars="ID")
+    #     colnames(pcpDat) <- c("ID", "Sample", "Count")
+    #     pcpDat$Sample <- as.character(pcpDat$Sample)
+    #     pcpDat$ID <- as.factor(pcpDat$ID)
+    #     
+    #     p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot() + geom_line(data=pcpDat, aes_string(x = 'Sample', y = 'Count', group = 'ID'), colour = colList[j], alpha=lineAlpha, size = lineSize) + ylab(yAxisLabel) + xlab(xAxisLabel) + ggtitle(paste("Cluster ", j, " Genes (n=", format(nGenes, big.mark=",", scientific=FALSE), ")", sep="")) + theme(plot.title = element_text(hjust = 0.5, size=14, face="plain"), axis.text=element_text(size=11), axis.title=element_text(size=14))
+    #     p
+    # })
+    # p = arrangeGrob(grobs=plot_clusters, ncol=2)
+    # if (saveFile == TRUE || verbose == TRUE){
+    #     fileName = paste(outDir, "/", plotName, "_", nC, ".jpg", sep="")
+    #     jpeg(fileName)
+    #     grid.draw(p)
+    #     invisible(dev.off())}
+    # #return(p)
+    # }
     
     if (!is.null(dataMetrics) && is.null(geneList)){
         metricPair = dataMetrics[[paste0(group1,"_",group2)]]
@@ -187,7 +231,33 @@ ret <- lapply(cols.combn, function(x){
         cData <- fData
     }
     
-    plotName <- paste0(group1,"_",group2)
+    if (!is.null(geneLists)){
+    nC = length(geneLists)
+    colList = rainbow(nC)
+    seqVec = seq(nC)
+
+    plot_clusters = lapply(seq_along(seqVec), function(j){
+        xSigNames = geneLists[[j]]
+        xSig = fData %>% filter(ID %in% xSigNames)
+        nGenes = nrow(xSig)
+
+        pcpDat <- melt(xSig, id.vars="ID")
+        colnames(pcpDat) <- c("ID", "Sample", "Count")
+        pcpDat$Sample <- as.character(pcpDat$Sample)
+        pcpDat$ID <- as.factor(pcpDat$ID)
+
+        p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot() + geom_line(data=pcpDat, aes_string(x = 'Sample', y = 'Count', group = 'ID'), colour = colList[j], alpha=lineAlpha, size = lineSize) + ylab(yAxisLabel) + xlab(xAxisLabel) + ggtitle(paste("Cluster ", j, " Genes (n=", format(nGenes, big.mark=",", scientific=FALSE), ")", sep="")) + theme(plot.title = element_text(hjust = 0.5, size=14, face="plain"), axis.text=element_text(size=11), axis.title=element_text(size=14))
+        p
+    })
+    p = arrangeGrob(grobs=plot_clusters, ncol=2)
+    if (saveFile == TRUE || verbose == TRUE){
+        fileName = paste(outDir, "/", plotName, "_", nC, ".jpg", sep="")
+        jpeg(fileName)
+        grid.draw(p)
+        invisible(dev.off())}
+    return(p)
+    }
+    
     
     # geneList variable takes precedence. Create metricPair to only
     # select geneList IDs

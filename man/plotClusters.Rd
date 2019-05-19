@@ -5,23 +5,32 @@
 \title{Plot static parallel coordinate clusters}
 \usage{
 plotClusters(data, dataMetrics = NULL, geneList = NULL,
-  threshVar = "FDR", threshVal = 0.05, clusterAllData = TRUE,
-  nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
-  "single", "complete", "average", "mcquitty", "median", "centroid"),
-  yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
-  lineAlpha = 0.5, vxAxis = FALSE, outDir = tempdir(),
-  saveFile = TRUE, verbose = FALSE)
+  geneLists = NULL, threshVar = "FDR", threshVal = 0.05,
+  clusterAllData = TRUE, nC = 4, colList = rainbow(nC),
+  aggMethod = c("ward.D", "ward.D2", "single", "complete", "average",
+  "mcquitty", "median", "centroid"), yAxisLabel = "Count",
+  xAxisLabel = "Sample", lineSize = 0.1, lineAlpha = 0.5,
+  vxAxis = FALSE, outDir = tempdir(), saveFile = TRUE,
+  verbose = FALSE)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
 \item{dataMetrics}{LIST | Differential expression metrics; default NULL}
 
-\item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn 
+\item{geneList}{CHARACTER ARRAY | Array of ID values of genes to be drawn 
 from data as parallel coordinate lines. Use this parameter if you have 
-predetermined genes to be drawn. Otherwise, use dataMetrics, threshVar, 
-and threshVal to create genes to be overlaid as parallel coordinate lines; 
-default NULL}
+predetermined genes to be drawn. These genes will be clustered. Otherwise, 
+use dataMetrics, threshVar, and threshVal to create clusters to be
+overlaid as parallel coordinate lines; default NULL. See package website
+for examples}
+
+\item{geneLists}{LIST | List of ID values of genes already clustered to be #' drawn from data as parallel coordinate lines. Each list item is an array
+of genes ID values that are already grouped as a cluster. Unlike the 
+singular geneList object, the plural geneLists object is not be clustered.
+If you instead wish to cluster genes, use dataMetrics, threshVar, and 
+threshVal or geneList to create clusters to be overlaid as parallel
+coordinate lines; default NULL. See package website for examples}
 
 \item{threshVar}{CHARACTER STRING | Name of column in dataMetrics object 
 that is used to threshold significance; default "FDR"}
@@ -101,7 +110,7 @@ colList = c("#00A600FF", rainbow(5)[c(1,4,5)])
 ret <- plotClusters(data=soybean_ir_sub,
     dataMetrics = soybean_ir_sub_metrics, nC=4, colList = colList,
     clusterAllData = FALSE, threshVal = 1e-7, saveFile = FALSE)
-plot(ret[["N_P_4"]])
+grid.draw(ret[["N_P_4"]])
 
 # Example 2: Perform the same analysis, only now create the four groups by 
 # clustering on all genes in the data (n = 5,604). Then, overlay the genes 
@@ -110,14 +119,14 @@ plot(ret[["N_P_4"]])
 ret <- plotClusters(data=soybean_ir_sub,
     dataMetrics = soybean_ir_sub_metrics, nC=4, colList = colList,
     clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
-plot(ret[["N_P_4"]])
+grid.draw(ret[["N_P_4"]])
 
 # Example 3: Perform the same analysis, only now overlay all genes in the 
 # data by keeping the dataMetrics object as its default value of NULL.
 
 ret <- plotClusters(data=soybean_ir_sub, nC=4, colList = colList,
     clusterAllData = TRUE, saveFile = FALSE)
-plot(ret[["N_P_4"]])
+grid.draw(ret[["N_P_4"]])
 
 # Example 4: Visualization of gene clusters is usually performed on
 # standardized data. Here, hierarchical clustering of size four is performed
@@ -143,8 +152,8 @@ ret <- plotClusters(data=soybean_cn_sub_st,
     aggMethod = "average", yAxisLabel = "Standardized read count",
     saveFile = FALSE)
 names(ret)
-plot(ret[["S1_S2_4"]])
-plot(ret[["S1_S3_4"]])
+grid.draw(ret[["S1_S2_4"]])
+grid.draw(ret[["S1_S3_4"]])
 
 # Example 5: Run the same analysis, only now set the verbose parameter to 
 # value TRUE. This will save images of each individual cluster, .rds files 
@@ -162,4 +171,5 @@ plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics,
 }
 \seealso{
 \code{\link[stats]{hclust}}
+\url{https://lindsayrutter.github.io/bigPint/articles/clusters.html}
 }

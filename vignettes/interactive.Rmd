@@ -25,7 +25,7 @@ ________________________________________________________________________________
 
 ## Types of interactive plots
 
-Currently, there are three interactive plots available in the `bigPint` package:
+Currently, there are four interactive plots available in the `bigPint` package:
 
 - Scatterplot matrix
 - Litre plots
@@ -38,7 +38,7 @@ ________________________________________________________________________________
 
 ## Scatterplot matrix app
 
-Interactive scatterplot matrices can be generated with the `bigPint` function [plotSMApp()](https://lindsayrutter.github.io/bigPint/reference/plotSMApp.html). The code below will generate an example interactive litre plot from the soybean cotyledon dataset [@brown2015developmental].
+Interactive scatterplot matrices can be generated with the `bigPint` function [plotSMApp()](https://lindsayrutter.github.io/bigPint/reference/plotSMApp.html). The code below will generate an example interactive scatterplot matrix from the soybean cotyledon dataset [@brown2015developmental].
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 library(bigPint)
@@ -109,7 +109,7 @@ ________________________________________________________________________________
 
 ## Volcano plot app
 
-Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
+Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive volcano plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 app <- plotVolcanoApp(data = soybean_ir_sub_log,

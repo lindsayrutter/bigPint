@@ -179,7 +179,7 @@ server <- function(input, output, session) {
     if (option=="hexagon"){  
       p <- ggplot2::ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts, fill=countColor2)) + geom_hex(stat="identity") + scale_fill_manual(labels = as.character(my_breaks), values = rev(clrs), name = "Gene count") + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", input$selPair[1], ")"), y = paste0("Read count ", "(", input$selPair[2], ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1)
   
-      gP <- plotly::ggplotly(p, height = 400) #  height = 400
+      gP <- plotly::ggplotly(p, height = 400)
       for (i in 1:(length(gP$x$data)-1)){
         info <- gP$x$data[i][[1]]$text
         info2 <- strsplit(info,"[<br/>]")
