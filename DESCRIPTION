@@ -5,7 +5,7 @@ Description: Methods for visualizing large multivariate datasets using static an
 Authors@R: c(person("Lindsay", "Rutter", email = "lindsayannerutter@gmail.com", role = c("aut","cre")),
   person("Dianne", "Cook", email = "dicook@monash.edu", role = c("aut")))
 License: GPL-3
-Depends: R (>= 3.5.2)
+Depends: R (>= 3.6.0)
 Imports: dplyr (>= 0.7.2), GGally (>= 1.3.2), ggplot2 (>= 2.2.1),
         graphics (>= 3.5.0), grDevices (>= 3.5.0), grid (>= 3.5.0),
         gridExtra (>= 2.3), hexbin (>= 1.27.1), Hmisc (>= 4.0.3),

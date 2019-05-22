@@ -75,7 +75,12 @@ navbar:
       -  text: Hierarchical clustering
          href: articles/clusters.html
       -  text: Recommended RNA-seq pipeline
-         href: articles/pipeline.html         
+         href: articles/pipeline.html
+    - icon: fa-pencil-square-o
+      text: "manuscripts"
+      menu:
+      -  text: Research article
+         href: articles/honeybee.html
     - icon: fa-newspaper-o
       text: "news"
       href: news/index.html

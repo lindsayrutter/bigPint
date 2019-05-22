@@ -188,7 +188,7 @@ ________________________________________________________________________________
 
 ## Pre-determined clusters
 
-Some users may perform clustering using other software and may wish to simply overlay those clusters as parallel coordinate plots usingn the `bigPint` package. This can be achieved in the `plotClusters()` function using the `geneLists` variable. As an example, let us read in three clusters that each contain a character array of gene IDs. These three clusters may have been created in another software package and we simply now wish to plot them out using the `bigPint` graphics. We see that the first cluster contains 7 gene IDs and the last two clusters each contain 2 gene IDs.
+Some users may perform clustering using other software and may wish to simply overlay those clusters as parallel coordinate plots using the `bigPint` package. This can be achieved in the `plotClusters()` function using the `geneLists` variable. As an example, let us read in three clusters that each contain a character array of gene IDs. These three clusters may have been created in another software package and we simply now wish to plot them out using the `bigPint` graphics. We see that the first cluster contains 7 gene IDs and the last two clusters each contain 2 gene IDs.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 S1S3Cluster2 <- readRDS(paste0(tempdir(), "/S1_S3_4_2.rds"))

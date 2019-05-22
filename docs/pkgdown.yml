@@ -1,12 +1,13 @@
 pandoc: 2.3.1
-pkgdown: 1.1.0.9000
-pkgdown_sha: b62fef53d0a5633adea58b9c503d35e465a9af43
+pkgdown: 1.3.0
+pkgdown_sha: ~
 articles:
   bioconductor: bioconductor.html
   clusters: clusters.html
   createDataMetrics: createDataMetrics.html
   data: data.html
   dataMetrics: dataMetrics.html
+  honeybee: honeybee.html
   installation: installation.html
   interactive: interactive.html
   pipeline: pipeline.html
