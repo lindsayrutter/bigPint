@@ -19,17 +19,6 @@ vignettes/installPkgDown.Rmd
 man/figures
 inst/shiny-dashboards
 docs
-vignettes/clusters.Rmd
-vignettes/createDataMetrics.Rmd
-vignettes/data.Rmd
-vignettes/dataMetrics.Rmd
-vignettes/installation.Rmd
-vignettes/interactive.Rmd
-vignettes/introduction.Rmd
-vignettes/pipeline.Rmd
-vignettes/plotIntro.Rmd
-vignettes/static.Rmd
-vignettes/superimposeData.Rmd
 README.md
 _pkgdown.yml
 NEWS.md
