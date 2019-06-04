@@ -8,6 +8,7 @@ library(stats)
 library(hexbin)
 library(stringr)
 library(dplyr)
+library(plyr)
 library(shinycssloaders)
 library(shinydashboard)
 library(shinycssloaders)
@@ -31,14 +32,14 @@ sidebar <- shinydashboard::dashboardSidebar(
   width = 180,
   hr(),
   shinydashboard::sidebarMenu(id="tabs",
-    shinydashboard::menuItem("Application", tabName="hexPlot"),
+    shinydashboard::menuItem("Application", tabName="volPlot"),
     shinydashboard::menuItem("About", tabName = "about", selected=TRUE)
   )
 )
 
 body <- shinydashboard::dashboardBody(
   shinydashboard::tabItems(
-    shinydashboard::tabItem(tabName = "hexPlot",
+    shinydashboard::tabItem(tabName = "volPlot",
       fluidRow(
         column(width = 4, 
            shinydashboard::box(width = NULL, status = "primary", title = "Plot metrics", solidHeader = TRUE,
@@ -50,7 +51,7 @@ body <- shinydashboard::dashboardBody(
          shiny::numericInput("pointSize", "Point size:", value = 2, min = 1),
          shiny::actionButton("goButton", "Plot gene subset!"))),
   column(width = 8,
-           shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("hexPlot")), collapsible = FALSE, background = "black", title = "Volcano plot", status = "primary", solidHeader = TRUE))),
+           shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("volPlot")), collapsible = FALSE, background = "black", title = "Volcano plot", status = "primary", solidHeader = TRUE))),
       
   
       fluidRow(
@@ -102,17 +103,13 @@ server <- function(input, output, session) {
   shiny::observeEvent(input$binSize, values$x <- 0)
   shiny::observeEvent(input$selPair, values$selPair <- input$selPair)
   
-  fcInputMax = 0
-  for (i in 1:length(dataMetrics)){
-    fciMaxTemp = max(dataMetrics[[i]][["logFC"]])
-    fcInputMax = max(fcInputMax, fciMaxTemp)
-  }
+  # Define largest fold change dynamically based on data
+  fcInMax <- max(ldply(dataMetrics, rbind)[["logFC"]])
   
-  # Make dynamic input slider
+  # Construct dynamic input Shiny slider for fold change
   output$slider <- renderUI({
-    sliderInput("logFC", "Log fold change:", min=0, max=fcInputMax, value=ceiling((fcInputMax)/3), step=0.1)
+    sliderInput("logFC", "Log fold change:", min=0, max=fcInMax, value=ceiling((fcInMax)/3), step=0.1)
   })
-  
   
   # Create data subset based on two letters user chooses
   datSel <- eventReactive(input$selPair, {
@@ -121,7 +118,7 @@ server <- function(input, output, session) {
     dat[,c(1, sampleIndex())]
   }, ignoreNULL = FALSE)
   
-  # no longer metricDF
+  # Set the main data frame to include only the pairs selected by user
   curPairDF <- eventReactive(input$selPair, {
     validate(need(length(input$selPair) == 2, "Select a pair of treatments."))
     curPairDF <- dataMetrics[[paste0(input$selPair[1], "_", input$selPair[2])]]
@@ -135,6 +132,7 @@ server <- function(input, output, session) {
     curPairDF
   })
   
+  # Subset other data frame to include only genes with small PValue
   curPairSel <- eventReactive(values$x, {
     validate(need(values$x > 0, "Plot a gene."))
     if (input$absLFC==TRUE){
@@ -146,7 +144,8 @@ server <- function(input, output, session) {
     curPairSel
   })
   
-  output$hexPlot <- plotly::renderPlotly({
+  # Declare shiny output volcano plot
+  output$volPlot <- plotly::renderPlotly({
     
     xbins= input$binSize
     xMax = max(curPairDF()[["logFC"]])
@@ -204,11 +203,10 @@ server <- function(input, output, session) {
       
     }
 
+    plotlyVol <- reactive(gP())
     
-    plotlyHex <- reactive(gP()) #%>% config(displayModeBar = F))
-    
-    # Use onRender() function to draw x and y values of selected row as orange point
-    plotlyHex() %>% onRender("
+    # Tailor interactivity of the plotly volcano plot object using custom JavaScript
+    plotlyVol() %>% onRender("
      function(el, x, data) {
      noPoint = x.data.length;
      Shiny.addCustomMessageHandler('points', function(drawPoints) {
@@ -220,8 +218,8 @@ server <- function(input, output, session) {
      var trace = {
      x: drawPoints.geneX,
      y: drawPoints.geneY,
-text: ids,
-hoverinfo: 'text',
+     text: ids,
+     hoverinfo: 'text',
      mode: 'markers',
      marker: {
      color: drawPoints.pointColor,
@@ -234,6 +232,7 @@ hoverinfo: 'text',
      });}")
   })
   
+  # If the user changes the superimposed gene
   observe({
     
     geneX <- curPairSel()[["logFC"]]
@@ -244,9 +243,7 @@ hoverinfo: 'text',
     # Send x and y values of selected row into onRender() function
     session$sendCustomMessage(type = "points", message=list(geneX=geneX, geneY=geneY, geneID=geneID, pointSize = pointSize, pointColor = pointColor))
   })
-    
-  #output$selectedValues <- renderPrint({cat(curPairSel()[["ID"]][1:min(nrow(curPairSel()), 50)],sep="\n")})
-  
+
   output$selectedValues1 = renderPrint({
     if ( nrow(curPairSel()) > 50) { 
       cat(paste0("Number of genes: ", nrow(curPairSel()), ". Only listing first 50 genes."))
@@ -259,7 +256,7 @@ hoverinfo: 'text',
     cat(curPairSel()[["ID"]][1:min(nrow(curPairSel()), 50)],sep="\n")
   })
   
-  
+  # Declare Shiny output boxplot
   output$boxPlot <- plotly::renderPlotly({
     nVar = reactive(ncol(datSel()))
     colNms <- reactive(colnames(datSel()[, c(2:nVar())]))
@@ -270,9 +267,11 @@ hoverinfo: 'text',
       boxDat
     })
     
+    # Create reactive expression of plotly background boxplot
     BP <- reactive(ggplot2::ggplot(boxDat(), aes(x = Sample, y = Count)) + geom_boxplot() + labs(y = "Read count"))
     ggBP <- reactive(plotly::ggplotly(BP(), width=600, height = 400))
     
+    # Tailor interactivity of the plotly boxplot object using custom JavaScript
     ggBP() %>% onRender("
       function(el, x, data) {
       Shiny.addCustomMessageHandler('lines', function(drawLines) {
@@ -298,12 +297,12 @@ hoverinfo: 'text',
       xArr.push(b+1)
       yArr.push(drawLines.pcpDat[cNames[b]][a]);
       }
-      var traceHiLine = {
+      var traceLine = {
       x: xArr,
       y: yArr,
       mode: 'lines',
-text: drawLines.geneID,
-hoverinfo: 'text',
+      text: drawLines.geneID,
+      hoverinfo: 'text',
 
       line: {
       color: drawLines.pointColor,
@@ -311,10 +310,9 @@ hoverinfo: 'text',
       },
       opacity: 0.9,
       }
-      Traces.push(traceHiLine);
+      Traces.push(traceLine);
       }
       Plotly.addTraces(el.id, Traces);
-      
       });}")
   })
   
@@ -335,7 +333,6 @@ hoverinfo: 'text',
       write.table(curPairSel()[["ID"]], file, row.names = FALSE, col.names = FALSE, quote = FALSE, sep=',')
     }
   )
-
   }  
 
 shiny::shinyApp(ui = ui, server = server)

@@ -35,14 +35,14 @@ sidebar <- shinydashboard::dashboardSidebar(
   width = 180,
   hr(),
   shinydashboard::sidebarMenu(id="tabs",
-    shinydashboard::menuItem("Application", tabName="hexPlot"),
+    shinydashboard::menuItem("Application", tabName="litrePlot"),
     shinydashboard::menuItem("About", tabName = "about", selected=TRUE)
   )
 )
 
 body <- shinydashboard::dashboardBody(
   shinydashboard::tabItems(
-    shinydashboard::tabItem(tabName = "hexPlot",
+    shinydashboard::tabItem(tabName = "litrePlot",
       fluidRow(
         column(width = 4, 
          shinydashboard::box(width = NULL, status = "primary", title = "Plot metrics", solidHeader = TRUE,
@@ -54,7 +54,7 @@ body <- shinydashboard::dashboardBody(
          shiny::actionButton("goButton", "Plot gene!"))),
          #shiny::actionButton("saveLitre", "Save litre plot"))),
         column(width = 8,
-          shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("hexPlot")), collapsible = FALSE, background = "black", title = "Litre plot", status = "primary", solidHeader = TRUE))),
+          shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("litrePlot")), collapsible = FALSE, background = "black", title = "Litre plot", status = "primary", solidHeader = TRUE))),
       
       fluidRow(
         column(width = 12,
@@ -176,7 +176,7 @@ server <- function(input, output, session) {
     
     p <- ggplot2::ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts, fill=countColor2)) + geom_hex(stat="identity") + scale_fill_manual(labels = as.character(my_breaks), values = rev(clrs), name = "Gene count") + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", input$selPair[1], ")"), y = paste0("Read count ", "(", input$selPair[2], ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1)
 
-    gP <- plotly::ggplotly(p, height = 400) #  height = 400
+    gP <- plotly::ggplotly(p, height = 400)
     for (i in 1:(length(gP$x$data)-1)){
       info <- gP$x$data[i][[1]]$text
       info2 <- strsplit(info,"[<br/>]")
@@ -187,12 +187,12 @@ server <- function(input, output, session) {
     gP
     })
     
-  output$hexPlot <- plotly::renderPlotly({
+  output$litrePlot <- plotly::renderPlotly({
 
-    plotlyHex <- reactive(gP())
+    plotlyLitre <- reactive(gP())
     
     # Use onRender() function to draw x and y values of selected row as orange point
-    plotlyHex() %>% onRender("
+    plotlyLitre() %>% onRender("
      function(el, x, data) {
      noPoint = x.data.length;
      Shiny.addCustomMessageHandler('points', function(drawPoints) {
@@ -232,7 +232,7 @@ hoverinfo: 'text',
       }
     }
     geneID <- currID()
-    pointSize <- input$pointSize
+    pointSize <- input$pointSize #*4?
     
     # Send x and y values of selected row into onRender() function
     session$sendCustomMessage(type = "points", message=list(geneX=geneX, geneY=geneY, pointSize = pointSize, geneID=geneID))

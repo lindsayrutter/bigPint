@@ -11,7 +11,7 @@ title: 'Research paper'
 #     tidy: TRUE
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{"Installation"}
+  %\VignetteIndexEntry{"Research paper"}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\VignettePackage{bigPint}

@@ -22,3 +22,5 @@ docs
 README.md
 _pkgdown.yml
 NEWS.md
+^doc$
+^Meta$
