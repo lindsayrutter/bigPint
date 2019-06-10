@@ -156,7 +156,7 @@ server <- function(input, output, session) {
     buffer = (xMax-xMin)/xbins/2
     
     x = curPairDF()[["logFC"]]
-    y = -log(curPairDF()[["PValue"]])#+1e-10
+    y = -log(curPairDF()[["PValue"]])
     h = hexbin(x=x, y=y, xbins=xbins, shape=3, IDs=TRUE, xbnds=c(xMin, xMax), ybnds=c(yMin, yMax))
     hexdf = data.frame (hcell2xy (h),  hexID = h@cell, counts = h@count)
     attr(hexdf, "cID") <- h@cID
