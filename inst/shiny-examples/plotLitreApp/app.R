@@ -177,7 +177,7 @@ server <- function(input, output, session) {
     clrs <- clrs[3:length(clrs)]
     
     if (option=="hexagon"){  
-      p <- ggplot2::ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts, fill=countColor2)) + geom_hex(stat="identity") + scale_fill_manual(labels = as.character(my_breaks), values = rev(clrs), name = "Gene count") + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", input$selPair[1], ")"), y = paste0("Read count ", "(", input$selPair[2], ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1)
+      p <- ggplot2::ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts, fill=countColor2)) + geom_hex(stat="identity") + scale_fill_manual(labels = as.character(my_breaks), values = rev(clrs), name = "Gene count") + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", input$selPair[1], ")"), y = paste0("Read count ", "(", input$selPair[2], ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1) + theme_gray()
   
       gP <- plotly::ggplotly(p, height = 400)
       for (i in 1:(length(gP$x$data)-1)){
@@ -191,7 +191,7 @@ server <- function(input, output, session) {
     }
   else{
     mainPoints = data.frame(x=x, y=y)
-    p <- ggplot(mainPoints, aes(x=x, y=y)) + geom_point(size = input$pointSize) + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", input$selPair[1], ")"), y = paste0("Read count ", "(", input$selPair[2], ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1)
+    p <- ggplot(mainPoints, aes(x=x, y=y)) + geom_point(size = input$pointSize) + geom_abline(intercept = 0, color = "red", size = 0.25) + labs(x = paste0("Read count ", "(", input$selPair[1], ")"), y = paste0("Read count ", "(", input$selPair[2], ")")) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_fixed(ratio=1) + theme_gray()
     
     gP <- plotly::ggplotly(p, height = 400)
     gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"
@@ -256,12 +256,12 @@ hoverinfo: 'text',
     colNms <- reactive(colnames(datSel()[, c(2:nVar())]))
     
     boxDat <- eventReactive(datSel(), {
-      boxDat <- datSel()[, c(1:nVar())] %>% gather(key, val, -c(ID))
+      boxDat <- datSel()[, c(1:nVar())] %>% gather(key, val, -c(ID)) 
       colnames(boxDat) <- c("ID", "Sample", "Count")
       boxDat
     })
     
-    BP <- reactive(ggplot2::ggplot(boxDat(), aes(x = Sample, y = Count)) + geom_boxplot() + labs(y = "Read count"))
+    BP <- reactive(ggplot2::ggplot(boxDat(), aes(x = Sample, y = Count)) + geom_boxplot() + labs(y = "Read count") + theme_gray())
     ggBP <- reactive(plotly::ggplotly(BP(), width=600, height = 400))
     
     

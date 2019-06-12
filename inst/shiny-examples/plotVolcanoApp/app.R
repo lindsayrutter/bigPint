@@ -176,7 +176,7 @@ server <- function(input, output, session) {
     clrs <- clrs[3:length(clrs)]
   
     if (option=="hexagon"){
-      p <- reactive(ggplot2::ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts, fill=countColor2)) + geom_hex(stat="identity") + scale_fill_manual(labels = as.character(my_breaks), values = rev(clrs), name = "Count") + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_cartesian(xlim = c(xMin-buffer, xMax+buffer), ylim = c(yMin, yMax)) + xlab("logFC") + ylab(paste0("-log10(", "PValue", ")")))
+      p <- reactive(ggplot2::ggplot(hexdf, aes(x=x, y=y, hexID=hexID, counts=counts, fill=countColor2)) + geom_hex(stat="identity") + scale_fill_manual(labels = as.character(my_breaks), values = rev(clrs), name = "Count") + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_cartesian(xlim = c(xMin-buffer, xMax+buffer), ylim = c(yMin, yMax)) + xlab("logFC") + ylab(paste0("-log10(", "PValue", ")")) + theme_gray())
       
       gP <- eventReactive(p(), {
         gP <- plotly::ggplotly(p(), height = 400)
@@ -193,7 +193,7 @@ server <- function(input, output, session) {
     else{
 
       mainPoints = data.frame(x=x, y=y)
-      p <- reactive(ggplot2::ggplot(mainPoints, aes(x=x, y=y)) + geom_point(size = input$pointSize) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_cartesian(xlim = c(xMin, xMax), ylim = c(yMin, yMax)) + xlab("logFC") + ylab(paste0("-log10(", "PValue", ")")))
+      p <- reactive(ggplot2::ggplot(mainPoints, aes(x=x, y=y)) + geom_point(size = input$pointSize) + theme(axis.text=element_text(size=15), axis.title=element_text(size=15), legend.title=element_text(size=15), legend.text=element_text(size=15)) + coord_cartesian(xlim = c(xMin, xMax), ylim = c(yMin, yMax)) + xlab("logFC") + ylab(paste0("-log10(", "PValue", ")")) + theme_gray())
       
       gP <- eventReactive(p(), {
         gP <- plotly::ggplotly(p(), height = 400)
@@ -268,7 +268,7 @@ server <- function(input, output, session) {
     })
     
     # Create reactive expression of plotly background boxplot
-    BP <- reactive(ggplot2::ggplot(boxDat(), aes(x = Sample, y = Count)) + geom_boxplot() + labs(y = "Read count"))
+    BP <- reactive(ggplot2::ggplot(boxDat(), aes(x = Sample, y = Count)) + geom_boxplot() + labs(y = "Read count") + theme_gray())
     ggBP <- reactive(plotly::ggplotly(BP(), width=600, height = 400))
     
     # Tailor interactivity of the plotly boxplot object using custom JavaScript
