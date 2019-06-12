@@ -15,11 +15,15 @@ library(RColorBrewer)
 library(Hmisc)
 library(shinycssloaders)
 
-data <- bigPint:::PKGENVIR$DATA # read the data from envir
+# Read data from envir
+data <- bigPint:::PKGENVIR$DATA
+
+# Create new variables based on values read in previously
 datCol <- colnames(data)[-which(colnames(data) %in% "ID")]
 myPairs <- unique(sapply(datCol, function(x) unlist(strsplit(x,"[.]"))[1]))
 values <- reactiveValues(x=0, selPair=NULL, selMetric=NULL, selOrder=NULL)
 
+# Initiate sidebar of Shiny dashboard
 sidebar <- shinydashboard::dashboardSidebar(
 width = 180,
 shiny::hr(),
@@ -28,10 +32,10 @@ shinydashboard::menuItem("Application", tabName="scatMatPlot"), #hexPlot
 shinydashboard::menuItem("About", tabName = "about", selected=TRUE) #boxPlot
 )
 )
-    
+
+# Initiate main body of Shiny dashboard, including Shiny input fields and application description page
 body <- shinydashboard::dashboardBody(
 shinydashboard::tabItems(
-
 shinydashboard::tabItem(tabName = "scatMatPlot",
 shiny::fluidRow(
 shiny::column(width = 12, shinydashboard::box(width = 660, height = 660, withSpinner(plotly::plotlyOutput("scatMatPlot")), collapsible = FALSE, background = "black", title = "Binned scatterplot", status = "primary", solidHeader = TRUE))),
@@ -67,12 +71,14 @@ div(img(src='Figure4.png', style="width: 75%; height: 75%"), style="text-align: 
 ))
 )
 
+# Combine sidebar and main body of Shiny into ui of Shiny application
 ui <- shinydashboard::dashboardPage(
 shinydashboard::dashboardHeader(title = "Overlaying genes", titleWidth = 180),
 sidebar,
 body
 )
 
+# Inititate server of Shiny application
 server <- function(input, output, session) {
     
     output$scatMatPlot <- renderPlotly({

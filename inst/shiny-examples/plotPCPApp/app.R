@@ -109,9 +109,7 @@ server <- function(input, output, session) {
     gp %>% onRender("
       function(el, x, data) {
 
-
-
-      var rects = [];
+     var rects = [];
       var origPcpDat = data.pcpDat
       var pcpDat = data.pcpDat
       
@@ -288,7 +286,6 @@ server <- function(input, output, session) {
       pcpDat = []
       }
       }
-      
       
       var drawRect = {
       type: 'rect',

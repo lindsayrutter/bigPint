@@ -16,18 +16,21 @@ library(Hmisc)
 library(RColorBrewer)
 
 options(spinner.color.background="#F5F5F5")
-data <- bigPint:::PKGENVIR$DATA ## read the data from envir
-dataMetrics <- bigPint:::PKGENVIR$DATAMETRICS ## read the dataMetrics from envir
-option <- bigPint:::PKGENVIR$OPTION ## read the option from envir
-pointColor <- bigPint:::PKGENVIR$POINTCOLOR ## read the pointColor from envir
 
+# Read various data values from envir
+data <- bigPint:::PKGENVIR$DATA
+dataMetrics <- bigPint:::PKGENVIR$DATAMETRICS
+option <- bigPint:::PKGENVIR$OPTION
+pointColor <- bigPint:::PKGENVIR$POINTCOLOR
+
+# Create new variables based on values read in previously
 dat <- data
-
 datCol <- colnames(dat)[-which(colnames(dat) %in% "ID")]
 myPairs <- unique(sapply(datCol, function(x) unlist(strsplit(x,"[.]"))[1]))
 myMetrics <- colnames(dataMetrics[[1]])[-which(colnames(dataMetrics[[1]]) %in% "ID")]
 values <- reactiveValues(x=0, selPair=NULL)
 
+# Initiate sidebar of Shiny dashboard
 sidebar <- shinydashboard::dashboardSidebar(
   width = 180,
   hr(),
@@ -37,6 +40,7 @@ sidebar <- shinydashboard::dashboardSidebar(
   )
 )
 
+# Initiate main body of Shiny dashboard, including Shiny input fields and application description page
 body <- shinydashboard::dashboardBody(
   shinydashboard::tabItems(
     shinydashboard::tabItem(tabName = "volPlot",
@@ -88,14 +92,17 @@ shinydashboard::tabItem(tabName = "about",
       shiny::fluidRow("1. Brown, A.V. and Hudson, K.A. (2015) Developmental profiling of gene expression in soybean trifoliate leaves and cotyledons.", em(" BMC Plant Biology, "), strong("15"), ", 169.", style='padding:10px;')
     )))
 
+# Combine sidebar and main body of Shiny into ui of Shiny application
 ui <- shinydashboard::dashboardPage(
   shinydashboard::dashboardHeader(title = "Overlaying genes", titleWidth = 180),
   sidebar,
   body
 )
 
+# Inititate server of Shiny application
 server <- function(input, output, session) {
   
+  # Declare what gene number will be displayed based on user Shiny input
   shiny::observeEvent(input$goButton, values$x <- values$x + 1)
   shiny::observeEvent(input$selMetric, values$x <- 0)
   shiny::observeEvent(input$selOrder, values$x <- 0)
