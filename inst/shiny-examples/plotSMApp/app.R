@@ -44,7 +44,7 @@ shiny::fluidRow(
 shiny::column(width = 12, shinydashboard::box(width = NULL, withSpinner(plotly::plotlyOutput("boxPlot")), collapsible = FALSE, background = "black", title = "Boxplot", status = "primary", solidHeader = TRUE))),
 
 shiny::fluidRow(
-shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), shiny::verbatimTextOutput("selectedValues"), collapsible = TRUE, title = "Selected Gene IDs", status = "primary", solidHeader = TRUE)))),
+shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), DT::dataTableOutput("selectedValues"), collapsible = FALSE, title = "Selected genes", status = "primary", solidHeader = TRUE)))),
 
 shinydashboard::tabItem(tabName = "about",
 shiny::fluidRow("This application allows you to examine the relationship between all variables in your dataset with an interactive scatterplot matrix. Plotting an individual point for each gene can obscure the number of genes in a given area due to overplotting. As a result, we use hexagon bins in the scatterplot matrix. If you hover over a given hexagon bin of interest, you can determine the number of genes in its area, as shown in Figure 1 below.", style='padding:10px;'),
@@ -242,13 +242,7 @@ server <- function(input, output, session) {
     pcpDat <- reactive(data[which(data$ID %in% selID()), ])
     
     # Print the selected gene IDs
-    output$selectedValues = renderPrint({
-        if ( nrow(pcpDat()) > 50) { 
-            cat(paste0("Only listing first 50 genes."))
-            cat("\n")
-        }
-        cat(pcpDat()$ID[1:min(nrow(pcpDat()), 50)],sep="\n")
-    })
+    output$selectedValues = DT::renderDataTable(pcpDat(), rownames= FALSE)
     
     # Create static box plot of the full dataset
     colNms <- colnames(data[, -1])

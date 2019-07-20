@@ -156,21 +156,8 @@ hoverinfo: 'text',
   
   pcpDat <- reactive(data[which(data$ID %in% selID()), ])
   
-  # output$selectedValues <- renderPrint({cat(pcpDat()$ID,sep="\n")})
-  # 
-  # output$selectedValues <- renderPrint({cat(curPairSel()[["ID"]][1:min(nrow(curPairSel()), 50)],sep="\n")})
-  
-  output$selectedValues = renderPrint({
-    if ( nrow(pcpDat()) > 50) { 
-      cat(paste0("Only listing first 50 genes."))
-      cat("\n")
-    }
-    cat(pcpDat()$ID[1:min(nrow(pcpDat()), 50)],sep="\n")
-  })
-  
-  
-  
-  
+  # Print the selected gene IDs
+  output$selectedValues = DT::renderDataTable(pcpDat(), rownames= FALSE)
   
   colNms <- colnames(data[, -1])
   nVar <- ncol(data)
