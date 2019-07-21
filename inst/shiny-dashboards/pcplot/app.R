@@ -47,14 +47,13 @@ body <- shinydashboard::dashboardBody(
         column(width = 12,
                shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("plot1")), collapsible = FALSE, background = "black", title = "Parallel coordinate plot", status = "primary", solidHeader = TRUE))),
     
-    fluidRow(
-      column(width = 12,
-             shinydashboard::box(width = 12, downloadButton("downloadData", "Download remaining IDs"), br(), br(), shinycssloaders::withSpinner(shiny::verbatimTextOutput("rectdf")), collapsible = FALSE, background = "black", title = "Remaining Gene IDs", status = "primary", solidHeader = TRUE)))),
+    shiny::fluidRow(
+      shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), DT::dataTableOutput("rectdf"), collapsible = FALSE, title = "Selected genes", status = "primary", solidHeader = TRUE)))),
     
 shinydashboard::tabItem(tabName = "about",
       shiny::fluidRow("This application allows users to refine/reduce a set of genes that are represented as parallel coordinate lines. The parallel coordinate lines can often represent a subset of an entire dataset (such as differentially expressed genes). The data we use for the examples below are published RNA-seq data of soybean leaves exposed to iron-rich (group N) and iron-poor (group P) hydroponic soil (Moran Lauter et al., 2016). The two treatments (N and P) each with three replicates. In this example, the subset of data plotted as parallel coordinate lines are the 120 genes that had a FDR values less than 0.01 and a log fold change values less than -4", style='padding:10px;'),
       shiny::fluidRow("As demonstrated in Figure 1, the user can begin to refine/reduce the set of genes by selecting the 'Box Select' button in the Plotly Mode Bar at the top right of the image. In this example, it seems that group P had inconsistent replicates. If, in this case, the user wishes to reduce the set of genes to only include those that have high consistency between the P group replicates, then they can use the 'Box Select' tool to draw a box as is shown in Figure 2. Then, any genes that have a count value for P.1, P.2 or P.3 that is outside of that box will be removed; the result of this is shown in Figure 3.", style='padding:10px;'),
-      shiny::fluidRow("The bottom of the application will list the IDs of the remaining genes and provide a button for users to download these IDs. As shown in Figure 4, this example reduced the number of parallel coordinate lines from 120 to 7. Please note that you can download the parallel coordinate plots at any time as static .png files. You need to view this application in a web browser for this function to work. Hover over the top of the interative graphic and the Plotly Mode Bar buttons will appear. After that, simply click on the leftmost button (that has a camera icon) and this will download the static image.", style='padding:10px;'),
+      shiny::fluidRow("The bottom of the application will list the IDs of the remaining genes and provide a button for users to download these IDs. As shown in Figure 4, this example reduced the number of parallel coordinate lines from 120 to 9. Please note that you can download the parallel coordinate plots at any time as static .png files. You need to view this application in a web browser for this function to work. Hover over the top of the interative graphic and the Plotly Mode Bar buttons will appear. After that, simply click on the leftmost button (that has a camera icon) and this will download the static image.", style='padding:10px;'),
       shiny::fluidRow("Go ahead and test this application by switching to the 'Application' tab on the left side of the screen.", style='padding:10px;'),
       br(),
       br(),
@@ -102,19 +101,8 @@ server <- function(input, output, session) {
     return(df)
   })
   
-  output$rectdf = renderPrint({
-    if ( length(inputRectDf()) > 50) { 
-      cat(paste0("Number of genes: ", length(inputRectDf()), ". Only listing first 50 genes."))
-    }
-    else{
-      cat(paste("Number of genes:", length(inputRectDf())))
-    }
-    cat("\n")
-    cat("\n")
-    cat(inputRectDf()[1:min(length(inputRectDf()), 50)],sep="\n")
-  })
-  
-  
+  # Print the selected gene IDs
+  output$rectdf = DT::renderDataTable(pcpDat %>% filter(ID %in% inputRectDf()), rownames= FALSE)
   
   output$plot1 <- renderPlotly({
     gp %>% onRender("

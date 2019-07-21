@@ -62,8 +62,8 @@ body <- shinydashboard::dashboardBody(
         column(width = 12,
                shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("boxPlot")), collapsible = FALSE, background = "black", title = "Parallel coordinate plot", status = "primary", solidHeader = TRUE))),
   
-   shiny::fluidRow(
-     shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), br(), br(), shiny::verbatimTextOutput("selectedValues1"), collapsible = TRUE, title = "Selected Gene IDs", status = "primary", solidHeader = TRUE)))),
+  shiny::fluidRow(
+    shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), DT::dataTableOutput("selectedValues1"), collapsible = FALSE, title = "Selected genes", status = "primary", solidHeader = TRUE)))),
   
 shinydashboard::tabItem(tabName = "about",
       shiny::fluidRow("This application allows users to superimpose a set of genes onto a volcano plot. The volcano plot displays significance versus fold change for each observation in a dataset. It is commonly used in RNA-seq data when scientists wish to quickly identify subsets of genes that undergo meaningful changes. The data we use for the examples below are published RNA-seq data of soybean developmental stages (Brown and Hudson, 2015). They contain three treatments (S1, S2, and S3).", style='padding:10px;'),
@@ -251,17 +251,8 @@ server <- function(input, output, session) {
     session$sendCustomMessage(type = "points", message=list(geneX=geneX, geneY=geneY, geneID=geneID, pointSize = pointSize, pointColor = pointColor))
   })
 
-  output$selectedValues1 = renderPrint({
-    if ( nrow(curPairSel()) > 50) { 
-      cat(paste0("Number of genes: ", nrow(curPairSel()), ". Only listing first 50 genes."))
-    }
-    else{
-      cat(paste("Number of genes:", nrow(curPairSel())))
-    }
-    cat("\n")
-    cat("\n")
-    cat(curPairSel()[["ID"]][1:min(nrow(curPairSel()), 50)],sep="\n")
-  })
+  # Print the selected gene IDs
+  output$selectedValues1 = DT::renderDataTable(curPairSel(), rownames= FALSE)
   
   # Declare Shiny output boxplot
   output$boxPlot <- plotly::renderPlotly({
