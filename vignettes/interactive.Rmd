@@ -54,6 +54,9 @@ Upon running the code above in your R session, an interactive window will open. 
 
 <iframe width="690" height="600" src="https://bigpint.shinyapps.io/smplot" style="border: 3px black solid;" allowfullscreen></iframe>
 
+<iframe width="690" height="600" src="https://github.com/lindsayrutter/bigPint/blob/master/inst/Videos/litreVid.mov" style="border: 3px black solid;" allowfullscreen></iframe>
+
+<video controls="controls" width="800" height="600" name="Video Name" src="https://github.com/lindsayrutter/bigPint/blob/master/inst/Videos/litreVid.mov"></video>
 ____________________________________________________________________________________
 
 ## Litre plot app
