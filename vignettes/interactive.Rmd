@@ -56,7 +56,16 @@ Upon running the code above in your R session, an interactive window will open. 
 
 <iframe width="690" height="600" src="https://github.com/lindsayrutter/bigPint/blob/master/inst/Videos/litreVid.mov" style="border: 3px black solid;" allowfullscreen></iframe>
 
-<video controls="controls" width="800" height="600" name="Video Name" src="https://github.com/lindsayrutter/bigPint/blob/master/inst/Videos/litreVid.mov"></video>
+<video controls="controls" width="690" height="600" name="Video Name" src="https://github.com/lindsayrutter/bigPint/blob/master/inst/Videos/litreVid.mov"></video>
+
+<object CLASSID="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" width="320" height="256" CODEBASE="http://www.apple.com/qtactivex/qtplugin.cab">
+    <param name="src" value="sample.mov">
+    <param name="qtsrc" value="https://github.com/lindsayrutter/bigPint/blob/master/inst/Videos/litreVid.mov">
+    <param name="autoplay" value="true">
+    <param name="loop" value="false">
+    <param name="controller" value="true">
+    <embed src="sample.mov" qtsrc="https://github.com/lindsayrutter/bigPint/blob/master/inst/Videos/litreVid.mov" width="320" height="256" autoplay="true" loop="false" controller="true" pluginspage="http://www.apple.com/quicktime/"></embed>
+</object>
 ____________________________________________________________________________________
 
 ## Litre plot app
