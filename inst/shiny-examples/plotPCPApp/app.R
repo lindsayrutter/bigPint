@@ -24,17 +24,17 @@ sidebar <- shinydashboard::dashboardSidebar(
   width = 180,
   hr(),
   shinydashboard::sidebarMenu(id="tabs",
-    shinydashboard::menuItem("Application", tabName="plot1"), #from hexPlot plot1
+    shinydashboard::menuItem("Application", tabName="pcpPlot"), #from hexPlot pcpPlot
     shinydashboard::menuItem("About", tabName = "about", selected=TRUE)
   )
 )
 
 body <- shinydashboard::dashboardBody(
   shinydashboard::tabItems(
-    shinydashboard::tabItem(tabName = "plot1",
+    shinydashboard::tabItem(tabName = "pcpPlot",
       fluidRow(
         column(width = 12,
-               shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("plot1")), collapsible = FALSE, background = "black", title = "Parallel coordinate plot", status = "primary", solidHeader = TRUE))),
+               shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("pcpPlot")), collapsible = FALSE, background = "black", title = "Parallel coordinate plot", status = "primary", solidHeader = TRUE))),
     
     shiny::fluidRow(
       shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), DT::dataTableOutput("rectdf"), collapsible = FALSE, title = "Selected genes", status = "primary", solidHeader = TRUE)))),
@@ -95,7 +95,7 @@ server <- function(input, output, session) {
   
   session$sendCustomMessage(type = "lines", message=list(pointColor=pointColor))
   
-  output$plot1 <- renderPlotly({
+  output$pcpPlot <- renderPlotly({
     gp %>% onRender("
       function(el, x, data) {
 
