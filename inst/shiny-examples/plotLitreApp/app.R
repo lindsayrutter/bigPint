@@ -211,7 +211,6 @@ server <- function(input, output, session) {
 
     plotlyLitre <- reactive(gP())
     
-    # Use onRender() function to draw x and y values of selected row as orange point
     plotlyLitre() %>% onRender("
      function(el, x, data) {
      noPoint = x.data.length;

@@ -55,7 +55,7 @@ Upon running the code above in your R session, an interactive application will o
 ```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
 library("htmltools")
 library("vembedr")
-embed_vimeo("349395290", width = 700, height = 500) %>% div(class = "vembedr") %>%
+embed_vimeo("349395290", width = 700, height = 600) %>% div(class = "vembedr") %>%
   div(align = "left")
 ```
 
@@ -82,7 +82,7 @@ Upon running the code above in your R session, an interactive application will o
 ```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
 library("htmltools")
 library("vembedr")
-embed_vimeo("349396087", width = 700, height = 500) %>% div(class = "vembedr") %>%
+embed_vimeo("349396087", width = 700, height = 600) %>% div(class = "vembedr") %>%
   div(align = "left")
 ```
 
@@ -116,7 +116,7 @@ Upon running the code above in your R session, an interactive application will o
 ```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
 library("htmltools")
 library("vembedr")
-embed_vimeo("349398286", width = 700, height = 500) %>% div(class = "vembedr") %>%
+embed_vimeo("349398286", width = 700, height = 600) %>% div(class = "vembedr") %>%
   div(align = "left")
 ```
 
