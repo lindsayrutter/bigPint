@@ -24,3 +24,14 @@ _pkgdown.yml
 NEWS.md
 ^doc$
 ^Meta$
+vignettes/clusters.Rmd
+vignettes/createDataMetrics.Rmd
+vignettes/data.Rmd
+vignettes/dataMetrics.Rmd
+vignettes/honeybee.Rmd
+vignettes/installation.Rmd
+vignettes/interactive.Rmd
+vignettes/pipeline.Rmd
+vignettes/plotIntro.Rmd
+vignettes/static.Rmd
+vignettes/superimposeData.Rmd
