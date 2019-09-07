@@ -5,13 +5,13 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data metrics object • bigPint</title>
+<title>Manuscripts • bigPint</title>
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Data metrics object">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Manuscripts">
 <meta property="og:description" content="">
 <meta property="og:image" content="http://lindsayrutter.github.io/bigPint/logo.png">
 <meta name="twitter:card" content="summary">
@@ -141,92 +141,53 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Data metrics object</h1>
-                        <h4 class="author">Lindsay Rutter</h4>
-                        
-            <h4 class="date">2019-09-07</h4>
+      <h1>Manuscripts</h1>
+            
       
-      <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/dataMetrics.Rmd"><code>vignettes/dataMetrics.Rmd</code></a></small>
-      <div class="hidden name"><code>dataMetrics.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/manuscripts.Rmd"><code>vignettes/manuscripts.Rmd</code></a></small>
+      <div class="hidden name"><code>manuscripts.Rmd</code></div>
 
     </div>
 
     
     
-<div id="about-data-metrics-object" class="section level2">
+<div id="research-paper" class="section level2">
 <h2 class="hasAnchor">
-<a href="#about-data-metrics-object" class="anchor"></a>About data metrics object</h2>
-<p>Researchers may wish to superimpose a subset of the full dataset onto the full dataset. If a researcher is using the package to visualize RNA-seq data, then this subset of data is often differentially expressed genes (DEGs) returned from a model. In this case, the user may wish to use the <code>dataMetrics</code> input parameter, which contains at least one quantitative variable returned from a model such as FDR, p-value, and log fold change.</p>
-<hr>
+<a href="#research-paper" class="anchor"></a>Research paper</h2>
+<p>Our research paper <a href="https://doi.org/10.1186/s12864-019-5767-1">Transcriptomic responses to diet quality and viral infection in Apis mellifera</a> was published in BMC Genomics. We examined how monofloral diet quality and Israeli acute paralysis virus inoculation affected honey bee transcriptomics. Our RNA-seq data was noisy and we used data visualization from the bigPint package to identify noise and robustness in our data. For users interested in additional applications of the bigPint package, please refer to the paper.</p>
+<p>The BibTeX entry the cite this paper is as follows:</p>
+<pre><code>@Article{Rutter2019,
+author="Rutter, Lindsay and Carrillo-Tripp, Jimena and Bonning, Bryony C. and Cook, Dianne and Toth, Amy L. and Dolezal, Adam G.",
+title="Transcriptomic responses to diet quality and viral infection in Apis mellifera",
+journal="BMC Genomics",
+year="2019",
+month="May",
+day="22",
+volume="20",
+number="1",
+pages="412",
+doi="10.1186/s12864-019-5767-1",
+url="https://doi.org/10.1186/s12864-019-5767-1"
+}</code></pre>
 </div>
-<div id="example-two-treatments" class="section level2">
+<div id="methodology-paper" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-two-treatments" class="anchor"></a>Example: two treatments</h2>
-<p>As was shown in the article <a href="https://lindsayrutter.github.io/bigPint/articles/data.html">Data object</a>, the <code>data</code> object called <code>soybean_ir_sub</code> contained 5,604 genes and two treatment groups, N and P <span class="citation">(Lauter and Graham 2016)</span>. We can examine the structure of its corresponding <code>dataMetrics</code> object called <code>soybean_ir_sub_metrics</code> as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bigPint)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"soybean_ir_sub_metrics"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(soybean_ir_sub_metrics, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</a></code></pre></div>
-<pre><code>## List of 1
-## $ N_P:'data.frame': 5604 obs. of 6 variables:
-## ..$ ID : chr [1:5604] "Glyma.19G168700.Wm82.a2.v1"
-##    "Glyma.13G293500.Wm82.a2.v1" "Glyma.05G188700.Wm82.a2.v1"
-##    "Glyma.13G173100.Wm82.a2.v1" ...
-## ..$ logFC : num [1:5604] -5.92 2.99 -3.51 -3.91 -3.51 ...
-## ..$ logCPM: num [1:5604] 7.52 8.08 8.83 8.27 10.19 ...
-## ..$ LR : num [1:5604] 266 171 167 157 154 ...
-## ..$ PValue: num [1:5604] 9.18e-60 3.65e-39 2.73e-38 6.04e-36 2.58e-35 ...
-## ..$ FDR : num [1:5604] 5.14e-56 1.02e-35 5.09e-35 8.46e-33 2.89e-32 ...</code></pre>
-<hr>
-</div>
-<div id="example-three-treatments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-three-treatments" class="anchor"></a>Example: three treatments</h2>
-<p>Similarly, as was shown in the data page, the <code>data</code> object called <code>soybean_cn_sub</code> contained 7,332 genes and three treatment groups, S1, S2, and S3 <span class="citation">(Brown and Hudson 2015)</span>. We can examine the structure of its corresponding <code>dataMetrics</code> object called <code>soybean_cn_sub_metrics</code> as follows:</p>
-<hr>
-</div>
-<div id="data-metrics-object-rules" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-metrics-object-rules" class="anchor"></a>Data metrics object rules</h2>
-<p>As demonstrated in the two examples above, the <code>dataMetrics</code> object must meet the following conditions:</p>
-<ul>
-<li>Be of type <code>list</code>
-</li>
-<li>Contain a number of elements equal to the number of pairwise treatment combinations in the <code>data</code> object. For example, the <code>soybean_ir_sub_metrics</code> object contains one list element (“N_P”) and the <code>soybean_cn_sub_metrics</code> object contains three list elements (“S1_S2”, “S1_S3”, “S2_S3”).</li>
-<li>Have each list element
-<ul>
-<li>Be of type <code>data.frame</code>
-</li>
-<li>Be called in a three-part format (such as “N_P” or “S2_S3”) that matches the Perl expression <code>^[a-zA-Z0-9]+_[a-zA-Z0-9]+</code>, where
-<ul>
-<li>The first part indicates the first treatment group alphameric name</li>
-<li>The second part consists of an underscore "_" to serve as a delimeter</li>
-<li>The third part indicates the second treatment group alphameric name</li>
-</ul>
-</li>
-<li>Contain a first column called “ID” of class <code>character</code> consisting of the unique names of the genes</li>
-<li>Contain at least one column of class <code>numeric</code> or <code>integer</code> consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called “logFC”, “logCPM”, “LR”, “PValue”, and “FDR”.</li>
-</ul>
-</li>
-</ul>
-<p>You can quickly double-check the names of the list elements in your <code>dataMetrics</code> object as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(soybean_ir_sub_metrics)</a></code></pre></div>
-<pre><code>## [1] "N_P"</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/names">names</a></span>(soybean_cn_sub_metrics)</a></code></pre></div>
-<pre><code>## [1] "S1_S2" "S1_S3" "S2_S3"</code></pre>
-<p>If your <code>dataMetrics</code> object does not fit this format, <code>bigPint</code> will likely throw an informative error about why your format was not recognized.</p>
-<hr>
-</div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<div id="refs" class="references">
-<div id="ref-brown2015developmental">
-<p>Brown, Anne V., and Karen A. Hudson. 2015. “Developmental Profiling of Gene Expression in Soybean Trifoliate Leaves and Cotyledons.” <em>BMC Plant Biology</em> 15 (1). BioMed Central: 169.</p>
-</div>
-<div id="ref-soybeanIR">
-<p>Lauter, AN Moran, and MA Graham. 2016. “NCBI Sra Bioproject Accession: PRJNA318409.”</p>
-</div>
-</div>
+<a href="#methodology-paper" class="anchor"></a>Methodology paper</h2>
+<p>Our methodology paper <a href="https://doi.org/10.1186/s12859-019-2968-1">Visualization methods for differential expression analysis</a> was published in BMC Bioinformatics. We used case studies of public RNA-seq datasets to demonstrate that bigPint graphics can detect normalization issues, differential expression designation problems, and common analysis errors. We also show that our new visualization tools can identify genes of interest in ways undetectable with models.</p>
+<p>The BibTeX entry the cite this paper is as follows:</p>
+<pre><code>@Article{Rutter2019,
+author="Rutter, Lindsay and Moran Lauter, Adrienne N. and Graham,  Michelle A. and Cook, Dianne",
+title="Visualization methods for differential expression analysis",
+journal="BMC Bioinformatics",
+year="2019",
+month="September",
+day="6",
+volume="20",
+number="1",
+pages="458",
+doi="10.1186/s12859-019-2968-1",
+url="https://doi.org/10.1186/s12859-019-2968-1"
+}</code></pre>
 </div>
   </div>
 
@@ -235,11 +196,8 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#about-data-metrics-object">About data metrics object</a></li>
-      <li><a href="#example-two-treatments">Example: two treatments</a></li>
-      <li><a href="#example-three-treatments">Example: three treatments</a></li>
-      <li><a href="#data-metrics-object-rules">Data metrics object rules</a></li>
-      <li><a href="#references">References</a></li>
+<li><a href="#research-paper">Research paper</a></li>
+      <li><a href="#methodology-paper">Methodology paper</a></li>
       </ul>
 </div>
       </div>

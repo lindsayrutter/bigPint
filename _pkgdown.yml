@@ -79,8 +79,8 @@ navbar:
     - icon: fa-pencil-square-o
       text: "manuscripts"
       menu:
-      -  text: Research article
-         href: articles/honeybee.html
+      -  text: Manuscripts
+         href: articles/manuscripts.html
     - icon: fa-newspaper-o
       text: "news"
       href: news/index.html

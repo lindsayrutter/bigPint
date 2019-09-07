@@ -10,6 +10,7 @@ articles:
   honeybee: honeybee.html
   installation: installation.html
   interactive: interactive.html
+  manuscripts: manuscripts.html
   pipeline: pipeline.html
   plotIntro: plotIntro.html
   static: static.html

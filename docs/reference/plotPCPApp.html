@@ -71,7 +71,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
       </span>
     </div>
 
@@ -137,7 +137,7 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="../articles/honeybee.html">Research article</a>
+      <a href="../articles/manuscripts.html">Manuscripts</a>
     </li>
   </ul>
 </li>
@@ -191,7 +191,7 @@
     
     </div>
 
-    <pre class="usage"><span class='fu'>plotPCPApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>)</pre>
+    <pre class="usage"><span class='fu'>plotPCPApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"orange"</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -201,7 +201,7 @@
       <td><p>DATA FRAME | Read counts for parallel coordinate lines</p></td>
     </tr>
     <tr>
-      <th>pointColor</th>
+      <th>lineColor</th>
       <td><p>CHARACTER STRING | Color of overlaid points on scatterplot 
 matrix; default "orange"</p></td>
     </tr>
@@ -239,7 +239,7 @@ that remain.</p>
     <span class='no'>logFC</span> <span class='kw'>&lt;</span> -<span class='fl'>4</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/select.html'>select</a></span>(<span class='no'>ID</span>)
 <span class='no'>pcpDat</span> <span class='kw'>=</span> <span class='fu'><a href='https://dplyr.tidyverse.org/reference/filter.html'>filter</a></span>(<span class='no'>soybean_ir_sub_st</span>, <span class='no'>ID</span> <span class='kw'>%in%</span> <span class='no'>plotGenes</span>[,<span class='fl'>1</span>])
 
-<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCPApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pcpDat</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"purple"</span>)
+<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCPApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>pcpDat</span>, <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"purple"</span>)
 <span class='kw'>if</span> (<span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/interactive'>interactive</a></span>()) {
     <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://www.rdocumentation.org/packages/shiny/topics/runApp'>runApp</a></span>(<span class='no'>app</span>, <span class='kw'>display.mode</span> <span class='kw'>=</span> <span class='st'>"normal"</span>)
 }</div></pre>
