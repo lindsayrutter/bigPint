@@ -78,9 +78,7 @@ navbar:
          href: articles/pipeline.html
     - icon: fa-pencil-square-o
       text: "manuscripts"
-      menu:
-      -  text: Manuscripts
-         href: articles/manuscripts.html
+      href: articles/manuscripts.html
     - icon: fa-newspaper-o
       text: "news"
       href: news/index.html
