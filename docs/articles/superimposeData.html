@@ -6,9 +6,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Alternatives to data metrics object • bigPint</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Alternatives to data metrics object">
@@ -33,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -117,7 +124,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right" role="search">
+<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
@@ -131,13 +138,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Alternatives to data metrics object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2019-09-17</h4>
+            <h4 class="date">2019-12-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/superimposeData.Rmd"><code>vignettes/superimposeData.Rmd</code></a></small>
       <div class="hidden name"><code>superimposeData.Rmd</code></div>
@@ -161,13 +169,13 @@
 <li>threshVal <code>INTEGER</code> Maximum value to threshold significance from threshVar object; default 0.05</li>
 </ul>
 <p>Below is an example of superimposing genes that have an FDR value less than 1e-10 <span class="citation">(Lauter and Graham 2016)</span>.</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bigPint)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"soybean_ir_sub"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"soybean_ir_sub_metrics"</span>)</a>
-<a class="sourceLine" id="cb1-4" data-line-number="4">soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/Log">log</a></span>(soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</a>
-<a class="sourceLine" id="cb1-5" data-line-number="5">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">dataMetrics=</span>soybean_ir_sub_metrics,</a>
-<a class="sourceLine" id="cb1-6" data-line-number="6">  <span class="dt">threshVar =</span> <span class="st">"FDR"</span>, <span class="dt">threshVal =</span> <span class="fl">1e-10</span>, <span class="dt">pointSize =</span> <span class="fl">0.1</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb1-7" data-line-number="7">ret[[<span class="st">"N_P"</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bigPint)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"soybean_ir_sub"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"soybean_ir_sub_metrics"</span>)</span>
+<span id="cb1-4"><a href="#cb1-4"></a>soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>] <span class="op">+</span><span class="st"> </span><span class="dv">1</span>)</span>
+<span id="cb1-5"><a href="#cb1-5"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">dataMetrics=</span>soybean_ir_sub_metrics,</span>
+<span id="cb1-6"><a href="#cb1-6"></a>  <span class="dt">threshVar =</span> <span class="st">"FDR"</span>, <span class="dt">threshVal =</span> <span class="fl">1e-10</span>, <span class="dt">pointSize =</span> <span class="fl">0.1</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb1-7"><a href="#cb1-7"></a>ret[[<span class="st">"N_P"</span>]]</span></code></pre></div>
 <pre><code>## Warning: Using `as.character()` on a quosure is deprecated as of rlang 0.3.0.
 ## Please use `as_label()` or `as_name()` instead.
 ## This warning is displayed once per session.</code></pre>
@@ -178,21 +186,21 @@
 <h2 class="hasAnchor">
 <a href="#option-2-gene-list-object" class="anchor"></a>Option 2: Gene List object</h2>
 <p>We can alternatively use the <code>geneList</code> input object to superimpose a subset of the data onto the full data frame. The <code>geneList</code> object is NULL by default. However, the user can set it to be equal to the list of the IDs that should be superimposed. For example, we can achieve the same plot above by using the following code.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb3-2" data-line-number="2">sigGenes =<span class="st"> </span>soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID)</a>
-<a class="sourceLine" id="cb3-3" data-line-number="3">sigGenes =<span class="st"> </span>sigGenes[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb3-4" data-line-number="4">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">geneList =</span> sigGenes, <span class="dt">pointSize =</span> <span class="fl">0.1</span>,</a>
-<a class="sourceLine" id="cb3-5" data-line-number="5">  <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb3-6" data-line-number="6">ret[[<span class="st">"N_P"</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb3-2"><a href="#cb3-2"></a>sigGenes =<span class="st"> </span>soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-10</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID)</span>
+<span id="cb3-3"><a href="#cb3-3"></a>sigGenes =<span class="st"> </span>sigGenes[,<span class="dv">1</span>]</span>
+<span id="cb3-4"><a href="#cb3-4"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">geneList =</span> sigGenes, <span class="dt">pointSize =</span> <span class="fl">0.1</span>,</span>
+<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb3-6"><a href="#cb3-6"></a>ret[[<span class="st">"N_P"</span>]]</span></code></pre></div>
 <p><img src="superimposeData_files/figure-html/unnamed-chunk-2-1.png" width="700.0000032"></p>
 <p>We note that the <code>geneList</code> object is more flexible than the <code>dataMetrics</code> object. This is because the <code>dataMetrics</code> object can only create the subset of data by thresholding one quantitative variable. However, the <code>geneList</code> object can be created in many more ways. For example, below we can examine genes that have an FDR value less than 1e-10 and a log fold change value greater than the absolute value of 6.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb4-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb4-2" data-line-number="2">sigGenes =<span class="st"> </span>soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-10</span>) <span class="op">%&gt;%</span><span class="st">   </span></a>
-<a class="sourceLine" id="cb4-3" data-line-number="3"><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/MathFun">abs</a></span>(logFC) <span class="op">&gt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID)</a>
-<a class="sourceLine" id="cb4-4" data-line-number="4">sigGenes =<span class="st"> </span>sigGenes[,<span class="dv">1</span>]</a>
-<a class="sourceLine" id="cb4-5" data-line-number="5">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">geneList =</span> sigGenes, <span class="dt">pointSize =</span> <span class="fl">0.5</span>,</a>
-<a class="sourceLine" id="cb4-6" data-line-number="6">  <span class="dt">pointColor =</span> <span class="st">"magenta"</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb4-7" data-line-number="7">ret[[<span class="st">"N_P"</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb4-2"><a href="#cb4-2"></a>sigGenes =<span class="st"> </span>soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]] <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-10</span>) <span class="op">%&gt;%</span><span class="st">   </span></span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="st">  </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/filter.html">filter</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/MathFun.html">abs</a></span>(logFC) <span class="op">&gt;</span><span class="st"> </span><span class="dv">6</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(ID)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>sigGenes =<span class="st"> </span>sigGenes[,<span class="dv">1</span>]</span>
+<span id="cb4-5"><a href="#cb4-5"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">geneList =</span> sigGenes, <span class="dt">pointSize =</span> <span class="fl">0.5</span>,</span>
+<span id="cb4-6"><a href="#cb4-6"></a>  <span class="dt">pointColor =</span> <span class="st">"magenta"</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>ret[[<span class="st">"N_P"</span>]]</span></code></pre></div>
 <p><img src="superimposeData_files/figure-html/unnamed-chunk-3-1.png" width="700.0000032"></p>
 <p>Because of this, if both <code>dataMetrics</code> and <code>geneList</code> are both not their default NULL value, then <code>geneList</code> will take priority and <code>dataMetrics</code> will be ignored.</p>
 <hr>
@@ -201,8 +209,8 @@
 <h2 class="hasAnchor">
 <a href="#option-3-no-superimposing" class="anchor"></a>Option 3: No superimposing</h2>
 <p>The last possibility is to leave both <code>dataMetrics</code> and <code>geneList</code> as their default NULL value. This will allow a user to examine the distribution of the full dataset without superimposing any subset of data. We end with an example of this technique.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1">ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</a>
-<a class="sourceLine" id="cb5-2" data-line-number="2">ret[[<span class="st">"N_P"</span>]]</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">data=</span>soybean_ir_sub, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>ret[[<span class="st">"N_P"</span>]]</span></code></pre></div>
 <p><img src="superimposeData_files/figure-html/unnamed-chunk-4-1.png" width="700.0000032"></p>
 <hr>
 </div>
@@ -218,6 +226,7 @@
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -234,13 +243,15 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://github.com/lindsayrutter">Lindsay Rutter</a>, <a href="https://github.com/dicook">Dianne Cook</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 

@@ -56,7 +56,7 @@ bluePoints = degData[!indexBlue,]
 
 p <- ggplot(lineDF, aes(x=xv, y=lyv)) + geom_line(aes(y = lyv), alpha=0.1) +
 geom_line(aes(y = uyv), alpha=0.1) + geom_ribbon(aes(ymin=lyv,ymax=uyv),
-fill="blue", alpha="0.3") + geom_point(data = bluePoints,
+fill="blue", alpha=0.3) + geom_point(data = bluePoints,
 aes_string(x = xChar, y = yChar), size=pointSize, alpha=0.5, color = "blue") +
 geom_point(data = greyPoints, aes_string(x=xChar, y = yChar), size=pointSize,
 color = "darkgrey") + geom_point(data = redPoints, aes_string(x = xChar,
@@ -65,7 +65,7 @@ y = yChar), size=pointSize, color = "red")
 else{
 p <- ggplot(lineDF, aes(x=xv, y=lyv)) + geom_line(aes(y = lyv), alpha=0.1) +
 geom_line(aes(y = uyv), alpha=0.1) + geom_ribbon(aes(ymin=lyv,ymax=uyv),
-fill="blue", alpha="0.3") + geom_point(data = plotPoints,
+fill="blue", alpha=0.3) + geom_point(data = plotPoints,
 aes_string(x = xChar, y = yChar), size=pointSize)
 }
 p

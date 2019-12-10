@@ -6,9 +6,16 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Data object • bigPint</title>
+<!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png">
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png">
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png">
 <!-- jquery --><script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/sandstone/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous">
-<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- sticky kit --><script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script><!-- Font Awesome icons --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous">
+<!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
 <script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Data object">
@@ -33,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.2.2</span>
       </span>
     </div>
 
@@ -117,7 +124,7 @@
   </a>
 </li>
       </ul>
-<form class="navbar-form navbar-right" role="search">
+<form class="navbar-form navbar-right hidden-xs hidden-sm" role="search">
         <div class="form-group">
           <input type="search" class="form-control" name="search-input" id="search-input" placeholder="Search..." aria-label="Search for..." autocomplete="off">
 </div>
@@ -131,13 +138,14 @@
 <!--/.navbar -->
 
       
+
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
       <h1>Data object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2019-09-17</h4>
+            <h4 class="date">2019-12-10</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/data.Rmd"><code>vignettes/data.Rmd</code></a></small>
       <div class="hidden name"><code>data.Rmd</code></div>
@@ -156,9 +164,9 @@
 <h2 class="hasAnchor">
 <a href="#example-two-treatments" class="anchor"></a>Example: two treatments</h2>
 <p>The <code>data</code> object requires the same particular data frame format for all <code>bigPint</code> functions. There should be <span class="math inline">\(n\)</span> rows in the data frame, where <span class="math inline">\(n\)</span> is the number of genes. There should be <span class="math inline">\(p + 1\)</span> columns in the data frame, where <span class="math inline">\(p\)</span> is the number of samples. The first column contains the genes names and the rest of the columns should contain the read counts for all samples of interest. An example of this format is shown below:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb1-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(bigPint)</a>
-<a class="sourceLine" id="cb1-2" data-line-number="2"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(<span class="st">"soybean_ir_sub"</span>)</a>
-<a class="sourceLine" id="cb1-3" data-line-number="3"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(soybean_ir_sub)</a></code></pre></div>
+<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bigPint)</span>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"soybean_ir_sub"</span>)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(soybean_ir_sub)</span></code></pre></div>
 <pre><code>##                               ID N.1 N.2 N.3 P.1 P.2 P.3
 ## 14881 Glyma.06G158700.Wm82.a2.v1  48  28  15  29  16   8
 ## 20855 Glyma.08G156000.Wm82.a2.v1   0   0   0   0   0   0
@@ -167,7 +175,7 @@
 ## 11303 Glyma.05G050000.Wm82.a2.v1   0   0   0   0   0   0
 ## 50345 Glyma.18G292300.Wm82.a2.v1 583 669 497 419 467 426</code></pre>
 <p>We can also examine the structure of an example <code>data</code> object as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb3-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/str">str</a></span>(soybean_ir_sub, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</a></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(soybean_ir_sub, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</span></code></pre></div>
 <pre><code>## 'data.frame':    5604 obs. of  7 variables:
 ## $ ID : chr "Glyma.06G158700.Wm82.a2.v1" "Glyma.08G156000.Wm82.a2.v1"
 ##    "Glyma.12G070600.Wm82.a2.v1" "Glyma.19G045200.Wm82.a2.v1" ...
@@ -218,40 +226,28 @@
 <h2 class="hasAnchor">
 <a href="#example-three-treatments" class="anchor"></a>Example: three treatments</h2>
 <p>Note that the <code>data</code> object can contain more than two treatment groups. In this case, the <code>bigPint</code> software will automatically create plots for all pairs of treatment groups. An example of this type of dataset is provided in the <code>bigPint</code> package and can accessed as follows:</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb5-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/data">data</a></span>(soybean_cn_sub)</a></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_cn_sub)</span></code></pre></div>
 <p>This example dataset contains 7,332 genes and nine samples <span class="citation">(Brown and Hudson 2015)</span>. There are three treatment groups, S1, S2, and S3. Each treatment group contains three replicates. In such cases where the <code>data</code> object contains more than two treatment groups, all functions in the <code>bigPint</code> package (except <code><a href="../reference/plotSMApp.html">plotSMApp()</a></code>) will automatically produce a plot for each pairwise combination of treatment groups.</p>
 <p>For example, <code>bigPint</code> functions will produce plots for S1 versus S2, S1 versus S3, and S2 versus S3 in this case. The same could be accomplished (although less efficiently) by separating the dataset into three separate datasets and running a <code>bigPint</code> function of interest on each of them individually.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb6-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/base/topics/library">library</a></span>(dplyr)</a>
-<a class="sourceLine" id="cb6-2" data-line-number="2">soybean_cn_sub_S1S2 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>))</a>
-<a class="sourceLine" id="cb6-3" data-line-number="3">soybean_cn_sub_S1S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</a>
-<a class="sourceLine" id="cb6-4" data-line-number="4">soybean_cn_sub_S2S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>), <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</a></code></pre></div>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb7-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(soybean_cn_sub_S1S2, <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##                     ID      S1.1     S1.2     S1.3     S2.1     S2.2
-## 19468  Glyma06g12670.1 0.8024444 2.708884 1.763407 7.716099 6.581990
-## 27284  Glyma08g12390.2 4.7687202 5.235777 5.166631 3.823472 3.566863
-## 42001 Glyma12g02076.11 3.1899340 2.902131 2.906502 3.100206 3.284326
-##           S2.3
-## 19468 7.003538
-## 27284 3.295619
-## 42001 3.295619</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb9-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(soybean_cn_sub_S1S3, <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##                     ID      S1.1     S1.2     S1.3     S3.1     S3.2
-## 19468  Glyma06g12670.1 0.8024444 2.708884 1.763407 8.556732 8.367593
-## 27284  Glyma08g12390.2 4.7687202 5.235777 5.166631 3.669489 4.031427
-## 42001 Glyma12g02076.11 3.1899340 2.902131 2.906502 3.364437 2.731105
-##           S3.3
-## 19468 8.389347
-## 27284 4.269312
-## 42001 3.255649</code></pre>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><a class="sourceLine" id="cb11-1" data-line-number="1"><span class="kw"><a href="https://www.rdocumentation.org/packages/utils/topics/head">head</a></span>(soybean_cn_sub_S2S3, <span class="dv">3</span>)</a></code></pre></div>
-<pre><code>##                     ID     S2.1     S2.2     S2.3     S3.1     S3.2
-## 19468  Glyma06g12670.1 7.716099 6.581990 7.003538 8.556732 8.367593
-## 27284  Glyma08g12390.2 3.823472 3.566863 3.295619 3.669489 4.031427
-## 42001 Glyma12g02076.11 3.100206 3.284326 3.295619 3.364437 2.731105
-##           S3.3
-## 19468 8.389347
-## 27284 4.269312
-## 42001 3.255649</code></pre>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>soybean_cn_sub_S1S2 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>))</span>
+<span id="cb6-3"><a href="#cb6-3"></a>soybean_cn_sub_S1S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S1"</span>), <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</span>
+<span id="cb6-4"><a href="#cb6-4"></a>soybean_cn_sub_S2S3 &lt;-<span class="st"> </span>soybean_cn_sub <span class="op">%&gt;%</span><span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/select.html">select</a></span>(<span class="st">"ID"</span>, <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S2"</span>), <span class="kw"><a href="https://dplyr.tidyverse.org/reference/reexports.html">contains</a></span>(<span class="st">"S3"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(soybean_cn_sub_S1S2, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                     ID      S1.1     S1.2     S1.3     S2.1     S2.2     S2.3
+## 19468  Glyma06g12670.1 0.8024444 2.708884 1.763407 7.716099 6.581990 7.003538
+## 27284  Glyma08g12390.2 4.7687202 5.235777 5.166631 3.823472 3.566863 3.295619
+## 42001 Glyma12g02076.11 3.1899340 2.902131 2.906502 3.100206 3.284326 3.295619</code></pre>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(soybean_cn_sub_S1S3, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                     ID      S1.1     S1.2     S1.3     S3.1     S3.2     S3.3
+## 19468  Glyma06g12670.1 0.8024444 2.708884 1.763407 8.556732 8.367593 8.389347
+## 27284  Glyma08g12390.2 4.7687202 5.235777 5.166631 3.669489 4.031427 4.269312
+## 42001 Glyma12g02076.11 3.1899340 2.902131 2.906502 3.364437 2.731105 3.255649</code></pre>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/head.html">head</a></span>(soybean_cn_sub_S2S3, <span class="dv">3</span>)</span></code></pre></div>
+<pre><code>##                     ID     S2.1     S2.2     S2.3     S3.1     S3.2     S3.3
+## 19468  Glyma06g12670.1 7.716099 6.581990 7.003538 8.556732 8.367593 8.389347
+## 27284  Glyma08g12390.2 3.823472 3.566863 3.295619 3.669489 4.031427 4.269312
+## 42001 Glyma12g02076.11 3.100206 3.284326 3.295619 3.364437 2.731105 3.255649</code></pre>
 <hr>
 </div>
 <div id="preprocessing-of-data-object" class="section level2">
@@ -265,25 +261,26 @@
 <a href="#references" class="anchor"></a>References</h2>
 <div id="refs" class="references">
 <div id="ref-brown2015developmental">
-<p>Brown, Anne V., and Karen A. Hudson. 2015. “Developmental Profiling of Gene Expression in Soybean Trifoliate Leaves and Cotyledons.” <em>BMC Plant Biology</em> 15 (1). BioMed Central: 169.</p>
+<p>Brown, Anne V., and Karen A. Hudson. 2015. “Developmental Profiling of Gene Expression in Soybean Trifoliate Leaves and Cotyledons.” <em>BMC Plant Biology</em> 15 (1): 169.</p>
 </div>
 <div id="ref-soybeanIR">
 <p>Lauter, AN Moran, and MA Graham. 2016. “NCBI Sra Bioproject Accession: PRJNA318409.”</p>
 </div>
 <div id="ref-love2014moderated">
-<p>Love, Michael I., Wolfgang Huber, and Simon Anders. 2014. “Moderated Estimation of Fold Change and Dispersion for Rna-Seq Data with Deseq2.” <em>Genome Biology</em> 15 (12). BioMed Central: 550.</p>
+<p>Love, Michael I., Wolfgang Huber, and Simon Anders. 2014. “Moderated Estimation of Fold Change and Dispersion for Rna-Seq Data with Deseq2.” <em>Genome Biology</em> 15 (12): 550.</p>
 </div>
 <div id="ref-ritchie2015limma">
-<p>Ritchie, Matthew E., Belinda Phipson, Di Wu, Yifang Hu, Charity W. Law, Wei Shi, and Gordon K. Smyth. 2015. “Limma Powers Differential Expression Analyses for Rna-Sequencing and Microarray Studies.” <em>Nucleic Acids Research</em> 43 (7). Oxford University Press: e47–e47.</p>
+<p>Ritchie, Matthew E., Belinda Phipson, Di Wu, Yifang Hu, Charity W. Law, Wei Shi, and Gordon K. Smyth. 2015. “Limma Powers Differential Expression Analyses for Rna-Sequencing and Microarray Studies.” <em>Nucleic Acids Research</em> 43 (7): e47–e47.</p>
 </div>
 <div id="ref-robinson2010edger">
-<p>Robinson, Mark D., Davis J. McCarthy, and Gordon K. Smyth. 2010. “EdgeR: A Bioconductor Package for Differential Expression Analysis of Digital Gene Expression Data.” <em>Bioinformatics</em> 26 (1). Oxford University Press: 139–40.</p>
+<p>Robinson, Mark D., Davis J. McCarthy, and Gordon K. Smyth. 2010. “EdgeR: A Bioconductor Package for Differential Expression Analysis of Digital Gene Expression Data.” <em>Bioinformatics</em> 26 (1): 139–40.</p>
 </div>
 </div>
 </div>
   </div>
 
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+
         <div id="tocnav">
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
@@ -301,13 +298,15 @@
 </div>
 
 
+
       <footer><div class="copyright">
   <p>Developed by <a href="https://github.com/lindsayrutter">Lindsay Rutter</a>, <a href="https://github.com/dicook">Dianne Cook</a>.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
 </div>
 
