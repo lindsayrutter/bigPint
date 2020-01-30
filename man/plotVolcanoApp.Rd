@@ -4,8 +4,12 @@
 \alias{plotVolcanoApp}
 \title{Plot interactive volcano plots}
 \usage{
-plotVolcanoApp(data = data, dataMetrics = dataMetrics,
-  option = c("hexagon", "allPoints"), pointColor = "orange")
+plotVolcanoApp(
+  data = data,
+  dataMetrics = dataMetrics,
+  option = c("hexagon", "allPoints"),
+  pointColor = "orange"
+)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}

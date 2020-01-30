@@ -4,14 +4,27 @@
 \alias{plotClusters}
 \title{Plot static parallel coordinate clusters}
 \usage{
-plotClusters(data, dataMetrics = NULL, geneList = NULL,
-  geneLists = NULL, threshVar = "FDR", threshVal = 0.05,
-  clusterAllData = TRUE, nC = 4, colList = rainbow(nC),
-  aggMethod = c("ward.D", "ward.D2", "single", "complete", "average",
-  "mcquitty", "median", "centroid"), yAxisLabel = "Count",
-  xAxisLabel = "Sample", lineSize = 0.1, lineAlpha = 0.5,
-  vxAxis = FALSE, outDir = tempdir(), saveFile = TRUE,
-  verbose = FALSE)
+plotClusters(
+  data,
+  dataMetrics = NULL,
+  geneList = NULL,
+  geneLists = NULL,
+  threshVar = "FDR",
+  threshVal = 0.05,
+  clusterAllData = TRUE,
+  nC = 4,
+  colList = rainbow(nC),
+  aggMethod = c("ward.D", "ward.D2", "single", "complete", "average", "mcquitty",
+    "median", "centroid"),
+  yAxisLabel = "Count",
+  xAxisLabel = "Sample",
+  lineSize = 0.1,
+  lineAlpha = 0.5,
+  vxAxis = FALSE,
+  outDir = tempdir(),
+  saveFile = TRUE,
+  verbose = FALSE
+)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}

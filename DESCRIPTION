@@ -23,7 +23,7 @@ biocViews: Clustering, DataImport, DifferentialExpression,
         GeneExpression, MultipleComparison, Normalization,
         Preprocessing, QualityControl, RNASeq, Sequencing, Software,
         Transcription, Visualization
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 BugReports: https://github.com/lindsayrutter/bigPint/issues
 URL: https://github.com/lindsayrutter/bigPint
 NeedsCompilation: no
