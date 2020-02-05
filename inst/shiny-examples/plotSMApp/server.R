@@ -21,6 +21,8 @@ values <- reactiveValues(x=0, selPair=NULL, selMetric=NULL, selOrder=NULL)
 
 server <- function(input, output, session) {
   
+  track_usage(storage_mode = store_json(path = "logs/"))
+  
   output$scatMatPlot <- renderPlotly({
     maxVal = max(abs(data[,-1]))
     maxRange = c(-1*maxVal, maxVal)
