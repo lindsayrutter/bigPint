@@ -25,7 +25,6 @@
     #' }
 #' @docType data
 #' @keywords datasets
-#' @name soybean_cn
 #' @format A data frame with 73,320 rows and 10 variables
 #' @references
 #' Brown AV, Hudson KA (2015) Developmental profiling of gene expression in 

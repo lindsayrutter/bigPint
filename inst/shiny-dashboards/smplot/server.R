@@ -23,6 +23,8 @@ values <- reactiveValues(x=0, selPair=NULL, selMetric=NULL, selOrder=NULL)
 
 server <- function(input, output, session) {
   
+  track_usage(storage_mode = store_json(path = "logs/"))
+  
   output$scatMatPlot <- renderPlotly({
     
     ################################ Prepare scatterplot matrix

@@ -4,11 +4,22 @@
 \alias{plotVolcano}
 \title{Plot static volcano plot}
 \usage{
-plotVolcano(data = data, dataMetrics = dataMetrics, geneList = NULL,
-  threshVar = "FDR", threshVal = 0.05, option = c("hexagon",
-  "allPoints"), logFC = "logFC", PValue = "PValue", xbins = 10,
-  pointSize = 0.5, pointColor = "orange", outDir = tempdir(),
-  saveFile = TRUE, hover = FALSE)
+plotVolcano(
+  data = data,
+  dataMetrics = dataMetrics,
+  geneList = NULL,
+  threshVar = "FDR",
+  threshVal = 0.05,
+  option = c("hexagon", "allPoints"),
+  logFC = "logFC",
+  PValue = "PValue",
+  xbins = 10,
+  pointSize = 0.5,
+  pointColor = "orange",
+  outDir = tempdir(),
+  saveFile = TRUE,
+  hover = FALSE
+)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}

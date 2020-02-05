@@ -20,6 +20,5 @@
     #' }
 #' @docType data
 #' @keywords datasets
-#' @name soybean_ir
 #' @format A data frame with 56,044 rows and 7 variables
 NULL

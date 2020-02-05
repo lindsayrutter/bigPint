@@ -3,7 +3,6 @@
 \docType{package}
 \name{bigPint}
 \alias{bigPint}
-\alias{bigPint-package}
 \title{\code{bigPint} package}
 \description{
 bigPint R API
