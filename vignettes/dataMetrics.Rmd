@@ -1,0 +1,78 @@
+---
+title: 'Data metrics object'
+author:
+- name: Lindsay Rutter
+date: '`r Sys.Date()`'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Data metrics object"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## About data metrics object
+
+Researchers may wish to superimpose a subset of the full dataset onto the full dataset. If a researcher is using the package to visualize RNA-seq data, then this subset of data is often differentially expressed genes (DEGs) returned from a model. In this case, the user may wish to use the `dataMetrics` input parameter, which contains at least one quantitative variable returned from a model such as FDR, p-value, and log fold change.  
+
+____________________________________________________________________________________
+
+## Example: two treatments
+
+As was shown in the article [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can examine the structure of its corresponding `dataMetrics` object called `soybean_ir_sub_metrics` as follows:
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+library(bigPint)
+data("soybean_ir_sub_metrics")
+str(soybean_ir_sub_metrics, strict.width = "wrap")
+```
+____________________________________________________________________________________
+
+## Example: three treatments
+
+Similarly, as was shown in the data page, the `data` object called `soybean_cn_sub` contained 7,332 genes and three treatment groups, S1, S2, and S3 [@brown2015developmental]. We can examine the structure of its corresponding `dataMetrics` object called `soybean_cn_sub_metrics` as follows:
+
+```{r, eval=TRUE, include=FALSE}
+data("soybean_cn_sub_metrics")
+str(soybean_cn_sub_metrics, strict.width = "wrap")
+```
+
+____________________________________________________________________________________
+
+## Data metrics object rules
+
+As demonstrated in the two examples above, the `dataMetrics` object must meet the following conditions:
+
+* Be of type `list`
+* Contain a number of elements equal to the number of pairwise treatment combinations in the `data` object. For example, the `soybean_ir_sub_metrics` object contains one list element ("N_P") and the `soybean_cn_sub_metrics` object contains three list elements ("S1_S2", "S1_S3", "S2_S3").
+* Have each list element
+    + Be of type `data.frame`
+    + Be called in a three-part format (such as "N_P" or "S2_S3") that matches the Perl expression `^[a-zA-Z0-9]+_[a-zA-Z0-9]+`, where
+      - The first part indicates the first treatment group alphameric name
+      - The second part consists of an underscore "_" to serve as a delimeter
+      - The third part indicates the second treatment group alphameric name
+    + Contain a first column called "ID" of class `character` consisting of the unique names of the genes
+    + Contain at least one column of class `numeric` or `integer` consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called "logFC", "logCPM", "LR", "PValue", and "FDR".
+
+You can quickly double-check the names of the list elements in your `dataMetrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_ir_sub_metrics)
+names(soybean_cn_sub_metrics)
+```
+
+If your `dataMetrics` object does not fit this format, `bigPint` will likely throw an informative error about why your format was not recognized.
+
+____________________________________________________________________________________
+
+## References

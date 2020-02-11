@@ -1,0 +1,67 @@
+---
+title: 'Manuscripts'
+# author:
+# - name: Lindsay Rutter
+# date: '`r Sys.Date()`'
+# package: bigPint
+# bibliography: bigPint.bib
+# output:
+#   BiocStyle::html_document:
+#     toc_float: true
+#     tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Manuscripts"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## Research paper
+
+Our research paper [Transcriptomic responses to diet quality and viral infection in Apis mellifera](https://doi.org/10.1186/s12864-019-5767-1) was published in BMC Genomics. We examined how monofloral diet quality and Israeli acute paralysis virus inoculation affected honey bee transcriptomics. Our RNA-seq data was noisy and we used data visualization from the bigPint package to identify noise and robustness in our data. For users interested in additional applications of the bigPint package, please refer to the paper.
+
+The BibTeX entry the cite this paper is as follows:
+
+```
+@Article{Rutter2019,
+author="Rutter, Lindsay and Carrillo-Tripp, Jimena and Bonning, Bryony C. and Cook, Dianne and Toth, Amy L. and Dolezal, Adam G.",
+title="Transcriptomic responses to diet quality and viral infection in Apis mellifera",
+journal="BMC Genomics",
+year="2019",
+month="May",
+day="22",
+volume="20",
+number="1",
+pages="412",
+doi="10.1186/s12864-019-5767-1",
+url="https://doi.org/10.1186/s12864-019-5767-1"
+}
+```
+
+## Methodology paper
+
+Our methodology paper [Visualization methods for differential expression analysis](https://doi.org/10.1186/s12859-019-2968-1) was published in BMC Bioinformatics. We used case studies of public RNA-seq datasets to demonstrate that bigPint graphics can detect normalization issues, differential expression designation problems, and common analysis errors. We also show that our new visualization tools can identify genes of interest in ways undetectable with models.
+
+The BibTeX entry the cite this paper is as follows:
+
+```
+@Article{Rutter2019,
+author="Rutter, Lindsay and Moran Lauter, Adrienne N. and Graham,  Michelle A. and Cook, Dianne",
+title="Visualization methods for differential expression analysis",
+journal="BMC Bioinformatics",
+year="2019",
+month="September",
+day="6",
+volume="20",
+number="1",
+pages="458",
+doi="10.1186/s12859-019-2968-1",
+url="https://doi.org/10.1186/s12859-019-2968-1"
+}
+```
+

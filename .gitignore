@@ -1,0 +1,10 @@
+.Rproj.user
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+bigPint.Rproj
+.DS_Store
+*.Rproj
+doc
+Meta

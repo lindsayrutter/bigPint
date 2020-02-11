@@ -1,0 +1,10 @@
+name: volcano
+title:
+username:
+account: bigpint
+server: shinyapps.io
+hostUrl: https://api.shinyapps.io/v1
+appId: 557618
+bundleId: 2249755
+url: https://bigpint.shinyapps.io/volcano/
+when: 1563626493.34761

@@ -1,0 +1,148 @@
+---
+title: 'Producing interactive plots'
+author:
+- name: Lindsay Rutter
+date: '`r Sys.Date()`'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Producing interactive plots"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+## Accessing interactive plots
+
+Interactive plots in the `bigPint` package open as [Shiny](https://shiny.rstudio.com/) applications. These applications consist of a simple dashboard that includes an "About" tab that explains how to use the application. They also include an "Application" tab that offers several input fields that the user can tailor to their needs. Some of these input fields are generated dynamically based off the dataset that the user input. These tailorizations include aesthetics (such as point color) and metrics to determine the subset of data to be superimposed. In these applications, users can also easily save static images of the interactive graphics and lists of selected genes to their local computer.
+
+____________________________________________________________________________________
+
+## Types of interactive plots
+
+Currently, there are four interactive plots available in the `bigPint` package:
+
+- Scatterplot matrix
+- Litre plots
+- Parallel coordinate plots
+- Volcano plots
+
+Below we provide examples on how to produce these types of plots.
+
+____________________________________________________________________________________
+
+## Scatterplot matrix app
+
+Interactive scatterplot matrices can be generated with the `bigPint` function [plotSMApp()](https://lindsayrutter.github.io/bigPint/reference/plotSMApp.html). The code below will generate an example interactive scatterplot matrix from the soybean cotyledon dataset [@brown2015developmental].
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+library(bigPint)
+data("soybean_cn_sub")
+soybean_cn_sub <- soybean_cn_sub[,1:7]
+app <- plotSMApp(data=soybean_cn_sub)
+if (interactive()) {
+    shiny::runApp(app)
+}
+```
+
+Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/smplot). Embedded below is a video demonstration of the application.
+
+```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
+library("htmltools")
+library("vembedr")
+embed_vimeo("349395290", width = 700, height = 600) %>% div(class = "vembedr") %>%
+  div(align = "left")
+```
+
+____________________________________________________________________________________
+
+## Litre plot app
+
+Interactive litre plots can be generated with the `bigPint` function [plotLitreApp()](https://lindsayrutter.github.io/bigPint/reference/plotLitreApp.html). The code below will generate an example interactive litre plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+data("soybean_ir_sub")
+data("soybean_ir_sub_metrics")
+soybean_ir_sub_log <- soybean_ir_sub
+soybean_ir_sub_log[,-1] <- log(soybean_ir_sub[,-1]+1)
+app <- plotLitreApp(data=soybean_ir_sub_log,
+    dataMetrics = soybean_ir_sub_metrics)
+if (interactive()) {
+    shiny::runApp(app, port = 1234, launch.browser = TRUE)
+}
+```
+
+Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/litre/). Embedded below is a video demonstration of the application.
+
+```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
+library("htmltools")
+library("vembedr")
+embed_vimeo("349396087", width = 700, height = 600) %>% div(class = "vembedr") %>%
+  div(align = "left")
+```
+
+____________________________________________________________________________________
+
+## Parallel coordinates app
+
+Users can produce interactive parallel coordinate plots with the `bigPint` function [plotPCPApp()](https://lindsayrutter.github.io/bigPint/reference/plotPCPApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being standardized [@soybeanIR].
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+soybean_ir_sub_st = as.data.frame(t(apply(as.matrix(soybean_ir_sub[,-1]), 1, 
+  scale)))
+soybean_ir_sub_st$ID = as.character(soybean_ir_sub$ID)
+soybean_ir_sub_st = soybean_ir_sub_st[,c(length(soybean_ir_sub_st), 
+  1:length(soybean_ir_sub_st)-1)]
+colnames(soybean_ir_sub_st) = colnames(soybean_ir_sub)
+nID = which(is.nan(soybean_ir_sub_st[,2]))
+soybean_ir_sub_st[nID,2:length(soybean_ir_sub_st)] = 0
+
+plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01, logFC < -4) %>% 
+  select(ID)
+pcpDat = filter(soybean_ir_sub_st, ID %in% plotGenes[,1])
+app <- plotPCPApp(data = pcpDat)
+if (interactive()) {
+    shiny::runApp(app, display.mode = "normal")
+}
+```
+
+Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/pcplot/). Embedded below is a video demonstration of the application.
+
+```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
+library("htmltools")
+library("vembedr")
+embed_vimeo("349398286", width = 700, height = 600) %>% div(class = "vembedr") %>%
+  div(align = "left")
+```
+
+____________________________________________________________________________________
+
+## Volcano plot app
+
+Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive volcano plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
+
+```{r, eval=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
+app <- plotVolcanoApp(data = soybean_ir_sub_log,
+    dataMetrics = soybean_ir_sub_metrics)
+if (interactive()) {
+    shiny::runApp(app)
+}
+```
+
+Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/volcano/). Embedded below is a video demonstration of the application.
+
+```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
+library("htmltools")
+library("vembedr")
+embed_vimeo("349396567", width = 700, height = 600) %>% div(class = "vembedr") %>%
+  div(align = "left")
+```
+
+____________________________________________________________________________________
+
+## References
