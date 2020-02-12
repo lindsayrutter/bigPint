@@ -1,4 +1,3 @@
-
 # bigPint: Make BIG data pint-sized <img src="man/figures/logo.png" align="right" alt="" />
 
 [![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/lindsayrutter/bigPint/graphs/commit-activity)

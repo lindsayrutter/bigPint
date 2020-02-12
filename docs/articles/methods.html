@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Data metrics object • bigPint</title>
+<title>Methodology paper • bigPint</title>
 <!-- favicons --><link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
 <link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
 <link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png">
@@ -18,7 +18,7 @@
 <!-- clipboard.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script><!-- headroom.js --><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script><script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script><!-- pkgdown --><link href="../pkgdown.css" rel="stylesheet">
 <script src="../pkgdown.js"></script><!-- docsearch --><script src="../docsearch.js"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/docsearch.js/2.6.1/docsearch.min.css" integrity="sha256-QOSRU/ra9ActyXkIBbiIB144aDBdtvXBcNc3OTNuX/Q=" crossorigin="anonymous">
 <link href="../docsearch.css" rel="stylesheet">
-<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Data metrics object">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/mark.js/8.11.1/jquery.mark.min.js" integrity="sha256-4HLtjeVgH0eIB3aZ9mLYF6E8oU5chNdjU6p6rrXpl9U=" crossorigin="anonymous"></script><meta property="og:title" content="Methodology paper">
 <meta property="og:description" content="">
 <meta property="og:image" content="http://lindsayrutter.github.io/bigPint/logo.png">
 <meta name="twitter:card" content="summary">
@@ -152,91 +152,33 @@
       </header><div class="row">
   <div class="col-md-9 contents">
     <div class="page-header toc-ignore">
-      <h1>Data metrics object</h1>
-                        <h4 class="author">Lindsay Rutter</h4>
-                        
-            <h4 class="date">2020-02-12</h4>
+      <h1>Methodology paper</h1>
+            
       
-      <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/dataMetrics.Rmd"><code>vignettes/dataMetrics.Rmd</code></a></small>
-      <div class="hidden name"><code>dataMetrics.Rmd</code></div>
+      <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/methods.Rmd"><code>vignettes/methods.Rmd</code></a></small>
+      <div class="hidden name"><code>methods.Rmd</code></div>
 
     </div>
 
     
     
-<div id="about-data-metrics-object" class="section level2">
+<p>Our methodology paper <a href="https://doi.org/10.1186/s12859-019-2968-1">Visualization methods for differential expression analysis</a> was published in BMC Bioinformatics. We show examples of why visualization should be an integral component of differential expression analysis and how the bigPint package can help scientists detect normalization issues, differential expression designation problems, and common analysis errors. For users interested in additional applications of the bigPint package, please refer to the paper.</p>
+<div id="citation" class="section level2">
 <h2 class="hasAnchor">
-<a href="#about-data-metrics-object" class="anchor"></a>About data metrics object</h2>
-<p>Researchers may wish to superimpose a subset of the full dataset onto the full dataset. If a researcher is using the package to visualize RNA-seq data, then this subset of data is often differentially expressed genes (DEGs) returned from a model. In this case, the user may wish to use the <code>dataMetrics</code> input parameter, which contains at least one quantitative variable returned from a model such as FDR, p-value, and log fold change.</p>
-<hr>
-</div>
-<div id="example-two-treatments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-two-treatments" class="anchor"></a>Example: two treatments</h2>
-<p>As was shown in the article <a href="https://lindsayrutter.github.io/bigPint/articles/data.html">Data object</a>, the <code>data</code> object called <code>soybean_ir_sub</code> contained 5,604 genes and two treatment groups, N and P <span class="citation">(Lauter and Graham 2016)</span>. We can examine the structure of its corresponding <code>dataMetrics</code> object called <code>soybean_ir_sub_metrics</code> as follows:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bigPint)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"soybean_ir_sub_metrics"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(soybean_ir_sub_metrics, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</span></code></pre></div>
-<pre><code>## List of 1
-## $ N_P:'data.frame': 5604 obs. of 6 variables:
-## ..$ ID : chr [1:5604] "Glyma.19G168700.Wm82.a2.v1" "Glyma.13G293500.Wm82.a2.v1"
-##    "Glyma.05G188700.Wm82.a2.v1" "Glyma.13G173100.Wm82.a2.v1" ...
-## ..$ logFC : num [1:5604] -5.92 2.99 -3.51 -3.91 -3.51 ...
-## ..$ logCPM: num [1:5604] 7.52 8.08 8.83 8.27 10.19 ...
-## ..$ LR : num [1:5604] 266 171 167 157 154 ...
-## ..$ PValue: num [1:5604] 9.18e-60 3.65e-39 2.73e-38 6.04e-36 2.58e-35 ...
-## ..$ FDR : num [1:5604] 5.14e-56 1.02e-35 5.09e-35 8.46e-33 2.89e-32 ...</code></pre>
-<hr>
-</div>
-<div id="example-three-treatments" class="section level2">
-<h2 class="hasAnchor">
-<a href="#example-three-treatments" class="anchor"></a>Example: three treatments</h2>
-<p>Similarly, as was shown in the data page, the <code>data</code> object called <code>soybean_cn_sub</code> contained 7,332 genes and three treatment groups, S1, S2, and S3 <span class="citation">(Brown and Hudson 2015)</span>. We can examine the structure of its corresponding <code>dataMetrics</code> object called <code>soybean_cn_sub_metrics</code> as follows:</p>
-<hr>
-</div>
-<div id="data-metrics-object-rules" class="section level2">
-<h2 class="hasAnchor">
-<a href="#data-metrics-object-rules" class="anchor"></a>Data metrics object rules</h2>
-<p>As demonstrated in the two examples above, the <code>dataMetrics</code> object must meet the following conditions:</p>
-<ul>
-<li>Be of type <code>list</code>
-</li>
-<li>Contain a number of elements equal to the number of pairwise treatment combinations in the <code>data</code> object. For example, the <code>soybean_ir_sub_metrics</code> object contains one list element (“N_P”) and the <code>soybean_cn_sub_metrics</code> object contains three list elements (“S1_S2”, “S1_S3”, “S2_S3”).</li>
-<li>Have each list element
-<ul>
-<li>Be of type <code>data.frame</code>
-</li>
-<li>Be called in a three-part format (such as “N_P” or “S2_S3”) that matches the Perl expression <code>^[a-zA-Z0-9]+_[a-zA-Z0-9]+</code>, where
-<ul>
-<li>The first part indicates the first treatment group alphameric name</li>
-<li>The second part consists of an underscore "_" to serve as a delimeter</li>
-<li>The third part indicates the second treatment group alphameric name</li>
-</ul>
-</li>
-<li>Contain a first column called “ID” of class <code>character</code> consisting of the unique names of the genes</li>
-<li>Contain at least one column of class <code>numeric</code> or <code>integer</code> consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called “logFC”, “logCPM”, “LR”, “PValue”, and “FDR”.</li>
-</ul>
-</li>
-</ul>
-<p>You can quickly double-check the names of the list elements in your <code>dataMetrics</code> object as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_ir_sub_metrics)</span></code></pre></div>
-<pre><code>## [1] "N_P"</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_cn_sub_metrics)</span></code></pre></div>
-<pre><code>## [1] "S1_S2" "S1_S3" "S2_S3"</code></pre>
-<p>If your <code>dataMetrics</code> object does not fit this format, <code>bigPint</code> will likely throw an informative error about why your format was not recognized.</p>
-<hr>
-</div>
-<div id="references" class="section level2 unnumbered">
-<h2 class="hasAnchor">
-<a href="#references" class="anchor"></a>References</h2>
-<div id="refs" class="references">
-<div id="ref-brown2015developmental">
-<p>Brown, Anne V., and Karen A. Hudson. 2015. “Developmental Profiling of Gene Expression in Soybean Trifoliate Leaves and Cotyledons.” <em>BMC Plant Biology</em> 15 (1): 169.</p>
-</div>
-<div id="ref-soybeanIR">
-<p>Lauter, AN Moran, and MA Graham. 2016. “NCBI Sra Bioproject Accession: PRJNA318409.”</p>
-</div>
-</div>
+<a href="#citation" class="anchor"></a>Citation</h2>
+<p>The BibTeX entry the cite this paper is as follows:</p>
+<pre><code>@Article{rutter2019visualization,
+author="Rutter, Lindsay and Lauter, Adrienne N Moran and Graham, Michelle A and Cook, Dianne",
+title="Visualization methods for differential expression analysis",
+journal="BMC Bioinformatics",
+year="2019",
+volume="20",
+number="1",
+pages="458",
+publisher="Springer",
+doi="10.1186/s12859-019-2968-1",
+url="https://doi.org/10.1186/s12859-019-2968-1"
+}</code></pre>
 </div>
   </div>
 
@@ -246,11 +188,7 @@
       <h2 class="hasAnchor">
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
-<li><a href="#about-data-metrics-object">About data metrics object</a></li>
-      <li><a href="#example-two-treatments">Example: two treatments</a></li>
-      <li><a href="#example-three-treatments">Example: three treatments</a></li>
-      <li><a href="#data-metrics-object-rules">Data metrics object rules</a></li>
-      <li><a href="#references">References</a></li>
+<li><a href="#citation">Citation</a></li>
       </ul>
 </div>
       </div>

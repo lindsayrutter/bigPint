@@ -81,6 +81,8 @@ navbar:
       menu:
       -  text: Research article
          href: articles/honeybee.html
+      -  text: Methodology article
+         href: articles/methods.html
     - icon: fa-newspaper-o
       text: "news"
       href: news/index.html
