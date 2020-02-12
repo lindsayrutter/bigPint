@@ -1,21 +1,11 @@
 
-```{r, echo = FALSE}
-knitr::opts_chunk$set(
-  collapse = TRUE,
-  comment = "#>",
-  fig.path = "README-",
-  fig.path = "man/figures/"
-)
-```
-
 # bigPint: Make BIG data pint-sized <img src="man/figures/logo.png" align="right" alt="" />
 
-[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active)
-[![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/lindsayrutter/bigPint/graphs/commit-activity)
+[![Project Status: Active – The project has reached a stable, usable state and is being actively developed.](https://www.repostatus.org/badges/latest/active.svg)](https://www.repostatus.org/#active) [![Maintenance](https://img.shields.io/badge/Maintained%3F-yes-green.svg)](https://GitHub.com/lindsayrutter/bigPint/graphs/commit-activity)
 [![minimal R version](https://img.shields.io/badge/R%3E%3D-3.4.1-6666ff.svg)](https://cran.r-project.org/)
 [![Last-changedate](https://img.shields.io/badge/last%20change-`r gsub('-', '--', Sys.Date())`-blue.svg)](/commits/master)
 [![GitHub issues](https://img.shields.io/github/issues/lindsayrutter/bigPint.svg)](https://GitHub.com/lindsayrutter/bigPint/issues/)
-[![packageversion](https://img.shields.io/badge/Package%20version-0.99.0-orange.svg?style=flat-square)](commits/master)
+[![packageversion](https://img.shields.io/badge/Package%20version-0.99.8-orange.svg?style=flat-square)](commits/master)
 [![License: GPL v3](https://img.shields.io/badge/License-GPL%20v3-ff69b4.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 > **BIG** multivariate data **P**lotted **INT**eractively.
@@ -51,3 +41,4 @@ ________________________________________________________________________________
 Large multivariate datasets are common across numerous disciplinary fields. The best approach for looking at quantitative multivariate data are scatterplot matrices; parallel coordinate plots; and replicate line plots. Each of these plots enable assessing the association between multiple variables. With effective plotting tools, analysts can improve modeling; they can iterate between visualizations and modeling to enhance the models based on feedback from the visuals.
 
 However, these plots are ineffective with large quantities of data: Overplotting can obscure important structure, and the plots can be slow to render if every observation is mapped to a graphical element. In this package, we developed more useful visualization techniques for large multivariate datasets by incorporating appropriate summaries and using interactivity. 
+
