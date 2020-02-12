@@ -39,7 +39,7 @@ body <- shinydashboard::dashboardBody(
       shiny::column(width = 12, shinydashboard::box(width = NULL, withSpinner(plotly::plotlyOutput("boxPlot")), collapsible = FALSE, background = "black", title = "Boxplot", status = "primary", solidHeader = TRUE))),
     
     shiny::fluidRow(
-      shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), DT::dataTableOutput("selectedValues"), collapsible = FALSE, title = "Selected genes", status = "primary", solidHeader = TRUE)))),
+      shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), shiny::verbatimTextOutput("selectedValues"), collapsible = TRUE, title = "Selected Gene IDs", status = "primary", solidHeader = TRUE)))),
     
 shinydashboard::tabItem(tabName = "about",
     shiny::fluidRow("This application allows you to examine the relationship between all variables in your dataset with an interactive scatterplot matrix. Plotting an individual point for each gene can obscure the number of genes in a given area due to overplotting. As a result, we use hexagon bins in the scatterplot matrix. If you hover over a given hexagon bin of interest, you can determine the number of genes in its area, as shown in Figure 1 below.", style='padding:10px;'),

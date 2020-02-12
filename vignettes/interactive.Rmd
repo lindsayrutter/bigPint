@@ -50,14 +50,9 @@ if (interactive()) {
 }
 ```
 
-Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/smplot). Embedded below is a video demonstration of the application.
+Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/smplot)).
 
-```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
-library("htmltools")
-library("vembedr")
-embed_vimeo("349395290", width = 700, height = 600) %>% div(class = "vembedr") %>%
-  div(align = "left")
-```
+<iframe width="690" height="600" src="https://bigpint.shinyapps.io/smplot" style="border: 3px black solid;" allowfullscreen></iframe>
 
 ____________________________________________________________________________________
 
@@ -77,14 +72,9 @@ if (interactive()) {
 }
 ```
 
-Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/litre/). Embedded below is a video demonstration of the application.
+Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/litre/)).
 
-```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
-library("htmltools")
-library("vembedr")
-embed_vimeo("349396087", width = 700, height = 600) %>% div(class = "vembedr") %>%
-  div(align = "left")
-```
+<iframe width="690" height="600" src="https://bigpint.shinyapps.io/litre/" style="border: 3px black solid;" allowfullscreen></iframe>
 
 ____________________________________________________________________________________
 
@@ -111,14 +101,9 @@ if (interactive()) {
 }
 ```
 
-Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/pcplot/). Embedded below is a video demonstration of the application.
+Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/pcplot/)).
 
-```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
-library("htmltools")
-library("vembedr")
-embed_vimeo("349398286", width = 700, height = 600) %>% div(class = "vembedr") %>%
-  div(align = "left")
-```
+<iframe width="690" height="600" src="https://bigpint.shinyapps.io/pcplot/" style="border: 3px black solid;" allowfullscreen></iframe>
 
 ____________________________________________________________________________________
 
@@ -126,7 +111,7 @@ ________________________________________________________________________________
 
 Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive volcano plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
 
-```{r, eval=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 app <- plotVolcanoApp(data = soybean_ir_sub_log,
     dataMetrics = soybean_ir_sub_metrics)
 if (interactive()) {
@@ -134,14 +119,9 @@ if (interactive()) {
 }
 ```
 
-Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/volcano/). Embedded below is a video demonstration of the application.
+Upon running the code above in your R session, an interactive window will open. By default, you will first see an "About" tab that explains the application. Simply click on the "Application" tab under the navigation icon at the top of the screen to enter the actual interactive graphic. Embedded below is the resulting application (which can also be accessed directly [here](https://bigpint.shinyapps.io/volcano/)).
 
-```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
-library("htmltools")
-library("vembedr")
-embed_vimeo("349396567", width = 700, height = 600) %>% div(class = "vembedr") %>%
-  div(align = "left")
-```
+<iframe width="690" height="600" src="https://bigpint.shinyapps.io/volcano/" style="border: 3px black solid;" allowfullscreen></iframe>
 
 ____________________________________________________________________________________
 

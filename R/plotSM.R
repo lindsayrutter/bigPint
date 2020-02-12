@@ -132,67 +132,67 @@
 #' 
 
 plotSM = function(data=data, dataMetrics=NULL, geneList = NULL,
-    threshVar="FDR", threshVal=0.05, option=c("allPoints", "foldChange",
-    "orthogonal", "hexagon"), xbins=10, threshFC=3, threshOrth=3,
-    pointSize=0.5, pointColor = "orange", outDir=tempdir(), saveFile = TRUE){
-
-option <- match.arg(option)
+                  threshVar="FDR", threshVal=0.05, option=c("allPoints", "foldChange",
+                                                            "orthogonal", "hexagon"), xbins=10, threshFC=3, threshOrth=3,
+                  pointSize=0.5, pointColor = "orange", outDir=tempdir(), saveFile = TRUE){
     
-# Check that input parameters fit required formats
-helperTestData(data)
-if (is.null(geneList) && !is.null(dataMetrics)){
-    helperTestDataMetrics(data, dataMetrics, threshVar)
-}
-
-if (option=="foldChange"){
-
-ret <- helperSMFC(data, dataMetrics, outDir, pointSize, threshFC, threshVar,
-threshVal)
-
-if (saveFile == TRUE){
-    fName = paste0("_degSM_", threshFC, "_FC.jpg")
-    helperSMPrint(ret, outDir, fName)
-}
-invisible(ret)
-}
-
-else if (option=="hexagon"){
-
-ret <- helperSMHex(data, dataMetrics, outDir, pointSize, pointColor, xbins, 
-threshVar, threshVal, geneList)
-
-if (saveFile == TRUE){
-    fName = paste0("_degSM_Hex_", threshVal, ".jpg")
-    helperSMPrint(ret, outDir, fName)
-}
-invisible(ret)
-}
-
-else if (option=="orthogonal"){
-
-ret <- helperSMOrth(data, dataMetrics, outDir, pointSize, threshOrth,
-threshVar, threshVal)
-
-if (saveFile == TRUE){
-    fName = paste0("_degSM_", threshOrth, "_Orth.jpg")
-    helperSMPrint(ret, outDir, fName)
-}
-invisible(ret)
-}  
-
-else if (option=="allPoints"){
-
-ret <- helperSMPoints(data, dataMetrics, outDir, pointSize, pointColor,
-threshVar, threshVal, geneList)
-
-if (saveFile == TRUE){
-    fName = paste0("_degSM_allPoints_", threshVar, "_", threshVal, ".jpg")
-    helperSMPrint(ret, outDir, fName)
-}
-invisible(ret)
-}
-
-else {
-    stop("Check that you selected a valid option parameter")
-}
+    option <- match.arg(option)
+    
+    # Check that input parameters fit required formats
+    helperTestData(data)
+    if (is.null(geneList) && !is.null(dataMetrics)){
+        helperTestDataMetrics(data, dataMetrics, threshVar)
+    }
+    
+    if (option=="foldChange"){
+        
+        ret <- helperSMFC(data, dataMetrics, outDir, pointSize, threshFC, threshVar,
+                          threshVal)
+        
+        if (saveFile == TRUE){
+            fName = paste0("_degSM_", threshFC, "_FC.jpg")
+            helperSMPrint(ret, outDir, fName)
+        }
+        invisible(ret)
+    }
+    
+    else if (option=="hexagon"){
+        
+        ret <- helperSMHex(data, dataMetrics, outDir, pointSize, pointColor, xbins, 
+                           threshVar, threshVal, geneList)
+        
+        if (saveFile == TRUE){
+            fName = paste0("_degSM_Hex_", threshVal, ".jpg")
+            helperSMPrint(ret, outDir, fName)
+        }
+        invisible(ret)
+    }
+    
+    else if (option=="orthogonal"){
+        
+        ret <- helperSMOrth(data, dataMetrics, outDir, pointSize, threshOrth,
+                            threshVar, threshVal)
+        
+        if (saveFile == TRUE){
+            fName = paste0("_degSM_", threshOrth, "_Orth.jpg")
+            helperSMPrint(ret, outDir, fName)
+        }
+        invisible(ret)
+    }  
+    
+    else if (option=="allPoints"){
+        
+        ret <- helperSMPoints(data, dataMetrics, outDir, pointSize, pointColor,
+                              threshVar, threshVal, geneList)
+        
+        if (saveFile == TRUE){
+            fName = paste0("_degSM_allPoints_", threshVar, "_", threshVal, ".jpg")
+            helperSMPrint(ret, outDir, fName)
+        }
+        invisible(ret)
+    }
+    
+    else {
+        stop("Check that you selected a valid option parameter")
+    }
 } 

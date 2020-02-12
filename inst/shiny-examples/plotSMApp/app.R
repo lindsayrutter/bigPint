@@ -15,15 +15,11 @@ library(RColorBrewer)
 library(Hmisc)
 library(shinycssloaders)
 
-# Read data from envir
-data <- bigPint:::PKGENVIR$DATA
-
-# Create new variables based on values read in previously
+data <- bigPint:::PKGENVIR$DATA # read the data from envir
 datCol <- colnames(data)[-which(colnames(data) %in% "ID")]
 myPairs <- unique(sapply(datCol, function(x) unlist(strsplit(x,"[.]"))[1]))
 values <- reactiveValues(x=0, selPair=NULL, selMetric=NULL, selOrder=NULL)
 
-# Initiate sidebar of Shiny dashboard
 sidebar <- shinydashboard::dashboardSidebar(
 width = 180,
 shiny::hr(),
@@ -32,10 +28,10 @@ shinydashboard::menuItem("Application", tabName="scatMatPlot"), #hexPlot
 shinydashboard::menuItem("About", tabName = "about", selected=TRUE) #boxPlot
 )
 )
-
-# Initiate main body of Shiny dashboard, including Shiny input fields and application description page
+    
 body <- shinydashboard::dashboardBody(
 shinydashboard::tabItems(
+
 shinydashboard::tabItem(tabName = "scatMatPlot",
 shiny::fluidRow(
 shiny::column(width = 12, shinydashboard::box(width = 660, height = 660, withSpinner(plotly::plotlyOutput("scatMatPlot")), collapsible = FALSE, background = "black", title = "Binned scatterplot", status = "primary", solidHeader = TRUE))),
@@ -44,7 +40,7 @@ shiny::fluidRow(
 shiny::column(width = 12, shinydashboard::box(width = NULL, withSpinner(plotly::plotlyOutput("boxPlot")), collapsible = FALSE, background = "black", title = "Boxplot", status = "primary", solidHeader = TRUE))),
 
 shiny::fluidRow(
-shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), DT::dataTableOutput("selectedValues"), collapsible = FALSE, title = "Selected genes", status = "primary", solidHeader = TRUE)))),
+shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), shiny::verbatimTextOutput("selectedValues"), collapsible = TRUE, title = "Selected Gene IDs", status = "primary", solidHeader = TRUE)))),
 
 shinydashboard::tabItem(tabName = "about",
 shiny::fluidRow("This application allows you to examine the relationship between all variables in your dataset with an interactive scatterplot matrix. Plotting an individual point for each gene can obscure the number of genes in a given area due to overplotting. As a result, we use hexagon bins in the scatterplot matrix. If you hover over a given hexagon bin of interest, you can determine the number of genes in its area, as shown in Figure 1 below.", style='padding:10px;'),
@@ -71,14 +67,12 @@ div(img(src='Figure4.png', style="width: 75%; height: 75%"), style="text-align: 
 ))
 )
 
-# Combine sidebar and main body of Shiny into ui of Shiny application
 ui <- shinydashboard::dashboardPage(
 shinydashboard::dashboardHeader(title = "Overlaying genes", titleWidth = 180),
 sidebar,
 body
 )
 
-# Inititate server of Shiny application
 server <- function(input, output, session) {
     
     output$scatMatPlot <- renderPlotly({
@@ -242,7 +236,13 @@ server <- function(input, output, session) {
     pcpDat <- reactive(data[which(data$ID %in% selID()), ])
     
     # Print the selected gene IDs
-    output$selectedValues = DT::renderDataTable(pcpDat(), rownames= FALSE)
+    output$selectedValues = renderPrint({
+        if ( nrow(pcpDat()) > 50) { 
+            cat(paste0("Only listing first 50 genes."))
+            cat("\n")
+        }
+        cat(pcpDat()$ID[1:min(nrow(pcpDat()), 50)],sep="\n")
+    })
     
     # Create static box plot of the full dataset
     colNms <- colnames(data[, -1])

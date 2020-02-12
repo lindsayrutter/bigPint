@@ -5,7 +5,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @description Plot interactive parallel coordinate plots.
 #' 
 #' @param data DATA FRAME | Read counts for parallel coordinate lines
-#' @param lineColor CHARACTER STRING | Color of overlaid points on scatterplot 
+#' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
 #' matrix; default "orange"
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly layout
 #' @importFrom ggplot2 ggplot aes_string geom_point xlim ylim scale_x_discrete
@@ -43,12 +43,12 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #'     logFC < -4) %>% select(ID)
 #' pcpDat = filter(soybean_ir_sub_st, ID %in% plotGenes[,1])
 #' 
-#' app <- plotPCPApp(data = pcpDat, lineColor = "purple")
+#' app <- plotPCPApp(data = pcpDat, pointColor = "purple")
 #' if (interactive()) {
 #'     shiny::runApp(app, display.mode = "normal")
 #' }
 
-plotPCPApp = function(data = data, lineColor = "orange"){
+plotPCPApp = function(data = data, pointColor = "orange"){
 
 helperTestData(data)
 appDir <- system.file("shiny-examples", "plotPCPApp", package = "bigPint")
@@ -57,6 +57,6 @@ if (appDir == "") {
     call. = FALSE)
 }
 PKGENVIR$DATA <- data # put the data into envir
-PKGENVIR$LINECOLOR <- lineColor # put the lineColor into envir
+PKGENVIR$POINTCOLOR <- pointColor # put the pointColor into envir
 return(appDir)
 }

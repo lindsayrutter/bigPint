@@ -4,12 +4,12 @@
 \alias{plotPCPApp}
 \title{Plot interactive parallel coordinate plots}
 \usage{
-plotPCPApp(data = data, lineColor = "orange")
+plotPCPApp(data = data, pointColor = "orange")
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts for parallel coordinate lines}
 
-\item{lineColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
+\item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
 matrix; default "orange"}
 }
 \value{
@@ -45,7 +45,7 @@ plotGenes = filter(soybean_ir_sub_metrics[["N_P"]], FDR < 0.01,
     logFC < -4) \%>\% select(ID)
 pcpDat = filter(soybean_ir_sub_st, ID \%in\% plotGenes[,1])
 
-app <- plotPCPApp(data = pcpDat, lineColor = "purple")
+app <- plotPCPApp(data = pcpDat, pointColor = "purple")
 if (interactive()) {
     shiny::runApp(app, display.mode = "normal")
 }

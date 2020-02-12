@@ -16,36 +16,34 @@ library(RColorBrewer)
 
 options(spinner.color.background="#F5F5F5")
 
-# Read data from envir
-data <- bigPint:::PKGENVIR$DATA
-lineColor <- bigPint:::PKGENVIR$LINECOLOR
+data <- bigPint:::PKGENVIR$DATA ## read the data from envir
+pointColor <- bigPint:::PKGENVIR$POINTCOLOR ## read the data from envir
 pcpDat <- data
 
-# Initiate sidebar of Shiny dashboard
 sidebar <- shinydashboard::dashboardSidebar(
   width = 180,
   hr(),
   shinydashboard::sidebarMenu(id="tabs",
-    shinydashboard::menuItem("Application", tabName="pcpPlot"),
+    shinydashboard::menuItem("Application", tabName="plot1"), #from hexPlot plot1
     shinydashboard::menuItem("About", tabName = "about", selected=TRUE)
   )
 )
 
-# Initiate main body of Shiny dashboard, including Shiny input fields and application description page
 body <- shinydashboard::dashboardBody(
   shinydashboard::tabItems(
-    shinydashboard::tabItem(tabName = "pcpPlot",
+    shinydashboard::tabItem(tabName = "plot1",
       fluidRow(
         column(width = 12,
-               shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("pcpPlot")), collapsible = FALSE, background = "black", title = "Parallel coordinate plot", status = "primary", solidHeader = TRUE))),
+               shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("plot1")), collapsible = FALSE, background = "black", title = "Parallel coordinate plot", status = "primary", solidHeader = TRUE))),
     
-    shiny::fluidRow(
-      shiny::column(width = 12, shinydashboard::box(width = NULL, downloadButton("downloadData", "Download selected IDs"), DT::dataTableOutput("rectdf"), collapsible = FALSE, title = "Selected genes", status = "primary", solidHeader = TRUE)))),
+    fluidRow(
+      column(width = 12,
+             shinydashboard::box(width = 12, downloadButton("downloadData", "Download remaining IDs"), br(), br(), shinycssloaders::withSpinner(shiny::verbatimTextOutput("rectdf")), collapsible = FALSE, background = "black", title = "Remaining Gene IDs", status = "primary", solidHeader = TRUE)))),
     
 shinydashboard::tabItem(tabName = "about",
       shiny::fluidRow("This application allows users to refine/reduce a set of genes that are represented as parallel coordinate lines. The parallel coordinate lines can often represent a subset of an entire dataset (such as differentially expressed genes). The data we use for the examples below are published RNA-seq data of soybean leaves exposed to iron-rich (group N) and iron-poor (group P) hydroponic soil (Moran Lauter et al., 2016). The two treatments (N and P) each with three replicates. In this example, the subset of data plotted as parallel coordinate lines are the 120 genes that had a FDR values less than 0.01 and a log fold change values less than -4", style='padding:10px;'),
       shiny::fluidRow("As demonstrated in Figure 1, the user can begin to refine/reduce the set of genes by selecting the 'Box Select' button in the Plotly Mode Bar at the top right of the image. In this example, it seems that group P had inconsistent replicates. If, in this case, the user wishes to reduce the set of genes to only include those that have high consistency between the P group replicates, then they can use the 'Box Select' tool to draw a box as is shown in Figure 2. Then, any genes that have a count value for P.1, P.2 or P.3 that is outside of that box will be removed; the result of this is shown in Figure 3.", style='padding:10px;'),
-      shiny::fluidRow("The bottom of the application will list the IDs of the remaining genes and provide a button for users to download these IDs. As shown in Figure 4, this example reduced the number of parallel coordinate lines from 120 to 9. Please note that you can download the parallel coordinate plots at any time as static .png files. You need to view this application in a web browser for this function to work. Hover over the top of the interative graphic and the Plotly Mode Bar buttons will appear. After that, simply click on the leftmost button (that has a camera icon) and this will download the static image.", style='padding:10px;'),
+      shiny::fluidRow("The bottom of the application will list the IDs of the remaining genes and provide a button for users to download these IDs. As shown in Figure 4, this example reduced the number of parallel coordinate lines from 120 to 7. Please note that you can download the parallel coordinate plots at any time as static .png files. You need to view this application in a web browser for this function to work. Hover over the top of the interative graphic and the Plotly Mode Bar buttons will appear. After that, simply click on the leftmost button (that has a camera icon) and this will download the static image.", style='padding:10px;'),
       shiny::fluidRow("Go ahead and test this application by switching to the 'Application' tab on the left side of the screen.", style='padding:10px;'),
       br(),
       br(),
@@ -67,21 +65,19 @@ shinydashboard::tabItem(tabName = "about",
       shiny::fluidRow("1. Moran Lauter, A.N. and Graham, M.A. (2016) NCBI SRA bioproject accession: PRJNA318409, https://www.ncbi.nlm.nih.gov/bioproject/PRJNA318409/.", style='padding:10px;')
     )))
 
-# Combine sidebar and main body of Shiny into ui of Shiny application
+
 ui <- shinydashboard::dashboardPage(
   shinydashboard::dashboardHeader(title = "Overlaying genes", titleWidth = 180),
   sidebar,
   body
 )
 
-# Inititate server of Shiny application
 server <- function(input, output, session) {
   
   colNms <- colnames(pcpDat[, c(2:(ncol(pcpDat)))])
   nVar <- length(colNms)
   pairs <- unique(sapply(colNms, function(x) unlist(strsplit(x,"[.]"))[1]))
   
-  # Create an empty ggplotly object with same dimensions as data
   emptyDat = mtcars
   emptyDat$wt[1]=nVar-0.5
   p <- ggplot(emptyDat, aes(x = wt, y = mpg)) + geom_point(alpha=0) + xlim(0,(nVar-1)) +ylim(min(pcpDat[,2:(nVar+1)]),max(pcpDat[,2:(nVar+1)])) + xlab("Sample") + ylab("Count") + scale_x_discrete(limits=colnames(pcpDat[-1]))
@@ -89,26 +85,40 @@ server <- function(input, output, session) {
   gp[["x"]][["data"]][[1]][["text"]] <- NULL
   gp[["x"]][["data"]][[1]][["hoverinfo"]] = "none"
   
-  # Send user-defined point color into onRender() function
-  session$sendCustomMessage(type = "lines", message=list(lineColor=lineColor))
+  inputRectDf <- reactive({
+    req(input$rects)
+    df <- input$rects
+    return(df)
+  })
   
-  # Declare Shiny output parallel coordinate plot
-  output$pcpPlot <- renderPlotly({
-    # Tailor interactivity of plotly parallel coordinate plot using custom JavaScript
+  output$rectdf = renderPrint({
+    if ( length(inputRectDf()) > 50) { 
+      cat(paste0("Number of genes: ", length(inputRectDf()), ". Only listing first 50 genes."))
+    }
+    else{
+      cat(paste("Number of genes:", length(inputRectDf())))
+    }
+    cat("\n")
+    cat("\n")
+    cat(inputRectDf()[1:min(length(inputRectDf()), 50)],sep="\n")
+  })
+  
+  session$sendCustomMessage(type = "lines", message=list(pointColor=pointColor))
+  
+  output$plot1 <- renderPlotly({
     gp %>% onRender("
       function(el, x, data) {
-      // Define rects array object to hold IDs of remaining lines
+
+
+
       var rects = [];
       var origPcpDat = data.pcpDat
       var pcpDat = data.pcpDat
       
-      // Create variables related to current dataset
       var Traces = [];
       var dLength = pcpDat.length
       var vLength = data.nVar
       var cNames = data.colNms
-      
-      // Draw lines for the original dataset
       for (a=0; a<dLength; a++){
       xArr = [];
       yArr = [];
@@ -124,7 +134,7 @@ server <- function(input, output, session) {
       y: yArr,
       mode: 'lines',
       line: {
-      color: data.lineColor,
+      color: data.pointColor,
       width: 1
       },
       text: ids,
@@ -137,11 +147,9 @@ server <- function(input, output, session) {
      
       var selectTime = 1
       
-      // If the user draws a rectangle
       el.on('plotly_selected', function(e) {
       if (pcpDat.length>0){
       
-      // Determine the corners of the rectangle
       var dLength = pcpDat.length
       var selectedPCP = []
       var xMin = e.range.x[0]
@@ -152,7 +160,6 @@ server <- function(input, output, session) {
       var yMax = e.range.y[1]
       var integers = []
       
-      // Determine how many x-axis integers are included in the rectangle
       if (!((xMax<0) || (xMin>(vLength)))){
       for (a=xMinC; a<(xMaxF+1); a++){
       integers.push(a-1)
@@ -163,11 +170,8 @@ server <- function(input, output, session) {
       var selectedPCP = []
       var notSelectedPCP = []
       
-      // If this is the first rectangle the user has drawn
       if (selectTime==1){
-      // And the rectangle contains at least one x-axis integer
       if (iLength > 0){
-      // Push genes that are outside rectangle into variable selectedPCP
       for (a=0; a<dLength; a++){
       var dat = pcpDat[a]
       var isOut = 0;
@@ -182,12 +186,12 @@ server <- function(input, output, session) {
       }
       }
 
-      // Delete genes that are outside rectangle
       var updateSPCP = []
       var selectedPCPL = selectedPCP.length
       for (a=0; a<selectedPCPL; a++){
       updateSPCP[a]=selectedPCP[a]+1
       }
+      
       var update = {
       line: {
       color: 'blue',
@@ -198,7 +202,6 @@ server <- function(input, output, session) {
       Plotly.deleteTraces(el.id, updateSPCP);
       }
       
-      // Create new object called pcpDat that only contains genes within rectangle
       var newDat = []
       var selectedPCPL = selectedPCP.length
       for (a=0; a<dLength; a++){
@@ -216,11 +219,8 @@ server <- function(input, output, session) {
       }
       }
       
-      // If this is not the first rectangle the user has drawn
       if (selectTime>1){
-      // And the rectangle contains at least one x-axis integer
       if (iLength > 0){
-      // Push genes that are outside rectangle into variable selectedPCP and those inside rectangle into variable notSelectedPCP
       for (a=0; a<dLength; a++){
       var dat = pcpDat[a]
       var isOut = 0;
@@ -230,6 +230,7 @@ server <- function(input, output, session) {
       isOut = 1;
       }
       }
+      
       if (isOut==0){
       selectedPCP.push(a)
       }
@@ -238,17 +239,16 @@ server <- function(input, output, session) {
       }
       }
 
-      // Delete genes that are outside rectangle
       var updateNSPCP = []
       var notSelectedPCPL = notSelectedPCP.length
       for (a=0; a<notSelectedPCPL; a++){
       updateNSPCP[a]=notSelectedPCP[a]+1
       }
+
       if (notSelectedPCPL!=0){
       Plotly.deleteTraces(el.id, updateNSPCP);
       }
       
-      // Create new object called pcpDat that only contains genes within rectangle
       var newDat = []
       var selectedPCPL = selectedPCP.length
       for (a=0; a<dLength; a++){
@@ -265,18 +265,17 @@ server <- function(input, output, session) {
       pcpDat = newDat
       }
       
-      // If the rectangle contains no x-axis integers, keep all lines
       else{
       for (a=0; a<dLength; a++){
       notSelectedPCP.push(a)
       }
+      
       var updateNSPCP = []
       var notSelectedPCPL = notSelectedPCP.length
       for (a=0; a<notSelectedPCPL; a++){
       updateNSPCP[a]=notSelectedPCP[a]+1
       }
       
-      // Delete genes that are outside rectangle
       var update = {
       line: {
       color: '#FF34B3',
@@ -290,7 +289,7 @@ server <- function(input, output, session) {
       }
       }
       
-      // Draw the rectangle the user created
+      
       var drawRect = {
       type: 'rect',
       x0: xMin,
@@ -308,46 +307,28 @@ server <- function(input, output, session) {
       shapes:rects
       }
       Plotly.relayout(el.id, update)
-      
-      // Indicate this is one more time the user drew a rectangle
+
       selectTime++
       }
 
-// Push IDs of remaining lines to rects array object
 for (a=0; a<pcpDat.length; a++){
 rects.push(pcpDat[a]['ID']);
 }
 
-// Save selected row IDs for parallel coordinate plot
-// 'Shiny' below refers to a JavaScript object that is provided by Shiny and is
-// available in JavaScript during the lifetime of an app. Instead of sending a message
-// from Shiny to JavaScript, we can also send messages from JavaScript to Shiny. 
-// Object with name rects, and subsequently use it to send a message back to Shiny. Here,
-// we tell it to make the message available in the R world under the name rects That is,
-// in R we can now listen for events via input$rects
 Shiny.onInputChange('rects', rects);
 rects = []
       })
-      // Pass variables into the JavaScript function
-      }", data = list(pcpDat = pcpDat, nVar = nVar, colNms = colNms, lineColor = lineColor))})
+      }", data = list(pcpDat = pcpDat, nVar = nVar, colNms = colNms, pointColor = pointColor))})
   
-  # Read into Shiny the gene IDs that remain as lines within rectangle drawn by user
-  inputRectDf <- reactive({
-    req(input$rects)
-    df <- input$rects
-    return(df)
-  })
-  
-  # Print the selected gene IDs
-  output$rectdf = DT::renderDataTable(pcpDat %>% filter(ID %in% inputRectDf()), rownames= FALSE)
-  
-  # Create download button
   output$downloadData <- downloadHandler(
     filename = function() {
-      paste("pcp_", pairs[1], "_", pairs[2], ".csv", sep = "")},
+      paste("pcp_", pairs[1], "_", pairs[2], ".csv", sep = "")
+    },
     content = function(file) {
-      write.table(inputRectDf(), file, row.names = FALSE, col.names = FALSE, quote = FALSE, sep=',')}
+      write.table(inputRectDf(), file, row.names = FALSE, col.names = FALSE, quote = FALSE, sep=',')
+    }
   )
+  
 }
 
 shiny::shinyApp(ui = ui, server = server)

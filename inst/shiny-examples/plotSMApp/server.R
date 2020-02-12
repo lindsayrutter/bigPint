@@ -14,9 +14,7 @@ library(GGally)
 library(RColorBrewer)
 library(Hmisc)
 
-load("soybean_cn_sub.rda")
-soybean_cn_sub <- soybean_cn_sub[,1:7]
-data <- soybean_cn_sub
+data <- bigPint:::PKGENVIR$DATA # read the data from envir
 datCol <- colnames(data)[-which(colnames(data) %in% "ID")]
 myPairs <- unique(sapply(datCol, function(x) unlist(strsplit(x,"[.]"))[1]))
 values <- reactiveValues(x=0, selPair=NULL, selMetric=NULL, selOrder=NULL)
@@ -26,13 +24,10 @@ server <- function(input, output, session) {
   track_usage(storage_mode = store_json(path = "logs/"))
   
   output$scatMatPlot <- renderPlotly({
-    
-    ################################ Prepare scatterplot matrix
-    ###########################################################
-    
     maxVal = max(abs(data[,-1]))
     maxRange = c(-1*maxVal, maxVal)
     
+    # Draw hexagon geoms and red x=y line in scatterplots in lower left corner of matrix
     my_fn <- function(data, mapping, ...){
       xChar = as.character(mapping$x)[2]
       yChar = as.character(mapping$y)[2]
@@ -45,11 +40,15 @@ server <- function(input, output, session) {
       p
     }
     
+    # Create static scatterplot matrix
     p <- ggpairs(data[,-1], lower = list(continuous = my_fn))
+    # Keep two separate copies
     pS <- p
     
+    # Render scatterplot matrix interactive as a plotly object
     ggPS <- ggplotly(pS, width=700, height=600)
     
+    # Specify that hovering over hexagons should indicate count number
     myLength <- length(ggPS[["x"]][["data"]])
     for (i in 1:myLength){
       item =ggPS[["x"]][["data"]][[i]]$text[1]
@@ -65,13 +64,26 @@ server <- function(input, output, session) {
       }
     }
     
+    # Specify attributes in hexagons are counts
     for(i in 2:(p$nrow)) {
       for(j in 1:(p$nrow-1)) {
         data[[paste(i,j,sep="-")]] <- attr(pS[i,j]$data, "cID")
       }
     }
     
-    ggPS2 <- ggPS %>% onRender("
+    # Use this function to supplement the widget's built-in JavaScript rendering logic
+    # with additional custom JavaScript code, just for this specific widget object.
+    # Usage: onRender(x, jsCode, data = NULL)
+    # x - An HTML Widget object
+    # jsCode - Character vector containing JavaScript code (see Details)
+    # data - An additional argument to pass to the jsCode function. This can be any R
+    # object that can be serialized to JSON. If you have multiple objects to pass to the
+    # function, use a named list. This is the JavaScript equivalent of the R object passed
+    # into onRender as the data argument; this is an easy way to transfer e.g. data frames     
+    # without having to manually do the JSON encoding. In this case, data is what the user
+    # passes in as the data frame of read counts.
+    # Use custom JavaScript to tailor interactivity of the plotly scatterplot matrix object
+    ggPSR <- ggPS %>% onRender("
      function(el, x, data) {
      
      function range(start, stop, step){
@@ -87,12 +99,15 @@ server <- function(input, output, session) {
      }
      noPoint = x.data.length;
      
+     // If user clicks on plotly scatterplot matrix object
      el.on('plotly_click', function(e) {
-     
+
+     // If present, delete any old superimposed plotly geoms (orange dots)
      if (x.data.length > noPoint){
      Plotly.deleteTraces(el.id, range(noPoint, (noPoint+(len*(len-1)/2-1)), 1));
      }
      
+     // Determine the IDs of genes inside selected hexagon
      xVar = (e.points[0].xaxis._id).replace(/[^0-9]/g,'')
      if (xVar.length == 0) xVar = 1
      yVar = (e.points[0].yaxis._id).replace(/[^0-9]/g,'')
@@ -111,9 +126,17 @@ server <- function(input, output, session) {
      for (a=0; a<selRows.length; a++){
      selID.push(selRows[a]['ID'])
      }
-     // Save selected row IDs for PCP
+
+     // Save selected row IDs for parallel coordinate plot
+     // 'Shiny' below refers to a JavaScript object that is provided by Shiny and is
+     // available in JavaScript during the lifetime of an app. Instead of sending a message
+     // from Shiny to JavaScript, we can also send messages from JavaScript to Shiny. 
+     // Object with name selID, and subsequently use it to send a message back to Shiny. Here,
+     // we tell it to make the message available in the R world under the name selID. That is,
+     // in R we can now listen for events via input$selID
      Shiny.onInputChange('selID', selID);
      
+     // Create traces for selected gene IDs as orange points that state gene names upon hovering
      var Traces = [];
      var i=0;
      var k=1;
@@ -137,8 +160,8 @@ server <- function(input, output, session) {
      },
      xaxis: 'x' + (i+1),
      yaxis: 'y' + (i*len+k),
-text: selID,
-hoverinfo: 'text',
+     text: selID,
+     hoverinfo: 'text',
      };
      Traces.push(trace);
      k++;
@@ -146,22 +169,21 @@ hoverinfo: 'text',
      i++;
      k=1;
      }
+     // Push traces to be superimposed onto the plotly scatterplot matrix object
      Plotly.addTraces(el.id, Traces);
      })}
+     // Pass the R data object into the JavaScript function
      ", data = data)
-    
-    ggPS2
-    
+    ggPSR
   })
   
+  # Read selected gene IDs into Shiny
   selID <- reactive(input$selID)
   
+  # Create data subset (read counts) for only the selected gene IDs
   pcpDat <- reactive(data[which(data$ID %in% selID()), ])
   
-  # output$selectedValues <- renderPrint({cat(pcpDat()$ID,sep="\n")})
-  # 
-  # output$selectedValues <- renderPrint({cat(curPairSel()[["ID"]][1:min(nrow(curPairSel()), 50)],sep="\n")})
-  
+  # Print the selected gene IDs
   output$selectedValues = renderPrint({
     if ( nrow(pcpDat()) > 50) { 
       cat(paste0("Only listing first 50 genes."))
@@ -170,15 +192,13 @@ hoverinfo: 'text',
     cat(pcpDat()$ID[1:min(nrow(pcpDat()), 50)],sep="\n")
   })
   
-  
-  
-  
-  
+  # Create static box plot of the full dataset
   colNms <- colnames(data[, -1])
   nVar <- ncol(data)
-  
   boxDat <- data %>% gather(Sample, Count, -c(ID))
   BP <- ggplot(boxDat, aes(x = Sample, y = Count)) + geom_boxplot()
+  
+  # Render box plot interactive as a plotly object
   ggBP <- ggplotly(BP, width=700)
   
   output$boxPlot <- renderPlotly({
@@ -194,11 +214,11 @@ hoverinfo: 'text',
       for (a=0; a<dLength; a++){
       xArr = [];
       yArr = [];
-selID = [];
+      selID = [];
       for (b=0; b<vLength; b++){
       xArr.push(b+1)
       yArr.push(data.pcpDat[a][cNames[b]]);
-selID.push(data.pcpDat[a]['ID']);
+      selID.push(data.pcpDat[a]['ID']);
       }
 
       var traceHiLine = {
@@ -210,15 +230,16 @@ selID.push(data.pcpDat[a]['ID']);
       width: 1.5
       },
       opacity: 0.9,
-text: selID,
-hoverinfo: 'text',
+      text: selID,
+      hoverinfo: 'text',
       }
       Traces.push(traceHiLine);
       }
       Plotly.addTraces(el.id, Traces);
-      
-      }", data = list(pcpDat = pcpDat(), nVar = nVar, colNms = colNms))}) # should be p$nrow not 7
+      // Pass the R objects into the JavaScript function
+      }", data = list(pcpDat = pcpDat(), nVar = nVar, colNms = colNms))})
 
+  # Create download button
   output$downloadData <- downloadHandler(
     filename = function() {
       paste("SM.csv")
@@ -228,4 +249,4 @@ hoverinfo: 'text',
     }
   )
   
-  }
+}

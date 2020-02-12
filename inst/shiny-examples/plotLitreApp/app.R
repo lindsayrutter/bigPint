@@ -17,34 +17,30 @@ library(orca)
 
 options(spinner.color.background="#F5F5F5")
 
-# Read various data values from envir
-data <- bigPint:::PKGENVIR$DATA
-dataMetrics <- bigPint:::PKGENVIR$DATAMETRICS
-geneList <- bigPint:::PKGENVIR$GENELIST
-pointColor <- bigPint:::PKGENVIR$POINTCOLOR
-option <- bigPint:::PKGENVIR$OPTION
+data <- bigPint:::PKGENVIR$DATA ## read the data from envir
+dataMetrics <- bigPint:::PKGENVIR$DATAMETRICS ## read the dataMetrics from envir
+geneList <- bigPint:::PKGENVIR$GENELIST ## read the geneList from envir
+pointColor <- bigPint:::PKGENVIR$POINTCOLOR ## read the pointColor from envir
+option <- bigPint:::PKGENVIR$OPTION ## read the option from envir
 
-# Create new variables based on values read in previously
 dat <- data
 datCol <- colnames(dat)[-which(colnames(dat) %in% "ID")]
 myPairs <- unique(sapply(datCol, function(x) unlist(strsplit(x,"[.]"))[1]))
 myMetrics <- colnames(dataMetrics[[1]])[-which(colnames(dataMetrics[[1]]) %in% "ID")]
 values <- reactiveValues(x=0, selPair=NULL, selMetric=NULL, selOrder=NULL)
 
-# Initiate sidebar of Shiny dashboard
 sidebar <- shinydashboard::dashboardSidebar(
   width = 180,
   hr(),
   shinydashboard::sidebarMenu(id="tabs",
-    shinydashboard::menuItem("Application", tabName="litrePlot"),
+    shinydashboard::menuItem("Application", tabName="hexPlot"),
     shinydashboard::menuItem("About", tabName = "about", selected=TRUE)
   )
 )
 
-# Initiate main body of Shiny dashboard, including Shiny input fields and application description page
 body <- shinydashboard::dashboardBody(
   shinydashboard::tabItems(
-    shinydashboard::tabItem(tabName = "litrePlot",
+    shinydashboard::tabItem(tabName = "hexPlot",
       fluidRow(
         column(width = 4, 
          shinydashboard::box(width = NULL, status = "primary", title = "Plot metrics", solidHeader = TRUE,
@@ -55,7 +51,7 @@ body <- shinydashboard::dashboardBody(
          shiny::numericInput("pointSize", "Point size:", value = 2, min = 1),
          shiny::actionButton("goButton", "Plot gene!"))),
         column(width = 8,
-          shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("litrePlot")), collapsible = FALSE, background = "black", title = "Litre plot", status = "primary", solidHeader = TRUE))),
+          shinydashboard::box(width = NULL, shinycssloaders::withSpinner(plotly::plotlyOutput("hexPlot")), collapsible = FALSE, background = "black", title = "Litre plot", status = "primary", solidHeader = TRUE))),
       
       fluidRow(
         column(width = 12,
@@ -91,22 +87,20 @@ shinydashboard::tabItem(tabName = "about",
       shiny::fluidRow("1. Brown, A.V. and Hudson, K.A. (2015) Developmental profiling of gene expression in soybean trifoliate leaves and cotyledons.", em(" BMC Plant Biology, "), strong("15"), ", 169.", style='padding:10px;')
     )))
 
-# Combine sidebar and main body of Shiny into ui of Shiny application
 ui <- shinydashboard::dashboardPage(
   shinydashboard::dashboardHeader(title = "Overlaying genes", titleWidth = 180),
   sidebar,
   body
 )
 
-# Inititate server of Shiny application
 server <- function(input, output, session) {
   
-  # Declare what gene number will be displayed based on user Shiny field inputs
   shiny::observeEvent(input$goButton, values$x <- values$x + 1)
   shiny::observeEvent(input$selPair, values$x <- 0)
   shiny::observeEvent(input$selMetric, values$x <- 0)
   shiny::observeEvent(input$selOrder, values$x <- 0)
   shiny::observeEvent(input$binSize, values$x <- 0)
+  
   shiny::observeEvent(input$selPair, values$selPair <- input$selPair)
   
   # Create data subset based on two letters user chooses
@@ -116,15 +110,16 @@ server <- function(input, output, session) {
     dat[,c(1, sampleIndex())]
   }, ignoreNULL = FALSE)
   
-  # Create data frame of metrics for genes in the order they should appear based on user Shiny field inputs
   metricDF <- eventReactive(c(input$selPair, input$selMetric, input$selOrder), {
     metricDF <- dataMetrics[[paste0(input$selPair[1], "_", input$selPair[2])]]
     if (is.null(metricDF)){
       metricDF <- dataMetrics[[paste0(input$selPair[2], "_", input$selPair[1])]]      
     }
+    
     if (!is.null(geneList)){
       metricDF <- metricDF[which(metricDF$ID %in% geneList),]
     }
+    
     if (!is.null(metricDF[[input$selMetric]])){
       metricDF <- metricDF[order(metricDF[[input$selMetric]]),]
       if (input$selOrder == "Decreasing"){
@@ -134,17 +129,14 @@ server <- function(input, output, session) {
     metricDF
   })
   
-  # Determine the metrics for the currently displayed gene
   currMetric <- eventReactive(values$x, {
     validate(need(values$x > 0, "Plot a gene."))
       currMetric <- metricDF()[values$x, ]
       currMetric
     })
-  # Determine the ID and number for the currently displayed gene
   currID <- eventReactive(currMetric(), {as.character(currMetric()$ID)})
   currGene <- eventReactive(currID(), {unname(unlist(datSel()[which(datSel()$ID == currID()), -1]))})
   
-  # Print the ID and number for the currently displayed gene
   output$info1 <- renderPrint({ print(currMetric(), row.names = FALSE) })
   output$info2 <- renderPrint({ cat("Gene rank:", values$x) })
   
@@ -205,13 +197,15 @@ server <- function(input, output, session) {
     gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"
     gP
     }
+    
   })
     
-  output$litrePlot <- plotly::renderPlotly({
+  output$hexPlot <- plotly::renderPlotly({
 
-    plotlyLitre <- reactive(gP())
+    plotlyHex <- reactive(gP())
     
-    plotlyLitre() %>% onRender("
+    # Use onRender() function to draw x and y values of selected row as orange point
+    plotlyHex() %>% onRender("
      function(el, x, data) {
      noPoint = x.data.length;
      Shiny.addCustomMessageHandler('points', function(drawPoints) {
@@ -227,13 +221,14 @@ server <- function(input, output, session) {
      color: drawPoints.pointColor,
      size: drawPoints.pointSize
      },
-     text: drawPoints.geneID,
-     hoverinfo: 'text',
+text: drawPoints.geneID,
+hoverinfo: 'text',
      showlegend: false
      };
      Traces.push(trace);
      Plotly.addTraces(el.id, Traces);
      });}")
+    
   })
   
   observe({
