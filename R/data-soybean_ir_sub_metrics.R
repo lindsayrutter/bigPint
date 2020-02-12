@@ -20,7 +20,6 @@
     #' }
 #' @docType data
 #' @keywords datasets
-#' @name soybean_ir_sub_metrics
 #' @usage data(soybean_ir_sub_metrics)
 #' @format A nested list of length 1. The list contains the metrics for the 
 #' 5,604 genes for the one treatment group combination.

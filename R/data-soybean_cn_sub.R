@@ -27,7 +27,6 @@
     #' }
 #' @docType data
 #' @keywords datasets
-#' @name soybean_cn_sub
 #' @usage data(soybean_cn_sub)
 #' @format A data frame with 7,332 rows and 10 variables
 #' @seealso \code{\link{soybean_cn}} from which this dataset is subsetted

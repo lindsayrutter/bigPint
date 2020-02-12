@@ -24,7 +24,6 @@
     #' }
 #' @docType data
 #' @keywords datasets
-#' @name soybean_cn_metrics
 #' @format A nested list of length 3. Each list contains the metrics for the 
 #' 73,320 genes for one treatment group combination.
 #' @seealso \code{\link{soybean_cn}} for information about the treatment 
