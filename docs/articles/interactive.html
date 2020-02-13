@@ -223,47 +223,47 @@
 </div>
 <hr>
 </div>
-<div id="parallel-coordinates-app" class="section level2">
-<h2 class="hasAnchor">
-<a href="#parallel-coordinates-app" class="anchor"></a>Parallel coordinates app</h2>
-<p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotPCPApp.html">plotPCPApp()</a>. The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being standardized <span class="citation">(Lauter and Graham 2016)</span>.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>soybean_ir_sub_st =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>]), <span class="dv">1</span>, </span>
-<span id="cb3-2"><a href="#cb3-2"></a>  scale)))</span>
-<span id="cb3-3"><a href="#cb3-3"></a>soybean_ir_sub_st<span class="op">$</span>ID =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(soybean_ir_sub<span class="op">$</span>ID)</span>
-<span id="cb3-4"><a href="#cb3-4"></a>soybean_ir_sub_st =<span class="st"> </span>soybean_ir_sub_st[,<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(soybean_ir_sub_st), </span>
-<span id="cb3-5"><a href="#cb3-5"></a>  <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(soybean_ir_sub_st)<span class="op">-</span><span class="dv">1</span>)]</span>
-<span id="cb3-6"><a href="#cb3-6"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(soybean_ir_sub_st) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(soybean_ir_sub)</span>
-<span id="cb3-7"><a href="#cb3-7"></a>nID =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span>(soybean_ir_sub_st[,<span class="dv">2</span>]))</span>
-<span id="cb3-8"><a href="#cb3-8"></a>soybean_ir_sub_st[nID,<span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(soybean_ir_sub_st)] =<span class="st"> </span><span class="dv">0</span></span>
-<span id="cb3-9"><a href="#cb3-9"></a></span>
-<span id="cb3-10"><a href="#cb3-10"></a>plotGenes =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]], FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>, logFC <span class="op">&lt;</span><span class="st"> </span><span class="dv">-4</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
-<span id="cb3-11"><a href="#cb3-11"></a><span class="st">  </span><span class="kw">select</span>(ID)</span>
-<span id="cb3-12"><a href="#cb3-12"></a>pcpDat =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(soybean_ir_sub_st, ID <span class="op">%in%</span><span class="st"> </span>plotGenes[,<span class="dv">1</span>])</span>
-<span id="cb3-13"><a href="#cb3-13"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotPCPApp.html">plotPCPApp</a></span>(<span class="dt">data =</span> pcpDat)</span>
-<span id="cb3-14"><a href="#cb3-14"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
-<span id="cb3-15"><a href="#cb3-15"></a>    shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app, <span class="dt">display.mode =</span> <span class="st">"normal"</span>)</span>
-<span id="cb3-16"><a href="#cb3-16"></a>}</span></code></pre></div>
-<p>Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application <a href="https://bigpint.shinyapps.io/pcplot/">here</a>. Embedded below is a video demonstration of the application.</p>
-<div align="left">
-<div class="vembedr">
-<iframe class="vimeo-embed" src="https://player.vimeo.com/video/349398286" width="700" height="600" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
-</div>
-</div>
-<hr>
-</div>
 <div id="volcano-plot-app" class="section level2">
 <h2 class="hasAnchor">
 <a href="#volcano-plot-app" class="anchor"></a>Volcano plot app</h2>
 <p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html">plotVolcanoApp()</a>. The code below will generate an example interactive volcano plot. We will input the logged soybean iron metabolism dataset <span class="citation">(Lauter and Graham 2016)</span> that we just created above.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotVolcanoApp.html">plotVolcanoApp</a></span>(<span class="dt">data =</span> soybean_ir_sub_log,</span>
-<span id="cb4-2"><a href="#cb4-2"></a>    <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</span>
-<span id="cb4-3"><a href="#cb4-3"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
-<span id="cb4-4"><a href="#cb4-4"></a>    shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app)</span>
-<span id="cb4-5"><a href="#cb4-5"></a>}</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotVolcanoApp.html">plotVolcanoApp</a></span>(<span class="dt">data =</span> soybean_ir_sub_log,</span>
+<span id="cb3-2"><a href="#cb3-2"></a>    <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</span>
+<span id="cb3-3"><a href="#cb3-3"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
+<span id="cb3-4"><a href="#cb3-4"></a>    shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app)</span>
+<span id="cb3-5"><a href="#cb3-5"></a>}</span></code></pre></div>
 <p>Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application <a href="https://bigpint.shinyapps.io/volcano/">here</a>. Embedded below is a video demonstration of the application.</p>
 <div align="left">
 <div class="vembedr">
 <iframe class="vimeo-embed" src="https://player.vimeo.com/video/349396567" width="700" height="600" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
+</div>
+</div>
+<hr>
+</div>
+<div id="parallel-coordinates-app" class="section level2">
+<h2 class="hasAnchor">
+<a href="#parallel-coordinates-app" class="anchor"></a>Parallel coordinates app</h2>
+<p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotPCPApp.html">plotPCPApp()</a>. The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being standardized <span class="citation">(Lauter and Graham 2016)</span>.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>soybean_ir_sub_st =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(soybean_ir_sub[,<span class="op">-</span><span class="dv">1</span>]), <span class="dv">1</span>, </span>
+<span id="cb4-2"><a href="#cb4-2"></a>  scale)))</span>
+<span id="cb4-3"><a href="#cb4-3"></a>soybean_ir_sub_st<span class="op">$</span>ID =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(soybean_ir_sub<span class="op">$</span>ID)</span>
+<span id="cb4-4"><a href="#cb4-4"></a>soybean_ir_sub_st =<span class="st"> </span>soybean_ir_sub_st[,<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(soybean_ir_sub_st), </span>
+<span id="cb4-5"><a href="#cb4-5"></a>  <span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(soybean_ir_sub_st)<span class="op">-</span><span class="dv">1</span>)]</span>
+<span id="cb4-6"><a href="#cb4-6"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(soybean_ir_sub_st) =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(soybean_ir_sub)</span>
+<span id="cb4-7"><a href="#cb4-7"></a>nID =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span>(soybean_ir_sub_st[,<span class="dv">2</span>]))</span>
+<span id="cb4-8"><a href="#cb4-8"></a>soybean_ir_sub_st[nID,<span class="dv">2</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(soybean_ir_sub_st)] =<span class="st"> </span><span class="dv">0</span></span>
+<span id="cb4-9"><a href="#cb4-9"></a></span>
+<span id="cb4-10"><a href="#cb4-10"></a>plotGenes =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(soybean_ir_sub_metrics[[<span class="st">"N_P"</span>]], FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>, logFC <span class="op">&lt;</span><span class="st"> </span><span class="dv">-4</span>) <span class="op">%&gt;%</span><span class="st"> </span></span>
+<span id="cb4-11"><a href="#cb4-11"></a><span class="st">  </span><span class="kw">select</span>(ID)</span>
+<span id="cb4-12"><a href="#cb4-12"></a>pcpDat =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(soybean_ir_sub_st, ID <span class="op">%in%</span><span class="st"> </span>plotGenes[,<span class="dv">1</span>])</span>
+<span id="cb4-13"><a href="#cb4-13"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotPCPApp.html">plotPCPApp</a></span>(<span class="dt">data =</span> pcpDat)</span>
+<span id="cb4-14"><a href="#cb4-14"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
+<span id="cb4-15"><a href="#cb4-15"></a>    shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app, <span class="dt">display.mode =</span> <span class="st">"normal"</span>)</span>
+<span id="cb4-16"><a href="#cb4-16"></a>}</span></code></pre></div>
+<p>Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application <a href="https://bigpint.shinyapps.io/pcplot/">here</a>. Embedded below is a video demonstration of the application.</p>
+<div align="left">
+<div class="vembedr">
+<iframe class="vimeo-embed" src="https://player.vimeo.com/video/349398286" width="700" height="600" frameborder="0" webkitallowfullscreen="" mozallowfullscreen="" allowfullscreen=""></iframe>
 </div>
 </div>
 <hr>
@@ -292,8 +292,8 @@
       <li><a href="#types-of-interactive-plots">Types of interactive plots</a></li>
       <li><a href="#scatterplot-matrix-app">Scatterplot matrix app</a></li>
       <li><a href="#litre-plot-app">Litre plot app</a></li>
-      <li><a href="#parallel-coordinates-app">Parallel coordinates app</a></li>
       <li><a href="#volcano-plot-app">Volcano plot app</a></li>
+      <li><a href="#parallel-coordinates-app">Parallel coordinates app</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>

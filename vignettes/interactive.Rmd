@@ -88,6 +88,29 @@ embed_vimeo("349396087", width = 700, height = 600) %>% div(class = "vembedr") %
 
 ____________________________________________________________________________________
 
+## Volcano plot app
+
+Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive volcano plot. We will input the logged soybean iron metabolism dataset [@soybeanIR] that we just created above.
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+app <- plotVolcanoApp(data = soybean_ir_sub_log,
+    dataMetrics = soybean_ir_sub_metrics)
+if (interactive()) {
+    shiny::runApp(app)
+}
+```
+
+Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/volcano/). Embedded below is a video demonstration of the application.
+
+```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
+library("htmltools")
+library("vembedr")
+embed_vimeo("349396567", width = 700, height = 600) %>% div(class = "vembedr") %>%
+  div(align = "left")
+```
+
+____________________________________________________________________________________
+
 ## Parallel coordinates app
 
 Users can produce interactive parallel coordinate plots with the `bigPint` function [plotPCPApp()](https://lindsayrutter.github.io/bigPint/reference/plotPCPApp.html). The code below will generate an example interactive parallel coordinate plot using the soybean iron metabolism dataset after being standardized [@soybeanIR].
@@ -117,29 +140,6 @@ Upon running the code above in your R session, an interactive application will o
 library("htmltools")
 library("vembedr")
 embed_vimeo("349398286", width = 700, height = 600) %>% div(class = "vembedr") %>%
-  div(align = "left")
-```
-
-____________________________________________________________________________________
-
-## Volcano plot app
-
-Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive volcano plot. We will input the logged soybean iron metabolism dataset [@soybeanIR] that we just created above.
-
-```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
-app <- plotVolcanoApp(data = soybean_ir_sub_log,
-    dataMetrics = soybean_ir_sub_metrics)
-if (interactive()) {
-    shiny::runApp(app)
-}
-```
-
-Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application [here](https://bigpint.shinyapps.io/volcano/). Embedded below is a video demonstration of the application.
-
-```{r, eval=TRUE, echo = FALSE, message=FALSE, warning=FALSE}
-library("htmltools")
-library("vembedr")
-embed_vimeo("349396567", width = 700, height = 600) %>% div(class = "vembedr") %>%
   div(align = "left")
 ```
 

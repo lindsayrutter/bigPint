@@ -14,7 +14,7 @@ Welcome to the `bigPint` package website! For users who would like to immediatel
 
 ## Getting Started
 
-Whether or not you already tried the example pipeline, you can become more familiar with all aspects of the `bigPint` package by reading from the `Get Started` tab at the top of this website. There are ten short vignette articles in that tab, and we recommend reading them in order. These short vignette articles consist of reproducible code that provide:
+Whether or not you already tried the example pipeline above, you can become more familiar with all aspects of the `bigPint` package by reading from the `Get Started` tab at the top of this website. It contains ten short vignette articles that we recommend reading in order. These short articles consist of reproducible code and sample data that provide:
 
 - An introduction to `bigPint` plots and how to interpret them
 - A guide to installing the `bigPint` package
