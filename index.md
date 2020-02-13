@@ -8,9 +8,13 @@
 
 > **BIG** multivariate data **P**lotted **INT**eractively.
 
+## Quick Start
+
+Welcome to the `bigPint` package website! For users who would like to immediately try out the package in a hands-on fashion, we recommend consulting our example  [pipeline](https://lindsayrutter.github.io/bigPint/articles/pipeline). This pipeline uses reproducible code and sample data that comes with the `bigPint` package, so you can smoothly follow along each line of example code. 
+
 ## Getting Started
 
-Welcome to the `bigPint` package website! If you are a new user, please begin by reading from the `Get Started` tab at the top of this website. There are ten short vignette articles in that tab, and we recommend reading them in order. These short vignette articles consist of reproducible code that provide:
+Whether or not you already tried the example pipeline, you can become more familiar with all aspects of the `bigPint` package by reading from the `Get Started` tab at the top of this website. There are ten short vignette articles in that tab, and we recommend reading them in order. These short vignette articles consist of reproducible code that provide:
 
 - An introduction to `bigPint` plots and how to interpret them
 - A guide to installing the `bigPint` package
@@ -18,7 +22,7 @@ Welcome to the `bigPint` package website! If you are a new user, please begin by
 - How to produce static `bigPint` plots
 - How to produce interactive `bigPint` plots
 - How to perform hierarchical clustering and use the clusters in `bigPint` functions
-- A recommended RNA-seq visualization pipeline with example code for you to follow
+- The aforementioned Quick Start recommended RNA-seq visualization pipeline
 
 ____________________________________________________________________________________
 

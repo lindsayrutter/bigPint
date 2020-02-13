@@ -30,7 +30,7 @@ library(devtools)
 install_github("lindsayrutter/bigPint")
 ```
 
-The `bigPint` package will hopefully also be available on [Bioconductor](https://www.bioconductor.org/). As a result, the latest stable release version of the package and all its dependencies can be accessed using the following Bioconductor infrastructure:
+The `bigPint` package is available on [Bioconductor](https://www.bioconductor.org/). As a result, the latest stable release version of the package and all its dependencies can be accessed using the following Bioconductor infrastructure:
 
 ```{r, eval=FALSE, include=TRUE}
 if (!require("BiocManager"))

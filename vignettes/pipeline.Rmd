@@ -62,7 +62,7 @@ ________________________________________________________________________________
 
 ## Step 1: Side-by-side boxplot
 
-First, we will read in our example data, [`soybean_cn_sub`](https://lindsayrutter.github.io/bigPint/reference/soybean_cn_sub.html). This is public RNA-seq data derived from soybean cotyledon at different time points. We will consider two treatment groups (S1 and S3) that each have three replicates [@brown2015developmental]. We will refer to this count table as `data`. Check that your `data` object is in the format `bigPint` expects by refering to the article (i.e. [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html)). An example of the data structure is shown below.
+Please be sure you have [installed bigPint](https://lindsayrutter.github.io/bigPint/articles/installation.html) before following this pipeline. First, we will read in our example data, [`soybean_cn_sub`](https://lindsayrutter.github.io/bigPint/reference/soybean_cn_sub.html). This is public RNA-seq data derived from soybean cotyledon at different time points. We will consider two treatment groups (S1 and S3) that each have three replicates [@brown2015developmental]. We will refer to this count table as `data`. Check that your `data` object is in the format `bigPint` expects by refering to the article (i.e. [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html)). An example of the data structure is shown below.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 library(bigPint)
