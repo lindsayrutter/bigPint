@@ -124,9 +124,9 @@ ________________________________________________________________________________
 
 ## Volcano plot app
 
-Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive volcano plot using the soybean iron metabolism dataset after being logged [@soybeanIR].
+Users can produce interactive parallel coordinate plots with the `bigPint` function [plotVolcanoApp()](https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html). The code below will generate an example interactive volcano plot. We will input the logged soybean iron metabolism dataset [@soybeanIR] that we just created above.
 
-```{r, eval=FALSE, echo = FALSE, message=FALSE, warning=FALSE}
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 app <- plotVolcanoApp(data = soybean_ir_sub_log,
     dataMetrics = soybean_ir_sub_metrics)
 if (interactive()) {

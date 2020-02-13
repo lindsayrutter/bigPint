@@ -254,7 +254,12 @@
 <div id="volcano-plot-app" class="section level2">
 <h2 class="hasAnchor">
 <a href="#volcano-plot-app" class="anchor"></a>Volcano plot app</h2>
-<p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html">plotVolcanoApp()</a>. The code below will generate an example interactive volcano plot using the soybean iron metabolism dataset after being logged <span class="citation">(Lauter and Graham 2016)</span>.</p>
+<p>Users can produce interactive parallel coordinate plots with the <code>bigPint</code> function <a href="https://lindsayrutter.github.io/bigPint/reference/plotVolcanoApp.html">plotVolcanoApp()</a>. The code below will generate an example interactive volcano plot. We will input the logged soybean iron metabolism dataset <span class="citation">(Lauter and Graham 2016)</span> that we just created above.</p>
+<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotVolcanoApp.html">plotVolcanoApp</a></span>(<span class="dt">data =</span> soybean_ir_sub_log,</span>
+<span id="cb4-2"><a href="#cb4-2"></a>    <span class="dt">dataMetrics =</span> soybean_ir_sub_metrics)</span>
+<span id="cb4-3"><a href="#cb4-3"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
+<span id="cb4-4"><a href="#cb4-4"></a>    shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app)</span>
+<span id="cb4-5"><a href="#cb4-5"></a>}</span></code></pre></div>
 <p>Upon running the code above in your R session, an interactive application will open. You can access and interact with an instance of this application <a href="https://bigpint.shinyapps.io/volcano/">here</a>. Embedded below is a video demonstration of the application.</p>
 <div align="left">
 <div class="vembedr">
