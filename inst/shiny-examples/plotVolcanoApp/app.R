@@ -50,7 +50,6 @@ body <- shinydashboard::dashboardBody(
                shiny::selectizeInput("selPair", "Treatment pairs:", choices = myPairs, multiple = TRUE, options = list(maxItems = 2)),
                checkboxInput("absLFC", "Absolute log Fold change?", FALSE),
                uiOutput("slider"),
-               #sliderInput("PValue", "P-value:", min = 0, max = 1, value = 0.05, step = 0.01),
                textInput("PValue", "P-value:", value = "0.05"),
                shiny::numericInput("binSize", "Hexagon size:", value = 10, min = 1),
                shiny::numericInput("pointSize", "Point size:", value = 2, min = 1),
@@ -139,7 +138,7 @@ server <- function(input, output, session) {
   })
   
   # Subset other data frame to include only genes with small PValue
-  curPairSel <- eventReactive(c(values$x, input$PValue), {
+  curPairSel <- eventReactive(values$x, {
     validate(need(values$x > 0, "Plot a gene."))
     
     ipv <- as.numeric(input$PValue)
@@ -209,7 +208,6 @@ server <- function(input, output, session) {
         gP[["x"]][["data"]][[1]][["hoverinfo"]] <- "none"
         gP
       })
-      
     }
     
     plotlyVol <- reactive(gP())
@@ -228,9 +226,6 @@ server <- function(input, output, session) {
      noPoint = x.data.length;
      Shiny.addCustomMessageHandler('points', function(drawPoints) {
      ids = drawPoints.geneID
-     if (x.data.length > noPoint){
-     Plotly.deleteTraces(el.id, x.data.length-1);
-     }
      var Traces = [];
      var trace = {
      x: drawPoints.geneX,
