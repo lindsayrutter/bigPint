@@ -15,6 +15,8 @@ library(RColorBrewer)
 library(Hmisc)
 library(shinycssloaders)
 
+options(warn=-1)
+
 # Read data from envir
 data <- bigPint:::PKGENVIR$DATA
 

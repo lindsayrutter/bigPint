@@ -14,6 +14,7 @@ library(shinycssloaders)
 library(Hmisc)
 library(RColorBrewer)
 library(orca)
+library(shinylogs)
 
 options(spinner.color.background="#F5F5F5")
 
@@ -94,6 +95,8 @@ ui <- shinydashboard::dashboardPage(
 )
 
 server <- function(input, output, session) {
+  #track_usage(storage_mode = store_json(path = "logs/"))
+  track_usage(storage_mode = store_json(path = paste0(tempdir(), "/bigPint_Litre_", Sys.Date())))
   
   shiny::observeEvent(input$goButton, values$x <- values$x + 1)
   shiny::observeEvent(input$selPair, values$x <- 0)
@@ -311,6 +314,14 @@ hoverinfo: 'text',
       Plotly.addTraces(el.id, Traces);
       })
       }")})
+}
+
+onStart = function() {
+  cat("Doing application setup\n")
+  
+  onStop(function() {
+    cat("Doing application cleanup\n")
+  })
 }
 
 shiny::shinyApp(ui = ui, server = server)

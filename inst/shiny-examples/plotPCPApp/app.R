@@ -13,6 +13,7 @@ library(shinydashboard)
 library(shinycssloaders)
 library(Hmisc)
 library(RColorBrewer)
+library(shinylogs)
 
 options(spinner.color.background="#F5F5F5")
 
@@ -73,6 +74,8 @@ ui <- shinydashboard::dashboardPage(
 )
 
 server <- function(input, output, session) {
+  
+  track_usage(storage_mode = store_json(path = "logs/"))
   
   colNms <- colnames(pcpDat[, c(2:(ncol(pcpDat)))])
   nVar <- length(colNms)
