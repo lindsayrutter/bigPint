@@ -75,7 +75,7 @@ ui <- shinydashboard::dashboardPage(
 
 server <- function(input, output, session) {
   
-  track_usage(storage_mode = store_json(path = "logs/"))
+  track_usage(storage_mode = store_json(path = paste0(tempdir(), "/bigPint_PCP_", Sys.Date())))
   
   colNms <- colnames(pcpDat[, c(2:(ncol(pcpDat)))])
   nVar <- length(colNms)
@@ -331,7 +331,9 @@ rects = []
       write.table(inputRectDf(), file, row.names = FALSE, col.names = FALSE, quote = FALSE, sep=',')
     }
   )
-  
+  onSessionEnded(function() {
+    message(paste0("Shiny log file stored in ", tempdir(), "/bigPint_PCP_", Sys.Date()))
+  })
 }
 
 shiny::shinyApp(ui = ui, server = server)

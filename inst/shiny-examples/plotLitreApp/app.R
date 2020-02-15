@@ -95,7 +95,6 @@ ui <- shinydashboard::dashboardPage(
 )
 
 server <- function(input, output, session) {
-  #track_usage(storage_mode = store_json(path = "logs/"))
   track_usage(storage_mode = store_json(path = paste0(tempdir(), "/bigPint_Litre_", Sys.Date())))
   
   shiny::observeEvent(input$goButton, values$x <- values$x + 1)
@@ -314,6 +313,10 @@ hoverinfo: 'text',
       Plotly.addTraces(el.id, Traces);
       })
       }")})
+  
+  onSessionEnded(function() {
+    message(paste0("Shiny log file stored in ", tempdir(), "/bigPint_Litre_", Sys.Date()))
+  })
 }
 
 onStart = function() {

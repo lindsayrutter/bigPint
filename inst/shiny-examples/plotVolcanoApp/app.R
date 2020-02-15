@@ -14,6 +14,7 @@ library(shinydashboard)
 library(shinycssloaders)
 library(Hmisc)
 library(RColorBrewer)
+library(shinylogs)
 
 options(spinner.color.background="#F5F5F5")
 
@@ -101,6 +102,8 @@ ui <- shinydashboard::dashboardPage(
 
 # Inititate server of Shiny application
 server <- function(input, output, session) {
+  
+  track_usage(storage_mode = store_json(path = paste0(tempdir(), "/bigPint_Volcano_", Sys.Date())))
   
   # Declare what gene number will be displayed based on user Shiny input
   shiny::observeEvent(input$goButton, values$x <- values$x + 1)
@@ -346,6 +349,9 @@ server <- function(input, output, session) {
       write.table(curPairSel()[["ID"]], file, row.names = FALSE, col.names = FALSE, quote = FALSE, sep=',')
     }
   )
+  onSessionEnded(function() {
+    message(paste0("Shiny log file stored in ", tempdir(), "/bigPint_Volcano_", Sys.Date()))
+  })
 }  
 
 shiny::shinyApp(ui = ui, server = server)
