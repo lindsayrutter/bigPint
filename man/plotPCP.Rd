@@ -7,6 +7,7 @@
 plotPCP(
   data,
   dataMetrics = NULL,
+  dataSE = NULL,
   geneList = NULL,
   threshVar = "FDR",
   threshVal = 0.05,
@@ -24,6 +25,9 @@ plotPCP(
 \item{dataMetrics}{LIST | Differential expression metrics; If both geneList 
 and dataMetrics are NULL, then no genes will be overlaid onto the
 side-by-side boxplot; default NULL}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data and dataMetrics; default NULL}
 
 \item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 scatterplot matrix of all data. If this parameter is defined, these will be 

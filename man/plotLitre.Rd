@@ -7,6 +7,7 @@
 plotLitre(
   data = data,
   dataMetrics = NULL,
+  dataSE = NULL,
   geneList = NULL,
   threshVar = "FDR",
   threshVal = 0.05,
@@ -22,6 +23,9 @@ plotLitre(
 \item{data}{DATA FRAME | Read counts}
 
 \item{dataMetrics}{LIST | Differential expression metrics; default NULL}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data and dataMetrics; default NULL}
 
 \item{geneList}{CHARACTER ARRAY | List of ID values of genes to be drawn 
 from data as litre plots. Use this parameter if you have predetermined 

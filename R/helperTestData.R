@@ -7,7 +7,9 @@ generalMessage = "For more information about formatting the data
 object, see https://lrutter.github.io/bigPint/articles/data.html"
 
 if (!methods::is(data, "data.frame")){ 
-    stop(paste0("Data object must be of class 'data.frame'. ",
+    stop(paste0("Data object must be of class 'data.frame'. If you are
+    using a SummarizedExperiment input data, be sure to defined it as
+    the 'dataSE' object. ",
     generalMessage))
 }
 

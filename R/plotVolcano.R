@@ -7,6 +7,8 @@
 #' must contain one column with magnitude changes (for the logFC parameter)
 #' and one column with statistical values (for the PValue parameter),
 #' unless geneList is not NULL
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data and dataMetrics; default NULL
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 #' scatterplot matrix of all data. Use this parameter if you have
 #' predetermined subset of genes to be superimposed. Otherwise, dataMetrics,
@@ -92,14 +94,31 @@
 #' ret[[1]]
 #' 
 
-plotVolcano = function(data = data, dataMetrics = dataMetrics,
+plotVolcano = function(data = data, dataMetrics = dataMetrics, dataSE=NULL,
     geneList = NULL, threshVar = "FDR", threshVal = 0.05,
     option = c("hexagon", "allPoints"), logFC = "logFC", PValue = "PValue",
     xbins = 10, pointSize = 0.5, pointColor = "orange", outDir = tempdir(), 
     saveFile=TRUE, hover = FALSE){
 
 option <- match.arg(option)
+
+if (is.null(dataSE) && is.null(data)){
+    helperTestHaveData()
+}
+
+if (!is.null(dataSE)){
+    #Reverse engineer data
+    data <- helperGetData(dataSE)
     
+    if (ncol(rowData(dataSE))>0){
+        #Reverse engineer dataMetrics
+        reDataMetrics <- as.data.frame(rowData(dataSE))
+        dataMetrics <- lapply(split.default(reDataMetrics[-1], 
+        sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
+        cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))            
+    }
+}
+
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){

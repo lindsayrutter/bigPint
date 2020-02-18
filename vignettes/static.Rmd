@@ -222,7 +222,6 @@ ret[["S1_S2_Glyma18g00690.1"]]
 We can examine the same litre plot, but now plot the full dataset in the background as points rather than the default hexagons. We do this by setting the `option` parameter to a value of `allPoints`. The benefit of this approach over the previous plot is that we are no longer looking at summarization (hexagon bins) of the background information. However, the benefit of the prevoius plot was that we could overcome overplotting problems and ascertain how many points were in a given area due to the count information provided by the hexagon bins.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-geneList = soybean_cn_sub_metrics[["S1_S2"]][1:5,]$ID
 ret <- plotLitre(data = soybean_cn_sub_st[,c(1:7)], geneList = geneList,
   pointColor = "gold", saveFile = FALSE, option = "allPoints")
 ret[["S1_S2_Glyma18g00690.1"]]
@@ -232,13 +231,11 @@ ________________________________________________________________________________
 
 ## Static parallel coordinates
 
-Static parallel coordinate plots can be generated with the `bigPint` function [plotPCP()](https://lindsayrutter.github.io/bigPint/reference/plotPCP.html). Here we create a logged version of the `soybean_ir` object (`soybean_ir_sub_log`) and then superimpose the ten genes with the lowest FDR values as purple lines.
+Static parallel coordinate plots can be generated with the `bigPint` function [plotPCP()](https://lindsayrutter.github.io/bigPint/reference/plotPCP.html). Here we superimpose the ten genes with the lowest FDR values from the `soybean_ir_sub` data as purple lines.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-soybean_ir_sub_log = soybean_ir_sub
-soybean_ir_sub_log[,-1] = log(soybean_ir_sub[,-1] + 1)
 geneList = soybean_ir_sub_metrics[["N_P"]][1:10,]$ID
-ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.7, 
+ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.7, 
   lineColor = "purple", saveFile = FALSE)
 ret[[1]]
 ```
@@ -246,7 +243,7 @@ ret[[1]]
 We may wish to recreate the above plot but allow us to quickly identify each of the ten genes. We can achieve this functionality by setting the `hover` parameter to a value of `TRUE`. Note this approach does incoroporate a bit of interactivity into our plot even though it is part of the static `plotPCP()` function. The capabilities in the interactive parallel coordinate plot [plotPCPApp()](https://lindsayrutter.github.io/bigPint/reference/plotPCPApp.html) extend upon this functionality.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotPCP(data = soybean_ir_sub_log, geneList = geneList, lineSize = 0.4, 
+ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.4, 
   lineColor = "purple", saveFile = FALSE, hover = TRUE)
 ret[[1]]
 ```
@@ -254,7 +251,7 @@ ret[[1]]
 We note that users can again refrain from defining a subeset of data to be superimposed as parallel coordinate lines by retaining the default NULL values for parameters `geneList` and `dataMetrics`. In this case, we will simply plot the background side-by-side boxplots that show the distribution of all read counts in the data. 
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotPCP(data = soybean_ir_sub_log, saveFile = FALSE)
+ret <- plotPCP(data = soybean_ir_sub, saveFile = FALSE)
 ret[[1]]
 ```
 

@@ -7,6 +7,8 @@
 #' @param dataMetrics LIST | Differential expression metrics; If both geneList 
 #' and dataMetrics are NULL, then no genes will be overlaid onto the
 #' side-by-side boxplot; default NULL
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data and dataMetrics; default NULL
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 #' scatterplot matrix of all data. If this parameter is defined, these will be 
 #' the overlaid genes to be drawn. After that, dataMetrics, threshVar, and 
@@ -85,11 +87,28 @@
 #' ret[[1]]
 #' 
 
-plotPCP = function(data, dataMetrics = NULL, geneList = NULL,
+plotPCP = function(data, dataMetrics = NULL, dataSE=NULL, geneList = NULL,
     threshVar = "FDR", threshVal = 0.05, lineSize = 0.1,
     lineColor = "orange", vxAxis=FALSE, outDir=tempdir(), saveFile=TRUE,
     hover=FALSE){
 
+if (is.null(dataSE) && is.null(data)){
+    helperTestHaveData()
+}
+
+if (!is.null(dataSE)){
+    #Reverse engineer data
+    data <- helperGetData(dataSE)
+    
+    if (ncol(rowData(dataSE))>0){
+        #Reverse engineer dataMetrics
+        reDataMetrics <- as.data.frame(rowData(dataSE))
+        dataMetrics <- lapply(split.default(reDataMetrics[-1], 
+        sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
+        cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))            
+    }
+}
+    
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){

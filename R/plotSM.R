@@ -14,6 +14,8 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics; default NULL
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data and dataMetrics; default NULL
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 #' scatterplot matrix of all data. Use this parameter if you have predetermined 
 #' genes to be drawn. Otherwise, use dataMetrics, threshVar, and threshVal to 
@@ -131,12 +133,29 @@
 #' ret[[1]]
 #' 
 
-plotSM = function(data=data, dataMetrics=NULL, geneList = NULL,
-                  threshVar="FDR", threshVal=0.05, option=c("allPoints", "foldChange",
-                                                            "orthogonal", "hexagon"), xbins=10, threshFC=3, threshOrth=3,
-                  pointSize=0.5, pointColor = "orange", outDir=tempdir(), saveFile = TRUE){
+plotSM = function(data=data, dataMetrics=NULL, dataSE=NULL, geneList = NULL,
+    threshVar="FDR", threshVal=0.05, option=c("allPoints", "foldChange",
+    "orthogonal", "hexagon"), xbins=10, threshFC=3, threshOrth=3,
+    pointSize=0.5, pointColor = "orange", outDir=tempdir(), saveFile = TRUE){
     
     option <- match.arg(option)
+    
+    if (is.null(dataSE) && is.null(data)){
+        helperTestHaveData()
+    }
+    
+    if (!is.null(dataSE)){
+        #Reverse engineer data
+        data <- helperGetData(dataSE)
+        
+        if (ncol(rowData(dataSE))>0){
+            #Reverse engineer dataMetrics
+            reDataMetrics <- as.data.frame(rowData(dataSE))
+            dataMetrics <- lapply(split.default(reDataMetrics[-1], 
+            sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
+            cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))            
+        }
+    }
     
     # Check that input parameters fit required formats
     helperTestData(data)

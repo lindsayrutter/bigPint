@@ -7,6 +7,7 @@
 plotVolcano(
   data = data,
   dataMetrics = dataMetrics,
+  dataSE = NULL,
   geneList = NULL,
   threshVar = "FDR",
   threshVal = 0.05,
@@ -28,6 +29,9 @@ plotVolcano(
 must contain one column with magnitude changes (for the logFC parameter)
 and one column with statistical values (for the PValue parameter),
 unless geneList is not NULL}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data and dataMetrics; default NULL}
 
 \item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the 
 scatterplot matrix of all data. Use this parameter if you have

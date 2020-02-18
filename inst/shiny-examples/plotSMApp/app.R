@@ -83,7 +83,7 @@ ui <- shinydashboard::dashboardPage(
 
 # Inititate server of Shiny application
 server <- function(input, output, session) {
-  track_usage(storage_mode = store_json(path = paste0(tempdir(), "/bigPint_AM_", Sys.Date())))
+  track_usage(storage_mode = store_json(path = paste0(tempdir(), "/bigPint_SM_", Sys.Date())))
   
   output$scatMatPlot <- renderPlotly({
     maxVal = max(abs(data[,-1]))
