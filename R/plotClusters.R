@@ -6,6 +6,8 @@
 #' 
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics; default NULL
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data and dataMetrics; default NULL
 #' @param geneList CHARACTER ARRAY | Array of ID values of genes to be drawn 
 #' from data as parallel coordinate lines. Use this parameter if you have 
 #' predetermined genes to be drawn. These genes will be clustered. Otherwise, 
@@ -147,7 +149,7 @@
 #'   verbose = TRUE)
 #' }
 #' 
-plotClusters <- function(data, dataMetrics = NULL, geneList = NULL,
+plotClusters <- function(data, dataMetrics = NULL, dataSE=NULL, geneList = NULL,
     geneLists = NULL, threshVar="FDR", threshVal=0.05, clusterAllData = TRUE, 
     nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
     "single", "complete", "average", "mcquitty", "median", "centroid"),
@@ -156,7 +158,24 @@ plotClusters <- function(data, dataMetrics = NULL, geneList = NULL,
     verbose=FALSE){
 
 aggMethod <- match.arg(aggMethod)
+
+if (is.null(dataSE) && is.null(data)){
+    helperTestHaveData()
+}
+
+if (!is.null(dataSE)){
+    #Reverse engineer data
+    data <- helperGetData(dataSE)
     
+    if (ncol(rowData(dataSE))>0){
+        #Reverse engineer dataMetrics
+        reDataMetrics <- as.data.frame(rowData(dataSE))
+        dataMetrics <- lapply(split.default(reDataMetrics[-1], 
+        sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
+        cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))            
+    }
+}
+
 # Check that input parameters fit required formats
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){

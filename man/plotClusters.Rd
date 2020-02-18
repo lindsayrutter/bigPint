@@ -7,6 +7,7 @@
 plotClusters(
   data,
   dataMetrics = NULL,
+  dataSE = NULL,
   geneList = NULL,
   geneLists = NULL,
   threshVar = "FDR",
@@ -30,6 +31,9 @@ plotClusters(
 \item{data}{DATA FRAME | Read counts}
 
 \item{dataMetrics}{LIST | Differential expression metrics; default NULL}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data and dataMetrics; default NULL}
 
 \item{geneList}{CHARACTER ARRAY | Array of ID values of genes to be drawn 
 from data as parallel coordinate lines. Use this parameter if you have 
