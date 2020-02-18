@@ -4,10 +4,13 @@
 \alias{plotPCPApp}
 \title{Plot interactive parallel coordinate plots}
 \usage{
-plotPCPApp(data = data, pointColor = "orange")
+plotPCPApp(data = data, dataSE = NULL, pointColor = "orange")
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts for parallel coordinate lines}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data; default NULL}
 
 \item{pointColor}{CHARACTER STRING | Color of overlaid points on scatterplot 
 matrix; default "orange"}

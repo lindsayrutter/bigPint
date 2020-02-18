@@ -7,6 +7,7 @@
 plotLitreApp(
   data = data,
   dataMetrics = dataMetrics,
+  dataSE = NULL,
   geneList = NULL,
   pointColor = "orange",
   option = c("hexagon", "allPoints")
@@ -15,7 +16,10 @@ plotLitreApp(
 \arguments{
 \item{data}{DATA FRAME | Read counts}
 
-\item{dataMetrics}{LIST | Differential expression metrics (required)}
+\item{dataMetrics}{LIST | Differential expression metrics}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data; default NULL}
 
 \item{geneList}{CHARACTER ARRAY | List of gene IDs to be drawn onto the
 litre. Use this parameter if you have predetermined subset of genes to be

@@ -7,6 +7,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @param data DATA FRAME | Read counts
 #' @param dataMetrics LIST | Differential expression metrics. This object must 
 #' contain one column named "logFC" and one column named "PValue".
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data; default NULL
 #' @param option CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
 #' plot; default "hexagon"
 #' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
@@ -55,11 +57,28 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #'     shiny::runApp(app)
 #' }
 
-plotVolcanoApp = function(data=data, dataMetrics=dataMetrics,
+plotVolcanoApp = function(data=data, dataMetrics=dataMetrics, dataSE = NULL,
     option=c("hexagon", "allPoints"), pointColor = "orange"){
 
 option <- match.arg(option)
+
+if (is.null(dataSE) && is.null(data)){
+    helperTestHaveData()
+}
+
+if (!is.null(dataSE)){
+    #Reverse engineer data
+    data <- helperGetData(dataSE)
     
+    if (ncol(rowData(dataSE))>0){
+        #Reverse engineer dataMetrics
+        reDataMetrics <- as.data.frame(rowData(dataSE))
+        dataMetrics <- lapply(split.default(reDataMetrics[-1], 
+        sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
+        cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))            
+    }
+}
+
 helperTestData(data)
 if (!is.null(dataMetrics)){
     helperTestDataMetricsVolcanoApp(data, dataMetrics, "PValue", "logFC")

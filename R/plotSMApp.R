@@ -5,6 +5,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @description Plot interactive scatterplot matrices.
 #' 
 #' @param data DATA FRAME | Read counts
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data; default NULL
 #' @param xbins INTEGER | Number of bins partitioning the range of the plot; 
 #' default 10 
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly config
@@ -39,8 +41,17 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #'     shiny::runApp(app)
 #' }
 
-plotSMApp = function(data=data, xbins=10){
+plotSMApp = function(data=data, dataSE=NULL, xbins=10){
 appDir <- system.file("shiny-examples", "plotSMApp", package = "bigPint")
+
+if (is.null(dataSE) && is.null(data)){
+    helperTestHaveData()
+}
+
+if (!is.null(dataSE)){
+    #Reverse engineer data
+    data <- helperGetData(dataSE)
+}
 
 helperTestData(data)
 

@@ -5,7 +5,9 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @description Plot interactive litre plots.
 #' 
 #' @param data DATA FRAME | Read counts
-#' @param dataMetrics LIST | Differential expression metrics (required)
+#' @param dataMetrics LIST | Differential expression metrics
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data; default NULL
 #' @param geneList CHARACTER ARRAY | List of gene IDs to be drawn onto the
 #' litre. Use this parameter if you have predetermined subset of genes to be
 #' drawn. Otherwise, all genes in the data object can be superimposed on the
@@ -62,11 +64,32 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #'     shiny::runApp(app)
 #' }
 
-plotLitreApp = function(data=data, dataMetrics=dataMetrics, geneList = NULL,
-pointColor = "orange", option = c("hexagon", "allPoints")){
+plotLitreApp = function(data=data, dataMetrics=dataMetrics, dataSE=NULL,
+geneList = NULL, pointColor = "orange", option = c("hexagon", "allPoints")){
 
 option <- match.arg(option)
+
+if (is.null(dataSE) && is.null(data)){
+    helperTestHaveData()
+}
+
+if (!is.null(dataSE)){
+    #Reverse engineer data
+    data <- helperGetData(dataSE)
     
+    if (ncol(rowData(dataSE))>0){
+        #Reverse engineer dataMetrics
+        reDataMetrics <- as.data.frame(rowData(dataSE))
+        dataMetrics <- lapply(split.default(reDataMetrics[-1], 
+        sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
+        cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))            
+    }
+}
+
+if (is.null(dataMetrics)){
+    helperTestHaveDataMetrics()
+}
+
 helperTestData(data)
 if (is.null(geneList) && !is.null(dataMetrics)){
     helperTestDataMetricsLitreApp(data, dataMetrics)

@@ -4,10 +4,13 @@
 \alias{plotSMApp}
 \title{Plot interactive scatterplot matrices}
 \usage{
-plotSMApp(data = data, xbins = 10)
+plotSMApp(data = data, dataSE = NULL, xbins = 10)
 }
 \arguments{
 \item{data}{DATA FRAME | Read counts}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data; default NULL}
 
 \item{xbins}{INTEGER | Number of bins partitioning the range of the plot; 
 default 10}

@@ -5,6 +5,8 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' @description Plot interactive parallel coordinate plots.
 #' 
 #' @param data DATA FRAME | Read counts for parallel coordinate lines
+#' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
+#' can be used in lieu of data; default NULL
 #' @param pointColor CHARACTER STRING | Color of overlaid points on scatterplot 
 #' matrix; default "orange"
 #' @importFrom plotly plotlyOutput ggplotly renderPlotly layout
@@ -48,8 +50,17 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #'     shiny::runApp(app, display.mode = "normal")
 #' }
 
-plotPCPApp = function(data = data, pointColor = "orange"){
+plotPCPApp = function(data = data, dataSE=NULL, pointColor = "orange"){
 
+if (is.null(dataSE) && is.null(data)){
+    helperTestHaveData()
+}
+
+if (!is.null(dataSE)){
+    #Reverse engineer data
+    data <- helperGetData(dataSE)
+}
+    
 helperTestData(data)
 appDir <- system.file("shiny-examples", "plotPCPApp", package = "bigPint")
 if (appDir == "") {

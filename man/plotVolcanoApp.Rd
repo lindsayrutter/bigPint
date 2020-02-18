@@ -7,6 +7,7 @@
 plotVolcanoApp(
   data = data,
   dataMetrics = dataMetrics,
+  dataSE = NULL,
   option = c("hexagon", "allPoints"),
   pointColor = "orange"
 )
@@ -16,6 +17,9 @@ plotVolcanoApp(
 
 \item{dataMetrics}{LIST | Differential expression metrics. This object must 
 contain one column named "logFC" and one column named "PValue".}
+
+\item{dataSE}{SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data; default NULL}
 
 \item{option}{CHARACTER STRING ["hexagon" | "allPoints"] | The background of 
 plot; default "hexagon"}
