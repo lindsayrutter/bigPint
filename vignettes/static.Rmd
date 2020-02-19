@@ -311,4 +311,219 @@ ret[["N_P"]]
 
 ____________________________________________________________________________________
 
+## SummarizedExperiment Version
+
+Below are the corresponding code blocks from above that now use the `SummarizedExperiment` object instead of the `data` and `dataMetrics` objects.
+
+### Accessing static plots
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+data("se_soybean_ir_sub")
+tenSigGenes <- as.data.frame(rowData(se_soybean_ir_sub)) %>% arrange(N_P.FDR)
+  %>% filter(row_number() <= 10)
+tenSigGenes <- tenSigGenes[,1]
+assay(se_soybean_ir_sub) <- log(as.data.frame(assay(se_soybean_ir_sub))+1)
+plotLitre(dataSE=se_soybean_ir_sub, geneList = tenSigGenes)
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+plotLitre(dataSE=se_soybean_ir_sub, geneList = tenSigGenes, outDir = "LitrePlots")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+plotLitre(dataSE=se_soybean_ir_sub, geneList = tenSigGenes, saveFile = FALSE)
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotLitre(dataSE=se_soybean_ir_sub, geneList = tenSigGenes,
+  saveFile = FALSE)
+names(ret)
+ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+library(ggplot2)
+ret[[1]] + labs(title = "Most significant gene")
+```
+
+### Static scatterplot matrices
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+library(matrixStats)
+data(soybean_cn_sub)
+data(soybean_cn_sub_metrics)
+
+data("se_soybean_cn_sub")
+se_soybean_cn_sub_st = se_soybean_cn_sub
+assay(se_soybean_cn_sub_st) <- as.data.frame(t(apply(as.matrix(as.data.frame
+  (assay(se_soybean_cn_sub))), 1, scale)))
+nID <- which(is.nan(as.data.frame(assay(se_soybean_cn_sub_st))[,1]))
+assay(se_soybean_cn_sub_st)[nID,] <- 0
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+plotSM(dataSE = se_soybean_cn_sub)
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = se_soybean_cn_sub, pointColor = "pink",
+  saveFile = FALSE)
+names(ret)
+ret[["S1_S2"]] + ggtitle("S1 versus S2")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret[["S1_S3"]] + ggtitle("S1 versus S3")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret[["S2_S3"]] + ggtitle("S2 versus S3") 
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = se_soybean_cn_sub_st, pointColor = "#00C379",
+  saveFile = FALSE)
+ret[[1]] + xlab("Standardized read counts") + ylab("Standardized read counts")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = se_soybean_cn_sub, option = "hexagon", xbins = 5, 
+  pointSize = 0.1, saveFile = FALSE)
+ret[[2]]
+```
+
+To avoid overlaying metrics information, we set the `rowData()` to `NULL`.
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+se_soybean_ir_sub_nm <- se_soybean_ir_sub
+rowData(se_soybean_ir_sub_nm) <- NULL
+ret <- plotSM(dataSE = se_soybean_ir_sub_nm, option = "orthogonal", 
+  threshOrth = 2.5, pointSize = 0.2, saveFile = FALSE)
+ret[[1]]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = se_soybean_ir_sub, option = "orthogonal", 
+  threshOrth = 2.5, pointSize = 0.2, saveFile = FALSE)
+ret[[1]]
+```
+
+To avoid overlaying metrics information, we set the `rowData()` to `NULL`.
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+se_soybean_cn_sub_nm <- se_soybean_cn_sub
+rowData(se_soybean_cn_sub_nm) <- NULL
+ret <- plotSM(dataSE = se_soybean_cn_sub_nm, option = "foldChange",
+  threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
+ret[[1]] 
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = se_soybean_cn_sub, option = "foldChange",
+  threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
+ret[[1]]
+```
+
+### Static litre plots
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+geneList <- as.data.frame(rowData(se_soybean_cn_sub_st)) %>%
+  arrange(S1_S2.FDR) %>% filter(row_number() <= 5)
+geneList <- geneList[,1]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+se_soybean_cn_sub_st_S1S2 <- convertSEPair(se_soybean_cn_sub_st, "S1", "S2")
+ret <- plotLitre(dataSE = se_soybean_cn_sub_st_S1S2, geneList = geneList,
+  pointColor = "gold", saveFile = FALSE)
+names(ret) 
+ret[["S1_S2_Glyma18g00690.1"]]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotLitre(dataSE = se_soybean_cn_sub_st_S1S2, geneList = geneList,
+  pointColor = "gold", saveFile = FALSE, option = "allPoints")
+ret[["S1_S2_Glyma18g00690.1"]]
+```
+
+### Static parallel coordinates
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+geneList <- as.data.frame(rowData(se_soybean_ir_sub)) %>% arrange(N_P.FDR) %>%
+  filter(row_number() <= 10)
+geneList <- geneList[,1]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotPCP(dataSE = se_soybean_ir_sub, geneList = geneList, lineSize = 0.7, 
+  lineColor = "purple", saveFile = FALSE)
+ret[[1]]   
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotPCP(dataSE = se_soybean_ir_sub, geneList = geneList, lineSize = 0.4, 
+  lineColor = "purple", saveFile = FALSE, hover = TRUE)
+ret[[1]]
+```
+
+To avoid overlaying metrics information, we set the `rowData()` to `NULL`.
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+se_soybean_ir_sub_nm <- se_soybean_ir_sub
+rowData(se_soybean_ir_sub_nm) <- NULL
+ret <- plotPCP(dataSE = se_soybean_ir_sub_nm, saveFile = FALSE)
+ret[[1]]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+library(EDASeq)
+library(edgeR)
+dataFrame <- as.data.frame(assay(se_soybean_ir_sub))
+dataID <- rownames(dataFrame)
+data2 = as.matrix(dataFrame)
+d = DGEList(counts=data2, lib.size=rep(1,6))
+cpm.data.new <- cpm(d, TRUE, TRUE)
+dataFrame_n <- betweenLaneNormalization(cpm.data.new, which="full",
+  round=FALSE)
+dataFrame_n = as.data.frame(dataFrame_n)
+dataFrame_ns = dataFrame_n
+dataFrame_ns = as.data.frame(t(apply(as.matrix(dataFrame_n), 1, scale)))
+nID = which(is.nan(dataFrame_ns[,2]))
+dataFrame_ns[nID,] = 0
+colnames(dataFrame_ns) = colnames(dataFrame_n)
+se_soybean_ir_sub_ns = se_soybean_ir_sub
+assay(se_soybean_ir_sub_ns) = dataFrame_ns
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotPCP(dataSE = se_soybean_ir_sub_ns, threshVal = 1e-4,
+  saveFile = FALSE)
+ret[["N_P"]]
+```
+
+### Static volcano plots
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotVolcano(dataSE = se_soybean_ir_sub, threshVal = 1e-8,
+  pointSize = 3, saveFile = FALSE)
+ret[["N_P"]]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotVolcano(dataSE = se_soybean_ir_sub, geneList = geneList,
+  option = "allPoints", pointColor = "deeppink", pointSize = 3,
+  saveFile = FALSE)
+ret[["N_P"]]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotVolcano(dataSE = se_soybean_ir_sub, geneList = geneList,
+  option = "allPoints", pointColor = "deeppink", pointSize = 2,
+  saveFile = FALSE,
+  hover = TRUE)
+ret[["N_P"]]
+```
+
+____________________________________________________________________________________
+
 ## References
