@@ -95,7 +95,7 @@ str(data_st, strict.width = "wrap")
 Next, we will generate a side-by-side boxplot of this data. We can check that the distribution of read counts (their five number summaries) is consistent across the six samples. If a user does not find that the side-by-side boxplots show consistent read count distributions across the samples, then they may wish to renormalize and/or remove outliers, using packages like [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger], [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated], or [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) [@ritchie2015limma]. Here, we are setting the `saveFile` option to `FALSE` so we do not save these plots to any directory. See the article [Producing static plots](https://lindsayrutter.github.io/bigPint/articles/static.html) for more details.
 
 ```{r, eval=TRUE, echo = TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
-ret <- plotPCP(data=data, saveFile = FALSE)
+ret <- plotPCP(data=data_st, saveFile = FALSE)
 ret[["S1_S3"]]
 ```
 
@@ -202,7 +202,7 @@ ret <- plotClusters(data_st, dataMetrics, threshVal = 0.1, nC = 2,
 plot(ret[["S1_S3_2"]])
 ```
 
-```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE, fig.width = 7.2916667, fig.asp= 1/1.618}
 ret <- plotClusters(data_st, dataMetrics, threshVal = 0.1, nC = 2,
   colList = c("#00A600FF", "#CC00FFFF"), lineSize = 0.5, saveFile = FALSE)
 plot(ret[["S1_S3_2"]])

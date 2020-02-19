@@ -153,7 +153,10 @@ plotSM = function(data=data, dataMetrics=NULL, dataSE=NULL, geneList = NULL,
             reDataMetrics <- as.data.frame(rowData(dataSE))
             dataMetrics <- lapply(split.default(reDataMetrics[-1], 
             sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
-            cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))            
+            cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))
+            for (k in 1:length(dataMetrics)){
+                colnames(dataMetrics[[k]])[1] = "ID"   
+            }
         }
     }
     
