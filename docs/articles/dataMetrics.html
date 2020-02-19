@@ -76,10 +76,7 @@
       <a href="../articles/dataMetrics.html">Data metrics object</a>
     </li>
     <li>
-      <a href="../articles/createDataMetrics.html">Creating data metrics object</a>
-    </li>
-    <li>
-      <a href="../articles/superimposeData.html">Alternatives to data metrics object</a>
+      <a href="../articles/summarizedExperiment.html">SummarizedExperiment object</a>
     </li>
     <li>
       <a href="../articles/static.html">Producing static plots</a>
@@ -155,7 +152,7 @@
       <h1>Data metrics object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2020-02-13</h4>
+            <h4 class="date">2020-02-19</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/dataMetrics.Rmd"><code>vignettes/dataMetrics.Rmd</code></a></small>
       <div class="hidden name"><code>dataMetrics.Rmd</code></div>
@@ -192,6 +189,33 @@
 <h2 class="hasAnchor">
 <a href="#example-three-treatments" class="anchor"></a>Example: three treatments</h2>
 <p>Similarly, as was shown in the data page, the <code>data</code> object called <code>soybean_cn_sub</code> contained 7,332 genes and three treatment groups, S1, S2, and S3 <span class="citation">(Brown and Hudson 2015)</span>. We can examine the structure of its corresponding <code>dataMetrics</code> object called <code>soybean_cn_sub_metrics</code> as follows:</p>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"soybean_cn_sub_metrics"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(soybean_cn_sub_metrics, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</span></code></pre></div>
+<pre><code>## List of 3
+## $ S1_S2:'data.frame': 7332 obs. of 6 variables:
+## ..$ ID : chr [1:7332] "Glyma18g00690.1" "Glyma08g22380.1" "Glyma20g30460.1"
+##    "Glyma07g09700.1" ...
+## ..$ logFC : num [1:7332] 3.14 2.62 2.5 2.37 2.74 ...
+## ..$ logCPM: num [1:7332] 8.04 8.05 8.14 8.19 7.93 ...
+## ..$ LR : num [1:7332] 29.3 24.8 24 22.7 21 ...
+## ..$ PValue: num [1:7332] 6.08e-08 6.50e-07 9.82e-07 1.94e-06 4.57e-06 ...
+## ..$ FDR : num [1:7332] 0.000446 0.002384 0.0024 0.003557 0.006697 ...
+## $ S1_S3:'data.frame': 7332 obs. of 6 variables:
+## ..$ ID : chr [1:7332] "Glyma08g22380.1" "Glyma08g19290.1" "Glyma20g30460.1"
+##    "Glyma18g00690.1" ...
+## ..$ logFC : num [1:7332] 3.18 3.32 2.44 2.46 3.03 ...
+## ..$ logCPM: num [1:7332] 8.05 8.14 8.14 8.04 7.85 ...
+## ..$ LR : num [1:7332] 30.4 24.7 23.3 22.5 22.3 ...
+## ..$ PValue: num [1:7332] 3.60e-08 6.53e-07 1.42e-06 2.09e-06 2.30e-06 ...
+## ..$ FDR : num [1:7332] 0.000264 0.002393 0.003378 0.003378 0.003378 ...
+## $ S2_S3:'data.frame': 7332 obs. of 6 variables:
+## ..$ ID : chr [1:7332] "Glyma08g14670.3" "Glyma08g14670.2" "Glyma08g19290.1"
+##    "Glyma06g46701.1" ...
+## ..$ logFC : num [1:7332] 2.66 2.72 2.78 2.19 2.29 ...
+## ..$ logCPM: num [1:7332] 7.86 7.82 8.14 7.63 7.84 ...
+## ..$ LR : num [1:7332] 16.1 16 14.3 11.8 10.5 ...
+## ..$ PValue: num [1:7332] 6.01e-05 6.30e-05 1.57e-04 5.81e-04 1.21e-03 ...
+## ..$ FDR : num [1:7332] 0.231 0.231 0.385 1 1 ...</code></pre>
 <hr>
 </div>
 <div id="data-metrics-object-rules" class="section level2">
@@ -219,11 +243,140 @@
 </li>
 </ul>
 <p>You can quickly double-check the names of the list elements in your <code>dataMetrics</code> object as follows:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_ir_sub_metrics)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_ir_sub_metrics)</span></code></pre></div>
 <pre><code>## [1] "N_P"</code></pre>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_cn_sub_metrics)</span></code></pre></div>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_cn_sub_metrics)</span></code></pre></div>
 <pre><code>## [1] "S1_S2" "S1_S3" "S2_S3"</code></pre>
 <p>If your <code>dataMetrics</code> object does not fit this format, <code>bigPint</code> will likely throw an informative error about why your format was not recognized.</p>
+<hr>
+</div>
+<div id="creating-data-metrics-object" class="section level2">
+<h2 class="hasAnchor">
+<a href="#creating-data-metrics-object" class="anchor"></a>Creating data metrics object</h2>
+<p>If a researcher is using the <code>bigPint</code> package to plot RNA-seq data, then many will create the <code>dataMetrics</code> object using popular RNA-seq packages such as <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> <span class="citation">(Robinson, McCarthy, and Smyth 2010)</span>, <a href="https://bioconductor.org/packages/release/bioc/html/DESeq2.html">DESeq2</a> <span class="citation">(Love, Huber, and Anders 2014)</span>, and <a href="https://bioconductor.org/packages/release/bioc/html/limma.html">limma</a> <span class="citation">(Ritchie et al. 2015)</span>. These R packages will output several interesting quantitative variables for each gene in the dataset, such as log fold change, p-value, and FDR. These quantitative variables can be incorporated into the <code>dataMetrics</code> object and determine by thresholds what subset of genes will be superimposed onto plots.</p>
+<hr>
+</div>
+<div id="example-two-treatments-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-two-treatments-1" class="anchor"></a>Example: two treatments</h2>
+<p>The following example shows how to create the <code>dataMetrics</code> object called <code>soybean_ir_sub_metrics</code>, which was shown in the article <a href="https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html">Data metrics object</a> <span class="citation">(Lauter and Graham 2016)</span>. The dataset from which it is created (<code>soybean_ir_sub</code>) contains only two treatment groups, N and P. In this case, the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> <span class="citation">(Robinson, McCarthy, and Smyth 2010)</span> package was primarily followed.</p>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bigPint)</span>
+<span id="cb9-2"><a href="#cb9-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(edgeR)</span>
+<span id="cb9-3"><a href="#cb9-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(data.table)</span>
+<span id="cb9-4"><a href="#cb9-4"></a></span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_ir_sub)</span>
+<span id="cb9-6"><a href="#cb9-6"></a>data =<span class="st"> </span>soybean_ir_sub</span>
+<span id="cb9-7"><a href="#cb9-7"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data) =<span class="st"> </span>data[,<span class="dv">1</span>]</span>
+<span id="cb9-8"><a href="#cb9-8"></a></span>
+<span id="cb9-9"><a href="#cb9-9"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>data[,<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb9-10"><a href="#cb9-10"></a>group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
+<span id="cb9-11"><a href="#cb9-11"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>y, <span class="dt">group=</span>group)</span>
+<span id="cb9-12"><a href="#cb9-12"></a>Group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"N"</span>,<span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"P"</span>,<span class="dv">3</span>)))</span>
+<span id="cb9-13"><a href="#cb9-13"></a>design &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(<span class="op">~</span><span class="dv">0</span><span class="op">+</span>Group, <span class="dt">data=</span>y<span class="op">$</span>samples)</span>
+<span id="cb9-14"><a href="#cb9-14"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(design) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(Group)</span>
+<span id="cb9-15"><a href="#cb9-15"></a>y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/estimateDisp.html">estimateDisp</a></span>(y, design)</span>
+<span id="cb9-16"><a href="#cb9-16"></a>fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmFit</a></span>(y, design)</span>
+<span id="cb9-17"><a href="#cb9-17"></a></span>
+<span id="cb9-18"><a href="#cb9-18"></a>soybean_ir_sub_metrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>()</span>
+<span id="cb9-19"><a href="#cb9-19"></a></span>
+<span id="cb9-20"><a href="#cb9-20"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)<span class="op">-</span><span class="dv">1</span>)){</span>
+<span id="cb9-21"><a href="#cb9-21"></a>  <span class="cf">for</span> (j <span class="cf">in</span> (i<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)){</span>
+<span id="cb9-22"><a href="#cb9-22"></a>    contrast=<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>,<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit))</span>
+<span id="cb9-23"><a href="#cb9-23"></a>    contrast[i]=<span class="dv">1</span></span>
+<span id="cb9-24"><a href="#cb9-24"></a>    contrast[j]=<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb9-25"><a href="#cb9-25"></a>    lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmLRT</a></span>(fit, <span class="dt">contrast=</span>contrast)</span>
+<span id="cb9-26"><a href="#cb9-26"></a>    lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/topTags.html">topTags</a></span>(lrt, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(y[[<span class="dv">1</span>]]))[[<span class="dv">1</span>]]</span>
+<span id="cb9-27"><a href="#cb9-27"></a>    </span>
+<span id="cb9-28"><a href="#cb9-28"></a>    <span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT</a></span>(lrt, <span class="dt">keep.rownames =</span> <span class="ot">TRUE</span>)[]</span>
+<span id="cb9-29"><a href="#cb9-29"></a>    <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt)[<span class="dv">1</span>] =<span class="st"> "ID"</span></span>
+<span id="cb9-30"><a href="#cb9-30"></a>    lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(lrt)</span>
+<span id="cb9-31"><a href="#cb9-31"></a>    </span>
+<span id="cb9-32"><a href="#cb9-32"></a>    soybean_ir_sub_metrics[[<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[i], <span class="st">"_"</span>, <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[j])]] &lt;-<span class="st"> </span>lrt</span>
+<span id="cb9-33"><a href="#cb9-33"></a>  }</span>
+<span id="cb9-34"><a href="#cb9-34"></a>}</span></code></pre></div>
+<p>We can indeed examine the generated <code>soybean_ir_sub_metrics</code> object as follows:</p>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(soybean_ir_sub_metrics, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</span></code></pre></div>
+<pre><code>## List of 1
+## $ N_P:'data.frame': 5604 obs. of 6 variables:
+## ..$ ID : chr [1:5604] "Glyma.19G168700.Wm82.a2.v1" "Glyma.13G293500.Wm82.a2.v1"
+##    "Glyma.05G188700.Wm82.a2.v1" "Glyma.13G173100.Wm82.a2.v1" ...
+## ..$ logFC : num [1:5604] -5.92 2.99 -3.51 -3.91 -3.51 ...
+## ..$ logCPM: num [1:5604] 7.52 8.08 8.83 8.27 10.19 ...
+## ..$ LR : num [1:5604] 266 171 167 157 154 ...
+## ..$ PValue: num [1:5604] 9.18e-60 3.65e-39 2.73e-38 6.04e-36 2.58e-35 ...
+## ..$ FDR : num [1:5604] 5.14e-56 1.02e-35 5.09e-35 8.46e-33 2.89e-32 ...</code></pre>
+<p>And verify that it contains one list element:</p>
+<div class="sourceCode" id="cb12"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_ir_sub_metrics)</span></code></pre></div>
+<pre><code>## [1] "N_P"</code></pre>
+<hr>
+</div>
+<div id="example-three-treatments-1" class="section level2">
+<h2 class="hasAnchor">
+<a href="#example-three-treatments-1" class="anchor"></a>Example: three treatments</h2>
+<p>The following example shows how to create the <code>dataMetrics</code> object called <code>soybean_cn_sub_metrics</code>, which was shown in the article <a href="https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html">Data metrics object</a>). The dataset from which it is created (<code>soybean_cn_sub</code>) contains three treatment groups, S1, S2, and S3 <span class="citation">(Brown and Hudson 2015)</span>. In this case, the <a href="https://bioconductor.org/packages/release/bioc/html/edgeR.html">edgeR</a> <span class="citation">(Robinson, McCarthy, and Smyth 2010)</span> package was primarily followed.</p>
+<div class="sourceCode" id="cb14"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb14-1"><a href="#cb14-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(edgeR)</span>
+<span id="cb14-2"><a href="#cb14-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(data.table)</span>
+<span id="cb14-3"><a href="#cb14-3"></a></span>
+<span id="cb14-4"><a href="#cb14-4"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_cn_sub)</span>
+<span id="cb14-5"><a href="#cb14-5"></a>data =<span class="st"> </span>soybean_cn_sub</span>
+<span id="cb14-6"><a href="#cb14-6"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data) =<span class="st"> </span>data[,<span class="dv">1</span>]</span>
+<span id="cb14-7"><a href="#cb14-7"></a></span>
+<span id="cb14-8"><a href="#cb14-8"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>data[,<span class="op">-</span><span class="dv">1</span>])</span>
+<span id="cb14-9"><a href="#cb14-9"></a>group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)</span>
+<span id="cb14-10"><a href="#cb14-10"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>y, <span class="dt">group=</span>group)</span>
+<span id="cb14-11"><a href="#cb14-11"></a>Group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"S1"</span>,<span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"S2"</span>,<span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"S3"</span>,<span class="dv">3</span>)))</span>
+<span id="cb14-12"><a href="#cb14-12"></a>design &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(<span class="op">~</span><span class="dv">0</span><span class="op">+</span>Group, <span class="dt">data=</span>y<span class="op">$</span>samples)</span>
+<span id="cb14-13"><a href="#cb14-13"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(design) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(Group)</span>
+<span id="cb14-14"><a href="#cb14-14"></a>y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/estimateDisp.html">estimateDisp</a></span>(y, design)</span>
+<span id="cb14-15"><a href="#cb14-15"></a>fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmFit</a></span>(y, design)</span>
+<span id="cb14-16"><a href="#cb14-16"></a></span>
+<span id="cb14-17"><a href="#cb14-17"></a>soybean_cn_sub_metrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>()</span>
+<span id="cb14-18"><a href="#cb14-18"></a></span>
+<span id="cb14-19"><a href="#cb14-19"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)<span class="op">-</span><span class="dv">1</span>)){</span>
+<span id="cb14-20"><a href="#cb14-20"></a>  <span class="cf">for</span> (j <span class="cf">in</span> (i<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)){</span>
+<span id="cb14-21"><a href="#cb14-21"></a>    contrast=<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>,<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit))</span>
+<span id="cb14-22"><a href="#cb14-22"></a>    contrast[i]=<span class="dv">1</span></span>
+<span id="cb14-23"><a href="#cb14-23"></a>    contrast[j]=<span class="op">-</span><span class="dv">1</span></span>
+<span id="cb14-24"><a href="#cb14-24"></a>    lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmLRT</a></span>(fit, <span class="dt">contrast=</span>contrast)</span>
+<span id="cb14-25"><a href="#cb14-25"></a>    lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/topTags.html">topTags</a></span>(lrt, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(y[[<span class="dv">1</span>]]))[[<span class="dv">1</span>]]</span>
+<span id="cb14-26"><a href="#cb14-26"></a>    </span>
+<span id="cb14-27"><a href="#cb14-27"></a>    <span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT</a></span>(lrt, <span class="dt">keep.rownames =</span> <span class="ot">TRUE</span>)[]</span>
+<span id="cb14-28"><a href="#cb14-28"></a>    <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt)[<span class="dv">1</span>] =<span class="st"> "ID"</span></span>
+<span id="cb14-29"><a href="#cb14-29"></a>    lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(lrt)</span>
+<span id="cb14-30"><a href="#cb14-30"></a>    </span>
+<span id="cb14-31"><a href="#cb14-31"></a>    soybean_cn_sub_metrics[[<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[i], <span class="st">"_"</span>, <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[j])]] &lt;-<span class="st"> </span>lrt</span>
+<span id="cb14-32"><a href="#cb14-32"></a>  }</span>
+<span id="cb14-33"><a href="#cb14-33"></a>}</span></code></pre></div>
+<p>We can indeed examine the generated <code>soybean_cn_sub_metrics</code> object as follows:</p>
+<div class="sourceCode" id="cb15"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb15-1"><a href="#cb15-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/str.html">str</a></span>(soybean_cn_sub_metrics, <span class="dt">strict.width =</span> <span class="st">"wrap"</span>)</span></code></pre></div>
+<pre><code>## List of 3
+## $ S1_S2:'data.frame': 7332 obs. of 6 variables:
+## ..$ ID : chr [1:7332] "Glyma18g00690.1" "Glyma08g22380.1" "Glyma20g30460.1"
+##    "Glyma07g09700.1" ...
+## ..$ logFC : num [1:7332] 3.14 2.62 2.5 2.37 2.74 ...
+## ..$ logCPM: num [1:7332] 8.04 8.05 8.14 8.19 7.93 ...
+## ..$ LR : num [1:7332] 29.3 24.8 24 22.7 21 ...
+## ..$ PValue: num [1:7332] 6.08e-08 6.50e-07 9.82e-07 1.94e-06 4.57e-06 ...
+## ..$ FDR : num [1:7332] 0.000446 0.002384 0.0024 0.003557 0.006697 ...
+## $ S1_S3:'data.frame': 7332 obs. of 6 variables:
+## ..$ ID : chr [1:7332] "Glyma08g22380.1" "Glyma08g19290.1" "Glyma20g30460.1"
+##    "Glyma18g00690.1" ...
+## ..$ logFC : num [1:7332] 3.18 3.32 2.44 2.46 3.03 ...
+## ..$ logCPM: num [1:7332] 8.05 8.14 8.14 8.04 7.85 ...
+## ..$ LR : num [1:7332] 30.4 24.7 23.3 22.5 22.3 ...
+## ..$ PValue: num [1:7332] 3.60e-08 6.53e-07 1.42e-06 2.09e-06 2.30e-06 ...
+## ..$ FDR : num [1:7332] 0.000264 0.002393 0.003378 0.003378 0.003378 ...
+## $ S2_S3:'data.frame': 7332 obs. of 6 variables:
+## ..$ ID : chr [1:7332] "Glyma08g14670.3" "Glyma08g14670.2" "Glyma08g19290.1"
+##    "Glyma06g46701.1" ...
+## ..$ logFC : num [1:7332] 2.66 2.72 2.78 2.19 2.29 ...
+## ..$ logCPM: num [1:7332] 7.86 7.82 8.14 7.63 7.84 ...
+## ..$ LR : num [1:7332] 16.1 16 14.3 11.8 10.5 ...
+## ..$ PValue: num [1:7332] 6.01e-05 6.30e-05 1.57e-04 5.81e-04 1.21e-03 ...
+## ..$ FDR : num [1:7332] 0.231 0.231 0.385 1 1 ...</code></pre>
+<p>And verify that it contains three list element:</p>
+<div class="sourceCode" id="cb17"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb17-1"><a href="#cb17-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(soybean_cn_sub_metrics)</span></code></pre></div>
+<pre><code>## [1] "S1_S2" "S1_S3" "S2_S3"</code></pre>
 <hr>
 </div>
 <div id="references" class="section level2 unnumbered">
@@ -235,6 +388,15 @@
 </div>
 <div id="ref-soybeanIR">
 <p>Lauter, AN Moran, and MA Graham. 2016. “NCBI Sra Bioproject Accession: PRJNA318409.”</p>
+</div>
+<div id="ref-love2014moderated">
+<p>Love, Michael I., Wolfgang Huber, and Simon Anders. 2014. “Moderated Estimation of Fold Change and Dispersion for Rna-Seq Data with Deseq2.” <em>Genome Biology</em> 15 (12): 550.</p>
+</div>
+<div id="ref-ritchie2015limma">
+<p>Ritchie, Matthew E., Belinda Phipson, Di Wu, Yifang Hu, Charity W. Law, Wei Shi, and Gordon K. Smyth. 2015. “Limma Powers Differential Expression Analyses for Rna-Sequencing and Microarray Studies.” <em>Nucleic Acids Research</em> 43 (7): e47–e47.</p>
+</div>
+<div id="ref-robinson2010edger">
+<p>Robinson, Mark D., Davis J. McCarthy, and Gordon K. Smyth. 2010. “EdgeR: A Bioconductor Package for Differential Expression Analysis of Digital Gene Expression Data.” <em>Bioinformatics</em> 26 (1): 139–40.</p>
 </div>
 </div>
 </div>
@@ -250,6 +412,9 @@
       <li><a href="#example-two-treatments">Example: two treatments</a></li>
       <li><a href="#example-three-treatments">Example: three treatments</a></li>
       <li><a href="#data-metrics-object-rules">Data metrics object rules</a></li>
+      <li><a href="#creating-data-metrics-object">Creating data metrics object</a></li>
+      <li><a href="#example-two-treatments-1">Example: two treatments</a></li>
+      <li><a href="#example-three-treatments-1">Example: three treatments</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>

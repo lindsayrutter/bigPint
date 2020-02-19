@@ -120,10 +120,7 @@ differentially expressed genes (DEGs) onto scatterplot matrix." />
       <a href="../articles/dataMetrics.html">Data metrics object</a>
     </li>
     <li>
-      <a href="../articles/createDataMetrics.html">Creating data metrics object</a>
-    </li>
-    <li>
-      <a href="../articles/superimposeData.html">Alternatives to data metrics object</a>
+      <a href="../articles/summarizedExperiment.html">SummarizedExperiment object</a>
     </li>
     <li>
       <a href="../articles/static.html">Producing static plots</a>
@@ -209,6 +206,7 @@ differentially expressed genes (DEGs) onto scatterplot matrix.</p>
     <pre class="usage"><span class='fu'>plotSM</span>(
   <span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>,
   <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"FDR"</span>,
   <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>0.05</span>,
@@ -232,6 +230,11 @@ differentially expressed genes (DEGs) onto scatterplot matrix.</p>
     <tr>
       <th>dataMetrics</th>
       <td><p>LIST | Differential expression metrics; default NULL</p></td>
+    </tr>
+    <tr>
+      <th>dataSE</th>
+      <td><p>SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data and dataMetrics; default NULL</p></td>
     </tr>
     <tr>
       <th>geneList</th>

@@ -119,10 +119,7 @@
       <a href="../articles/dataMetrics.html">Data metrics object</a>
     </li>
     <li>
-      <a href="../articles/createDataMetrics.html">Creating data metrics object</a>
-    </li>
-    <li>
-      <a href="../articles/superimposeData.html">Alternatives to data metrics object</a>
+      <a href="../articles/summarizedExperiment.html">SummarizedExperiment object</a>
     </li>
     <li>
       <a href="../articles/static.html">Producing static plots</a>
@@ -204,7 +201,7 @@
     <p>Plot interactive scatterplot matrices.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>plotSMApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
+    <pre class="usage"><span class='fu'>plotSMApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>data</span>, <span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>10</span>)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -212,6 +209,11 @@
     <tr>
       <th>data</th>
       <td><p>DATA FRAME | Read counts</p></td>
+    </tr>
+    <tr>
+      <th>dataSE</th>
+      <td><p>SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data; default NULL</p></td>
     </tr>
     <tr>
       <th>xbins</th>

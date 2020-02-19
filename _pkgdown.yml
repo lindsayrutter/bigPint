@@ -64,10 +64,8 @@ navbar:
          href: articles/data.html
       -  text: Data metrics object
          href: articles/dataMetrics.html
-      -  text: Creating data metrics object
-         href: articles/createDataMetrics.html
-      -  text: Alternatives to data metrics object
-         href: articles/superimposeData.html
+      -  text: SummarizedExperiment object
+         href: articles/summarizedExperiment.html
       -  text: Producing static plots
          href: articles/static.html
       -  text: Producing interactive plots
