@@ -297,7 +297,11 @@ saveFile parameter has a value of TRUE, then each parallel coordinate plot
 is saved to the location specified in the outDir parameter as a JPG file.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Example 1: Plot the side-by-side boxplots of the whole dataset without </span>
+    <pre class="examples"><div class='input'><span class='co'># The first set of four examples use data and dataMetrics</span>
+<span class='co'># objects as input. The last set of four examples create the same plots now</span>
+<span class='co'># using the SummarizedExperiment (i.e. dataSE) object input.</span>
+
+<span class='co'># Example 1: Plot the side-by-side boxplots of the whole dataset without </span>
 <span class='co'># overlaying any metrics data by keeping the dataMetrics parameter its</span>
 <span class='co'># default value of NULL.</span>
 
@@ -325,7 +329,54 @@ is saved to the location specified in the outDir parameter as a JPG file.</p>
 
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
     <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div></pre>
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+
+<span class='co'># Below are the same four examples, only now using the</span>
+<span class='co'># SummarizedExperiment (i.e. dataSE) object as input.</span>
+
+<span class='co'># Example 1: Plot the side-by-side boxplots of the whole dataset without </span>
+<span class='co'># overlaying any metrics. We prevent overlaying metrics by setting the</span>
+<span class='co'># rowData() to NULL.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>se_soybean_ir_sub</span>)
+<span class='no'>se_soybean_ir_sub</span>[,-<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>se_soybean_ir_sub</span>[,-<span class='fl'>1</span>]+<span class='fl'>1</span>)
+<span class='no'>se_soybean_ir_sub_nm</span> <span class='kw'>&lt;-</span> <span class='no'>se_soybean_ir_sub</span>
+<span class='fu'>rowData</span>(<span class='no'>se_soybean_ir_sub_nm</span>) <span class='kw'>&lt;-</span> <span class='kw'>NULL</span>
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub_nm</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='co'># Example 2: Overlay genes with FDR &lt; 1e-4 as orange parallel coordinate</span>
+<span class='co'># lines.</span>
+
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-4</span>,
+    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}
+
+<span class='co'># Example 3: Overlay the ten most significant genes (lowest FDR values) as </span>
+<span class='co'># blue parallel coordinate lines.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>geneList</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>rowData</span>(<span class='no'>se_soybean_ir_sub</span>)) <span class='kw'>%&gt;%</span>
+    <span class='fu'>arrange</span>(<span class='no'>N_P.FDR</span>) <span class='kw'>%&gt;%</span> <span class='fu'><a href='https://rdrr.io/r/stats/filter.html'>filter</a></span>(<span class='fu'>row_number</span>() <span class='kw'>&lt;=</span> <span class='fl'>10</span>)
+<span class='no'>geneList</span> <span class='kw'>&lt;-</span> <span class='no'>geneList</span>[,<span class='fl'>1</span>]
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>,
+    <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.3</span>, <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}
+
+<span class='co'># Example 4: Repeat this same procedure, only now set the hover parameter to </span>
+<span class='co'># TRUE to allow us to hover over blue parallel coordinate lines and</span>
+<span class='co'># determine their individual IDs.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotPCP</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub</span>, <span class='kw'>geneList</span> <span class='kw'>=</span> <span class='no'>geneList</span>, <span class='kw'>lineSize</span> <span class='kw'>=</span> <span class='fl'>0.3</span>,
+    <span class='kw'>lineColor</span> <span class='kw'>=</span> <span class='st'>"blue"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

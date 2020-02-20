@@ -82,6 +82,10 @@ parameter as a JPG file.
 Plot static volcano plot.
 }
 \examples{
+# The first set of four examples use data and dataMetrics objects as
+# input. The last set of four examples create the same plots now
+# using the SummarizedExperiment (i.e. dataSE) object input.
+
 # Example 1: Plot volcano plot with default settings for overlaid points
 # (FDR < 0.05).
 
@@ -116,5 +120,49 @@ ret <- plotVolcano(soybean_ir_sub, soybean_ir_sub_metrics,
     threshVal = 1e-15, option = "allPoints", saveFile = FALSE,
     hover = TRUE)
 ret[[1]]
+
+# Below are the same four examples, only now using the
+# SummarizedExperiment (i.e. dataSE) object as input.
+
+# Example 1: Plot volcano plot with default settings for overlaid points
+# (FDR < 0.05).
+
+\dontrun{
+data(se_soybean_ir_sub)
+ret <- plotVolcano(dataSE = se_soybean_ir_sub, pointSize = 1,
+    saveFile = FALSE)
+ret[[1]]
+}
+
+# Example 2: Plot volcano plot and overlay points with PValue < 1e-15.
+
+\dontrun{
+ret <- plotVolcano(dataSE = se_soybean_ir_sub, pointColor = "red", 
+    pointSize = 1, threshVar = "PValue", threshVal = 1e-15, 
+    saveFile = FALSE)
+ret[[1]]
+}
+
+# Example 3: Plot volcano plot and overlay points with PValue < 1e-15. This 
+# time, plot all points (instead of hexagons) for the background.
+
+\dontrun{
+ret <- plotVolcano(dataSE = se_soybean_ir_sub, pointColor = "red", 
+    pointSize = 1, threshVar = "PValue", threshVal = 1e-15, 
+    option = "allPoints", saveFile = FALSE)
+ret[[1]]
+}
+
+# Example 4: Plot volcano plot with points in background and overlay points 
+# with PValue < 1e-15. This time, use a value of TRUE for the hover
+# parameter so that you can hover over overlaid points and determine their
+# IDs.
+
+\dontrun{
+ret <- plotVolcano(dataSE = se_soybean_ir_sub, pointColor = "red",
+    pointSize = 1, threshVar = "PValue", threshVal = 1e-15, 
+    option = "allPoints", saveFile = FALSE, hover = TRUE)
+ret[[1]]
+}
 
 }

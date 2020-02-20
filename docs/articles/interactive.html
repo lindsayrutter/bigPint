@@ -273,7 +273,7 @@
 <h3 class="hasAnchor">
 <a href="#scatterplot-matrix-app-1" class="anchor"></a>Scatterplot matrix app</h3>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"se_soybean_cn_sub"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a>se_soybean_cn_sub_S1S2 &lt;-<span class="st"> </span><span class="kw">convertSEPair</span>(se_soybean_cn_sub, <span class="st">"S1"</span>, <span class="st">"S2"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>se_soybean_cn_sub_S1S2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/bigPint/man/convertSEPair.html">convertSEPair</a></span>(se_soybean_cn_sub, <span class="st">"S1"</span>, <span class="st">"S2"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSMApp.html">plotSMApp</a></span>(<span class="dt">dataSE=</span>se_soybean_cn_sub_S1S2)</span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
 <span id="cb5-5"><a href="#cb5-5"></a>  shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app)</span>
@@ -312,7 +312,7 @@
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dataMetrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">rowData</span>(se_soybean_ir_sub_st))</span>
 <span id="cb9-2"><a href="#cb9-2"></a>plotGenes =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(dataMetrics, N_P.FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>, N_P.logFC <span class="op">&lt;</span><span class="st"> </span><span class="dv">-4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ID)</span>
 <span id="cb9-3"><a href="#cb9-3"></a>plotGenes =<span class="st"> </span>plotGenes[,<span class="dv">1</span>]</span>
-<span id="cb9-4"><a href="#cb9-4"></a>se_soybean_ir_sub_st_genes &lt;-<span class="st"> </span><span class="kw">convertSESubsetGenes</span>(se_soybean_ir_sub_st,</span>
+<span id="cb9-4"><a href="#cb9-4"></a>se_soybean_ir_sub_st_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/bigPint/man/convertSESubsetGenes.html">convertSESubsetGenes</a></span>(se_soybean_ir_sub_st,</span>
 <span id="cb9-5"><a href="#cb9-5"></a>  plotGenes)</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotPCPApp.html">plotPCPApp</a></span>(<span class="dt">dataSE =</span> se_soybean_ir_sub_st_genes)</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>

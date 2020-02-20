@@ -40,9 +40,9 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' dataMetrics parameter. 
 #' @export
 #' @examples
-#' The first pair of examples use \code{data} and \code{dataMetrics}
-#' objects as input. The last pair of examples create the same plots now
-#' using the \code{SummarizedExperiment} (i.e. \code{dataSE}) object input.
+#' # The first pair of examples use data and dataMetrics
+#' # objects as input. The last pair of examples create the same plots now
+#' # using the SummarizedExperiment (i.e. dataSE) object input.
 #' 
 #' # Example 1: Create an interactive litre plot for the logged data using
 #' # default background of hexagons.
@@ -68,12 +68,13 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #'     shiny::runApp(app)
 #' }
 #' 
-#' Below are the same pair of examples, only now using the
-#' \code{SummarizedExperiment} (i.e. \code{dataSE}) object as input.
+#' # Below are the same pair of examples, only now using the
+#' # SummarizedExperiment (i.e. dataSE) object as input.
 #' 
 #' # Example 1: Create an interactive litre plot for the logged data using
 #' # default background of hexagons.
 #' 
+#' \dontrun{
 #' data(se_soybean_ir_sub)
 #' se_soybean_ir_sub_log <- se_soybean_ir_sub
 #' assay(se_soybean_ir_sub_log) <-
@@ -82,15 +83,18 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' if (interactive()) {
 #'     shiny::runApp(app, port = 1234, launch.browser = TRUE)
 #' }
+#' }
 #' 
 #' # Example 2: Repeat the same process, only now plot background data as 
 #' # individual points. Note this may be too slow now that all points are
 #' # drawn in the background.
 #' 
+#' \dontrun{
 #' app <- plotLitreApp(dataSE = se_soybean_ir_sub_log, option = "allPoints",
 #'     pointColor = "red")
 #' if (interactive()) {
 #'     shiny::runApp(app)
+#' }
 #' }
 #' 
 

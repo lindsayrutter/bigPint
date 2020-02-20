@@ -368,7 +368,7 @@ Below are the corresponding code blocks from everything above that now use the `
 
 ### Step 1: Side-by-side boxplot
 
-Note that since we are not superimposing any metrics, we do not call the `rowData()` command.
+Note that since we are not superimposing any metrics, we do not call the `rowData()` command. We also use the `convertSEPair()` function to reduce the `SummarizedExperiment` object from having three treatment groups (`data`) to only having two treatment groups, S1 and S3 (`dataSE`).  
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 library(bigPint)
@@ -402,6 +402,8 @@ ret <- plotPCP(dataSE=dataSE_st, saveFile = FALSE)
 ret[["S1_S3"]]
 ```
 
+____________________________________________________________________________________
+
 ### Step 2: Scatterplot matrix
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
@@ -419,6 +421,8 @@ dataSE_switch <- SummarizedExperiment(assays = dataSE_switch)
 ret <- plotSM(dataSE=dataSE_switch, saveFile = FALSE)
 ret[["S1_S3"]]
 ```
+
+____________________________________________________________________________________
 
 ### Step 3: DEG parallel coordinates and clusters
 
@@ -484,6 +488,8 @@ ret <- plotClusters(dataSE = dataSE_st, threshVal = 0.1, nC = 2,
 plot(ret[["S1_S3_2"]])
 ```
 
+____________________________________________________________________________________
+
 ### Step 4: DEG scatterplot matrix
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
@@ -516,6 +522,8 @@ ret <- plotSM(dataSE = dataSE_st, geneList = S1S3Cluster2,
   pointColor = "#CC00FFFF", pointSize = 1, saveFile = FALSE)
 ret[["S1_S3"]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")"))    
 ```
+
+____________________________________________________________________________________
 
 ### Step 5: DEG litre plots
 
@@ -564,6 +572,8 @@ if (interactive()) {
   shiny::runApp(app)
 }    
 ```
+
+____________________________________________________________________________________
 
 ### Step 6: DEG volcano plots
 

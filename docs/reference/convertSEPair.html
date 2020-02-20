@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Function reference • bigPint</title>
+<title>Convert SummarizedExperiment to only contain defined treatment pair — convertSEPair • bigPint</title>
 
 <!-- favicons -->
 <link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
@@ -48,7 +48,12 @@
 
 
 
-<meta property="og:title" content="Function reference" />
+<meta property="og:title" content="Convert SummarizedExperiment to only contain defined treatment pair — convertSEPair" />
+<meta property="og:description" content="Reduce a SummarizedExperiment object that initially contains
+more than two treatment groups to now only contain a user-specified subset
+pair of treatment groups. Note that this function is only necesary for
+users using the SummarizedExperiment input object (instead of the
+combination of data and dataMetrics input objects.)" />
 <meta property="og:image" content="http://lindsayrutter.github.io/bigPint/logo.png" />
 <meta name="twitter:card" content="summary" />
 
@@ -69,7 +74,7 @@
   </head>
 
   <body>
-    <div class="container template-reference-index">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -189,198 +194,59 @@
       </header>
 
 <div class="row">
-  <div class="contents col-md-9">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Reference</h1>
+    <h1>Convert SummarizedExperiment to only contain defined treatment pair</h1>
+    <small class="dont-index">Source: <a href='https://github.com/lindsayrutter/bigPint/blob/master/R/convertSEPair.R'><code>R/convertSEPair.R</code></a></small>
+    <div class="hidden name"><code>convertSEPair.Rd</code></div>
     </div>
 
-    <table class="ref-index">
+    <div class="ref-description">
+    <p>Reduce a SummarizedExperiment object that initially contains
+more than two treatment groups to now only contain a user-specified subset
+pair of treatment groups. Note that this function is only necesary for
+users using the SummarizedExperiment input object (instead of the
+combination of data and dataMetrics input objects.)</p>
+    </div>
 
-    <colgroup>
-      
-      <col class="alias" />
-      <col class="title" />
-    </colgroup>
+    <pre class="usage"><span class='fu'>convertSEPair</span>(<span class='no'>dataSE</span>, <span class='no'>group1</span>, <span class='no'>group2</span>)</pre>
 
-    <tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-data-and-data-metrics-example-inputs" class="hasAnchor"><a href="#section-data-and-data-metrics-example-inputs" class="anchor"></a>Data and data metrics example inputs</h2>
-          <p class="section-desc"><p>These are publicly available RNA-seq datasets in data and data metrics object formats. Half of them are data subsets (‘sub’). These were subsetted by selecting one out of ten genes from the full datasets. They can be used to quickly test the package functions and are shown in the example vignettes to reduce space.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="soybean_cn.html">soybean_cn</a></code> </p>
-        </td>
-        <td><p>Normalized soybean cotyledon data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="soybean_cn_metrics.html">soybean_cn_metrics</a></code> </p>
-        </td>
-        <td><p>Normalized soybean cotyledon metrics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="soybean_ir.html">soybean_ir</a></code> </p>
-        </td>
-        <td><p>Raw soybean leaves iron-metabolism data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="soybean_ir_metrics.html">soybean_ir_metrics</a></code> </p>
-        </td>
-        <td><p>Raw soybean leaves iron-metabolism metrics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="soybean_cn_sub.html">soybean_cn_sub</a></code> </p>
-        </td>
-        <td><p>Normalized and subsetted soybean cotyledon data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="soybean_cn_sub_metrics.html">soybean_cn_sub_metrics</a></code> </p>
-        </td>
-        <td><p>Normalized and subsetted soybean cotyledon metrics</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="soybean_ir_sub.html">soybean_ir_sub</a></code> </p>
-        </td>
-        <td><p>Raw and subsetted soybean leaves iron-metabolism data</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="soybean_ir_sub_metrics.html">soybean_ir_sub_metrics</a></code> </p>
-        </td>
-        <td><p>Raw and subsetted soybean leaves iron-metabolism metrics</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-summarizedexperiment-example-inputs" class="hasAnchor"><a href="#section-summarizedexperiment-example-inputs" class="anchor"></a>SummarizedExperiment example inputs</h2>
-          <p class="section-desc"><p>These are subsetted publicly available RNA-seq datasets in SummarizedExperiment object format.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="se_soybean_cn_sub.html">se_soybean_cn_sub</a></code> </p>
-        </td>
-        <td><p>Normalized and subsetted soybean cotyledon SummarizedExperiment</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="se_soybean_ir_sub.html">soybean_ir_sub</a></code> </p>
-        </td>
-        <td><p>Raw and subsetted soybean leaves iron-metabolism SummarizedExperiment</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-summarizedexperiment-data-formatting-tools" class="hasAnchor"><a href="#section-summarizedexperiment-data-formatting-tools" class="anchor"></a>SummarizedExperiment data formatting tools</h2>
-          <p class="section-desc"><p>These functions manipulate SummarizedExperiment data format by reducing number of treatment pairs and number of genes.</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="convertSEPair.html">convertSEPair()</a></code> </p>
-        </td>
-        <td><p>Convert SummarizedExperiment to only contain defined treatment pair</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="convertSESubsetGenes.html">convertSESubsetGenes()</a></code> </p>
-        </td>
-        <td><p>Convert SummarizedExperiment to only contain defined genes</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-static-plotting-tools" class="hasAnchor"><a href="#section-static-plotting-tools" class="anchor"></a>Static plotting tools</h2>
-          <p class="section-desc"><p>These functions plot RNA-seq data and optionally overlay differentially expressed genes (DEGs).</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="plotClusters.html">plotClusters()</a></code> </p>
-        </td>
-        <td><p>Plot static parallel coordinate clusters</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotLitre.html">plotLitre()</a></code> </p>
-        </td>
-        <td><p>Plot static litre plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotPCP.html">plotPCP()</a></code> </p>
-        </td>
-        <td><p>Plot static parallel coordinate plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotSM.html">plotSM()</a></code> </p>
-        </td>
-        <td><p>Plot static scatterplot matrices</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotVolcano.html">plotVolcano()</a></code> </p>
-        </td>
-        <td><p>Plot static volcano plot</p></td>
-      </tr>
-    </tbody><tbody>
-      <tr>
-        <th colspan="2">
-          <h2 id="section-interactive-plotting-tools" class="hasAnchor"><a href="#section-interactive-plotting-tools" class="anchor"></a>Interactive plotting tools</h2>
-          <p class="section-desc"><p>These applications plot RNA-seq data and optionally overlay differentially expressed genes (DEGs).</p></p>
-        </th>
-      </tr>
-      <tr>
-        
-        <td>
-          <p><code><a href="plotLitreApp.html">plotLitreApp()</a></code> </p>
-        </td>
-        <td><p>Plot interactive litre plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotPCPApp.html">plotPCPApp()</a></code> </p>
-        </td>
-        <td><p>Plot interactive parallel coordinate plots</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotSMApp.html">plotSMApp()</a></code> </p>
-        </td>
-        <td><p>Plot interactive scatterplot matrices</p></td>
-      </tr><tr>
-        
-        <td>
-          <p><code><a href="plotVolcanoApp.html">plotVolcanoApp()</a></code> </p>
-        </td>
-        <td><p>Plot interactive volcano plots</p></td>
-      </tr>
-    </tbody>
+    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
+    <table class="ref-arguments">
+    <colgroup><col class="name" /><col class="desc" /></colgroup>
+    <tr>
+      <th>dataSE</th>
+      <td><p>SUMMARIZEDEXPERIMENT | Summarized experiment format that
+can be used in lieu of data and dataMetrics</p></td>
+    </tr>
+    <tr>
+      <th>group1</th>
+      <td><p>CHARACTER STRING | Name of one treatment group that will
+remain in the dataSE object</p></td>
+    </tr>
+    <tr>
+      <th>group2</th>
+      <td><p>CHARACTER STRING | Name of second treatment group that will
+remain in the dataSE object</p></td>
+    </tr>
     </table>
-  </div>
 
+    <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
+
+    <p>A new dataSE object that is a subset of the input dataSE in that it
+now only contains the user-specified pair of treatment groups.</p>
+
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"></pre>
+  </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#section-data-and-data-metrics-example-inputs">Data and data metrics example inputs</a></li>
-      <li><a href="#section-summarizedexperiment-example-inputs">SummarizedExperiment example inputs</a></li>
-      <li><a href="#section-summarizedexperiment-data-formatting-tools">SummarizedExperiment data formatting tools</a></li>
-      <li><a href="#section-static-plotting-tools">Static plotting tools</a></li>
-      <li><a href="#section-interactive-plotting-tools">Interactive plotting tools</a></li>
+      <li><a href="#arguments">Arguments</a></li>
+      <li><a href="#value">Value</a></li>
+      <li><a href="#examples">Examples</a></li>
     </ul>
+
   </div>
 </div>
 

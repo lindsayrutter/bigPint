@@ -25,6 +25,10 @@ that remain.
 Plot interactive parallel coordinate plots.
 }
 \examples{
+# The first example uses data and dataMetrics objects as
+# input. The last example creates the same plot now using the
+# SummarizedExperiment (i.e. dataSE) object input.
+
 # Example: Create interactive parallel coordinate plot for genes that have
 # FDR < 0.01 and logFC < -4. Standardize genes to have an average of zero
 # and a standard deviation of one.
@@ -52,4 +56,38 @@ app <- plotPCPApp(data = pcpDat, pointColor = "purple")
 if (interactive()) {
     shiny::runApp(app, display.mode = "normal")
 }
+
+# Below is the same example, only now using the
+# SummarizedExperiment (i.e. dataSE) object as input.
+
+# Example: Create interactive parallel coordinate plot for genes that have
+# FDR < 0.01 and logFC < -4. Standardize genes to have an average of zero
+# and a standard deviation of one.
+
+\dontrun{
+data(se_soybean_ir_sub)
+
+# Create standardized version of data
+library(matrixStats)
+se_soybean_ir_sub_st = se_soybean_ir_sub
+assay(se_soybean_ir_sub_st) <-as.data.frame(t(apply(as.matrix(as.data.frame(
+    assay(se_soybean_ir_sub))), 1, scale)))
+nID <- which(is.nan(as.data.frame(assay(se_soybean_ir_sub_st))[,1]))
+assay(se_soybean_ir_sub_st)[nID,] <- 0
+
+# To subset our SummarizedExperiment data by a list of genes, we can
+# invoke the convertSESubsetGenes() method.
+
+library(dplyr, warn.conflicts = FALSE)
+geneList <- as.data.frame(rowData(se_soybean_ir_sub_st)) \%>\%
+    filter(N_P.FDR <= 0.01) \%>\% filter(N_P.logFC < -4)
+geneList <- geneList[,1]
+pcpDat <- convertSESubsetGenes(se_soybean_ir_sub_st, geneList)
+
+app <- plotPCPApp(dataSE = pcpDat, pointColor = "purple")
+if (interactive()) {
+    shiny::runApp(app, display.mode = "normal")
+}
+}
+
 }

@@ -25,6 +25,10 @@ that are located in the clicked hexagon bin.
 Plot interactive scatterplot matrices.
 }
 \examples{
+# The first example uses data and dataMetrics objects as
+# input. The last example creates the same plots now using the
+# SummarizedExperiment (i.e. dataSE) object input.
+
 # Example: Create interactive scatterplot matrix for first two treatment
 # groups of data.
 
@@ -34,4 +38,22 @@ app <- plotSMApp(data=soybean_cn_sub)
 if (interactive()) {
     shiny::runApp(app)
 }
+
+# Below are the same example, only now using the
+# SummarizedExperiment (i.e. dataSE) object as input.
+
+# Example: Create interactive scatterplot matrix for first two treatment
+# groups of data. When working with the SummarizedExperiment data,
+# we can summon the method convertSEPair() to subset our input data
+# to only a pair of treatment groups.
+
+\\dontrun{
+data(se_soybean_cn_sub)
+se_soybean_cn_sub <- convertSEPair(se_soybean_cn_sub, "S1", "S2")
+app <- plotSMApp(dataSE=se_soybean_cn_sub)
+if (interactive()) {
+    shiny::runApp(app)
+}
+}
+
 }

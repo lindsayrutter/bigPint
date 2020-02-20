@@ -311,7 +311,11 @@ these volcano plots is saved to the location specified in the outDir
 parameter as a JPG file.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Example 1: Plot volcano plot with default settings for overlaid points</span>
+    <pre class="examples"><div class='input'><span class='co'># The first set of four examples use data and dataMetrics objects as</span>
+<span class='co'># input. The last set of four examples create the same plots now</span>
+<span class='co'># using the SummarizedExperiment (i.e. dataSE) object input.</span>
+
+<span class='co'># Example 1: Plot volcano plot with default settings for overlaid points</span>
 <span class='co'># (FDR &lt; 0.05).</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_ir_sub</span>)
@@ -341,7 +345,51 @@ parameter as a JPG file.</p>
     <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>,
     <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
     <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
-<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div></pre>
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+
+<span class='co'># Below are the same four examples, only now using the</span>
+<span class='co'># SummarizedExperiment (i.e. dataSE) object as input.</span>
+
+<span class='co'># Example 1: Plot volcano plot with default settings for overlaid points</span>
+<span class='co'># (FDR &lt; 0.05).</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>se_soybean_ir_sub</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>,
+    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}
+
+<span class='co'># Example 2: Plot volcano plot and overlay points with PValue &lt; 1e-15.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
+    <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>,
+    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}
+
+<span class='co'># Example 3: Plot volcano plot and overlay points with PValue &lt; 1e-15. This </span>
+<span class='co'># time, plot all points (instead of hexagons) for the background.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
+    <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>,
+    <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}
+
+<span class='co'># Example 4: Plot volcano plot with points in background and overlay points </span>
+<span class='co'># with PValue &lt; 1e-15. This time, use a value of TRUE for the hover</span>
+<span class='co'># parameter so that you can hover over overlaid points and determine their</span>
+<span class='co'># IDs.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcano</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>,
+    <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>1</span>, <span class='kw'>threshVar</span> <span class='kw'>=</span> <span class='st'>"PValue"</span>, <span class='kw'>threshVal</span> <span class='kw'>=</span> <span class='fl'>1e-15</span>,
+    <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>hover</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

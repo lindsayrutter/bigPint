@@ -113,9 +113,9 @@ results with parallel coordinate plots. Optionally, save gene IDs within
 each cluster to .rds files for later use.
 }
 \examples{
-The first set of five examples use \code{data} and \code{dataMetrics}
-objects as input. The last set of five examples create the same plots now
-using the \code{SummarizedExperiment} (i.e. \code{dataSE}) object input.
+# The first set of five examples use data and dataMetrics
+# objects as input. The last set of five examples create the same plots now
+# using the SummarizedExperiment (i.e. dataSE) object input.
 
 # Example 1: Perform hierarchical clustering of size four using the 
 # default agglomeration method "ward.D". Cluster only on the genes that have
@@ -189,13 +189,14 @@ plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics,
   verbose = TRUE)
 }
 
-#' Below are the same five examples, only now using the
-\code{SummarizedExperiment} (i.e. \code{dataSE}) object as input.
+# Below are the same five examples, only now using the
+# SummarizedExperiment (i.e. dataSE) object as input.
 
 # Example 1: Perform hierarchical clustering of size four using the 
 # default agglomeration method "ward.D". Cluster only on the genes that have
 # FDR < 1e-7 (n = 113) and overlay these genes.
 
+\dontrun{
 library(grid)
 library(matrixStats)
 library(ggplot2)
@@ -205,7 +206,9 @@ colList = c("#00A600FF", rainbow(5)[c(1,4,5)])
 ret <- plotClusters(dataSE=se_soybean_ir_sub, nC=4, colList = colList,
     clusterAllData = FALSE, threshVal = 1e-7, saveFile = FALSE)
 grid.draw(ret[["N_P_4"]])
+}
 
+\dontrun{
 # Example 2: Perform the same analysis, only now create the four groups by 
 # clustering on all genes in the data (n = 5,604). Then, overlay the genes 
 # that have FDR < 1e-7 (n = 113) into their corresponding clusters.
@@ -213,15 +216,18 @@ grid.draw(ret[["N_P_4"]])
 ret <- plotClusters(dataSE=se_soybean_ir_sub, nC=4, colList = colList,
     clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
 grid.draw(ret[["N_P_4"]])
+}
 
 # Example 3: Perform the same analysis, only now overlay all genes in the 
 # data by setting the rowData() to NULL.
 
+\dontrun{
 se_soybean_ir_sub_nm <- se_soybean_ir_sub
 rowData(se_soybean_ir_sub_nm) <- NULL
 ret <- plotClusters(dataSE=se_soybean_ir_sub_nm, nC=4, colList = colList,
     clusterAllData = TRUE, saveFile = FALSE)
 grid.draw(ret[["N_P_4"]])
+}
 
 # Example 4: Visualization of gene clusters is usually performed on
 # standardized data. Here, hierarchical clustering of size four is performed
@@ -230,6 +236,7 @@ grid.draw(ret[["N_P_4"]])
 # pairwise combinations of treatment groups (S1 and S2; S1 and S3) have any 
 # genes with FDR < 0.05. The output plots for these two pairs are examined. 
 
+\dontrun{
 data(se_soybean_cn_sub)
 se_soybean_cn_sub_st = se_soybean_cn_sub
 assay(se_soybean_cn_sub_st) <-as.data.frame(t(apply(as.matrix(as.data.frame(
@@ -244,6 +251,7 @@ ret <- plotClusters(dataSE=se_soybean_cn_sub_st, nC=4,
 names(ret)
 grid.draw(ret[["S1_S2_4"]])
 grid.draw(ret[["S1_S3_4"]])
+}
 
 # Example 5: Run the same analysis, only now set the verbose parameter to 
 # value TRUE. This will save images of each individual cluster, .rds files 

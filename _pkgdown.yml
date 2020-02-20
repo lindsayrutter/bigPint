@@ -34,6 +34,11 @@ reference:
     contents:
     - '`se_soybean_cn_sub`'
     - '`se_soybean_ir_sub`'
+  - title: SummarizedExperiment data formatting tools
+    desc: These functions manipulate SummarizedExperiment data format by reducing number of treatment pairs and number of genes.
+    contents:
+    - '`convertSEPair`'
+    - '`convertSESubsetGenes`'    
   - title: Static plotting tools
     desc: These functions plot RNA-seq data and optionally overlay differentially expressed genes (DEGs). 
     contents:

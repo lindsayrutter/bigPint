@@ -48,9 +48,9 @@
 #' parameter as a JPG file.
 #' @export
 #' @examples
-#' The first set of three examples use \code{data} and \code{dataMetrics}
-#' objects as input. The last set of three examples create the same plots now
-#' using the \code{SummarizedExperiment} (i.e. \code{dataSE}) object input.
+#' # The first set of three examples use data and dataMetrics
+#' # objects as input. The last set of three examples create the same plots now
+#' # using the SummarizedExperiment (i.e. dataSE) object input.
 #' 
 #' # Example 1: Create litre plots for each of the 61 genes with FDR < 1e-10. 
 #' # Examine the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
@@ -84,12 +84,13 @@
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
 #' 
-#' Below are the same three examples, only now using the
-#' \code{SummarizedExperiment} (i.e. \code{dataSE}) object as input.
+#' # Below are the same three examples, only now using the
+#' # SummarizedExperiment (i.e. dataSE) object as input.
 #' 
 #' # Example 1: Create litre plots for each of the 61 genes with FDR < 1e-10. 
 #' # Examine the first plot (gene "N_P_Glyma.19G168700.Wm82.a2.v1")
 #' 
+#' \dontrun{
 #' data(se_soybean_ir_sub)
 #' assay(se_soybean_ir_sub) <- log(as.data.frame(assay(se_soybean_ir_sub))+1)
 #' ret <- plotLitre(dataSE = se_soybean_ir_sub, threshVal = 1e-10,
@@ -97,10 +98,12 @@
 #' length(ret)
 #' names(ret)[1]
 #' ret[[1]]
+#' }
 #' 
 #' # Example 2: Create litre plots for each of the five most significant genes
 #' # (low FDR values). View plot for gene "N_P_Glyma.19G168700.Wm82.a2.v1".
 #' 
+#' \dontrun{
 #' geneList <- as.data.frame(rowData(se_soybean_ir_sub)) %>%
 #'     arrange(N_P.FDR) %>% filter(row_number() <= 5)
 #' geneList <- geneList[,1]
@@ -108,16 +111,19 @@
 #'     pointColor = "deeppink")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
+#' }
 #' 
 #' # Example 3: Create one litre plot for each of the five most significant 
 #' # genes (low FDR values). View the plot for gene
 #' # "N_P_Glyma.19G168700.Wm82.a2.v1". Use points instead of the default 
 #' # hexagons as the background.
 #' 
+#' \dontrun{
 #' ret <- plotLitre(dataSE = se_soybean_ir_sub, geneList = geneList,
 #'     pointColor = "deeppink", option = "allPoints")
 #' names(ret)
 #' ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
+#' }
 #' 
 
 plotLitre = function(data=data, dataMetrics=NULL, dataSE=NULL,

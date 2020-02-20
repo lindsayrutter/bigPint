@@ -151,6 +151,8 @@ Below are the corresponding code blocks from everything above that now use the `
 
 ### Scatterplot matrix app
 
+We use the `convertSEPair()` function to reduce the `SummarizedExperiment` object from having three treatment groups (`se_soybean_cn_sub`) to only having two treatment groups, S1 and S2 (`se_soybean_cn_sub_S1S2`).  
+
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 data("se_soybean_cn_sub")
 se_soybean_cn_sub_S1S2 <- convertSEPair(se_soybean_cn_sub, "S1", "S2")
@@ -196,6 +198,8 @@ assay(se_soybean_ir_sub_st) <- as.data.frame(t(apply(as.matrix(as.data.frame(
 nID <- which(is.nan(as.data.frame(assay(se_soybean_ir_sub_st))[,1]))
 assay(se_soybean_ir_sub_st)[nID,] <- 0
 ```
+
+We use the `convertSESubsetGenes()` method to reduce the number of genes in the original `SummarizedExperiment` object from 5604 genes (`se_soybean_ir_sub_st`) to the 14 genes (`se_soybean_ir_sub_st_genes`) that had FDR less than 0.01 and logFC less than -4.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 dataMetrics <- as.data.frame(rowData(se_soybean_ir_sub_st))

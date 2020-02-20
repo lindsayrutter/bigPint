@@ -53,9 +53,9 @@
 #' is saved to the location specified in the outDir parameter as a JPG file.
 #' @export
 #' @examples
-#' The first set of four examples use \code{data} and \code{dataMetrics}
-#' objects as input. The last set of four examples create the same plots now
-#' using the \code{SummarizedExperiment} (i.e. \code{dataSE}) object input.
+#' # The first set of four examples use data and dataMetrics
+#' # objects as input. The last set of four examples create the same plots now
+#' # using the SummarizedExperiment (i.e. dataSE) object input.
 #' 
 #' # Example 1: Plot the side-by-side boxplots of the whole dataset without 
 #' # overlaying any metrics data by keeping the dataMetrics parameter its
@@ -90,44 +90,52 @@
 #'     lineColor = "blue", saveFile = FALSE, hover = TRUE)
 #' ret[[1]]
 #' 
-#' Below are the same four examples, only now using the
-#' \code{SummarizedExperiment} (i.e. \code{dataSE}) object as input.
+#' # Below are the same four examples, only now using the
+#' # SummarizedExperiment (i.e. dataSE) object as input.
 #' 
 #' # Example 1: Plot the side-by-side boxplots of the whole dataset without 
 #' # overlaying any metrics. We prevent overlaying metrics by setting the
 #' # rowData() to NULL.
 #' 
+#' \dontrun{
 #' data(se_soybean_ir_sub)
 #' se_soybean_ir_sub[,-1] <- log(se_soybean_ir_sub[,-1]+1)
 #' se_soybean_ir_sub_nm <- se_soybean_ir_sub
 #' rowData(se_soybean_ir_sub_nm) <- NULL
 #' ret <- plotPCP(dataSE = se_soybean_ir_sub_nm, saveFile = FALSE)
 #' ret[[1]]
+#' }
 #' 
+#' \dontrun{
 #' # Example 2: Overlay genes with FDR < 1e-4 as orange parallel coordinate
 #' # lines.
 #' 
 #' ret <- plotPCP(dataSE = se_soybean_ir_sub, threshVal = 1e-4,
 #'     saveFile = FALSE)
 #' ret[[1]]
+#' }
 #' 
 #' # Example 3: Overlay the ten most significant genes (lowest FDR values) as 
 #' # blue parallel coordinate lines.
 #' 
+#' \dontrun{
 #' geneList <- as.data.frame(rowData(se_soybean_ir_sub)) %>%
 #'     arrange(N_P.FDR) %>% filter(row_number() <= 10)
 #' geneList <- geneList[,1]
 #' ret <- plotPCP(dataSE = se_soybean_ir_sub, geneList = geneList,
 #'     lineSize = 0.3, lineColor = "blue", saveFile = FALSE)
 #' ret[[1]]
+#' }
 #' 
 #' # Example 4: Repeat this same procedure, only now set the hover parameter to 
 #' # TRUE to allow us to hover over blue parallel coordinate lines and
 #' # determine their individual IDs.
 #' 
+#' \dontrun{
 #' ret <- plotPCP(data = soybean_ir_sub, geneList = geneList, lineSize = 0.3, 
 #'     lineColor = "blue", saveFile = FALSE, hover = TRUE)
 #' ret[[1]]
+#' }
 #' 
 
 plotPCP = function(data, dataMetrics = NULL, dataSE=NULL, geneList = NULL,

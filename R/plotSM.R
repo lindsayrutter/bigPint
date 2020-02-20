@@ -64,13 +64,18 @@
 #' parameter as a JPG file.
 #' @export
 #' @examples
-#' # Read in data and metrics (need for all examples)
+#' 
+#' # The first set of six examples use data and dataMetrics
+#' # objects as input. The last set of six examples create the same plots now
+#' # using the SummarizedExperiment (i.e. dataSE) object input.
+#' 
+#' # Read in data and metrics (need for first set of six examples)
 #' data(soybean_cn_sub)
 #' data(soybean_cn_sub_metrics)
 #' data(soybean_ir_sub)
 #' data(soybean_ir_sub_metrics)
 #' 
-#' # Create standardized version of data (need for some examples)
+#' # Create standardized version of data (need for first set of six examples)
 #' library(matrixStats)
 #' library(ggplot2)
 #' soybean_cn_sub_st <- as.data.frame(t(apply(as.matrix(soybean_cn_sub[,-1]),
@@ -131,6 +136,79 @@
 #' ret <- plotSM(soybean_cn_sub, soybean_cn_sub_metrics, option = "foldChange", 
 #'     threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
 #' ret[[1]]
+#' 
+#' # Below are the same six examples, only now using the
+#' # SummarizedExperiment (i.e. dataSE) object as input.
+#' 
+#' # Read in data and metrics (need for first set of six examples)
+#' data(se_soybean_cn_sub)
+#' data(se_soybean_ir_sub)
+#' 
+#' # Create standardized version of data (need for first set of six examples)
+#' library(matrixStats)
+#' library(ggplot2)
+#' se_soybean_cn_sub_st = se_soybean_cn_sub
+#' assay(se_soybean_cn_sub_st) <-as.data.frame(t(apply(as.matrix(as.data.frame(
+#'     assay(se_soybean_cn_sub))), 1, scale)))
+#' nID <- which(is.nan(as.data.frame(assay(se_soybean_cn_sub_st))[,1]))
+#' assay(se_soybean_cn_sub_st)[nID,] <- 0
+#' 
+#' # Example 1: Plot scatterplot matrix of points. Saves three plots to outDir 
+#' # because saveFile equals TRUE by default.
+#' 
+#' \dontrun{
+#' plotSM(dataSE = se_soybean_cn_sub)
+#' }
+#' 
+#' # Example 2: Plot scatterplot matrix of points. Return list of plots so user 
+#' # can tailor them (such as add title) and does not save to outDir because 
+#' # saveFile equals FALSE.
+#' 
+#' \dontrun{
+#' ret <- plotSM(dataSE = se_soybean_cn_sub, pointColor = "pink",
+#'     saveFile = FALSE)
+#' # Determine names of plots in returned list
+#' names(ret)
+#' ret[["S1_S2"]] + ggtitle("S1 versus S2")
+#' ret[["S1_S3"]] + ggtitle("S1 versus S3")
+#' ret[["S2_S3"]] + ggtitle("S2 versus S3")
+#' }
+#' 
+#' # Example 3: Plot standardized data as scatterplot matrix of points.
+#' 
+#' \dontrun{
+#' ret <- plotSM(dataSE = se_soybean_cn_sub_st, pointColor = "#00C379",
+#'     saveFile = FALSE)
+#' ret[[1]] + xlab("Standardized read counts") +
+#' ylab("Standardized read counts")
+#' }
+#' 
+#' # Example 4: Plot scatterplot matrix of hexagons.
+#' 
+#' \dontrun{
+#' ret <- plotSM(dataSE = se_soybean_cn_sub, option = "hexagon", xbins = 5, 
+#'     pointSize = 0.1, saveFile = FALSE)
+#' ret[[2]]
+#' }
+#' 
+#' # Example 5: Plot scatterplot matrix of orthogonal distance on the logged
+#' # data, first without considering the metrics dataset and then considering
+#' # it.
+#' 
+#' \dontrun{
+#' assay(se_soybean_ir_sub) <- log(as.data.frame(assay(se_soybean_ir_sub))+1)
+#' ret <- plotSM(dataSE = se_soybean_ir_sub, option = "orthogonal",
+#'     threshOrth = 2.5, pointSize = 0.2, saveFile = FALSE)
+#' ret[[1]]
+#' }
+#' 
+#' # Example 6: Plot scatterplot matrix of fold change.
+#' 
+#' \dontrun{
+#' ret <- plotSM(dataSE = se_soybean_cn_sub, option = "foldChange", 
+#'     threshFC = 0.5, pointSize = 0.2, saveFile = FALSE)
+#' ret[[1]]
+#' }
 #' 
 
 plotSM = function(data=data, dataMetrics=NULL, dataSE=NULL, geneList = NULL,

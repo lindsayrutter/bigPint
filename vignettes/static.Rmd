@@ -346,6 +346,8 @@ library(ggplot2)
 ret[[1]] + labs(title = "Most significant gene")
 ```
 
+____________________________________________________________________________________
+
 ### Static scatterplot matrices
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
@@ -424,6 +426,8 @@ ret <- plotSM(dataSE = se_soybean_cn_sub, option = "foldChange",
 ret[[1]]
 ```
 
+____________________________________________________________________________________
+
 ### Static litre plots
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
@@ -431,6 +435,8 @@ geneList <- as.data.frame(rowData(se_soybean_cn_sub_st)) %>%
   arrange(S1_S2.FDR) %>% filter(row_number() <= 5)
 geneList <- geneList[,1]
 ```
+
+We use the `convertSEPair()` function to reduce the `SummarizedExperiment` object from having three treatment groups (`se_soybean_cn_sub_st`) to only having two treatment groups, S1 and S2 (`se_soybean_cn_sub_st_S1S2`).  
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 se_soybean_cn_sub_st_S1S2 <- convertSEPair(se_soybean_cn_sub_st, "S1", "S2")
@@ -445,6 +451,8 @@ ret <- plotLitre(dataSE = se_soybean_cn_sub_st_S1S2, geneList = geneList,
   pointColor = "gold", saveFile = FALSE, option = "allPoints")
 ret[["S1_S2_Glyma18g00690.1"]]
 ```
+
+____________________________________________________________________________________
 
 ### Static parallel coordinates
 
@@ -500,6 +508,8 @@ ret <- plotPCP(dataSE = se_soybean_ir_sub_ns, threshVal = 1e-4,
   saveFile = FALSE)
 ret[["N_P"]]
 ```
+
+____________________________________________________________________________________
 
 ### Static volcano plots
 

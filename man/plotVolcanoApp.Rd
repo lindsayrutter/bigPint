@@ -37,6 +37,10 @@ can download a file that contains the gene IDs that pass these thresholds.
 Plot interactive volcano plots.
 }
 \examples{
+# The first pair of examples use data and dataMetrics objects as input.
+# The last pair of examples create the same plots now using the 
+# SummarizedExperiment (i.e. dataSE) object input.
+
 # Example 1: Create interactive volcano plot of logged data using hexagon
 # bins for the background.
 
@@ -57,4 +61,30 @@ app <- plotVolcanoApp(data = soybean_cn_sub,
 if (interactive()) {
     shiny::runApp(app)
 }
+
+# Below is the same pair of examples, only now using the
+# SummarizedExperiment (i.e. dataSE) object as input.
+
+# Example 1: Create interactive volcano plot of logged data using hexagon
+# bins for the background.
+
+\dontrun{
+data(se_soybean_cn_sub)
+app <- plotVolcanoApp(dataSE = se_soybean_cn_sub)
+if (interactive()) {
+    shiny::runApp(app)
+}
+}
+
+# Example 2: Create interactive volcano plot of logged data using points for 
+# the background.
+
+\dontrun{
+app <- plotVolcanoApp(dataSE = se_soybean_cn_sub, option = "allPoints",
+    pointColor = "magenta")
+if (interactive()) {
+    shiny::runApp(app)
+}
+}
+
 }

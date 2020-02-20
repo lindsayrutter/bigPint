@@ -246,7 +246,11 @@ P-value) and a magnitude change value (such as log fold change). The user
 can download a file that contains the gene IDs that pass these thresholds.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Example 1: Create interactive volcano plot of logged data using hexagon</span>
+    <pre class="examples"><div class='input'><span class='co'># The first pair of examples use data and dataMetrics objects as input.</span>
+<span class='co'># The last pair of examples create the same plots now using the </span>
+<span class='co'># SummarizedExperiment (i.e. dataSE) object input.</span>
+
+<span class='co'># Example 1: Create interactive volcano plot of logged data using hexagon</span>
 <span class='co'># bins for the background.</span>
 
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_cn_sub</span>)
@@ -265,6 +269,31 @@ can download a file that contains the gene IDs that pass these thresholds.</p>
     <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"magenta"</span>)
 <span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
     <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>runApp</a></span>(<span class='no'>app</span>)
+}
+
+<span class='co'># Below is the same pair of examples, only now using the</span>
+<span class='co'># SummarizedExperiment (i.e. dataSE) object as input.</span>
+
+<span class='co'># Example 1: Create interactive volcano plot of logged data using hexagon</span>
+<span class='co'># bins for the background.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>se_soybean_cn_sub</span>)
+<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcanoApp</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>runApp</a></span>(<span class='no'>app</span>)
+}
+}
+
+<span class='co'># Example 2: Create interactive volcano plot of logged data using points for </span>
+<span class='co'># the background.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotVolcanoApp</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>,
+    <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"magenta"</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>runApp</a></span>(<span class='no'>app</span>)
+}
 }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

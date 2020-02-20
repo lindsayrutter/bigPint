@@ -318,13 +318,18 @@ distance</p></li>
 
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># Read in data and metrics (need for all examples)</span>
+    <pre class="examples"><div class='input'>
+<span class='co'># The first set of six examples use data and dataMetrics</span>
+<span class='co'># objects as input. The last set of six examples create the same plots now</span>
+<span class='co'># using the SummarizedExperiment (i.e. dataSE) object input.</span>
+
+<span class='co'># Read in data and metrics (need for first set of six examples)</span>
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_cn_sub</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_cn_sub_metrics</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_ir_sub</span>)
 <span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_ir_sub_metrics</span>)
 
-<span class='co'># Create standardized version of data (need for some examples)</span>
+<span class='co'># Create standardized version of data (need for first set of six examples)</span>
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>matrixStats</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
 <span class='no'>soybean_cn_sub_st</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='no'>soybean_cn_sub</span>[,-<span class='fl'>1</span>]),
@@ -379,7 +384,75 @@ distance</p></li>
 <span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='no'>soybean_cn_sub</span>, <span class='no'>soybean_cn_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"foldChange"</span>,
     <span class='kw'>threshFC</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
 <span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]</div><div class='img'><img src='plotSM-8.png' alt='' width='700' height='700' /></div><div class='input'>
-</div></span></pre>
+<span class='co'># Below are the same six examples, only now using the</span>
+<span class='co'># SummarizedExperiment (i.e. dataSE) object as input.</span>
+
+<span class='co'># Read in data and metrics (need for first set of six examples)</span>
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>se_soybean_cn_sub</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>se_soybean_ir_sub</span>)
+
+<span class='co'># Create standardized version of data (need for first set of six examples)</span>
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>matrixStats</span>)
+<span class='fu'><a href='https://rdrr.io/r/base/library.html'>library</a></span>(<span class='no'>ggplot2</span>)
+<span class='no'>se_soybean_cn_sub_st</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub</span>
+<span class='fu'>assay</span>(<span class='no'>se_soybean_cn_sub_st</span>) <span class='kw'>&lt;-</span><span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/t.html'>t</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/apply.html'>apply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/matrix.html'>as.matrix</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(
+    <span class='fu'>assay</span>(<span class='no'>se_soybean_cn_sub</span>))), <span class='fl'>1</span>, <span class='no'>scale</span>)))</div><div class='output co'>#&gt; <span class='error'>Error in assay(se_soybean_cn_sub): could not find function "assay"</span></div><div class='input'><span class='no'>nID</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/which.html'>which</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/is.finite.html'>is.nan</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>assay</span>(<span class='no'>se_soybean_cn_sub_st</span>))[,<span class='fl'>1</span>]))</div><div class='output co'>#&gt; <span class='error'>Error in assay(se_soybean_cn_sub_st): could not find function "assay"</span></div><div class='input'><span class='fu'>assay</span>(<span class='no'>se_soybean_cn_sub_st</span>)[<span class='no'>nID</span>,] <span class='kw'>&lt;-</span> <span class='fl'>0</span></div><div class='output co'>#&gt; <span class='error'>Error in assay(se_soybean_cn_sub_st)[nID, ] &lt;- 0: could not find function "assay"</span></div><div class='input'>
+<span class='co'># Example 1: Plot scatterplot matrix of points. Saves three plots to outDir </span>
+<span class='co'># because saveFile equals TRUE by default.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>plotSM</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub</span>)
+}
+
+<span class='co'># Example 2: Plot scatterplot matrix of points. Return list of plots so user </span>
+<span class='co'># can tailor them (such as add title) and does not save to outDir because </span>
+<span class='co'># saveFile equals FALSE.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"pink"</span>,
+    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='co'># Determine names of plots in returned list</span>
+<span class='fu'><a href='https://rdrr.io/r/base/names.html'>names</a></span>(<span class='no'>ret</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S2"</span>]] + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S1 versus S2"</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S1_S3"</span>]] + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S1 versus S3"</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='st'>"S2_S3"</span>]] + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ggtitle</a></span>(<span class='st'>"S2 versus S3"</span>)
+}
+
+<span class='co'># Example 3: Plot standardized data as scatterplot matrix of points.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub_st</span>, <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"#00C379"</span>,
+    <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]] + <span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>xlab</a></span>(<span class='st'>"Standardized read counts"</span>) +
+<span class='fu'><a href='https://ggplot2.tidyverse.org/reference/labs.html'>ylab</a></span>(<span class='st'>"Standardized read counts"</span>)
+}
+
+<span class='co'># Example 4: Plot scatterplot matrix of hexagons.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"hexagon"</span>, <span class='kw'>xbins</span> <span class='kw'>=</span> <span class='fl'>5</span>,
+    <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.1</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>2</span>]]
+}
+
+<span class='co'># Example 5: Plot scatterplot matrix of orthogonal distance on the logged</span>
+<span class='co'># data, first without considering the metrics dataset and then considering</span>
+<span class='co'># it.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'>assay</span>(<span class='no'>se_soybean_ir_sub</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>assay</span>(<span class='no'>se_soybean_ir_sub</span>))+<span class='fl'>1</span>)
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"orthogonal"</span>,
+    <span class='kw'>threshOrth</span> <span class='kw'>=</span> <span class='fl'>2.5</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}
+
+<span class='co'># Example 6: Plot scatterplot matrix of fold change.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>ret</span> <span class='kw'>&lt;-</span> <span class='fu'>plotSM</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_cn_sub</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"foldChange"</span>,
+    <span class='kw'>threshFC</span> <span class='kw'>=</span> <span class='fl'>0.5</span>, <span class='kw'>pointSize</span> <span class='kw'>=</span> <span class='fl'>0.2</span>, <span class='kw'>saveFile</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+<span class='no'>ret</span><span class='kw'>[[</span><span class='fl'>1</span>]]
+}</div></span></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

@@ -254,7 +254,62 @@ to order how to sequentially superimpose the genes by columns in the
 dataMetrics parameter.</p>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"></pre>
+    <pre class="examples"><div class='input'><span class='co'># The first pair of examples use data and dataMetrics</span>
+<span class='co'># objects as input. The last pair of examples create the same plots now</span>
+<span class='co'># using the SummarizedExperiment (i.e. dataSE) object input.</span>
+
+<span class='co'># Example 1: Create an interactive litre plot for the logged data using</span>
+<span class='co'># default background of hexagons.</span>
+
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_ir_sub</span>)
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>soybean_ir_sub_metrics</span>)
+<span class='no'>soybean_ir_sub_log</span> <span class='kw'>&lt;-</span> <span class='no'>soybean_ir_sub</span>
+<span class='no'>soybean_ir_sub_log</span>[,-<span class='fl'>1</span>] <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='no'>soybean_ir_sub</span>[,-<span class='fl'>1</span>]+<span class='fl'>1</span>)
+<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitreApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_log</span>,
+    <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>runApp</a></span>(<span class='no'>app</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>1234</span>, <span class='kw'>launch.browser</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}
+
+<span class='co'># Example 2: Repeat the same process, only now plot background data as </span>
+<span class='co'># individual points. Note this may be too slow now that all points are drawn</span>
+<span class='co'># in the background.</span>
+
+<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitreApp</span>(<span class='kw'>data</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_log</span>,
+    <span class='kw'>dataMetrics</span> <span class='kw'>=</span> <span class='no'>soybean_ir_sub_metrics</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>,
+    <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>runApp</a></span>(<span class='no'>app</span>)
+}
+
+<span class='co'># Below are the same pair of examples, only now using the</span>
+<span class='co'># SummarizedExperiment (i.e. dataSE) object as input.</span>
+
+<span class='co'># Example 1: Create an interactive litre plot for the logged data using</span>
+<span class='co'># default background of hexagons.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='fu'><a href='https://rdrr.io/r/utils/data.html'>data</a></span>(<span class='no'>se_soybean_ir_sub</span>)
+<span class='no'>se_soybean_ir_sub_log</span> <span class='kw'>&lt;-</span> <span class='no'>se_soybean_ir_sub</span>
+<span class='fu'>assay</span>(<span class='no'>se_soybean_ir_sub_log</span>) <span class='kw'>&lt;-</span>
+   <span class='fu'><a href='https://rdrr.io/r/base/Log.html'>log</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/as.data.frame.html'>as.data.frame</a></span>(<span class='fu'>assay</span>(<span class='no'>se_soybean_ir_sub_log</span>))+<span class='fl'>1</span>)
+<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitreApp</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub_log</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>runApp</a></span>(<span class='no'>app</span>, <span class='kw'>port</span> <span class='kw'>=</span> <span class='fl'>1234</span>, <span class='kw'>launch.browser</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)
+}
+}
+
+<span class='co'># Example 2: Repeat the same process, only now plot background data as </span>
+<span class='co'># individual points. Note this may be too slow now that all points are</span>
+<span class='co'># drawn in the background.</span>
+
+<span class='kw'>if</span> (<span class='fl'>FALSE</span>) {
+<span class='no'>app</span> <span class='kw'>&lt;-</span> <span class='fu'>plotLitreApp</span>(<span class='kw'>dataSE</span> <span class='kw'>=</span> <span class='no'>se_soybean_ir_sub_log</span>, <span class='kw'>option</span> <span class='kw'>=</span> <span class='st'>"allPoints"</span>,
+    <span class='kw'>pointColor</span> <span class='kw'>=</span> <span class='st'>"red"</span>)
+<span class='kw'>if</span> (<span class='fu'><a href='https://rdrr.io/r/base/interactive.html'>interactive</a></span>()) {
+    <span class='kw pkg'>shiny</span><span class='kw ns'>::</span><span class='fu'><a href='https://rdrr.io/pkg/shiny/man/runApp.html'>runApp</a></span>(<span class='no'>app</span>)
+}
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

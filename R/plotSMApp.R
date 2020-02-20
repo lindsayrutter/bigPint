@@ -31,6 +31,10 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' that are located in the clicked hexagon bin.
 #' @export
 #' @examples
+#' # The first example uses data and dataMetrics objects as
+#' # input. The last example creates the same plots now using the
+#' # SummarizedExperiment (i.e. dataSE) object input.
+#' 
 #' # Example: Create interactive scatterplot matrix for first two treatment
 #' # groups of data.
 #' 
@@ -40,6 +44,24 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' if (interactive()) {
 #'     shiny::runApp(app)
 #' }
+#' 
+#' # Below are the same example, only now using the
+#' # SummarizedExperiment (i.e. dataSE) object as input.
+#' 
+#' # Example: Create interactive scatterplot matrix for first two treatment
+#' # groups of data. When working with the SummarizedExperiment data,
+#' # we can summon the method convertSEPair() to subset our input data
+#' # to only a pair of treatment groups.
+#' 
+#' \\dontrun{
+#' data(se_soybean_cn_sub)
+#' se_soybean_cn_sub <- convertSEPair(se_soybean_cn_sub, "S1", "S2")
+#' app <- plotSMApp(dataSE=se_soybean_cn_sub)
+#' if (interactive()) {
+#'     shiny::runApp(app)
+#' }
+#' }
+#' 
 
 plotSMApp = function(data=data, dataSE=NULL, xbins=10){
 appDir <- system.file("shiny-examples", "plotSMApp", package = "bigPint")
