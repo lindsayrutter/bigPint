@@ -362,4 +362,231 @@ ret[["S1_S3"]] %>% layout(title=paste0("Cluster 2 (n = ", length(S1S3Cluster2), 
 
 ____________________________________________________________________________________
 
+## SummarizedExperiment Version
+
+Below are the corresponding code blocks from above that now use the `SummarizedExperiment` object instead of the `data` and `dataMetrics` objects.
+
+### Step 1: Side-by-side boxplot
+
+Note that since we are not superimposing any metrics, we do not call the `rowData()` command.
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+library(bigPint)
+library(dplyr)
+library(ggplot2)
+library(plotly)
+library(DelayedArray)
+library(SummarizedExperiment)
+data("soybean_cn_sub")
+rownames(soybean_cn_sub) = soybean_cn_sub[,1]
+data = soybean_cn_sub[,-1]
+data <- DelayedArray(data)
+data <- SummarizedExperiment(assays = data)
+dataSE = convertSEPair(data, "S1", "S3")
+
+str(assays(dataSE), strict.width = "wrap")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+dataSE_st = dataSE
+assay(dataSE_st) <- as.data.frame(t(apply(as.matrix(as.data.frame(
+  assay(dataSE))), 1, scale)))
+nID <- which(is.nan(as.data.frame(assay(dataSE_st))[,1]))
+assay(dataSE_st)[nID,] <- 0
+
+str(assays(dataSE_st), strict.width = "wrap")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotPCP(dataSE=dataSE_st, saveFile = FALSE)
+ret[["S1_S3"]]
+```
+
+### Step 2: Scatterplot matrix
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE=dataSE, saveFile = FALSE)
+ret[["S1_S3"]]
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+dataSwitch = as.data.frame(assay(dataSE))
+dataSE_switch <- dataSwitch[,c(1:2, 4, 3, 5:6)]
+colnames(dataSE_switch) <- colnames(dataSwitch)
+dataSE_switch <- DelayedArray(dataSE_switch)
+dataSE_switch <- SummarizedExperiment(assays = dataSE_switch)
+
+ret <- plotSM(dataSE=dataSE_switch, saveFile = FALSE)
+ret[["S1_S3"]]
+```
+
+### Step 3: DEG parallel coordinates and clusters
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+library(edgeR)
+library(data.table)
+data = soybean_cn_sub %>% select(ID, starts_with("S1"), starts_with("S3")) 
+rownames(data) = data[,1]
+
+y = DGEList(counts=data[,-1])
+group = c(1,1,1,2,2,2)
+y = DGEList(counts=y, group=group)
+Group = factor(c(rep("S1",3), rep("S3",3)))
+design <- model.matrix(~0+Group, data=y$samples)
+colnames(design) <- levels(Group)
+y <- estimateDisp(y, design)
+fit <- glmFit(y, design)
+
+dataMetrics <- data.frame(ID = rownames(data))
+for (i in 1:(ncol(fit)-1)){
+    for (j in (i+1):ncol(fit)){
+        contrast=rep(0,ncol(fit))
+        contrast[i]=1
+        contrast[j]=-1
+        lrt <- glmLRT(fit, contrast=contrast)
+        lrt <- topTags(lrt, n = nrow(y[[1]]))[[1]]
+        
+        setDT(lrt, keep.rownames = TRUE)[]
+        lrt <- as.data.frame(lrt)
+        colnames(lrt) <- paste0(colnames(fit)[i], "_", colnames(fit)[j], ".",
+          colnames(lrt))
+        colnames(lrt)[1] = "ID"
+        
+        reorderID <- full_join(data, lrt, by = "ID")
+        dataMetrics <- cbind(dataMetrics, reorderID[,-c(1:ncol(data))])
+    }
+}
+
+dataMetrics$ID <- as.character(dataMetrics$ID)
+data <- DelayedArray(as.data.frame(assay(dataSE_st)))
+dataSE_st <- SummarizedExperiment(assays = data, rowData = dataMetrics)
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+str(rowData(dataSE_st), strict.width = "wrap")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotPCP(dataSE = dataSE_st, threshVal = 0.1, lineSize = 0.3,
+  lineColor = "magenta", saveFile = FALSE)
+ret[["S1_S3"]] + ggtitle("DEGs (FDR < 0.1)")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotPCP(dataSE = dataSE_st, threshVal = 0.1, lineSize = 0.3,
+  lineColor = "magenta", saveFile = FALSE, hover = TRUE)
+ret[["S1_S3"]] %>% layout(title="DEGs (FDR < 0.1)")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(dataSE = dataSE_st, threshVal = 0.1, nC = 2,
+  colList = c("#00A600FF", "#CC00FFFF"), lineSize = 0.5, verbose = TRUE)
+plot(ret[["S1_S3_2"]])
+```
+
+### Step 4: DEG scatterplot matrix
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster1 <- readRDS(paste0(tempdir(), "/S1_S3_2_1.rds"))
+S1S3Cluster2 <- readRDS(paste0(tempdir(), "/S1_S3_2_2.rds"))
+S1S3Cluster1
+S1S3Cluster2
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = dataSE, geneList = S1S3Cluster1,
+  pointColor = "#00A600FF", pointSize = 1, saveFile = FALSE)
+ret[["S1_S3"]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = dataSE, geneList = S1S3Cluster2,
+  pointColor = "#CC00FFFF", pointSize = 1, saveFile = FALSE)
+ret[["S1_S3"]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")"))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = dataSE_st, geneList = S1S3Cluster1,
+  pointColor = "#00A600FF",pointSize = 1, saveFile = FALSE)
+ret[["S1_S3"]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = dataSE_st, geneList = S1S3Cluster2,
+  pointColor = "#CC00FFFF", pointSize = 1, saveFile = FALSE)
+ret[["S1_S3"]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")"))    
+```
+
+### Step 5: DEG litre plots
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotLitre(dataSE = dataSE, geneList = S1S3Cluster1[1],
+  pointColor = "#00A600FF", pointSize = 2, saveFile = FALSE)
+ret[[1]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), "): ", 
+    S1S3Cluster1[1]))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotLitre(dataSE = dataSE, geneList = S1S3Cluster2[1],
+  pointColor = "#CC00FFFF", pointSize = 2, saveFile = FALSE)
+ret[[1]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), "): ", 
+  S1S3Cluster2[1])) 
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotLitre(dataSE = dataSE_st, geneList = S1S3Cluster1[1],
+  pointColor = "#00A600FF", pointSize = 2, saveFile = FALSE,
+  option = "allPoints")
+ret[[1]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), "): ", 
+  S1S3Cluster1[1]))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotLitre(dataSE = dataSE_st, geneList = S1S3Cluster2[1],
+  pointColor = "#CC00FFFF", pointSize = 2, saveFile = FALSE,
+  option = "allPoints")
+ret[[1]] + ggtitle(paste0("Cluster 2 (n = ", length(S1S3Cluster2), "): ", 
+  S1S3Cluster2[1]))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+app <- plotLitreApp(dataSE = dataSE_st, geneList = S1S3Cluster1,
+  pointColor = "#00A600FF")
+if (interactive()) {
+  shiny::runApp(app)
+}
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+app <- plotLitreApp(dataSE = dataSE_st, geneList = S1S3Cluster2,
+  pointColor = "#CC00FFFF")
+if (interactive()) {
+  shiny::runApp(app)
+}    
+```
+
+### Step 6: DEG volcano plots
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+dataSE <- SummarizedExperiment(assays = dataSE, rowData = dataMetrics)    
+rowData(dataSE) <- dataMetrics
+
+ret <- plotVolcano(dataSE = dataSE, geneList = S1S3Cluster1,
+    saveFile = FALSE, pointSize = 4, pointColor = "#00A600FF")
+ret[["S1_S3"]] + ggtitle(paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotVolcano(dataSE = dataSE, geneList = S1S3Cluster1, saveFile = FALSE,
+  pointSize = 2, pointColor = "#00A600FF", option = "allPoints", hover = TRUE)
+ret[["S1_S3"]] %>% layout(title=paste0("Cluster 1 (n = ", length(S1S3Cluster1), ")"))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotVolcano(dataSE = dataSE, geneList = S1S3Cluster2,
+  saveFile = FALSE, pointSize = 2, pointColor = "#CC00FFFF", option = "allPoints", 
+  hover = TRUE)
+ret[["S1_S3"]] %>% layout(title=paste0("Cluster 2 (n = ", length(S1S3Cluster2), ")")) 
+```
+
 ## References

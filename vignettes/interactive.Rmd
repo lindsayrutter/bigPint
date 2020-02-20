@@ -145,4 +145,73 @@ embed_vimeo("349398286", width = 700, height = 600) %>% div(class = "vembedr") %
 
 ____________________________________________________________________________________
 
+## SummarizedExperiment Version
+
+Below are the corresponding code blocks from above that now use the `SummarizedExperiment` object instead of the `data` and `dataMetrics` objects.
+
+### Scatterplot matrix app
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+data("se_soybean_cn_sub")
+se_soybean_cn_sub_S1S2 <- convertSEPair(se_soybean_cn_sub, "S1", "S2")
+app <- plotSMApp(dataSE=se_soybean_cn_sub_S1S2)
+if (interactive()) {
+  shiny::runApp(app)
+}
+```
+
+____________________________________________________________________________________
+
+### Litre plot app
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+data("se_soybean_ir_sub")
+se_soybean_ir_sub_log = se_soybean_ir_sub
+assay(se_soybean_ir_sub_log) <- log(as.data.frame(assay(se_soybean_ir_sub))+1)
+app <- plotLitreApp(dataSE = se_soybean_ir_sub_log)
+if (interactive()) {
+  shiny::runApp(app, port = 1234, launch.browser = TRUE)
+}
+```
+
+____________________________________________________________________________________
+
+### Volcano plot app
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+app <- plotVolcanoApp(dataSE = se_soybean_ir_sub_log)
+if (interactive()) {
+  shiny::runApp(app)
+}    
+```
+
+____________________________________________________________________________________
+
+### Parallel coordinates app
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+se_soybean_ir_sub_st = se_soybean_ir_sub
+assay(se_soybean_ir_sub_st) <- as.data.frame(t(apply(as.matrix(as.data.frame(
+  assay(se_soybean_ir_sub))), 1, scale)))
+nID <- which(is.nan(as.data.frame(assay(se_soybean_ir_sub_st))[,1]))
+assay(se_soybean_ir_sub_st)[nID,] <- 0
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+dataMetrics <- as.data.frame(rowData(se_soybean_ir_sub_st))
+plotGenes = filter(dataMetrics, N_P.FDR < 0.01, N_P.logFC < -4) %>% select(ID)
+plotGenes = plotGenes[,1]
+se_soybean_ir_sub_st_genes <- convertSESubsetGenes(se_soybean_ir_sub_st,
+  plotGenes)
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+app <- plotPCPApp(dataSE = se_soybean_ir_sub_st_genes)
+if (interactive()) {
+  shiny::runApp(app, display.mode = "normal")
+}
+```
+
+____________________________________________________________________________________
+
 ## References

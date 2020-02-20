@@ -152,7 +152,7 @@
       <h1>Hierarchical clustering</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2020-02-19</h4>
+            <h4 class="date">2020-02-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/clusters.Rmd"><code>vignettes/clusters.Rmd</code></a></small>
       <div class="hidden name"><code>clusters.Rmd</code></div>
@@ -309,6 +309,118 @@
 <span id="cb27-2"><a href="#cb27-2"></a>  S1S3Cluster3, S1S3Cluster4), <span class="dt">lineAlpha =</span> <span class="dv">1</span>, <span class="dt">lineSize =</span> <span class="fl">0.5</span>)</span>
 <span id="cb27-3"><a href="#cb27-3"></a><span class="kw"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(ret[[<span class="st">"S1_S3_3"</span>]])</span></code></pre></div>
 <p><img src="clusters_files/figure-html/unnamed-chunk-16-1.png" width="700.0000032"></p>
+<hr>
+</div>
+<div id="summarizedexperiment-version" class="section level2">
+<h2 class="hasAnchor">
+<a href="#summarizedexperiment-version" class="anchor"></a>SummarizedExperiment Version</h2>
+<p>Below are the corresponding code blocks from above that now use the <code>SummarizedExperiment</code> object instead of the <code>data</code> and <code>dataMetrics</code> objects.</p>
+<div id="approach-1-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#approach-1-1" class="anchor"></a>Approach 1</h3>
+<div class="sourceCode" id="cb28"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb28-1"><a href="#cb28-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(grid)</span>
+<span id="cb28-2"><a href="#cb28-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(matrixStats)</span>
+<span id="cb28-3"><a href="#cb28-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(ggplot2)</span>
+<span id="cb28-4"><a href="#cb28-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bigPint)</span>
+<span id="cb28-5"><a href="#cb28-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(DelayedArray)</span>
+<span id="cb28-6"><a href="#cb28-6"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(SummarizedExperiment)</span>
+<span id="cb28-7"><a href="#cb28-7"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"se_soybean_ir_sub"</span>)</span>
+<span id="cb28-8"><a href="#cb28-8"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_ir_sub) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_ir_sub))<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb28-9"><a href="#cb28-9"></a><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(se_soybean_ir_sub)</span></code></pre></div>
+<pre><code>## [1] 5604</code></pre>
+<div class="sourceCode" id="cb30"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb30-1"><a href="#cb30-1"></a><span class="kw"><a href="https://rdrr.io/r/base/length.html">length</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span>(se_soybean_ir_sub))<span class="op">$</span>N_P.FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">1e-7</span>))</span></code></pre></div>
+<pre><code>## [1] 113</code></pre>
+<div class="sourceCode" id="cb32"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb32-1"><a href="#cb32-1"></a>colList =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#00A600FF"</span>, <span class="kw"><a href="https://rdrr.io/r/grDevices/palettes.html">rainbow</a></span>(<span class="dv">5</span>)[<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">4</span>,<span class="dv">5</span>)])</span>
+<span id="cb32-2"><a href="#cb32-2"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">dataSE=</span>se_soybean_ir_sub, <span class="dt">nC=</span><span class="dv">4</span>, <span class="dt">colList =</span> colList,</span>
+<span id="cb32-3"><a href="#cb32-3"></a>  <span class="dt">clusterAllData =</span> <span class="ot">FALSE</span>, <span class="dt">threshVal =</span> <span class="fl">1e-7</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb32-4"><a href="#cb32-4"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ret)</span></code></pre></div>
+<pre><code>## [1] "N_P_4"</code></pre>
+<div class="sourceCode" id="cb34"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb34-1"><a href="#cb34-1"></a><span class="kw"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(ret[[<span class="st">"N_P_4"</span>]])</span></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-19-1.png" width="700.0000032"></p>
+<hr>
+</div>
+<div id="approach-2-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#approach-2-1" class="anchor"></a>Approach 2</h3>
+<div class="sourceCode" id="cb35"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb35-1"><a href="#cb35-1"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">dataSE=</span>se_soybean_ir_sub, <span class="dt">nC=</span><span class="dv">4</span>, <span class="dt">colList =</span> colList,</span>
+<span id="cb35-2"><a href="#cb35-2"></a>  <span class="dt">clusterAllData =</span> <span class="ot">TRUE</span>, <span class="dt">threshVal =</span> <span class="fl">1e-7</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb35-3"><a href="#cb35-3"></a><span class="kw"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(ret[[<span class="st">"N_P_4"</span>]])</span></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-20-1.png" width="700.0000032"></p>
+<hr>
+</div>
+<div id="approach-3-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#approach-3-1" class="anchor"></a>Approach 3</h3>
+<div class="sourceCode" id="cb36"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb36-1"><a href="#cb36-1"></a>se_soybean_ir_sub_nm &lt;-<span class="st"> </span>se_soybean_ir_sub</span>
+<span id="cb36-2"><a href="#cb36-2"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span>(se_soybean_ir_sub_nm) &lt;-<span class="st"> </span><span class="ot">NULL</span></span>
+<span id="cb36-3"><a href="#cb36-3"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">dataSE=</span>se_soybean_ir_sub_nm, <span class="dt">nC=</span><span class="dv">4</span>, <span class="dt">colList =</span> colList,</span>
+<span id="cb36-4"><a href="#cb36-4"></a>  <span class="dt">clusterAllData =</span> <span class="ot">TRUE</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb36-5"><a href="#cb36-5"></a><span class="kw"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(ret[[<span class="st">"N_P_4"</span>]])  </span></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-21-1.png" width="700.0000032"></p>
+<hr>
+</div>
+<div id="standardization-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#standardization-1" class="anchor"></a>Standardization</h3>
+<div class="sourceCode" id="cb37"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb37-1"><a href="#cb37-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(se_soybean_cn_sub)</span>
+<span id="cb37-2"><a href="#cb37-2"></a></span>
+<span id="cb37-3"><a href="#cb37-3"></a>se_soybean_cn_sub_st =<span class="st"> </span>se_soybean_cn_sub</span>
+<span id="cb37-4"><a href="#cb37-4"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_cn_sub_st) &lt;-<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/DelayedArray/man/DelayedMatrix-utils.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/DelayedArray/man/DelayedArray-utils.html">apply</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(</span>
+<span id="cb37-5"><a href="#cb37-5"></a>  <span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_cn_sub))), <span class="dv">1</span>, scale)))</span>
+<span id="cb37-6"><a href="#cb37-6"></a>nID &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_cn_sub_st))[,<span class="dv">1</span>]))</span>
+<span id="cb37-7"><a href="#cb37-7"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_cn_sub_st)[nID,] &lt;-<span class="st"> </span><span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb38"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb38-1"><a href="#cb38-1"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">dataSE=</span>se_soybean_cn_sub_st, <span class="dt">nC=</span><span class="dv">4</span>,</span>
+<span id="cb38-2"><a href="#cb38-2"></a>  <span class="dt">colList =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#00A600FF"</span>, <span class="st">"#CC00FFFF"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>), <span class="dt">lineSize =</span> <span class="fl">0.5</span>,</span>
+<span id="cb38-3"><a href="#cb38-3"></a>  <span class="dt">lineAlpha =</span> <span class="dv">1</span>, <span class="dt">clusterAllData =</span> <span class="ot">FALSE</span>, <span class="dt">aggMethod =</span> <span class="st">"average"</span>,</span>
+<span id="cb38-4"><a href="#cb38-4"></a>  <span class="dt">yAxisLabel =</span> <span class="st">"Standardized read count"</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)    </span></code></pre></div>
+<pre><code>## [1] "S2_S3: There were no significant genes"</code></pre>
+<div class="sourceCode" id="cb40"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb40-1"><a href="#cb40-1"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(ret)</span></code></pre></div>
+<pre><code>## [1] "S1_S2_4" "S1_S3_4" "S2_S3_4"</code></pre>
+<div class="sourceCode" id="cb42"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb42-1"><a href="#cb42-1"></a><span class="kw"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(ret[[<span class="st">"S1_S2_4"</span>]])</span>
+<span id="cb42-2"><a href="#cb42-2"></a><span class="kw"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(ret[[<span class="st">"S1_S3_4"</span>]])</span></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-23-1.png" width="700.0000032"></p>
+<hr>
+</div>
+<div id="verbose-option-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#verbose-option-1" class="anchor"></a>Verbose option</h3>
+<div class="sourceCode" id="cb43"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb43-1"><a href="#cb43-1"></a><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">dataSE=</span>se_soybean_cn_sub_st, <span class="dt">nC=</span><span class="dv">4</span>, </span>
+<span id="cb43-2"><a href="#cb43-2"></a>  <span class="dt">colList =</span> <span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="st">"#00A600FF"</span>, <span class="st">"#CC00FFFF"</span>, <span class="st">"red"</span>, <span class="st">"darkorange"</span>), <span class="dt">lineSize =</span> <span class="fl">0.5</span>,</span>
+<span id="cb43-3"><a href="#cb43-3"></a>  <span class="dt">lineAlpha =</span> <span class="dv">1</span>, <span class="dt">clusterAllData =</span> <span class="ot">FALSE</span>, <span class="dt">aggMethod =</span> <span class="st">"average"</span>,</span>
+<span id="cb43-4"><a href="#cb43-4"></a>  <span class="dt">yAxisLabel =</span> <span class="st">"Standardized read count"</span>, <span class="dt">verbose =</span> <span class="ot">TRUE</span>)</span></code></pre></div>
+<pre><code>## [1] "S2_S3: There were no significant genes"</code></pre>
+<div class="sourceCode" id="cb45"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb45-1"><a href="#cb45-1"></a>S1S3Cluster1 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"/S1_S3_4_1.rds"</span>))    </span>
+<span id="cb45-2"><a href="#cb45-2"></a>S1S3Cluster1</span></code></pre></div>
+<pre><code>##  [1] "Glyma18g00690.1" "Glyma08g44110.1" "Glyma01g26570.1" "Glyma07g09700.1"
+##  [5] "Glyma02g40610.1" "Glyma17g17970.1" "Glyma19g26250.1" "Glyma10g34630.1"
+##  [9] "Glyma14g14220.1" "Glyma19g26710.1" "Glyma03g29150.1" "Glyma08g19245.1"
+## [13] "Glyma07g01730.2" "Glyma18g25845.1" "Glyma08g22380.1" "Glyma20g30460.1"
+## [17] "Glyma12g10960.1" "Glyma16g08810.1" "Glyma18g42630.2"</code></pre>
+<div class="sourceCode" id="cb47"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb47-1"><a href="#cb47-1"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSM.html">plotSM</a></span>(<span class="dt">dataSE =</span> se_soybean_cn_sub_st, <span class="dt">geneList =</span> S1S3Cluster1,</span>
+<span id="cb47-2"><a href="#cb47-2"></a>  <span class="dt">pointColor =</span> <span class="st">"#00A600FF"</span>, <span class="dt">saveFile =</span> <span class="ot">FALSE</span>)</span>
+<span id="cb47-3"><a href="#cb47-3"></a>ret[[<span class="st">"S1_S3"</span>]] <span class="op">+</span><span class="st"> </span><span class="kw"><a href="https://ggplot2.tidyverse.org/reference/labs.html">ggtitle</a></span>(<span class="st">"Cluster 1 Genes (n=19)"</span>)</span></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-26-1.png" width="700.0000032"></p>
+<hr>
+</div>
+<div id="pre-determined-clusters-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#pre-determined-clusters-1" class="anchor"></a>Pre-determined clusters</h3>
+<div class="sourceCode" id="cb48"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb48-1"><a href="#cb48-1"></a>S1S3Cluster2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"/S1_S3_4_2.rds"</span>))</span>
+<span id="cb48-2"><a href="#cb48-2"></a>S1S3Cluster3 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"/S1_S3_4_3.rds"</span>))</span>
+<span id="cb48-3"><a href="#cb48-3"></a>S1S3Cluster4 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/readRDS.html">readRDS</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/tempfile.html">tempdir</a></span>(), <span class="st">"/S1_S3_4_4.rds"</span>))</span></code></pre></div>
+<div class="sourceCode" id="cb49"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb49-1"><a href="#cb49-1"></a>S1S3Cluster2</span></code></pre></div>
+<pre><code>## [1] "Glyma06g12670.1" "Glyma12g32460.1" "Glyma17g09850.1" "Glyma18g52920.1"
+## [5] "Glyma01g24710.1" "Glyma04g39880.1" "Glyma05g27450.2"</code></pre>
+<div class="sourceCode" id="cb51"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb51-1"><a href="#cb51-1"></a>S1S3Cluster3</span></code></pre></div>
+<pre><code>## [1] "Glyma04g37510.1" "Glyma03g19880.1"</code></pre>
+<div class="sourceCode" id="cb53"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb53-1"><a href="#cb53-1"></a>S1S3Cluster4</span></code></pre></div>
+<pre><code>## [1] "Glyma08g11570.1" "Glyma08g19290.1"</code></pre>
+<div class="sourceCode" id="cb55"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb55-1"><a href="#cb55-1"></a>ret &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotClusters.html">plotClusters</a></span>(<span class="dt">dataSE=</span>se_soybean_cn_sub_st, <span class="dt">geneLists =</span> <span class="kw"><a href="https://rdrr.io/r/base/list.html">list</a></span>(S1S3Cluster2,</span>
+<span id="cb55-2"><a href="#cb55-2"></a>  S1S3Cluster3, S1S3Cluster4), <span class="dt">lineAlpha =</span> <span class="dv">1</span>, <span class="dt">lineSize =</span> <span class="fl">0.5</span>)</span>
+<span id="cb55-3"><a href="#cb55-3"></a><span class="kw"><a href="https://rdrr.io/r/grid/grid.draw.html">grid.draw</a></span>(ret[[<span class="st">"S1_S3_3"</span>]])</span></code></pre></div>
+<p><img src="clusters_files/figure-html/unnamed-chunk-29-1.png" width="700.0000032"></p>
+<hr>
+</div>
 </div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
@@ -340,6 +452,7 @@
       <li><a href="#standardization">Standardization</a></li>
       <li><a href="#verbose-option">Verbose option</a></li>
       <li><a href="#pre-determined-clusters">Pre-determined clusters</a></li>
+      <li><a href="#summarizedexperiment-version">SummarizedExperiment Version</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>

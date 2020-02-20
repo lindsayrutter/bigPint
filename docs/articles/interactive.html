@@ -152,7 +152,7 @@
       <h1>Producing interactive plots</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2020-02-19</h4>
+            <h4 class="date">2020-02-20</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/interactive.Rmd"><code>vignettes/interactive.Rmd</code></a></small>
       <div class="hidden name"><code>interactive.Rmd</code></div>
@@ -265,6 +265,62 @@
 </div>
 <hr>
 </div>
+<div id="summarizedexperiment-version" class="section level2">
+<h2 class="hasAnchor">
+<a href="#summarizedexperiment-version" class="anchor"></a>SummarizedExperiment Version</h2>
+<p>Below are the corresponding code blocks from above that now use the <code>SummarizedExperiment</code> object instead of the <code>data</code> and <code>dataMetrics</code> objects.</p>
+<div id="scatterplot-matrix-app-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#scatterplot-matrix-app-1" class="anchor"></a>Scatterplot matrix app</h3>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"se_soybean_cn_sub"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>se_soybean_cn_sub_S1S2 &lt;-<span class="st"> </span><span class="kw">convertSEPair</span>(se_soybean_cn_sub, <span class="st">"S1"</span>, <span class="st">"S2"</span>)</span>
+<span id="cb5-3"><a href="#cb5-3"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSMApp.html">plotSMApp</a></span>(<span class="dt">dataSE=</span>se_soybean_cn_sub_S1S2)</span>
+<span id="cb5-4"><a href="#cb5-4"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
+<span id="cb5-5"><a href="#cb5-5"></a>  shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app)</span>
+<span id="cb5-6"><a href="#cb5-6"></a>}</span></code></pre></div>
+<hr>
+</div>
+<div id="litre-plot-app-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#litre-plot-app-1" class="anchor"></a>Litre plot app</h3>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"se_soybean_ir_sub"</span>)</span>
+<span id="cb6-2"><a href="#cb6-2"></a>se_soybean_ir_sub_log =<span class="st"> </span>se_soybean_ir_sub</span>
+<span id="cb6-3"><a href="#cb6-3"></a><span class="kw">assay</span>(se_soybean_ir_sub_log) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/Log.html">log</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">assay</span>(se_soybean_ir_sub))<span class="op">+</span><span class="dv">1</span>)</span>
+<span id="cb6-4"><a href="#cb6-4"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotLitreApp.html">plotLitreApp</a></span>(<span class="dt">dataSE =</span> se_soybean_ir_sub_log)</span>
+<span id="cb6-5"><a href="#cb6-5"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
+<span id="cb6-6"><a href="#cb6-6"></a>  shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app, <span class="dt">port =</span> <span class="dv">1234</span>, <span class="dt">launch.browser =</span> <span class="ot">TRUE</span>)</span>
+<span id="cb6-7"><a href="#cb6-7"></a>}</span></code></pre></div>
+<hr>
+</div>
+<div id="volcano-plot-app-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#volcano-plot-app-1" class="anchor"></a>Volcano plot app</h3>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotVolcanoApp.html">plotVolcanoApp</a></span>(<span class="dt">dataSE =</span> se_soybean_ir_sub_log)</span>
+<span id="cb7-2"><a href="#cb7-2"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
+<span id="cb7-3"><a href="#cb7-3"></a>  shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>}    </span></code></pre></div>
+<hr>
+</div>
+<div id="parallel-coordinates-app-1" class="section level3">
+<h3 class="hasAnchor">
+<a href="#parallel-coordinates-app-1" class="anchor"></a>Parallel coordinates app</h3>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>se_soybean_ir_sub_st =<span class="st"> </span>se_soybean_ir_sub</span>
+<span id="cb8-2"><a href="#cb8-2"></a><span class="kw">assay</span>(se_soybean_ir_sub_st) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/t.html">t</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/apply.html">apply</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/matrix.html">as.matrix</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(</span>
+<span id="cb8-3"><a href="#cb8-3"></a>  <span class="kw">assay</span>(se_soybean_ir_sub))), <span class="dv">1</span>, scale)))</span>
+<span id="cb8-4"><a href="#cb8-4"></a>nID &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">assay</span>(se_soybean_ir_sub_st))[,<span class="dv">1</span>]))</span>
+<span id="cb8-5"><a href="#cb8-5"></a><span class="kw">assay</span>(se_soybean_ir_sub_st)[nID,] &lt;-<span class="st"> </span><span class="dv">0</span></span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dataMetrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">rowData</span>(se_soybean_ir_sub_st))</span>
+<span id="cb9-2"><a href="#cb9-2"></a>plotGenes =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(dataMetrics, N_P.FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>, N_P.logFC <span class="op">&lt;</span><span class="st"> </span><span class="dv">-4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ID)</span>
+<span id="cb9-3"><a href="#cb9-3"></a>plotGenes =<span class="st"> </span>plotGenes[,<span class="dv">1</span>]</span>
+<span id="cb9-4"><a href="#cb9-4"></a>se_soybean_ir_sub_st_genes &lt;-<span class="st"> </span><span class="kw">convertSESubsetGenes</span>(se_soybean_ir_sub_st,</span>
+<span id="cb9-5"><a href="#cb9-5"></a>  plotGenes)</span></code></pre></div>
+<div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotPCPApp.html">plotPCPApp</a></span>(<span class="dt">dataSE =</span> se_soybean_ir_sub_st_genes)</span>
+<span id="cb10-2"><a href="#cb10-2"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
+<span id="cb10-3"><a href="#cb10-3"></a>  shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app, <span class="dt">display.mode =</span> <span class="st">"normal"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4"></a>}</span></code></pre></div>
+<hr>
+</div>
+</div>
 <div id="references" class="section level2 unnumbered">
 <h2 class="hasAnchor">
 <a href="#references" class="anchor"></a>References</h2>
@@ -291,6 +347,7 @@
       <li><a href="#litre-plot-app">Litre plot app</a></li>
       <li><a href="#volcano-plot-app">Volcano plot app</a></li>
       <li><a href="#parallel-coordinates-app">Parallel coordinates app</a></li>
+      <li><a href="#summarizedexperiment-version">SummarizedExperiment Version</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>
