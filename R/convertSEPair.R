@@ -1,4 +1,4 @@
-#' @title Convert SummarizedExperiment to only contain defined treatment pair
+#' @title Convert SummarizedExperiment to contain defined treatment pair
 #' 
 #' @description Reduce a SummarizedExperiment object that initially contains
 #' more than two treatment groups to now only contain a user-specified subset
@@ -12,6 +12,8 @@
 #' remain in the dataSE object
 #' @param group2 CHARACTER STRING | Name of second treatment group that will
 #' remain in the dataSE object
+#' @importFrom SummarizedExperiment rowData assay SummarizedExperiment
+#' @importFrom DelayedArray DelayedArray
 #' @return A new dataSE object that is a subset of the input dataSE in that it
 #' now only contains the user-specified pair of treatment groups.
 #' @export
@@ -28,7 +30,7 @@ convertSEPair <- function(dataSE, group1, group2){
     dfFormat <- as.data.frame(rowData(dataSE))
     dataMetrics <- lapply(split.default(dfFormat[-1], sub("\\..*", "",names(dfFormat[-1]))), function(x) cbind(dfFormat[1], setNames(x, sub(".*\\.", "", names(x)))))
     
-    oldData <- as.data.frame(assay(dataSE)) #changed from as.data.frame(assay(dataSE))
+    oldData <- as.data.frame(assay(dataSE))
     keepDataCol <- which(sapply(colnames(oldData), function(x) strsplit(x, "[.]")[[1]][1]) %in% c(group1, group2))
     keepOldData <- oldData[, keepDataCol]
     

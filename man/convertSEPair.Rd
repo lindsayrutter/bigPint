@@ -2,7 +2,7 @@
 % Please edit documentation in R/convertSEPair.R
 \name{convertSEPair}
 \alias{convertSEPair}
-\title{Convert SummarizedExperiment to only contain defined treatment pair}
+\title{Convert SummarizedExperiment to contain defined treatment pair}
 \usage{
 convertSEPair(dataSE, group1, group2)
 }
@@ -28,9 +28,9 @@ users using the SummarizedExperiment input object (instead of the
 combination of data and dataMetrics input objects.)
 }
 \examples{
-Example: Read in example SummarizedExperiment object that contains three
-treatment groups (S1, S2, and S3). Reduce it to now only contain two treatment
-groups (S1 and S3).
+# Example: Read in example SummarizedExperiment object that contains three
+# treatment groups (S1, S2, and S3). Reduce it to now only contain two treatment
+# groups (S1 and S3).
 
 data(se_soybean_cn_sub)
 se_soybean_cn_sub_2 <- convertSEPair(se_soybean_cn_sub, "S1", "S3")

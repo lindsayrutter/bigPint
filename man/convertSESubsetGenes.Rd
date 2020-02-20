@@ -21,10 +21,12 @@ Reduce a SummarizedExperiment object so that it only now
 contains a subset of genes.
 }
 \examples{
-Example: Read in example SummarizedExperiment object that originally
-contains 5604 genes. Reduce it to now only contain ten genes (specifically
-the ones with the lowest FDR).
+# Example: Read in example SummarizedExperiment object that originally
+# contains 5604 genes. Reduce it to now only contain ten genes (specifically
+# the ones with the lowest FDR).
 
+library(dplyr)
+library(SummarizedExperiment)
 data(se_soybean_ir_sub)
 geneList <- as.data.frame(rowData(se_soybean_ir_sub)) \%>\%
     arrange(N_P.FDR) \%>\% filter(row_number() <= 10)

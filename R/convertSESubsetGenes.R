@@ -6,6 +6,9 @@
 #' @param dataSE SUMMARIZEDEXPERIMENT | Summarized experiment format that
 #' can be used in lieu of data and dataMetrics
 #' @param geneList CHARACTER ARRAY | List of gene IDs to remain in dataSE
+#' @importFrom SummarizedExperiment rowData assay SummarizedExperiment
+#' @importFrom DelayedArray DelayedArray
+#' @importFrom dplyr %>% filter arrange
 #' @return A new dataSE object that is a subset of the input dataSE in that it
 #' now only contains the user-specified list of genes.
 #' @export
@@ -14,6 +17,8 @@
 #' # contains 5604 genes. Reduce it to now only contain ten genes (specifically
 #' # the ones with the lowest FDR).
 #' 
+#' suppressMessages(library(dplyr))
+#' suppressMessages(library(SummarizedExperiment))
 #' data(se_soybean_ir_sub)
 #' geneList <- as.data.frame(rowData(se_soybean_ir_sub)) %>%
 #'     arrange(N_P.FDR) %>% filter(row_number() <= 10)

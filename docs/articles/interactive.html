@@ -152,7 +152,7 @@
       <h1>Producing interactive plots</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2020-02-20</h4>
+            <h4 class="date">2020-02-21</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/interactive.Rmd"><code>vignettes/interactive.Rmd</code></a></small>
       <div class="hidden name"><code>interactive.Rmd</code></div>
@@ -272,8 +272,9 @@
 <div id="scatterplot-matrix-app-1" class="section level3">
 <h3 class="hasAnchor">
 <a href="#scatterplot-matrix-app-1" class="anchor"></a>Scatterplot matrix app</h3>
+<p>We use the <code><a href="../reference/convertSEPair.html">convertSEPair()</a></code> function to reduce the <code>SummarizedExperiment</code> object from having three treatment groups (<code>se_soybean_cn_sub</code>) to only having two treatment groups, S1 and S2 (<code>se_soybean_cn_sub_S1S2</code>).</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"se_soybean_cn_sub"</span>)</span>
-<span id="cb5-2"><a href="#cb5-2"></a>se_soybean_cn_sub_S1S2 &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/bigPint/man/convertSEPair.html">convertSEPair</a></span>(se_soybean_cn_sub, <span class="st">"S1"</span>, <span class="st">"S2"</span>)</span>
+<span id="cb5-2"><a href="#cb5-2"></a>se_soybean_cn_sub_S1S2 &lt;-<span class="st"> </span><span class="kw"><a href="../reference/convertSEPair.html">convertSEPair</a></span>(se_soybean_cn_sub, <span class="st">"S1"</span>, <span class="st">"S2"</span>)</span>
 <span id="cb5-3"><a href="#cb5-3"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotSMApp.html">plotSMApp</a></span>(<span class="dt">dataSE=</span>se_soybean_cn_sub_S1S2)</span>
 <span id="cb5-4"><a href="#cb5-4"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
 <span id="cb5-5"><a href="#cb5-5"></a>  shiny<span class="op">::</span><span class="kw"><a href="https://rdrr.io/pkg/shiny/man/runApp.html">runApp</a></span>(app)</span>
@@ -309,10 +310,11 @@
 <span id="cb8-3"><a href="#cb8-3"></a>  <span class="kw">assay</span>(se_soybean_ir_sub))), <span class="dv">1</span>, scale)))</span>
 <span id="cb8-4"><a href="#cb8-4"></a>nID &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/which.html">which</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/is.finite.html">is.nan</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">assay</span>(se_soybean_ir_sub_st))[,<span class="dv">1</span>]))</span>
 <span id="cb8-5"><a href="#cb8-5"></a><span class="kw">assay</span>(se_soybean_ir_sub_st)[nID,] &lt;-<span class="st"> </span><span class="dv">0</span></span></code></pre></div>
+<p>We use the <code><a href="../reference/convertSESubsetGenes.html">convertSESubsetGenes()</a></code> method to reduce the number of genes in the original <code>SummarizedExperiment</code> object from 5604 genes (<code>se_soybean_ir_sub_st</code>) to the 14 genes (<code>se_soybean_ir_sub_st_genes</code>) that had FDR less than 0.01 and logFC less than -4.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a>dataMetrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(<span class="kw">rowData</span>(se_soybean_ir_sub_st))</span>
 <span id="cb9-2"><a href="#cb9-2"></a>plotGenes =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/filter.html">filter</a></span>(dataMetrics, N_P.FDR <span class="op">&lt;</span><span class="st"> </span><span class="fl">0.01</span>, N_P.logFC <span class="op">&lt;</span><span class="st"> </span><span class="dv">-4</span>) <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">select</span>(ID)</span>
 <span id="cb9-3"><a href="#cb9-3"></a>plotGenes =<span class="st"> </span>plotGenes[,<span class="dv">1</span>]</span>
-<span id="cb9-4"><a href="#cb9-4"></a>se_soybean_ir_sub_st_genes &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/bigPint/man/convertSESubsetGenes.html">convertSESubsetGenes</a></span>(se_soybean_ir_sub_st,</span>
+<span id="cb9-4"><a href="#cb9-4"></a>se_soybean_ir_sub_st_genes &lt;-<span class="st"> </span><span class="kw"><a href="../reference/convertSESubsetGenes.html">convertSESubsetGenes</a></span>(se_soybean_ir_sub_st,</span>
 <span id="cb9-5"><a href="#cb9-5"></a>  plotGenes)</span></code></pre></div>
 <div class="sourceCode" id="cb10"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1"></a>app &lt;-<span class="st"> </span><span class="kw"><a href="../reference/plotPCPApp.html">plotPCPApp</a></span>(<span class="dt">dataSE =</span> se_soybean_ir_sub_st_genes)</span>
 <span id="cb10-2"><a href="#cb10-2"></a><span class="cf">if</span> (<span class="kw"><a href="https://rdrr.io/r/base/interactive.html">interactive</a></span>()) {</span>
