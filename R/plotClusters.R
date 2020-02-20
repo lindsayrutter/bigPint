@@ -77,6 +77,10 @@
 #' to the location specified in the outDir parameter.
 #' @export
 #' @examples
+#' The first set of five examples use \code{data} and \code{dataMetrics}
+#' objects as input. The last set of five examples create the same plots now
+#' using the \code{SummarizedExperiment} (i.e. \code{dataSE}) object input.
+#' 
 #' # Example 1: Perform hierarchical clustering of size four using the 
 #' # default agglomeration method "ward.D". Cluster only on the genes that have
 #' # FDR < 1e-7 (n = 113) and overlay these genes.
@@ -149,6 +153,76 @@
 #'   verbose = TRUE)
 #' }
 #' 
+#' #' Below are the same five examples, only now using the
+#' \code{SummarizedExperiment} (i.e. \code{dataSE}) object as input.
+#' 
+#' # Example 1: Perform hierarchical clustering of size four using the 
+#' # default agglomeration method "ward.D". Cluster only on the genes that have
+#' # FDR < 1e-7 (n = 113) and overlay these genes.
+#' 
+#' library(grid)
+#' library(matrixStats)
+#' library(ggplot2)
+#' data(se_soybean_ir_sub)
+#' assay(se_soybean_ir_sub) <- log(as.data.frame(assay(se_soybean_ir_sub))+1)
+#' colList = c("#00A600FF", rainbow(5)[c(1,4,5)])
+#' ret <- plotClusters(dataSE=se_soybean_ir_sub, nC=4, colList = colList,
+#'     clusterAllData = FALSE, threshVal = 1e-7, saveFile = FALSE)
+#' grid.draw(ret[["N_P_4"]])
+#' 
+#' # Example 2: Perform the same analysis, only now create the four groups by 
+#' # clustering on all genes in the data (n = 5,604). Then, overlay the genes 
+#' # that have FDR < 1e-7 (n = 113) into their corresponding clusters.
+#' 
+#' ret <- plotClusters(dataSE=se_soybean_ir_sub, nC=4, colList = colList,
+#'     clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
+#' grid.draw(ret[["N_P_4"]])
+#' 
+#' # Example 3: Perform the same analysis, only now overlay all genes in the 
+#' # data by setting the rowData() to NULL.
+#' 
+#' se_soybean_ir_sub_nm <- se_soybean_ir_sub
+#' rowData(se_soybean_ir_sub_nm) <- NULL
+#' ret <- plotClusters(dataSE=se_soybean_ir_sub_nm, nC=4, colList = colList,
+#'     clusterAllData = TRUE, saveFile = FALSE)
+#' grid.draw(ret[["N_P_4"]])
+#' 
+#' # Example 4: Visualization of gene clusters is usually performed on
+#' # standardized data. Here, hierarchical clustering of size four is performed
+#' # using the agglomeration method "average" on standardized data. Only genes 
+#' # with FDR < 0.05 are used for the clustering. Only two of the three 
+#' # pairwise combinations of treatment groups (S1 and S2; S1 and S3) have any 
+#' # genes with FDR < 0.05. The output plots for these two pairs are examined. 
+#' 
+#' data(se_soybean_cn_sub)
+#' se_soybean_cn_sub_st = se_soybean_cn_sub
+#' assay(se_soybean_cn_sub_st) <-as.data.frame(t(apply(as.matrix(as.data.frame(
+#'     assay(se_soybean_cn_sub))), 1, scale)))
+#' nID <- which(is.nan(as.data.frame(assay(se_soybean_cn_sub_st))[,1]))
+#' assay(se_soybean_cn_sub_st)[nID,] <- 0
+#' ret <- plotClusters(dataSE=se_soybean_cn_sub_st, nC=4,
+#'     colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"),
+#'     lineSize = 0.5, lineAlpha = 1, clusterAllData = FALSE,
+#'     aggMethod = "average", yAxisLabel = "Standardized read count",
+#'     saveFile = FALSE)
+#' names(ret)
+#' grid.draw(ret[["S1_S2_4"]])
+#' grid.draw(ret[["S1_S3_4"]])
+#' 
+#' # Example 5: Run the same analysis, only now set the verbose parameter to 
+#' # value TRUE. This will save images of each individual cluster, .rds files 
+#' # that contain the IDs within each cluster, and images of the conglomerate 
+#' # clusters to outDir (default tempdir()).
+#' 
+#' \dontrun{
+#' plotClusters(dataSE=se_soybean_cn_sub_st, nC=4,
+#'     colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"),
+#'     lineSize = 0.5, lineAlpha = 1, clusterAllData = FALSE,
+#'     aggMethod = "average", yAxisLabel = "Standardized read count",
+#'     verbose = TRUE)
+#' }
+#'
+#'
 plotClusters <- function(data, dataMetrics = NULL, dataSE=NULL, geneList = NULL,
     geneLists = NULL, threshVar="FDR", threshVal=0.05, clusterAllData = TRUE, 
     nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
@@ -210,34 +284,6 @@ ret <- lapply(cols.combn, function(x){
     levels(boxDat$Sample) <- userOrder
     
     plotName <- paste0(group1,"_",group2)
-    
-    # If geneLists is not NULL
-    # if (!is.null(geneLists)){
-    # nC = length(geneLists)
-    # colList = rainbow(nC)
-    # seqVec = seq(nC)
-    # 
-    # plot_clusters = lapply(seq_along(seqVec), function(j){
-    #     xSigNames = geneLists[[j]]
-    #     xSig = fData %>% filter(ID %in% xSigNames)
-    #     nGenes = nrow(xSig)
-    #     
-    #     pcpDat <- melt(xSig, id.vars="ID")
-    #     colnames(pcpDat) <- c("ID", "Sample", "Count")
-    #     pcpDat$Sample <- as.character(pcpDat$Sample)
-    #     pcpDat$ID <- as.factor(pcpDat$ID)
-    #     
-    #     p <- ggplot(boxDat, aes_string(x = 'Sample', y = 'Count')) + geom_boxplot() + geom_line(data=pcpDat, aes_string(x = 'Sample', y = 'Count', group = 'ID'), colour = colList[j], alpha=lineAlpha, size = lineSize) + ylab(yAxisLabel) + xlab(xAxisLabel) + ggtitle(paste("Cluster ", j, " Genes (n=", format(nGenes, big.mark=",", scientific=FALSE), ")", sep="")) + theme(plot.title = element_text(hjust = 0.5, size=14, face="plain"), axis.text=element_text(size=11), axis.title=element_text(size=14))
-    #     p
-    # })
-    # p = arrangeGrob(grobs=plot_clusters, ncol=2)
-    # if (saveFile == TRUE || verbose == TRUE){
-    #     fileName = paste(outDir, "/", plotName, "_", nC, ".jpg", sep="")
-    #     jpeg(fileName)
-    #     grid.draw(p)
-    #     invisible(dev.off())}
-    # #return(p)
-    # }
     
     if (!is.null(dataMetrics) && is.null(geneList)){
         metricPair = dataMetrics[[paste0(group1,"_",group2)]]

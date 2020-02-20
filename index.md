@@ -10,15 +10,17 @@
 
 ## Quick Start
 
-Welcome to the `bigPint` package website! For users who would like to immediately try out the package in a hands-on fashion, we recommend consulting our example  [pipeline](https://lindsayrutter.github.io/bigPint/articles/pipeline). This pipeline uses reproducible code and sample data that comes with the `bigPint` package, so you can smoothly follow along each line of example code. 
+Welcome to the `bigPint` package website! For users who would like to immediately try out the package in a hands-on fashion, we recommend consulting our example  [pipeline](https://lindsayrutter.github.io/bigPint/articles/pipeline). This pipeline uses reproducible code and sample data that comes with the `bigPint` package, so you can smoothly follow along each line of example code. Please note that `bigPint` allows users to input either `data` and `dataMetrics` objects or `SummarizedExperiment` objects to produce graphics. In each article (including the [pipeline](https://lindsayrutter.github.io/bigPint/articles/pipeline)), example code is first provided for `data` and `dataMetrics` object formats, followed by the same example code in `SummarizedExperiment` object format.
+
+____________________________________________________________________________________
 
 ## Getting Started
 
-Whether or not you already tried the example pipeline above, you can become more familiar with all aspects of the `bigPint` package by reading from the `Get Started` tab at the top of this website. It contains ten short vignette articles that we recommend reading in order. These short articles consist of reproducible code and sample data that provide:
+Whether or not you already tried the example pipeline above, you can become more familiar with all aspects of the `bigPint` package by reading from the `Get Started` tab at the top of this website. It contains nine short vignette articles that we recommend reading in order. These short articles consist of reproducible code and sample data that provide:
 
 - An introduction to `bigPint` plots and how to interpret them
 - A guide to installing the `bigPint` package
-- Expected formats of two input objects in most `bigPint` functions
+- Input formats for `bigPint` plots (i.e. `data` and `dataMetrics` or `SummarizedExperiment`)
 - How to produce static `bigPint` plots
 - How to produce interactive `bigPint` plots
 - How to perform hierarchical clustering and use the clusters in `bigPint` functions

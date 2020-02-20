@@ -43,6 +43,10 @@ dataMetrics parameter.
 Plot interactive litre plots.
 }
 \examples{
+The first pair of examples use \code{data} and \code{dataMetrics}
+objects as input. The last pair of examples create the same plots now
+using the \code{SummarizedExperiment} (i.e. \code{dataSE}) object input.
+
 # Example 1: Create an interactive litre plot for the logged data using
 # default background of hexagons.
 
@@ -66,4 +70,30 @@ app <- plotLitreApp(data = soybean_ir_sub_log,
 if (interactive()) {
     shiny::runApp(app)
 }
+
+Below are the same pair of examples, only now using the
+\code{SummarizedExperiment} (i.e. \code{dataSE}) object as input.
+
+# Example 1: Create an interactive litre plot for the logged data using
+# default background of hexagons.
+
+data(se_soybean_ir_sub)
+se_soybean_ir_sub_log <- se_soybean_ir_sub
+assay(se_soybean_ir_sub_log) <-
+   log(as.data.frame(assay(se_soybean_ir_sub_log))+1)
+app <- plotLitreApp(dataSE = se_soybean_ir_sub_log)
+if (interactive()) {
+    shiny::runApp(app, port = 1234, launch.browser = TRUE)
+}
+
+# Example 2: Repeat the same process, only now plot background data as 
+# individual points. Note this may be too slow now that all points are
+# drawn in the background.
+
+app <- plotLitreApp(dataSE = se_soybean_ir_sub_log, option = "allPoints",
+    pointColor = "red")
+if (interactive()) {
+    shiny::runApp(app)
+}
+
 }

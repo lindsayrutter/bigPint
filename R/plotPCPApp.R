@@ -22,6 +22,10 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' that remain.
 #' @export
 #' @examples
+#' The first example uses \code{data} and \code{dataMetrics}  objects as
+#' input. The last example creates the same plot now using the
+#' \code{SummarizedExperiment} (i.e. \code{dataSE}) object input.
+#' 
 #' # Example: Create interactive parallel coordinate plot for genes that have
 #' # FDR < 0.01 and logFC < -4. Standardize genes to have an average of zero
 #' # and a standard deviation of one.
@@ -49,6 +53,11 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' if (interactive()) {
 #'     shiny::runApp(app, display.mode = "normal")
 #' }
+#' 
+#' Below is the same example, only now using the
+#' \code{SummarizedExperiment} (i.e. \code{dataSE}) object as input.
+#' 
+#' 
 
 plotPCPApp = function(data = data, dataSE=NULL, pointColor = "orange"){
 

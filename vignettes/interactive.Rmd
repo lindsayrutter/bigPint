@@ -147,7 +147,7 @@ ________________________________________________________________________________
 
 ## SummarizedExperiment Version
 
-Below are the corresponding code blocks from above that now use the `SummarizedExperiment` object instead of the `data` and `dataMetrics` objects.
+Below are the corresponding code blocks from everything above that now use the `SummarizedExperiment` object (`dataSE`) instead of the `data` and `dataMetrics` objects.
 
 ### Scatterplot matrix app
 
