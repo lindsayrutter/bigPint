@@ -41,6 +41,7 @@
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
 #' @importFrom utils combn
+#' @importFrom stats setNames
 #' @return List of n elements of litre plots, where n is the number of genes 
 #' determined to be superimposed through the dataMetrics or geneList
 #' parameter. If the saveFile parameter has a value of TRUE, then each of 
@@ -147,7 +148,7 @@ if (!is.null(dataSE)){
         dataMetrics <- lapply(split.default(reDataMetrics[-1], 
         sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
         cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))
-        for (k in 1:length(dataMetrics)){
+        for (k in seq_len(length(dataMetrics))){
             colnames(dataMetrics[[k]])[1] = "ID"   
         }
     }

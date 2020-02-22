@@ -14,13 +14,14 @@
 #' remain in the dataSE object
 #' @importFrom SummarizedExperiment rowData assay SummarizedExperiment
 #' @importFrom DelayedArray DelayedArray
+#' @importFrom stats setNames
 #' @return A new dataSE object that is a subset of the input dataSE in that it
 #' now only contains the user-specified pair of treatment groups.
 #' @export
 #' @examples
 #' # Example: Read in example SummarizedExperiment object that contains three
-#' # treatment groups (S1, S2, and S3). Reduce it to now only contain two treatment
-#' # groups (S1 and S3).
+#' # treatment groups (S1, S2, and S3). Reduce it to now only contain two
+#' # treatment groups (S1 and S3).
 #' 
 #' data(se_soybean_cn_sub)
 #' se_soybean_cn_sub_2 <- convertSEPair(se_soybean_cn_sub, "S1", "S3")
@@ -28,10 +29,13 @@
 convertSEPair <- function(dataSE, group1, group2){
     
     dfFormat <- as.data.frame(rowData(dataSE))
-    dataMetrics <- lapply(split.default(dfFormat[-1], sub("\\..*", "",names(dfFormat[-1]))), function(x) cbind(dfFormat[1], setNames(x, sub(".*\\.", "", names(x)))))
+    dataMetrics <- lapply(split.default(dfFormat[-1], sub("\\..*", "",
+        names(dfFormat[-1]))), function(x) cbind(dfFormat[1],
+        setNames(x, sub(".*\\.", "", names(x)))))
     
     oldData <- as.data.frame(assay(dataSE))
-    keepDataCol <- which(sapply(colnames(oldData), function(x) strsplit(x, "[.]")[[1]][1]) %in% c(group1, group2))
+    keepDataCol <- which(vapply(colnames(oldData), function(x)
+        strsplit(x, "[.]")[[1]][1]) %in% c(group1, group2))
     keepOldData <- oldData[, keepDataCol]
     
     data <- DelayedArray(keepOldData)
@@ -40,13 +44,15 @@ convertSEPair <- function(dataSE, group1, group2){
     if (length(dataMetrics) > 0){    
         
         listNames <- names(dataMetrics)
-        keepList <- which(sapply(listNames, function(x) strsplit(x, "[.]")[[1]][1]) %in% c(paste0(group1, "_", group2)))
+        keepList <- which(lapply(listNames, function(x)
+            strsplit(x, "[.]")[[1]][1]) %in% c(paste0(group1, "_", group2)))
         dataMetrics = dataMetrics[keepList]
     
-        for (k in 1:length(dataMetrics)){
+        for (k in seq_len(length(dataMetrics))){
             colnames(dataMetrics[[k]])[1] = "ID"   
         }
-        returnDFPair <- SummarizedExperiment(assays = data, rowData = dataMetrics)
+        returnDFPair <- SummarizedExperiment(assays = data,
+            rowData = dataMetrics)
     }
     
     return(returnDFPair)

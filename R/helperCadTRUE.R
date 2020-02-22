@@ -83,7 +83,6 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
         grid.draw(p)
         invisible(dev.off())
     }
-# ret[[paste0(plotName, "_", nC)]] = p
     return(p)
 }
 

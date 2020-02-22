@@ -13,12 +13,12 @@ x <- unlist(datSel[,index1])
 y <- unlist(datSel[,index2])
 
 h <- hexbin(x=x, y=y, xbins=xbins, shape=1, IDs=TRUE, xbnds=maxRange,
-ybnds=maxRange)
+    ybnds=maxRange)
 
 hexdf <- helperMakeHexDF(h)[["hexdf"]]
 clrs <- helperMakeHexDF(h)[["clrs"]]
 my_breaks <- helperMakeHexDF(h)[["my_breaks"]]
 
 return(list(hexdf=hexdf, maxRange=maxRange, clrs=clrs, my_breaks=my_breaks,
-x=x, y=y))
+    x=x, y=y))
 }

@@ -47,7 +47,7 @@ if (interactive()) {
 # we can summon the method convertSEPair() to subset our input data
 # to only a pair of treatment groups.
 
-\\dontrun{
+\dontrun{
 data(se_soybean_cn_sub)
 se_soybean_cn_sub <- convertSEPair(se_soybean_cn_sub, "S1", "S2")
 app <- plotSMApp(dataSE=se_soybean_cn_sub)

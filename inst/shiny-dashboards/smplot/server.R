@@ -228,4 +228,4 @@ hoverinfo: 'text',
     }
   )
   
-  }
+}

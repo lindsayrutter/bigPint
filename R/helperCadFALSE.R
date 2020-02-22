@@ -76,9 +76,5 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
         grid.draw(p)
         invisible(dev.off())
     }
-    # ret = list()
-    # ret[[paste0(plotName, "_", nC)]] = p
-    #ret <- list(paste0(plotName, "_", nC) = p)
-    #return(ret)
     return(p)
 }

@@ -23,7 +23,7 @@ knitr::opts_chunk$set(echo=TRUE)
 
 ## SummarizedExperiment object
 
-Researchers who prefer using the `SummarizedExperiment` class can feed their data and associated metrics into the `bigPint` methods using one `SummarizedExperiment` object (instead of both a `data` and `dataMetrics` object). We demonstrate here how to create a `SummarizedExperiment` object. In the remaining articles of the vignette, the example code uses the `data` and `dataMetrics` objects as example input. However, at the bottom of each vignette, we also include the corresponding example code that uses intead the `SummarizedExperiment` object to create the exact same plots.
+Researchers who prefer using the `SummarizedExperiment` class can feed their data and associated metrics into the `bigPint` methods using one `SummarizedExperiment` object (instead of both a `data` and `dataMetrics` object). We demonstrate here how to create a `SummarizedExperiment` object. In the remaining articles of the vignette, the example code uses the `data` and `dataMetrics` objects as example input. However, at the bottom of each vignette, we also include the corresponding example code that uses instead the `SummarizedExperiment` object to create the exact same plots.
 
 ____________________________________________________________________________________
 

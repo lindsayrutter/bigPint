@@ -33,6 +33,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
+#' @importFrom stats setNames
 #' @return A Shiny application that shows a litre plot background and allows
 #' users to superimpose the subset of genes determined to be superimposed
 #' through the dataMetrics or geneList parameter. The application allows users
@@ -117,7 +118,7 @@ if (!is.null(dataSE)){
         dataMetrics <- lapply(split.default(reDataMetrics[-1], 
         sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
         cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))
-        for (k in 1:length(dataMetrics)){
+        for (k in seq_len(length(dataMetrics))){
             colnames(dataMetrics[[k]])[1] = "ID"   
         }
     }

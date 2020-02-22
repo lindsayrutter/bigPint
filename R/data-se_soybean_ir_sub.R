@@ -35,7 +35,7 @@
 #' \item FDR FDR value
 #' }
 #' @keywords datasets
-#' @usage data(soybean_ir_sub)
+#' @usage data(se_soybean_ir_sub)
 #' @format A data frame with 5,604 rows and 7 variables
 #' @seealso \code{\link{soybean_ir_sub}} and
 #' \code{\link{soybean_ir_sub_metrics}}

@@ -25,8 +25,8 @@ contains a subset of genes.
 # contains 5604 genes. Reduce it to now only contain ten genes (specifically
 # the ones with the lowest FDR).
 
-library(dplyr)
-library(SummarizedExperiment)
+suppressMessages(library(dplyr))
+suppressMessages(library(SummarizedExperiment))
 data(se_soybean_ir_sub)
 geneList <- as.data.frame(rowData(se_soybean_ir_sub)) \%>\%
     arrange(N_P.FDR) \%>\% filter(row_number() <= 10)

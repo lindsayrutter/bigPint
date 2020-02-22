@@ -1,7 +1,7 @@
 #' @importFrom utils combn
 #' @importFrom dplyr starts_with 
 helperSMOrth <- function(data, dataMetrics, outDir, pointSize,
-                         threshOrth, threshVar, threshVal){
+    threshOrth, threshVar, threshVal){
     
     rownames(data) <- data$ID
     lwr <- upr <- ID <- NULL
@@ -19,7 +19,7 @@ helperSMOrth <- function(data, dataMetrics, outDir, pointSize,
     
     cols.combn <- combn(myPairs, 2, simplify = FALSE)
     data_list <- lapply(cols.combn, function(x) {data %>% select(ID,
-                                                                 starts_with(x[1]), starts_with(x[2]))})
+        starts_with(x[1]), starts_with(x[2]))})
     names_list <- lapply(cols.combn, function(x) {paste0(x[1], "_", x[2])})
     
     my_fn <- function(data, mapping, ...){
@@ -40,9 +40,9 @@ helperSMOrth <- function(data, dataMetrics, outDir, pointSize,
         
         if (!is.null(dataMetrics)){
             rowDEG1 <- which(dataMetrics[[paste0(group1,"_",group2)]]
-                             [threshVar] < threshVal)
+            [threshVar] < threshVal)
             rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
-                             [threshVar] < threshVal)
+            [threshVar] < threshVal)
             rowDEG <- c(rowDEG1, rowDEG2)
             degID1 <- dataMetrics[[paste0(group1,"_",group2)]][rowDEG,]$ID
             degID2 <- dataMetrics[[paste0(group2,"_",group1)]][rowDEG,]$ID
@@ -54,19 +54,22 @@ helperSMOrth <- function(data, dataMetrics, outDir, pointSize,
             greyPoints = plotPoints[!indexBoth,]
             bluePoints = degData[!indexBlue,]
             
-            p <- ggplot(lineDF, aes(x=xv, y=lyv)) + geom_line(aes(y = lyv), alpha=0.1) +
-                geom_line(aes(y = uyv), alpha=0.1) + geom_ribbon(aes(ymin=lyv,ymax=uyv),
-                                                                 fill="blue", alpha=0.3) + geom_point(data = bluePoints,
-                                                                                                      aes_string(x = xChar, y = yChar), size=pointSize, alpha=0.5, color = "blue") +
-                geom_point(data = greyPoints, aes_string(x=xChar, y = yChar), size=pointSize,
-                           color = "darkgrey") + geom_point(data = redPoints, aes_string(x = xChar,
-                                                                                         y = yChar), size=pointSize, color = "red")      
+            p <- ggplot(lineDF, aes(x=xv, y=lyv)) + geom_line(aes(y = lyv),
+                alpha=0.1) + geom_line(aes(y = uyv), alpha=0.1) +
+                geom_ribbon(aes(ymin=lyv,ymax=uyv), fill="blue", alpha=0.3) + 
+                geom_point(data = bluePoints, aes_string(x = xChar,
+                y = yChar), size=pointSize, alpha=0.5, color = "blue") +
+                geom_point(data = greyPoints, aes_string(x=xChar, y = yChar),
+                size=pointSize, color = "darkgrey") +
+                geom_point(data = redPoints, aes_string(x = xChar,
+                y = yChar), size=pointSize, color = "red")   
         }
         else{
-            p <- ggplot(lineDF, aes(x=xv, y=lyv)) + geom_line(aes(y = lyv), alpha=0.1) +
-                geom_line(aes(y = uyv), alpha=0.1) + geom_ribbon(aes(ymin=lyv,ymax=uyv),
-                                                                 fill="blue", alpha=0.3) + geom_point(data = plotPoints,
-                                                                                                      aes_string(x = xChar, y = yChar), size=pointSize)
+            p <- ggplot(lineDF, aes(x=xv, y=lyv)) + geom_line(aes(y = lyv),
+            alpha=0.1) + geom_line(aes(y = uyv), alpha=0.1) +
+            geom_ribbon(aes(ymin=lyv,ymax=uyv), fill="blue", alpha=0.3) +
+            geom_point(data = plotPoints, aes_string(x = xChar,
+            y = yChar), size=pointSize)
         }
         p
     }

@@ -63,6 +63,7 @@
 #' @importFrom utils write.table
 #' @importFrom grid grid.draw
 #' @importFrom utils combn
+#' @importFrom stats setNames
 #' @seealso
 #' \code{\link[stats]{hclust}}
 #' \url{https://lindsayrutter.github.io/bigPint/articles/clusters.html}
@@ -255,7 +256,7 @@ if (!is.null(dataSE)){
         dataMetrics <- lapply(split.default(reDataMetrics[-1], 
         sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
         cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))
-        for (k in 1:length(dataMetrics)){
+        for (k in seq_len(length(dataMetrics))){
             colnames(dataMetrics[[k]])[1] = "ID"   
         }
     }

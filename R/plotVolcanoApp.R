@@ -30,6 +30,7 @@ PKGENVIR <- new.env(parent=emptyenv()) # package level envir
 #' dashboardSidebar sidebarMenu tabItems box
 #' @importFrom Hmisc cut2
 #' @importFrom RColorBrewer brewer.pal
+#' @importFrom stats setNames
 #' @return A Shiny application that shows a volcano plot and allows users to 
 #' overlay genes depending on two values, usually a statistical value (such as
 #' P-value) and a magnitude change value (such as log fold change). The user
@@ -106,7 +107,7 @@ if (!is.null(dataSE)){
         dataMetrics <- lapply(split.default(reDataMetrics[-1], 
         sub("\\..*", "",names(reDataMetrics[-1]))), function(x)
         cbind(reDataMetrics[1], setNames(x, sub(".*\\.", "", names(x)))))
-        for (k in 1:length(dataMetrics)){
+        for (k in seq_len(length(dataMetrics))){
             colnames(dataMetrics[[k]])[1] = "ID"   
         }
     }

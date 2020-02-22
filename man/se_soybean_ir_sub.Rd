@@ -9,7 +9,7 @@ gene. Accessible by \code{assay(se_soybean_ir_sub)}. (2) A List with 1
 list element per treatment group combination and 1 row per gene.
 Accessible by \code{rowData(se_soybean_ir_sub)}.}
 \usage{
-data(soybean_ir_sub)
+data(se_soybean_ir_sub)
 }
 \description{
 This dataset contains raw RNA-sequencing read counts from a 

@@ -41,8 +41,10 @@ else if (!is.null(dataMetrics)){
     rowDEG2 <- which(dataMetrics[[paste0(group2,"_",group1)]]
     [threshVar] < threshVal)
     rowDEG <- c(rowDEG1, rowDEG2)
-    degID1 <- as.character(dataMetrics[[paste0(group1,"_",group2)]][rowDEG,]$ID)
-    degID2 <- as.character(dataMetrics[[paste0(group2,"_",group1)]][rowDEG,]$ID)
+    degID1 <- as.character(dataMetrics[[paste0(group1,"_",
+        group2)]][rowDEG,]$ID)
+    degID2 <- as.character(dataMetrics[[paste0(group2,"_",
+        group1)]][rowDEG,]$ID)
     degID <- c(degID1, degID2)
     dataID = cbind(ID=rownames(data), data)
     degData <- dataID[which(dataID$ID %in% degID),]
