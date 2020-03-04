@@ -1,3 +1,6 @@
+## bigPint 1.3.2 (2020-03-04)
+Users can now input SummarizedExperiment data type to create any bigPint plot.
+
 ## bigPint 0.99.8 (2019-09-06)
 [Our methodology article](https://doi.org/10.1186/s12859-019-2968-1) was published in BMC Bioinformatics. We used case studies of public RNA-seq datasets to demonstrate that bigPint graphics can detect normalization issues, differential expression designation problems, and common analysis errors. We also show that our new visualization tools can identify genes of interest in ways undetectable with models.
 
