@@ -1,0 +1,31 @@
+#' Normalized soybean cotyledon metrics
+#'
+#' @name soybean_cn_metrics
+#' @title Normalized soybean cotyledon metrics
+#' @description This data contains metrics for normalized RNA-sequencing read
+#' counts from soybean cotyledon across three time stages of development. 
+#' Early stage cotyledons were collected four days after planting and were 
+#' green but closed. Middle stage cotyledons were collected while green and 
+#' open, soon after the plant generated its first set of unifoliate leaves. 
+#' Late stage cotyledons were collected immediately after the initiation of 
+#' yellowing and shrinking. The metrics include the log fold change, log 
+#' counts per million, likelihood ratio, p-values, and FDR values for all 
+#' genes and all pairwise combinations of treatment groups.
+#' @docType data
+#' @format a \code{RData} instance, 1 list per treatment group combination 
+#' and 1 row per gene 
+#' @details \itemize{
+    #' \item ID gene name
+    #' \item logFC log fold change
+    #' \item logCPM log counts per million
+    #' \item LR likelihood ratio
+    #' \item PValue p-value
+    #' \item FDR FDR value
+    #' }
+#' @docType data
+#' @keywords datasets
+#' @format A nested list of length 3. Each list contains the metrics for the 
+#' 73,320 genes for one treatment group combination.
+#' @seealso \code{\link{soybean_cn}} for information about the treatment 
+#' groups
+NULL

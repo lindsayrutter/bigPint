@@ -1,0 +1,23 @@
+pandoc: 2.7.3
+pkgdown: 1.4.1
+pkgdown_sha: ~
+articles:
+  bioconductor: bioconductor.html
+  clusters: clusters.html
+  createDataMetrics: createDataMetrics.html
+  data: data.html
+  dataMetrics: dataMetrics.html
+  honeybee: honeybee.html
+  installation: installation.html
+  interactive: interactive.html
+  manuscripts: manuscripts.html
+  methods: methods.html
+  pipeline: pipeline.html
+  plotIntro: plotIntro.html
+  static: static.html
+  summarizedExperiment: summarizedExperiment.html
+  superimposeData: superimposeData.html
+urls:
+  reference: http://lindsayrutter.github.io/bigPint/reference
+  article: http://lindsayrutter.github.io/bigPint/articles
+

@@ -1,0 +1,87 @@
+---
+title: 'Installation'
+author:
+- name: Lindsay Rutter
+date: '`r Sys.Date()`'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Installation"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## R software
+
+`bigPint` requires [R](https://cran.r-project.org) (version >= 3.4.1) to be installed on your system. R is an open source software project for statistical computing, and can be freely downloaded from the Comprehensive R Archive Network (CRAN) website. The link to contributed documentation on the CRAN website offers practical resources for an introduction to R, in several languages. After downloading and installing R, the installation of additional packages is straightforward. The latest development version of the `bigPint` package can be installed as follows:
+
+```{r, eval=FALSE, include=TRUE}
+library(devtools)
+install_github("lindsayrutter/bigPint")
+```
+
+The `bigPint` package is available on [Bioconductor](https://www.bioconductor.org/). As a result, the latest stable release version of the package and all its dependencies can be accessed using the following Bioconductor infrastructure:
+
+```{r, eval=FALSE, include=TRUE}
+if (!require("BiocManager"))
+  install.packages("BiocManager")
+BiocManager::install("bigPint")
+```
+
+The bigPint package should now be successfully installed. Next, to render it accessible to the current R session, simply type:
+
+```{r, eval=FALSE, include=TRUE}
+library(bigPint)
+```
+
+____________________________________________________________________________________
+
+## Accessing help pages
+
+To access help pages with example syntax and documentation for the available functions of the bigPint package, please type:
+
+```{r, eval=FALSE, include=TRUE}
+help(package="bigPint")
+```
+
+To access more detailed information about a specific function in the bigPint package, use the following help command on that function, such as:
+
+```{r, eval=FALSE, include=TRUE}
+help(plotLitre)
+```
+
+____________________________________________________________________________________
+
+## Running help examples
+
+The above command will return the help file for the \texttt{plotLitre} function. The help file often includes freestanding example syntax to illustrate how function commands are executed. In the case of the \texttt{plotLitre} function, the example syntax is the following seven lines, which can be pasted directly into an R session.
+
+```{r, eval=FALSE, include=TRUE}
+data(soybean_ir_sub)
+soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1]+1)
+data(soybean_ir_sub_metrics)
+geneList = soybean_ir_sub_metrics[["N_P"]][1:5,]$ID
+ret <- plotLitre(data = soybean_ir_sub, geneList = geneList, saveFile = FALSE)
+names(ret)
+ret[["N_P_Glyma.19G168700.Wm82.a2.v1"]]
+```
+
+____________________________________________________________________________________
+
+## Session info
+
+Below is the output of `sessionInfo()` on the system from which this document was compiled running pandoc 1.19.2.1:
+
+```{r, eval=TRUE, include=TRUE}
+sessionInfo()
+```

@@ -1,0 +1,338 @@
+---
+title: 'Hierarchical clustering'
+author:
+- name: Lindsay Rutter
+date: '`r Sys.Date()`'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Hierarchical clustering"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## Three clustering approaches
+
+The `bigPint` package incorporates a function `plotClusters()` for users to conduct hierarchical clustering analyses on their data. This is accomplished through the `hclust()` and `cutree()` functions in the [`stats`](https://stat.ethz.ch/R-manual/R-devel/library/stats/html/stats-package.html) package. By default, the resulting clusters will be plotted as parallel coordinate lines superimposed onto side-by-side boxplots showing the full dataset. This will allow users to quickly view the patterns in the resulting clusters. There are three main approaches to using the `plotClusters()` function:
+
+1. **Approach 1:** The clusters are determined by clustering only on a subset of data (such as significant genes). Only the significant genes are overlaid as parallel coordinate lines.
+
+2. **Approach 2:** The clusters are determined by clustering the full dataset. Then, only a subset of data (such as significant genes) are overlaid as parallel coordinate lines.
+
+3. **Approach 3:** The clusters are determined by clustering the full dataset. All genes are overlaid as parallel coordinate lines.
+
+We will now show examples for each of these three main approaches and discuss a few additional options in the `plotClusters()` function.
+
+ ____________________________________________________________________________________
+
+## Approach 1
+
+Below, we read in the soybean iron metabolism dataset and perform a logarithm on it [@soybeanIR]. We determine that this dataset contains 5,604 genes. We also determine that this dataset has 113 genes that have FDR < 1e-7 (n = 113). We will consider these our 113 significant genes of interest.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+library(grid)
+library(matrixStats)
+library(ggplot2)
+library(bigPint)
+data("soybean_ir_sub")
+data("soybean_ir_sub_metrics")
+soybean_ir_sub[,-1] <- log(soybean_ir_sub[,-1]+1)
+nrow(soybean_ir_sub)
+length(which(soybean_ir_sub_metrics[["N_P"]]$FDR < 1e-7))
+```
+
+We then perform a hierarchical clustering of size four. By setting the `clusterAllData` parameter to a value of `FALSE`, our clustering algorithm only considers the 113 significant genes of interest. As a side note, we use the default agglomeration method "ward.D". We then overlay these 113 genes as parallel coordinate lines across the full dataset represented as side-by-side boxplots.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+colList = c("#00A600FF", rainbow(5)[c(1,4,5)])
+ret <- plotClusters(data=soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, nC=4,
+  colList = colList, clusterAllData = FALSE, threshVal = 1e-7, saveFile = FALSE)
+names(ret)
+grid.draw(ret[["N_P_4"]])
+```
+
+____________________________________________________________________________________
+
+## Approach 2
+
+We can perform a similar analysis as we did before, only now we will set the `clusterAllData` parameter to a value of `TRUE`. This means our four clusters will be created considering *all* genes in the data (n = 5,604). The clusters will then represent the four main patterns in the full dataset. After that, we will only overlay the 113 significant genes as parallel coordinate lines across the full dataset represented as side-by-side boxplots. Note that Cluster 1 did not contain any of the 113 significant genes.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(data=soybean_ir_sub, dataMetrics = soybean_ir_sub_metrics, nC=4,
+  colList = colList, clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
+grid.draw(ret[["N_P_4"]])
+```
+
+____________________________________________________________________________________
+
+## Approach 3
+
+In this last approach, we will perform hierarchical clustering on *all* 5,604 genes in the data and also overlay *all* 5,604 genes as parallel coordinate lines. We do not create any subset of genes (such as significant genes) because we leave the `dataMetrics` object with its default value of `NULL`.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(data=soybean_ir_sub, nC=4, colList = colList,
+  clusterAllData = TRUE, saveFile = FALSE)
+grid.draw(ret[["N_P_4"]])
+```
+
+As a side note, we can use the output from Approach 3 to better understand how Approach 2 worked. Basically, in Approach 2, all 5,604 genes were used in the clustering algorithm to create four clusters. These resulted in the cluster sizes shown in Approach 3: That is, Cluster 1 had 2,334 genes; Cluster 2 had 1,997 genes; Cluster 3 had 1,992 genes; and Cluster 4 had 881 genes. However, at that point, Approach 2 only plotted the 113 significant genes. This means that none of 2,334 genes in Cluster 1 were significant; 44 of the 1,997 genes in Cluster 2 were significant; 33 of the 1,992 genes in Cluster 3 were significant; and 36 of the 881 genes in Cluster 4 were significant.
+
+____________________________________________________________________________________
+
+## Standardization
+
+When visualizing hierarchical clustering of genes, it is often recommended to consider the *standardized* values of read counts [@Chandrasekhar]. Below is an example of standardizing gene read counts and plotting their clusters as parallel coordinate plots superimposed onto side-by-side boxplots. The standardization transforms each gene to have a mean of zero and a standard deviation of one across its samples. This example uses the soybean cotyledon dataset, which has three treatment groups (S1, S2, and S3) [@brown2015developmental]. Only two treatment pairs (S1 and S2; S1 and S3) return significant genes. As a result, our `ret` object will have these two comparisons.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+data(soybean_cn_sub)
+data(soybean_cn_sub_metrics)
+soybean_cn_sub_st <- as.data.frame(t(apply(as.matrix(soybean_cn_sub[,-1]), 1, 
+  scale)))
+soybean_cn_sub_st$ID <- as.character(soybean_cn_sub$ID)
+soybean_cn_sub_st <- soybean_cn_sub_st[,c(length(soybean_cn_sub_st), 
+  1:length(soybean_cn_sub_st)-1)]
+colnames(soybean_cn_sub_st) <- colnames(soybean_cn_sub)
+nID <- which(is.nan(soybean_cn_sub_st[,2]))
+soybean_cn_sub_st[nID,2:length(soybean_cn_sub_st)] <- 0
+ret <- plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, 
+  nC=4, colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5, 
+  lineAlpha = 1, clusterAllData = FALSE, aggMethod = "average",
+  yAxisLabel = "Standardized read count", saveFile = FALSE)
+names(ret)
+grid.draw(ret[["S1_S2_4"]])
+grid.draw(ret[["S1_S3_4"]])
+```
+
+____________________________________________________________________________________
+
+## Verbose option
+
+In some cases, users may wish to use the `plotClusters()` function to create clusters and then save these clusters to use for other purposes later, such as overlaying them onto scatterplot matrices, litre plots, and volcano plots. The gene IDs of the parallel coordinate lines in each cluster can be saved as .rds files for this purpose by setting the `verbose` option to a value of `TRUE`. Below is an example of this:
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics, nC=4,
+  colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5, 
+  lineAlpha = 1, clusterAllData = FALSE, aggMethod = "average",
+  yAxisLabel = "Standardized read count", verbose = TRUE)
+```
+
+Running the command above will save numerous files into the `outDir` location. The default location is a temporary directory. You can find the exact pathway of this temporary directory by simply typing `tempdir()` into your R console. This temporary directory and the files within it remain the same until you close your R session; at that point, a new temporary directory will be created. After running the above command, you should find the following files in your temporary directory: 
+
+- S1_S2_4_1.rds (10 gene IDs in Cluster 1 in S1 versus S2 comparison)
+- S1_S2_4_1.jpg (Individual plot of Cluster 1 in S1 versus S2 comparison)
+- S1_S2_4_2.rds (3 gene IDs in Cluster 1 in S1 versus S2 comparison)
+- S1_S2_4_2.jpg (Individual plot of Cluster 2 in S1 versus S2 comparison)
+- S1_S2_4_3.rds (2 gene IDs in Cluster 1 in S1 versus S2 comparison)
+- S1_S2_4_3.jpg (Individual plot of Cluster 3 in S1 versus S2 comparison)
+- S1_S2_4_4.rds (1 gene IDs in Cluster 1 in S1 versus S2 comparison)
+- S1_S2_4_4.jpg (Individual plot of Cluster 4 in S1 versus S2 comparison)
+- S1_S2_4.jpg (Plot of all four clusters in S1 versus S2 comparison)
+
+- S1_S3_4_1.rds (19 gene IDs in Cluster 1 in S1 versus S3 comparison)
+- S1_S3_4_1.jpg (Individual plot of Cluster 1 in S1 versus S3 comparison)
+- S1_S3_4_2.rds (7 gene IDs in Cluster 2 in S1 versus S3 comparison)
+- S1_S3_4_2.jpg (Individual plot of Cluster 2 in S1 versus S3 comparison)
+- S1_S3_4_3.rds (2 gene IDs in Cluster 3 in S1 versus S3 comparison)
+- S1_S3_4_3.jpg (Individual plot of Cluster 3 in S1 versus S3 comparison)
+- S1_S3_4_4.rds (2 gene IDs in Cluster 4 in S1 versus S3 comparison)
+- S1_S3_4_4.jpg (Individual plot of Cluster 4 in S1 versus S3 comparison)
+- S1_S3_4.jpg (Plot of all four clusters in S1 versus S3 comparison)
+
+At this point, we can use any of the .rds files to examine the genes represented in the clustered parallel coordinate plots. For instance, we can read in the 19 Cluster 1 genes in the S1 versus S3 comparison as follows:
+
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE}
+S1S3Cluster1 <- c("Glyma18g00690.1", "Glyma08g44110.1", "Glyma01g26570.1", "Glyma07g09700.1", "Glyma02g40610.1", "Glyma17g17970.1", "Glyma19g26250.1", "Glyma10g34630.1", "Glyma14g14220.1", "Glyma19g26710.1", "Glyma03g29150.1", "Glyma08g19245.1", "Glyma07g01730.2", "Glyma18g25845.1", "Glyma08g22380.1", "Glyma20g30460.1", "Glyma12g10960.1", "Glyma16g08810.1", "Glyma18g42630.2")
+```
+
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE}
+S1S3Cluster2 <- c("Glyma06g12670.1", "Glyma12g32460.1", "Glyma17g09850.1", "Glyma18g52920.1", "Glyma01g24710.1", "Glyma04g39880.1", "Glyma05g27450.2")
+```
+
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE}
+S1S3Cluster3 <- c("Glyma04g37510.1", "Glyma03g19880.1")
+```
+
+```{r, eval=TRUE, include=FALSE, message=FALSE, warning=FALSE}
+S1S3Cluster4 <- c("Glyma08g11570.1", "Glyma08g19290.1")
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster1 <- readRDS(paste0(tempdir(), "/S1_S3_4_1.rds"))
+```
+
+And check its contents contain the 19 gene IDs.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster1
+```
+
+Then, we can overlay these 19 genes from Cluster 1 in the S1 versus S3 comparison as points onto the scatterplot matrix. This step can give us another perspective of these 19 genes. We may wish to use the same color (green) that we did in the parallel coordinate plots above and add an informative plot title.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(data = soybean_cn_sub_st, geneList = S1S3Cluster1,
+  pointColor = "#00A600FF", saveFile = FALSE)
+ret[["S1_S3"]] + ggtitle("Cluster 1 Genes (n=19)")
+```
+
+____________________________________________________________________________________
+
+## Pre-determined clusters
+
+Some users may perform clustering using other software and may wish to simply overlay those clusters as parallel coordinate plots using the `bigPint` package. This can be achieved in the `plotClusters()` function using the `geneLists` variable. As an example, let us read in three clusters that each contain a character array of gene IDs. These three clusters may have been created in another software package and we simply now wish to plot them out using the `bigPint` graphics. We see that the first cluster contains 7 gene IDs and the last two clusters each contain 2 gene IDs.
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster2 <- readRDS(paste0(tempdir(), "/S1_S3_4_2.rds"))
+S1S3Cluster3 <- readRDS(paste0(tempdir(), "/S1_S3_4_3.rds"))
+S1S3Cluster4 <- readRDS(paste0(tempdir(), "/S1_S3_4_4.rds"))
+```
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster2
+S1S3Cluster3
+S1S3Cluster4
+```
+
+We can now plot these three clusters directly as parallel coordinate lines superimposed on side-by-side boxplots as follows:
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(data=soybean_cn_sub_st, geneLists = list(S1S3Cluster2,
+  S1S3Cluster3, S1S3Cluster4), lineAlpha = 1, lineSize = 0.5)
+grid.draw(ret[["S1_S3_3"]])
+```
+
+____________________________________________________________________________________
+
+## SummarizedExperiment Version
+
+Below are the corresponding code blocks from everything above that now use the `SummarizedExperiment` object (`dataSE`) instead of the `data` and `dataMetrics` objects.
+
+### Approach 1
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+library(grid)
+library(matrixStats)
+library(ggplot2)
+library(bigPint)
+library(DelayedArray)
+library(SummarizedExperiment)
+data("se_soybean_ir_sub")
+assay(se_soybean_ir_sub) <- log(as.data.frame(assay(se_soybean_ir_sub))+1)
+nrow(se_soybean_ir_sub)
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+length(which(as.data.frame(rowData(se_soybean_ir_sub))$N_P.FDR < 1e-7))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+colList = c("#00A600FF", rainbow(5)[c(1,4,5)])
+ret <- plotClusters(dataSE=se_soybean_ir_sub, nC=4, colList = colList,
+  clusterAllData = FALSE, threshVal = 1e-7, saveFile = FALSE)
+names(ret)
+grid.draw(ret[["N_P_4"]])
+```
+
+____________________________________________________________________________________
+
+### Approach 2
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(dataSE=se_soybean_ir_sub, nC=4, colList = colList,
+  clusterAllData = TRUE, threshVal = 1e-7, saveFile = FALSE)
+grid.draw(ret[["N_P_4"]])
+```
+
+____________________________________________________________________________________
+
+### Approach 3
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+se_soybean_ir_sub_nm <- se_soybean_ir_sub
+rowData(se_soybean_ir_sub_nm) <- NULL
+ret <- plotClusters(dataSE=se_soybean_ir_sub_nm, nC=4, colList = colList,
+  clusterAllData = TRUE, saveFile = FALSE)
+grid.draw(ret[["N_P_4"]])  
+```
+
+____________________________________________________________________________________
+
+### Standardization
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+data(se_soybean_cn_sub)
+
+se_soybean_cn_sub_st = se_soybean_cn_sub
+assay(se_soybean_cn_sub_st) <-as.data.frame(t(apply(as.matrix(as.data.frame(
+  assay(se_soybean_cn_sub))), 1, scale)))
+nID <- which(is.nan(as.data.frame(assay(se_soybean_cn_sub_st))[,1]))
+assay(se_soybean_cn_sub_st)[nID,] <- 0
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(dataSE=se_soybean_cn_sub_st, nC=4,
+  colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5,
+  lineAlpha = 1, clusterAllData = FALSE, aggMethod = "average",
+  yAxisLabel = "Standardized read count", saveFile = FALSE)    
+    
+names(ret)
+grid.draw(ret[["S1_S2_4"]])
+grid.draw(ret[["S1_S3_4"]])
+```
+
+____________________________________________________________________________________
+
+### Verbose option
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+plotClusters(dataSE=se_soybean_cn_sub_st, nC=4, 
+  colList = c("#00A600FF", "#CC00FFFF", "red", "darkorange"), lineSize = 0.5,
+  lineAlpha = 1, clusterAllData = FALSE, aggMethod = "average",
+  yAxisLabel = "Standardized read count", verbose = TRUE)
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster1 <- readRDS(paste0(tempdir(), "/S1_S3_4_1.rds"))    
+S1S3Cluster1
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotSM(dataSE = se_soybean_cn_sub_st, geneList = S1S3Cluster1,
+  pointColor = "#00A600FF", saveFile = FALSE)
+ret[["S1_S3"]] + ggtitle("Cluster 1 Genes (n=19)")
+```
+
+____________________________________________________________________________________
+
+### Pre-determined clusters
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster2 <- readRDS(paste0(tempdir(), "/S1_S3_4_2.rds"))
+S1S3Cluster3 <- readRDS(paste0(tempdir(), "/S1_S3_4_3.rds"))
+S1S3Cluster4 <- readRDS(paste0(tempdir(), "/S1_S3_4_4.rds"))
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+S1S3Cluster2
+S1S3Cluster3
+S1S3Cluster4
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+ret <- plotClusters(dataSE=se_soybean_cn_sub_st, geneLists = list(S1S3Cluster2,
+  S1S3Cluster3, S1S3Cluster4), lineAlpha = 1, lineSize = 0.5)
+grid.draw(ret[["S1_S3_3"]])
+```
+
+____________________________________________________________________________________
+
+## References

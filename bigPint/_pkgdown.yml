@@ -1,0 +1,109 @@
+title: bigPint
+url: http://lindsayrutter.github.io/bigPint
+
+authors:
+  Lindsay Rutter:
+    href: https://github.com/lindsayrutter
+  Dianne Cook:
+    href: https://github.com/dicook
+  
+template:
+  params:
+    docsearch:
+      api_key: API_KEY
+      index_name: INDEX_NAME
+    bootswatch: sandstone
+
+development:
+  mode: auto
+
+reference:
+  - title: Data and data metrics example inputs
+    desc: These are publicly available RNA-seq datasets in data and data metrics object formats. Half of them are data subsets (‘sub’). These were subsetted by selecting one out of ten genes from the full datasets. They can be used to quickly test the package functions and are shown in the example vignettes to reduce space.
+    contents:
+    - '`soybean_cn`'
+    - '`soybean_cn_metrics`'
+    - '`soybean_ir`'
+    - '`soybean_ir_metrics`'
+    - '`soybean_cn_sub`'
+    - '`soybean_cn_sub_metrics`'
+    - '`soybean_ir_sub`'
+    - '`soybean_ir_sub_metrics`'
+  - title: SummarizedExperiment example inputs
+    desc: These are subsetted publicly available RNA-seq datasets in SummarizedExperiment object format.
+    contents:
+    - '`se_soybean_cn_sub`'
+    - '`se_soybean_ir_sub`'
+  - title: SummarizedExperiment data formatting tools
+    desc: These functions manipulate SummarizedExperiment data format by reducing number of treatment pairs and number of genes.
+    contents:
+    - '`convertSEPair`'
+    - '`convertSESubsetGenes`'    
+  - title: Static plotting tools
+    desc: These functions plot RNA-seq data and optionally overlay differentially expressed genes (DEGs). 
+    contents:
+    - '`plotClusters`'
+    - '`plotLitre`'
+    - '`plotPCP`'
+    - '`plotSM`'
+    - '`plotVolcano`'
+  - title: Interactive plotting tools
+    desc: These applications plot RNA-seq data and optionally overlay differentially expressed genes (DEGs). 
+    contents:
+    - '`plotLitreApp`'
+    - '`plotPCPApp`'
+    - '`plotSMApp`'
+    - '`plotVolcanoApp`'
+    
+navbar:
+  left:
+    - icon: fa-home
+      href: index.html
+  right:
+    - text: "Get Started"
+      icon: fas fa-book
+      menu:
+      -  text: Introduction to bigPint plots
+         href: articles/plotIntro.html      
+      -  text: Installation
+         href: articles/installation.html
+      -  text: Data object
+         href: articles/data.html
+      -  text: Data metrics object
+         href: articles/dataMetrics.html
+      -  text: SummarizedExperiment object
+         href: articles/summarizedExperiment.html
+      -  text: Producing static plots
+         href: articles/static.html
+      -  text: Producing interactive plots
+         href: articles/interactive.html
+      -  text: Hierarchical clustering
+         href: articles/clusters.html
+      -  text: Recommended RNA-seq pipeline
+         href: articles/pipeline.html
+    - icon: fa-pencil-square-o
+      text: "manuscripts"
+      menu:
+      -  text: Research article
+         href: articles/honeybee.html
+      -  text: Methodology article
+         href: articles/methods.html
+    - icon: fa-newspaper-o
+      text: "news"
+      href: news/index.html
+    - icon: fa-file-code-o
+      text: "functions"
+      href: reference/index.html
+    - icon: fa-github fa-lg
+      text: "github"
+      href: https://github.com/lindsayrutter/bigPint/
+      
+runtime: shiny
+
+figures:
+  fig.height: 7.2916667
+  fig.width: 7.2916667
+  fig.asp: 1
+
+pkgdown:
+    as_is: true
