@@ -148,6 +148,7 @@
 #' # Create standardized version of data (need for first set of six examples)
 #' library(matrixStats)
 #' library(ggplot2)
+#' library(SummarizedExperiment)
 #' se_soybean_cn_sub_st = se_soybean_cn_sub
 #' assay(se_soybean_cn_sub_st) <-as.data.frame(t(apply(as.matrix(as.data.frame(
 #'     assay(se_soybean_cn_sub))), 1, scale)))

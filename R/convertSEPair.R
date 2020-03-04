@@ -34,7 +34,7 @@ convertSEPair <- function(dataSE, group1, group2){
         setNames(x, sub(".*\\.", "", names(x)))))
     
     oldData <- as.data.frame(assay(dataSE))
-    keepDataCol <- which(vapply(colnames(oldData), function(x)
+    keepDataCol <- which(lapply(colnames(oldData), function(x)
         strsplit(x, "[.]")[[1]][1]) %in% c(group1, group2))
     keepOldData <- oldData[, keepDataCol]
     
