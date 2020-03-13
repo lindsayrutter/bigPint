@@ -175,10 +175,10 @@ library(matrixStats)
 library(ggplot2)
 library(SummarizedExperiment)
 se_soybean_cn_sub_st = se_soybean_cn_sub
-assay(se_soybean_cn_sub_st) <-as.data.frame(t(apply(as.matrix(as.data.frame(
-    assay(se_soybean_cn_sub))), 1, scale)))
+assay(se_soybean_cn_sub_st, withDimnames=FALSE) <-as.data.frame(t(
+    apply(as.matrix(as.data.frame(assay(se_soybean_cn_sub))), 1, scale)))
 nID <- which(is.nan(as.data.frame(assay(se_soybean_cn_sub_st))[,1]))
-assay(se_soybean_cn_sub_st)[nID,] <- 0
+assay(se_soybean_cn_sub_st, withDimnames=FALSE)[nID,] <- 0
 
 # Example 1: Plot scatterplot matrix of points. Saves three plots to outDir 
 # because saveFile equals TRUE by default.
