@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@
       <h1>SummarizedExperiment object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2020-03-05</h4>
+            <h4 class="date">2020-03-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/summarizedExperiment.Rmd"><code>vignettes/summarizedExperiment.Rmd</code></a></small>
       <div class="hidden name"><code>summarizedExperiment.Rmd</code></div>
@@ -167,54 +167,29 @@
 <p>Researchers who prefer using the <code>SummarizedExperiment</code> class can feed their data and associated metrics into the <code>bigPint</code> methods using one <code>SummarizedExperiment</code> object (instead of both a <code>data</code> and <code>dataMetrics</code> object). We demonstrate here how to create a <code>SummarizedExperiment</code> object. In the remaining articles of the vignette, the example code uses the <code>data</code> and <code>dataMetrics</code> objects as example input. However, at the bottom of each vignette, we also include the corresponding example code that uses instead the <code>SummarizedExperiment</code> object to create the exact same plots.</p>
 <hr>
 </div>
-<div id="example-two-treatments" class="section level2">
+<div id="example-two-groups" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-two-treatments" class="anchor"></a>Example: two treatments</h2>
-<p>As was shown in the article <a href="https://lindsayrutter.github.io/bigPint/articles/data.html">Data object</a>, the <code>data</code> object called <code>soybean_ir_sub</code> contained 5,604 genes and two treatment groups, N and P <span class="citation">(Lauter and Graham 2016)</span>. We can create a <code>SummarizedExperiment</code> object that combines aspects of the <code>data</code> object and <code>dataMetrics</code> object. We start by preparing the <code>data</code> and <code>dataMetrics</code> objects.</p>
+<a href="#example-two-groups" class="anchor"></a>Example: two groups</h2>
+<p>As was shown in the article <a href="https://lindsayrutter.github.io/bigPint/articles/data.html">Data object</a>, the <code>data</code> object called <code>soybean_ir_sub</code> contained 5,604 genes and two treatment groups, N and P <span class="citation">(Lauter and Graham 2016)</span>. We can create a <code>SummarizedExperiment</code> object that combines aspects of the <code>data</code> object and <code>dataMetrics</code> object. We start by reading in the <code>data</code> and <code>dataMetrics</code> objects (created from <code>edgeR</code> in the article <a href="https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html">Data metrics object</a>.</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bigPint)</span>
-<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(edgeR)</span>
-<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(data.table)</span>
-<span id="cb1-4"><a href="#cb1-4"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(dplyr)</span>
-<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(DelayedArray)</span>
-<span id="cb1-6"><a href="#cb1-6"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(SummarizedExperiment)</span>
-<span id="cb1-7"><a href="#cb1-7"></a></span>
-<span id="cb1-8"><a href="#cb1-8"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_ir_sub)</span>
-<span id="cb1-9"><a href="#cb1-9"></a>data =<span class="st"> </span>soybean_ir_sub</span>
-<span id="cb1-10"><a href="#cb1-10"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data) =<span class="st"> </span>data[,<span class="dv">1</span>]</span>
-<span id="cb1-11"><a href="#cb1-11"></a></span>
-<span id="cb1-12"><a href="#cb1-12"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>data[,<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb1-13"><a href="#cb1-13"></a>group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>)</span>
-<span id="cb1-14"><a href="#cb1-14"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>y, <span class="dt">group=</span>group)</span>
-<span id="cb1-15"><a href="#cb1-15"></a>Group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"N"</span>,<span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"P"</span>,<span class="dv">3</span>)))</span>
-<span id="cb1-16"><a href="#cb1-16"></a>design &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(<span class="op">~</span><span class="dv">0</span><span class="op">+</span>Group, <span class="dt">data=</span>y<span class="op">$</span>samples)</span>
-<span id="cb1-17"><a href="#cb1-17"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(design) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(Group)</span>
-<span id="cb1-18"><a href="#cb1-18"></a>y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/estimateDisp.html">estimateDisp</a></span>(y, design)</span>
-<span id="cb1-19"><a href="#cb1-19"></a>fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmFit</a></span>(y, design)</span>
-<span id="cb1-20"><a href="#cb1-20"></a></span>
-<span id="cb1-21"><a href="#cb1-21"></a>dataMetrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">ID =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data))</span>
-<span id="cb1-22"><a href="#cb1-22"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)<span class="op">-</span><span class="dv">1</span>)){</span>
-<span id="cb1-23"><a href="#cb1-23"></a>    <span class="cf">for</span> (j <span class="cf">in</span> (i<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)){</span>
-<span id="cb1-24"><a href="#cb1-24"></a>        contrast=<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>,<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit))</span>
-<span id="cb1-25"><a href="#cb1-25"></a>        contrast[i]=<span class="dv">1</span></span>
-<span id="cb1-26"><a href="#cb1-26"></a>        contrast[j]=<span class="op">-</span><span class="dv">1</span></span>
-<span id="cb1-27"><a href="#cb1-27"></a>        lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmLRT</a></span>(fit, <span class="dt">contrast=</span>contrast)</span>
-<span id="cb1-28"><a href="#cb1-28"></a>        lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/topTags.html">topTags</a></span>(lrt, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(y[[<span class="dv">1</span>]]))[[<span class="dv">1</span>]]</span>
-<span id="cb1-29"><a href="#cb1-29"></a>        </span>
-<span id="cb1-30"><a href="#cb1-30"></a>        <span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT</a></span>(lrt, <span class="dt">keep.rownames =</span> <span class="ot">TRUE</span>)[]</span>
-<span id="cb1-31"><a href="#cb1-31"></a>        lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(lrt)</span>
-<span id="cb1-32"><a href="#cb1-32"></a>        <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[i], <span class="st">"_"</span>, <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[j], <span class="st">"."</span>, <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt))</span>
-<span id="cb1-33"><a href="#cb1-33"></a>        <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt)[<span class="dv">1</span>] =<span class="st"> "ID"</span></span>
-<span id="cb1-34"><a href="#cb1-34"></a>        </span>
-<span id="cb1-35"><a href="#cb1-35"></a>        reorderID &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">full_join</a></span>(data, lrt, <span class="dt">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb1-36"><a href="#cb1-36"></a>        dataMetrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/cbind.html">cbind</a></span>(dataMetrics, reorderID[,<span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))])</span>
-<span id="cb1-37"><a href="#cb1-37"></a>    }</span>
-<span id="cb1-38"><a href="#cb1-38"></a>}</span></code></pre></div>
+<span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(DelayedArray)</span>
+<span id="cb1-3"><a href="#cb1-3"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(SummarizedExperiment)</span>
+<span id="cb1-4"><a href="#cb1-4"></a></span>
+<span id="cb1-5"><a href="#cb1-5"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_ir_sub)</span>
+<span id="cb1-6"><a href="#cb1-6"></a>data =<span class="st"> </span>soybean_ir_sub</span>
+<span id="cb1-7"><a href="#cb1-7"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_ir_sub_metrics)</span>
+<span id="cb1-8"><a href="#cb1-8"></a>dataMetrics =<span class="st"> </span>soybean_ir_sub_metrics</span></code></pre></div>
+<p>We then convert the <code>dataMetrics</code> object from a list of dataframes into one dataframe.</p>
+<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>dMUnlist &lt;-<span class="st"> </span>dataMetrics</span>
+<span id="cb2-2"><a href="#cb2-2"></a>dMUnlist[<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(dMUnlist[<span class="op">-</span><span class="dv">1</span>], transform, <span class="dt">ID =</span> <span class="ot">NULL</span>)</span>
+<span id="cb2-3"><a href="#cb2-3"></a>dMUnlist &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(cbind, dMUnlist)</span>
+<span id="cb2-4"><a href="#cb2-4"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(dMUnlist)[<span class="dv">1</span>] &lt;-<span class="st"> "ID"</span></span></code></pre></div>
 <p>Now, we can tranform our <code>data</code> object into a <code>DelayedMatrix</code> class object and then input both our <code>data</code> and <code>dataMetrics</code> objects combined into a <code>SummarizedExperiment</code> class object. We can verify that the <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay()</a></code> and <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData()</a></code> methods work for accessing our <code>SummarizedExperiment</code> object.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a>dataMetrics<span class="op">$</span>ID &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dataMetrics<span class="op">$</span>ID)</span>
-<span id="cb2-2"><a href="#cb2-2"></a>data =<span class="st"> </span>data[,<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb2-3"><a href="#cb2-3"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/DelayedArray/man/DelayedArray-class.html">DelayedArray</a></span>(data)</span>
-<span id="cb2-4"><a href="#cb2-4"></a>se_soybean_ir_sub &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/RangedSummarizedExperiment-class.html">SummarizedExperiment</a></span>(<span class="dt">assays =</span> data, <span class="dt">rowData =</span> dataMetrics)</span>
-<span id="cb2-5"><a href="#cb2-5"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_ir_sub)</span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data) =<span class="st"> </span>data[,<span class="dv">1</span>]</span>
+<span id="cb3-2"><a href="#cb3-2"></a>data =<span class="st"> </span>data[,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb3-3"><a href="#cb3-3"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/DelayedArray/man/DelayedArray-class.html">DelayedArray</a></span>(data)</span>
+<span id="cb3-4"><a href="#cb3-4"></a>se_soybean_ir_sub &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/RangedSummarizedExperiment-class.html">SummarizedExperiment</a></span>(<span class="dt">assays =</span> data, <span class="dt">rowData =</span> dMUnlist)</span>
+<span id="cb3-5"><a href="#cb3-5"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_ir_sub)</span></code></pre></div>
 <pre><code>## &lt;5604 x 6&gt; matrix of class DelayedMatrix and type "integer":
 ##                             N.1  N.2  N.3  P.1  P.2  P.3
 ## Glyma.06G158700.Wm82.a2.v1   48   28   15   29   16    8
@@ -228,90 +203,68 @@
 ## Glyma.04G168000.Wm82.a2.v1    1    2    0    1    1    6
 ##   Glyma.U001000.Wm82.a2.v1    0    0    0    0    0    0
 ## Glyma.17G217700.Wm82.a2.v1    0    0    0    0    0    0</code></pre>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span>(se_soybean_ir_sub)</span></code></pre></div>
+<div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span>(se_soybean_ir_sub)</span></code></pre></div>
 <pre><code>## DataFrame with 5604 rows and 6 columns
-##                                                    ID           N_P.logFC
-##                                           &lt;character&gt;           &lt;numeric&gt;
-## Glyma.06G158700.Wm82.a2.v1 Glyma.06G158700.Wm82.a2.v1   0.604140766583633
-## Glyma.08G156000.Wm82.a2.v1 Glyma.08G156000.Wm82.a2.v1                   0
-## Glyma.12G070600.Wm82.a2.v1 Glyma.12G070600.Wm82.a2.v1   0.430823670390994
-## Glyma.19G045200.Wm82.a2.v1 Glyma.19G045200.Wm82.a2.v1  -0.102640945923742
-## Glyma.05G050000.Wm82.a2.v1 Glyma.05G050000.Wm82.a2.v1                   0
-## ...                                               ...                 ...
-## Glyma.08G043300.Wm82.a2.v1 Glyma.08G043300.Wm82.a2.v1  0.0281389646614343
-## Glyma.01G089300.Wm82.a2.v1 Glyma.01G089300.Wm82.a2.v1 -0.0690497115759348
-## Glyma.04G168000.Wm82.a2.v1 Glyma.04G168000.Wm82.a2.v1   -1.50003734454818
-## Glyma.U001000.Wm82.a2.v1     Glyma.U001000.Wm82.a2.v1                   0
-## Glyma.17G217700.Wm82.a2.v1 Glyma.17G217700.Wm82.a2.v1                   0
-##                                  N_P.logCPM              N_P.LR
-##                                   &lt;numeric&gt;           &lt;numeric&gt;
-## Glyma.06G158700.Wm82.a2.v1 5.26602153704868    1.83612161453503
-## Glyma.08G156000.Wm82.a2.v1  1.5799452462371                   0
-## Glyma.12G070600.Wm82.a2.v1 3.94990209177565   0.914070236209175
-## Glyma.19G045200.Wm82.a2.v1 8.17766350344981   0.384979900727243
-## Glyma.05G050000.Wm82.a2.v1  1.5799452462371                   0
-## ...                                     ...                 ...
-## Glyma.08G043300.Wm82.a2.v1 5.33083059180222 0.00922094917073712
-## Glyma.01G089300.Wm82.a2.v1 11.3545256327698   0.175655627116413
-## Glyma.04G168000.Wm82.a2.v1 2.52152519719632    2.31443886826637
-## Glyma.U001000.Wm82.a2.v1    1.5799452462371                   0
-## Glyma.17G217700.Wm82.a2.v1  1.5799452462371                   0
-##                                   N_P.PValue           N_P.FDR
-##                                    &lt;numeric&gt;         &lt;numeric&gt;
-## Glyma.06G158700.Wm82.a2.v1  0.17540619883522 0.459549480258332
-## Glyma.08G156000.Wm82.a2.v1                 1                 1
-## Glyma.12G070600.Wm82.a2.v1 0.339036766818545 0.653581713536679
-## Glyma.19G045200.Wm82.a2.v1 0.534950054003868 0.862390549165107
-## Glyma.05G050000.Wm82.a2.v1                 1                 1
-## ...                                      ...               ...
-## Glyma.08G043300.Wm82.a2.v1 0.923500102876376                 1
-## Glyma.01G089300.Wm82.a2.v1 0.675133619750374 0.979358678709578
-## Glyma.04G168000.Wm82.a2.v1 0.128177548359302 0.370070572388216
-## Glyma.U001000.Wm82.a2.v1                   1                 1
-## Glyma.17G217700.Wm82.a2.v1                 1                 1</code></pre>
+##                                                    ID         N_P.logFC
+##                                           &lt;character&gt;         &lt;numeric&gt;
+## Glyma.06G158700.Wm82.a2.v1 Glyma.19G168700.Wm82.a2.v1  -5.9247761923622
+## Glyma.08G156000.Wm82.a2.v1 Glyma.13G293500.Wm82.a2.v1  2.99173960996473
+## Glyma.12G070600.Wm82.a2.v1 Glyma.05G188700.Wm82.a2.v1  -3.5079074671209
+## Glyma.19G045200.Wm82.a2.v1 Glyma.13G173100.Wm82.a2.v1 -3.90774673911046
+## Glyma.05G050000.Wm82.a2.v1 Glyma.11G141800.Wm82.a2.v1 -3.50814181090523
+## ...                                               ...               ...
+## Glyma.08G043300.Wm82.a2.v1 Glyma.03G066400.Wm82.a2.v1                 0
+## Glyma.01G089300.Wm82.a2.v1 Glyma.13G267400.Wm82.a2.v1                 0
+## Glyma.04G168000.Wm82.a2.v1 Glyma.06G233000.Wm82.a2.v1                 0
+## Glyma.U001000.Wm82.a2.v1     Glyma.U001000.Wm82.a2.v1                 0
+## Glyma.17G217700.Wm82.a2.v1 Glyma.17G217700.Wm82.a2.v1                 0
+##                                  N_P.logCPM           N_P.LR
+##                                   &lt;numeric&gt;        &lt;numeric&gt;
+## Glyma.06G158700.Wm82.a2.v1 7.51940083928117  265.83486914301
+## Glyma.08G156000.Wm82.a2.v1 8.07646635392326 171.406495183488
+## Glyma.12G070600.Wm82.a2.v1 8.83078536437528 167.407678145543
+## Glyma.19G045200.Wm82.a2.v1 8.26716122502243 156.671559411266
+## Glyma.05G050000.Wm82.a2.v1 10.1912062562805 153.787608225866
+## ...                                     ...              ...
+## Glyma.08G043300.Wm82.a2.v1  1.5799452462371                0
+## Glyma.01G089300.Wm82.a2.v1  1.5799452462371                0
+## Glyma.04G168000.Wm82.a2.v1  1.5799452462371                0
+## Glyma.U001000.Wm82.a2.v1    1.5799452462371                0
+## Glyma.17G217700.Wm82.a2.v1  1.5799452462371                0
+##                                      N_P.PValue              N_P.FDR
+##                                       &lt;numeric&gt;            &lt;numeric&gt;
+## Glyma.06G158700.Wm82.a2.v1 9.17713438359673e-60 5.14286610856761e-56
+## Glyma.08G156000.Wm82.a2.v1  3.6473810406337e-39 1.02199616758556e-35
+## Glyma.12G070600.Wm82.a2.v1 2.72508695427751e-38 5.09046243059039e-35
+## Glyma.19G045200.Wm82.a2.v1 6.03836012864639e-36 8.45974254023359e-33
+## Glyma.05G050000.Wm82.a2.v1 2.57718195534749e-35 2.88850553555347e-32
+## ...                                         ...                  ...
+## Glyma.08G043300.Wm82.a2.v1                    1                    1
+## Glyma.01G089300.Wm82.a2.v1                    1                    1
+## Glyma.04G168000.Wm82.a2.v1                    1                    1
+## Glyma.U001000.Wm82.a2.v1                      1                    1
+## Glyma.17G217700.Wm82.a2.v1                    1                    1</code></pre>
 <hr>
 </div>
-<div id="example-three-treatments" class="section level2">
+<div id="example-three-groups" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-three-treatments" class="anchor"></a>Example: three treatments</h2>
-<p>Similarly, as was shown in the data page, the <code>data</code> object called <code>soybean_cn_sub</code> contained 7,332 genes and three treatment groups, S1, S2, and S3 <span class="citation">(Brown and Hudson 2015)</span>. We can create a <code>SummarizedExperiment</code> object that combines aspects of the <code>data</code> object and <code>dataMetrics</code> object. We start by preparing the <code>data</code> and <code>dataMetrics</code> objects.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_cn_sub)</span>
-<span id="cb6-2"><a href="#cb6-2"></a>data =<span class="st"> </span>soybean_cn_sub</span>
-<span id="cb6-3"><a href="#cb6-3"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data) =<span class="st"> </span>data[,<span class="dv">1</span>]</span>
-<span id="cb6-4"><a href="#cb6-4"></a></span>
-<span id="cb6-5"><a href="#cb6-5"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>data[,<span class="op">-</span><span class="dv">1</span>])</span>
-<span id="cb6-6"><a href="#cb6-6"></a>group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">1</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">2</span>,<span class="dv">3</span>,<span class="dv">3</span>,<span class="dv">3</span>)</span>
-<span id="cb6-7"><a href="#cb6-7"></a>y =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/DGEList.html">DGEList</a></span>(<span class="dt">counts=</span>y, <span class="dt">group=</span>group)</span>
-<span id="cb6-8"><a href="#cb6-8"></a>Group =<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/factor.html">factor</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"S1"</span>,<span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"S2"</span>,<span class="dv">3</span>), <span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="st">"S3"</span>,<span class="dv">3</span>)))</span>
-<span id="cb6-9"><a href="#cb6-9"></a>design &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/stats/model.matrix.html">model.matrix</a></span>(<span class="op">~</span><span class="dv">0</span><span class="op">+</span>Group, <span class="dt">data=</span>y<span class="op">$</span>samples)</span>
-<span id="cb6-10"><a href="#cb6-10"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(design) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/levels.html">levels</a></span>(Group)</span>
-<span id="cb6-11"><a href="#cb6-11"></a>y &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/estimateDisp.html">estimateDisp</a></span>(y, design)</span>
-<span id="cb6-12"><a href="#cb6-12"></a>fit &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmFit</a></span>(y, design)</span>
-<span id="cb6-13"><a href="#cb6-13"></a></span>
-<span id="cb6-14"><a href="#cb6-14"></a>dataMetrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/data.frame.html">data.frame</a></span>(<span class="dt">ID =</span> <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data))</span>
-<span id="cb6-15"><a href="#cb6-15"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="op">:</span>(<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)<span class="op">-</span><span class="dv">1</span>)){</span>
-<span id="cb6-16"><a href="#cb6-16"></a>    <span class="cf">for</span> (j <span class="cf">in</span> (i<span class="op">+</span><span class="dv">1</span>)<span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit)){</span>
-<span id="cb6-17"><a href="#cb6-17"></a>        contrast=<span class="kw"><a href="https://rdrr.io/r/base/rep.html">rep</a></span>(<span class="dv">0</span>,<span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(fit))</span>
-<span id="cb6-18"><a href="#cb6-18"></a>        contrast[i]=<span class="dv">1</span></span>
-<span id="cb6-19"><a href="#cb6-19"></a>        contrast[j]=<span class="op">-</span><span class="dv">1</span></span>
-<span id="cb6-20"><a href="#cb6-20"></a>        lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/glmfit.html">glmLRT</a></span>(fit, <span class="dt">contrast=</span>contrast)</span>
-<span id="cb6-21"><a href="#cb6-21"></a>        lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/topTags.html">topTags</a></span>(lrt, <span class="dt">n =</span> <span class="kw"><a href="https://rdrr.io/r/base/nrow.html">nrow</a></span>(y[[<span class="dv">1</span>]]))[[<span class="dv">1</span>]]</span>
-<span id="cb6-22"><a href="#cb6-22"></a>        </span>
-<span id="cb6-23"><a href="#cb6-23"></a>        <span class="kw"><a href="https://Rdatatable.gitlab.io/data.table/reference/setDT.html">setDT</a></span>(lrt, <span class="dt">keep.rownames =</span> <span class="ot">TRUE</span>)[]</span>
-<span id="cb6-24"><a href="#cb6-24"></a>        lrt &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/as.data.frame.html">as.data.frame</a></span>(lrt)</span>
-<span id="cb6-25"><a href="#cb6-25"></a>        <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt) &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/paste.html">paste0</a></span>(<span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[i], <span class="st">"_"</span>, <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(fit)[j], <span class="st">"."</span>, <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt))</span>
-<span id="cb6-26"><a href="#cb6-26"></a>        <span class="kw"><a href="https://rdrr.io/r/base/colnames.html">colnames</a></span>(lrt)[<span class="dv">1</span>] =<span class="st"> "ID"</span></span>
-<span id="cb6-27"><a href="#cb6-27"></a>        </span>
-<span id="cb6-28"><a href="#cb6-28"></a>        reorderID &lt;-<span class="st"> </span><span class="kw"><a href="https://dplyr.tidyverse.org/reference/join.html">full_join</a></span>(data, lrt, <span class="dt">by =</span> <span class="st">"ID"</span>)</span>
-<span id="cb6-29"><a href="#cb6-29"></a>        dataMetrics &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/edgeR/man/cbind.html">cbind</a></span>(dataMetrics, reorderID[,<span class="op">-</span><span class="kw"><a href="https://rdrr.io/r/base/c.html">c</a></span>(<span class="dv">1</span><span class="op">:</span><span class="kw"><a href="https://rdrr.io/r/base/nrow.html">ncol</a></span>(data))])</span>
-<span id="cb6-30"><a href="#cb6-30"></a>    }</span>
-<span id="cb6-31"><a href="#cb6-31"></a>}</span></code></pre></div>
+<a href="#example-three-groups" class="anchor"></a>Example: three groups</h2>
+<p>Similarly, as was shown in the data page, the <code>data</code> object called <code>soybean_cn_sub</code> contained 7,332 genes and three treatment groups, S1, S2, and S3 <span class="citation">(Brown and Hudson 2015)</span>. We can create a <code>SummarizedExperiment</code> object that combines aspects of the <code>data</code> object and <code>dataMetrics</code> object. We start by reading in the <code>data</code> and <code>dataMetrics</code> objects (created from <code>edgeR</code> in the article <a href="https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html">Data metrics object</a>.</p>
+<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_cn_sub)</span>
+<span id="cb7-2"><a href="#cb7-2"></a>data =<span class="st"> </span>soybean_cn_sub</span>
+<span id="cb7-3"><a href="#cb7-3"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_cn_sub_metrics)</span>
+<span id="cb7-4"><a href="#cb7-4"></a>dataMetrics =<span class="st"> </span>soybean_cn_sub_metrics</span></code></pre></div>
+<p>We then convert the <code>dataMetrics</code> object from a list of dataframes into one dataframe.</p>
+<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a>dMUnlist &lt;-<span class="st"> </span>dataMetrics</span>
+<span id="cb8-2"><a href="#cb8-2"></a>dMUnlist[<span class="op">-</span><span class="dv">1</span>] &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/lapply.html">lapply</a></span>(dMUnlist[<span class="op">-</span><span class="dv">1</span>], transform, <span class="dt">ID =</span> <span class="ot">NULL</span>)</span>
+<span id="cb8-3"><a href="#cb8-3"></a>dMUnlist &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/do.call.html">do.call</a></span>(cbind, dMUnlist)</span>
+<span id="cb8-4"><a href="#cb8-4"></a><span class="kw"><a href="https://rdrr.io/r/base/names.html">names</a></span>(dMUnlist)[<span class="dv">1</span>] &lt;-<span class="st"> "ID"</span></span></code></pre></div>
 <p>Now, we can tranform our <code>data</code> object into a <code>DelayedMatrix</code> class object and then input both our <code>data</code> and <code>dataMetrics</code> objects combined into a <code>SummarizedExperiment</code> class object. We can verify that the <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay()</a></code> and <code><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData()</a></code> methods work for accessing our <code>SummarizedExperiment</code> object.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a>dataMetrics<span class="op">$</span>ID &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/r/base/character.html">as.character</a></span>(dataMetrics<span class="op">$</span>ID)</span>
-<span id="cb7-2"><a href="#cb7-2"></a>data =<span class="st"> </span>data[,<span class="op">-</span><span class="dv">1</span>]</span>
-<span id="cb7-3"><a href="#cb7-3"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/DelayedArray/man/DelayedArray-class.html">DelayedArray</a></span>(data)</span>
-<span id="cb7-4"><a href="#cb7-4"></a>se_soybean_cn_sub &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/RangedSummarizedExperiment-class.html">SummarizedExperiment</a></span>(<span class="dt">assays =</span> data, <span class="dt">rowData =</span> dataMetrics)</span>
-<span id="cb7-5"><a href="#cb7-5"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_cn_sub)</span></code></pre></div>
+<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/r/base/colnames.html">rownames</a></span>(data) =<span class="st"> </span>data[,<span class="dv">1</span>]</span>
+<span id="cb9-2"><a href="#cb9-2"></a>data =<span class="st"> </span>data[,<span class="op">-</span><span class="dv">1</span>]</span>
+<span id="cb9-3"><a href="#cb9-3"></a>data &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/DelayedArray/man/DelayedArray-class.html">DelayedArray</a></span>(data)</span>
+<span id="cb9-4"><a href="#cb9-4"></a>se_soybean_cn_sub &lt;-<span class="st"> </span><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/RangedSummarizedExperiment-class.html">SummarizedExperiment</a></span>(<span class="dt">assays =</span> data, <span class="dt">rowData =</span> dMUnlist)</span>
+<span id="cb9-5"><a href="#cb9-5"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">assay</a></span>(se_soybean_cn_sub)</span></code></pre></div>
 <pre><code>## &lt;7332 x 9&gt; matrix of class DelayedMatrix and type "double":
 ##                       S1.1      S1.2      S1.3 ...      S3.2      S3.3
 ##  Glyma06g12670.1 0.8024444 2.7088837 1.7634068   . 8.3675932 8.3893470
@@ -325,86 +278,86 @@
 ##  Glyma06g01600.2 2.5761594 4.0431593 4.6920688   . 3.8463167 3.2556486
 ##  Glyma15g08800.1 0.8024444 2.7088837 2.2841221   . 4.1727846 3.4845295
 ##  Glyma02g34995.1 0.8024444 0.8024444 0.8024444   . 0.8024444 0.8024444</code></pre>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span>(se_soybean_cn_sub)</span></code></pre></div>
+<div class="sourceCode" id="cb11"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1"></a><span class="kw"><a href="https://rdrr.io/pkg/SummarizedExperiment/man/SummarizedExperiment-class.html">rowData</a></span>(se_soybean_cn_sub)</span></code></pre></div>
 <pre><code>## DataFrame with 7332 rows and 16 columns
-##                                ID         S1_S2.logFC     S1_S2.logCPM
-##                       &lt;character&gt;           &lt;numeric&gt;        &lt;numeric&gt;
-## Glyma06g12670.1   Glyma06g12670.1   -1.97863638497672 8.18978430210418
-## Glyma08g12390.2   Glyma08g12390.2   0.451358897687614 7.86566188266854
-## Glyma12g02076.11 Glyma12g02076.11  -0.140493860626786 7.58726396687696
-## Glyma18g53450.1   Glyma18g53450.1 -0.0353079621200995 6.71937451274736
-## Glyma05g03470.4   Glyma05g03470.4   0.319365727943316 7.57940927317866
-## ...                           ...                 ...              ...
-## Glyma02g14300.1   Glyma02g14300.1  -0.390785160008894 8.10283490011232
-## Glyma06g17451.4   Glyma06g17451.4  0.0931247707461661 7.24669578242168
-## Glyma06g01600.2   Glyma06g01600.2    1.46106139757423 7.50686693604049
-## Glyma15g08800.1   Glyma15g08800.1   -1.06843582329339 7.65876619818055
-## Glyma02g34995.1   Glyma02g34995.1 -0.0353079621200995 6.71937451274736
-##                             S1_S2.LR        S1_S2.PValue         S1_S2.FDR
-##                            &lt;numeric&gt;           &lt;numeric&gt;         &lt;numeric&gt;
-## Glyma06g12670.1     10.8123242222112 0.00100826643108159 0.189554089043338
-## Glyma08g12390.2    0.659893247989288   0.416597633276657 0.999674854803839
-## Glyma12g02076.11  0.0478954996034647   0.826766581255402 0.999674854803839
-## Glyma18g53450.1  0.00096428758602438   0.975227287845571 0.999674854803839
-## Glyma05g03470.4    0.210906201277846   0.646058058122825 0.999674854803839
-## ...                              ...                 ...               ...
-## Glyma02g14300.1    0.586513744237393   0.443770407489479 0.999674854803839
-## Glyma06g17451.4   0.0138341389952643   0.906369853341808 0.999674854803839
-## Glyma06g01600.2     3.75240995034095  0.0527314316801154 0.999674854803839
-## Glyma15g08800.1     2.52863393915805   0.111796964799529 0.999674854803839
-## Glyma02g34995.1  0.00096428758602438   0.975227287845571 0.999674854803839
-##                          S1_S3.logFC     S1_S3.logCPM            S1_S3.LR
-##                            &lt;numeric&gt;        &lt;numeric&gt;           &lt;numeric&gt;
-## Glyma06g12670.1    -2.22589679927172 8.18978430210418     14.877978229256
-## Glyma08g12390.2    0.290636530352781 7.86566188266854   0.288670320084279
-## Glyma12g02076.11  -0.094670933490381 7.58726396687696  0.0214006369269479
-## Glyma18g53450.1  -0.0372724406895944 6.71937451274736 0.00107434385372284
-## Glyma05g03470.4   -0.448216556413182 7.57940927317866   0.536237705706409
-## ...                              ...              ...                 ...
-## Glyma02g14300.1   -0.383313793276128 8.10283490011232   0.562444686772849
-## Glyma06g17451.4   -0.136829697756763 7.24669578242168  0.0321722167403031
-## Glyma06g01600.2   0.0665984234444191 7.50686693604049  0.0124026062494442
-## Glyma15g08800.1     -1.0852519594388 7.65876619818055    2.62164024455062
-## Glyma02g34995.1  -0.0372724406895944 6.71937451274736 0.00107434385372284
-##                          S1_S3.PValue          S1_S3.FDR          S2_S3.logFC
-##                             &lt;numeric&gt;          &lt;numeric&gt;            &lt;numeric&gt;
-## Glyma06g12670.1  0.000114694142435746 0.0347300678370702   -0.247260414294997
-## Glyma08g12390.2     0.591073883013608  0.999759621939895   -0.160722367334834
-## Glyma12g02076.11    0.883692802894879  0.999759621939895   0.0458229271364046
-## Glyma18g53450.1     0.973852272201602  0.999759621939895 -0.00196447856949492
-## Glyma05g03470.4     0.463996139264058  0.999759621939895   -0.767582284356498
-## ...                               ...                ...                  ...
-## Glyma02g14300.1     0.453276914784459  0.999759621939895  0.00747136673276579
-## Glyma06g17451.4     0.857650206581306  0.999759621939895   -0.229954468502929
-## Glyma06g01600.2     0.911325336113014  0.999759621939895    -1.39446297412981
-## Glyma15g08800.1     0.105415423292092  0.999759621939895   -0.016816136145404
-## Glyma02g34995.1     0.973852272201602  0.999759621939895 -0.00196447856949492
-##                      S2_S3.logCPM             S2_S3.LR      S2_S3.PValue
-##                         &lt;numeric&gt;            &lt;numeric&gt;         &lt;numeric&gt;
-## Glyma06g12670.1  8.18978430210418    0.351797087067103  0.55309760136132
-## Glyma08g12390.2  7.86566188266854   0.0748433165750264 0.784411197886029
-## Glyma12g02076.11 7.58726396687696   0.0051794409344656  0.94262710919802
-## Glyma18g53450.1  6.71937451274736  2.9731954499174e-06 0.998624211813305
-## Glyma05g03470.4  7.57940927317866     1.39286352192513 0.237922114006735
-## ...                           ...                  ...               ...
-## Glyma02g14300.1  8.10283490011232 0.000240346396198854 0.987630803974543
-## Glyma06g17451.4  7.24669578242168   0.0868999400152175 0.768155866226292
-## Glyma06g01600.2  7.50686693604049     3.30368112262913 0.069124813555961
-## Glyma15g08800.1  7.65876619818055 0.000885501872824879  0.97626054674142
-## Glyma02g34995.1  6.71937451274736  2.9731954499174e-06 0.998624211813305
-##                          S2_S3.FDR
-##                          &lt;numeric&gt;
-## Glyma06g12670.1  0.999824593695449
-## Glyma08g12390.2  0.999824593695449
-## Glyma12g02076.11 0.999824593695449
-## Glyma18g53450.1  0.999824593695449
-## Glyma05g03470.4  0.999824593695449
-## ...                            ...
-## Glyma02g14300.1  0.999824593695449
-## Glyma06g17451.4  0.999824593695449
-## Glyma06g01600.2  0.999824593695449
-## Glyma15g08800.1  0.999824593695449
-## Glyma02g34995.1  0.999824593695449</code></pre>
+##                               ID           S1_S2.logFC     S1_S2.logCPM
+##                      &lt;character&gt;             &lt;numeric&gt;        &lt;numeric&gt;
+## Glyma06g12670.1  Glyma18g00690.1       3.1406164674386 8.04140935435585
+## Glyma08g12390.2  Glyma08g22380.1      2.62010301368484 8.04876788928141
+## Glyma12g02076.11 Glyma20g30460.1      2.50409605459317 8.13952799903194
+## Glyma18g53450.1  Glyma07g09700.1      2.37046086750861 8.19271840209557
+## Glyma05g03470.4  Glyma10g31780.1      2.74333730828629  7.9319873394926
+## ...                          ...                   ...              ...
+## Glyma02g14300.1  Glyma10g10560.4 -0.000413427604253003 7.86347185571317
+## Glyma06g17451.4  Glyma17g26590.1  0.000192533500625859 8.97421823694854
+## Glyma06g01600.2  Glyma17g01820.2  0.000285254463364393 7.82862405077197
+## Glyma15g08800.1  Glyma01g44330.1  0.000199404175442821 8.36788817678224
+## Glyma02g34995.1  Glyma10g42001.6 -0.000277879736503788 7.38340012952646
+##                              S1_S2.LR         S1_S2.PValue            S1_S2.FDR
+##                             &lt;numeric&gt;            &lt;numeric&gt;            &lt;numeric&gt;
+## Glyma06g12670.1      29.3377659053178 6.07991481053223e-08 0.000445779353908223
+## Glyma08g12390.2      24.7572842865198 6.50225983485003e-07  0.00238372845545602
+## Glyma12g02076.11     23.9633668945292 9.81862225726021e-07   0.0023996712796744
+## Glyma18g53450.1      22.6528940494972 1.94067691466674e-06  0.00355726078458414
+## Glyma05g03470.4      21.0107015771135  4.5672514178665e-06  0.00669741747915943
+## ...                               ...                  ...                  ...
+## Glyma02g14300.1  5.75159128018976e-07    0.999394890420705    0.999674854803839
+## Glyma06g17451.4     2.99561162799e-07    0.999563300400471    0.999674854803839
+## Glyma06g01600.2  2.52769910419337e-07    0.999598853755752    0.999674854803839
+## Glyma15g08800.1  2.05640599770796e-07    0.999638178410205    0.999674854803839
+## Glyma02g34995.1  1.66063652162762e-07    0.999674854803839    0.999674854803839
+##                            S1_S3.logFC     S1_S3.logCPM             S1_S3.LR
+##                              &lt;numeric&gt;        &lt;numeric&gt;            &lt;numeric&gt;
+## Glyma06g12670.1       3.18021576438139 8.04876788928141     30.3535157635927
+## Glyma08g12390.2       3.31782869501987 8.13525861911815     24.7499133395679
+## Glyma12g02076.11      2.44356811670685 8.13952799903194     23.2588075894178
+## Glyma18g53450.1       2.46354631724766 8.04140935435585     22.5072123081431
+## Glyma05g03470.4       3.02814866964131 7.85103429586298     22.3237406601991
+## ...                                ...              ...                  ...
+## Glyma02g14300.1   0.000181323009531468 8.10962711657198 1.36860755173274e-07
+## Glyma06g17451.4  -0.000198696779056767  7.6469633713906 1.02335294238642e-07
+## Glyma06g01600.2  -0.000100971883233311 8.60600253550183 6.35067563606317e-08
+## Glyma15g08800.1   6.68582466891479e-05 8.63256350133575 2.72929973760272e-08
+## Glyma02g34995.1   1.47433205433351e-05 7.70704380569527 6.03469940685386e-10
+##                          S1_S3.PValue            S1_S3.FDR
+##                             &lt;numeric&gt;            &lt;numeric&gt;
+## Glyma06g12670.1  3.60053785056458e-08 0.000263991435203395
+## Glyma08g12390.2  6.52717356513269e-07  0.00239286182897764
+## Glyma12g02076.11 1.41600489907636e-06  0.00337772431327586
+## Glyma18g53450.1  2.09356073864243e-06  0.00337772431327586
+## Glyma05g03470.4  2.30341265226123e-06  0.00337772431327586
+## ...                               ...                  ...
+## Glyma02g14300.1     0.999704825036919    0.999980399466941
+## Glyma06g17451.4     0.999744757625969    0.999980399466941
+## Glyma06g01600.2     0.999798928729247    0.999980399466941
+## Glyma15g08800.1     0.999868184744363    0.999980399466941
+## Glyma02g34995.1     0.999980399466941    0.999980399466941
+##                            S2_S3.logFC     S2_S3.logCPM             S2_S3.LR
+##                              &lt;numeric&gt;        &lt;numeric&gt;            &lt;numeric&gt;
+## Glyma06g12670.1       2.66436020376367 7.85943484994532     16.1010284435055
+## Glyma08g12390.2       2.71839513128107 7.82371738576058     16.0104243609561
+## Glyma12g02076.11      2.77896477422702 8.13525861911815     14.2809998478888
+## Glyma18g53450.1       2.19312440298844 7.63084646168203      11.837447530885
+## Glyma05g03470.4       2.28950273402781 7.84030883115338     10.4717693290984
+## ...                                ...              ...                  ...
+## Glyma02g14300.1  -0.000587797267706622 7.10963315039468 5.02569005522702e-07
+## Glyma06g17451.4  -0.000173649112616916 8.56696801319134 1.76322233938486e-07
+## Glyma06g01600.2   0.000118818030845814 8.54349783387869 8.37196033054433e-08
+## Glyma15g08800.1  -0.000129615564354734 8.16543738316834 7.10091234701338e-08
+## Glyma02g34995.1  -0.000100783016769296 8.32825332997323 4.83292751929376e-08
+##                          S2_S3.PValue         S2_S3.FDR
+##                             &lt;numeric&gt;         &lt;numeric&gt;
+## Glyma06g12670.1  6.00514158020776e-05 0.230938474783886
+## Glyma08g12390.2  6.29946739726911e-05 0.230938474783886
+## Glyma12g02076.11 0.000157446136515663  0.38479835764428
+## Glyma18g53450.1  0.000580513451530436 0.999824593695449
+## Glyma05g03470.4   0.00121212572789409 0.999824593695449
+## ...                               ...               ...
+## Glyma02g14300.1     0.999434362914674 0.999824593695449
+## Glyma06g17451.4     0.999664962369523 0.999824593695449
+## Glyma06g01600.2      0.99976913737134 0.999824593695449
+## Glyma15g08800.1     0.999787383417981 0.999824593695449
+## Glyma02g34995.1     0.999824593695449 0.999824593695449</code></pre>
 <hr>
 </div>
 <div id="references" class="section level2 unnumbered">
@@ -428,8 +381,8 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#summarizedexperiment-object">SummarizedExperiment object</a></li>
-      <li><a href="#example-two-treatments">Example: two treatments</a></li>
-      <li><a href="#example-three-treatments">Example: three treatments</a></li>
+      <li><a href="#example-two-groups">Example: two groups</a></li>
+      <li><a href="#example-three-groups">Example: three groups</a></li>
       <li><a href="#references">References</a></li>
       </ul>
 </div>

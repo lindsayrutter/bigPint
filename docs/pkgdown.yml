@@ -4,7 +4,6 @@ pkgdown_sha: ~
 articles:
   bioconductor: bioconductor.html
   clusters: clusters.html
-  createDataMetrics: createDataMetrics.html
   data: data.html
   dataMetrics: dataMetrics.html
   honeybee: honeybee.html

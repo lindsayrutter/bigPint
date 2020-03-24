@@ -27,7 +27,7 @@ All functions in the `bigPint` package require an input parameter called `data`,
 
 ____________________________________________________________________________________
 
-## Example: two treatments
+## Example: two groups
 
 The `data` object requires the same particular data frame format for all `bigPint` functions. There should be $n$ rows in the data frame, where $n$ is the number of genes. There should be $p + 1$ columns in the data frame, where $p$ is the number of samples. The first column contains the genes names and the rest of the columns should contain the read counts for all samples of interest. An example of this format is shown below:
 
@@ -65,13 +65,12 @@ As demonstrated above, the `data` object must meet the following conditions:
         - The second part consists of a dot "." to serve as a delimeter
         - The third part indicates the replicate number and must consist of numbers
 
-It is important that the names of all columns except the first follow the three-part format delineated above. All functions in the `bigPint` package require this format to successfully produce plots. If your `data` object
-does not fit this format, `bigPint` will likely throw an informative
+It is important that the names of all columns except the first follow the three-part format delineated above. All functions in the `bigPint` package require this format to successfully produce plots. If your `data` object does not fit this format, `bigPint` will likely throw an informative
 error about why your format was not recognized.
 
 ____________________________________________________________________________________
 
-## Example: three treatments
+## Example: three groups
 
 Note that the `data` object can contain more than two treatment groups. In this case, the `bigPint` software will automatically create plots for all pairs of treatment groups. An example of this type of dataset is provided in the `bigPint` package and can accessed as follows:
 

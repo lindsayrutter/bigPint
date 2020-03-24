@@ -40,7 +40,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bigPint</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -152,7 +152,7 @@
       <h1>Data object</h1>
                         <h4 class="author">Lindsay Rutter</h4>
                         
-            <h4 class="date">2020-03-05</h4>
+            <h4 class="date">2020-03-24</h4>
       
       <small class="dont-index">Source: <a href="https://github.com/lindsayrutter/bigPint/blob/master/vignettes/data.Rmd"><code>vignettes/data.Rmd</code></a></small>
       <div class="hidden name"><code>data.Rmd</code></div>
@@ -167,9 +167,9 @@
 <p>All functions in the <code>bigPint</code> package require an input parameter called <code>data</code>, which should be a data frame that contains the full dataset of interest. If a researcher is using the package to visualize RNA-seq data, then this <code>data</code> object should be a count table that contains the read counts for all genes of interest.</p>
 <hr>
 </div>
-<div id="example-two-treatments" class="section level2">
+<div id="example-two-groups" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-two-treatments" class="anchor"></a>Example: two treatments</h2>
+<a href="#example-two-groups" class="anchor"></a>Example: two groups</h2>
 <p>The <code>data</code> object requires the same particular data frame format for all <code>bigPint</code> functions. There should be <span class="math inline">\(n\)</span> rows in the data frame, where <span class="math inline">\(n\)</span> is the number of genes. There should be <span class="math inline">\(p + 1\)</span> columns in the data frame, where <span class="math inline">\(p\)</span> is the number of samples. The first column contains the genes names and the rest of the columns should contain the read counts for all samples of interest. An example of this format is shown below:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1"></a><span class="kw"><a href="https://rdrr.io/r/base/library.html">library</a></span>(bigPint)</span>
 <span id="cb1-2"><a href="#cb1-2"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(<span class="st">"soybean_ir_sub"</span>)</span>
@@ -229,9 +229,9 @@
 <p>It is important that the names of all columns except the first follow the three-part format delineated above. All functions in the <code>bigPint</code> package require this format to successfully produce plots. If your <code>data</code> object does not fit this format, <code>bigPint</code> will likely throw an informative error about why your format was not recognized.</p>
 <hr>
 </div>
-<div id="example-three-treatments" class="section level2">
+<div id="example-three-groups" class="section level2">
 <h2 class="hasAnchor">
-<a href="#example-three-treatments" class="anchor"></a>Example: three treatments</h2>
+<a href="#example-three-groups" class="anchor"></a>Example: three groups</h2>
 <p>Note that the <code>data</code> object can contain more than two treatment groups. In this case, the <code>bigPint</code> software will automatically create plots for all pairs of treatment groups. An example of this type of dataset is provided in the <code>bigPint</code> package and can accessed as follows:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1"></a><span class="kw"><a href="https://rdrr.io/r/utils/data.html">data</a></span>(soybean_cn_sub)</span></code></pre></div>
 <p>This example dataset contains 7,332 genes and nine samples <span class="citation">(Brown and Hudson 2015)</span>. There are three treatment groups, S1, S2, and S3. Each treatment group contains three replicates. In such cases where the <code>data</code> object contains more than two treatment groups, all functions in the <code>bigPint</code> package (except <code><a href="../reference/plotSMApp.html">plotSMApp()</a></code>) will automatically produce a plot for each pairwise combination of treatment groups.</p>
@@ -293,9 +293,9 @@
 <a href="#tocnav" class="anchor"></a>Contents</h2>
       <ul class="nav nav-pills nav-stacked">
 <li><a href="#about-data-object">About data object</a></li>
-      <li><a href="#example-two-treatments">Example: two treatments</a></li>
+      <li><a href="#example-two-groups">Example: two groups</a></li>
       <li><a href="#data-object-rules">Data object rules</a></li>
-      <li><a href="#example-three-treatments">Example: three treatments</a></li>
+      <li><a href="#example-three-groups">Example: three groups</a></li>
       <li><a href="#preprocessing-of-data-object">Preprocessing of data object</a></li>
       <li><a href="#references">References</a></li>
       </ul>

@@ -27,7 +27,7 @@ Researchers who prefer using the `SummarizedExperiment` class can feed their dat
 
 ____________________________________________________________________________________
 
-## Example: two treatments
+## Example: two groups
 
 As was shown in the article [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by reading in the `data` and `dataMetrics` objects (created from `edgeR` in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html).
 
@@ -64,7 +64,7 @@ rowData(se_soybean_ir_sub)
 
 ____________________________________________________________________________________
 
-## Example: three treatments
+## Example: three groups
 
 Similarly, as was shown in the data page, the `data` object called `soybean_cn_sub` contained 7,332 genes and three treatment groups, S1, S2, and S3 [@brown2015developmental]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by reading in the `data` and `dataMetrics` objects (created from `edgeR` in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html).
 
