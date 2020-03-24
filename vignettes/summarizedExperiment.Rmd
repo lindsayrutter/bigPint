@@ -29,56 +29,35 @@ ________________________________________________________________________________
 
 ## Example: two treatments
 
-As was shown in the article [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by preparing the `data` and `dataMetrics` objects.
+As was shown in the article [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by reading in the `data` and `dataMetrics` objects (created from `edgeR` in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html).
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE}
 library(bigPint)
-library(edgeR)
-library(data.table)
-library(dplyr)
 library(DelayedArray)
 library(SummarizedExperiment)
 
 data(soybean_ir_sub)
 data = soybean_ir_sub
-rownames(data) = data[,1]
+data(soybean_ir_sub_metrics)
+dataMetrics = soybean_ir_sub_metrics
+```
 
-y = DGEList(counts=data[,-1])
-group = c(1,1,1,2,2,2)
-y = DGEList(counts=y, group=group)
-Group = factor(c(rep("N",3), rep("P",3)))
-design <- model.matrix(~0+Group, data=y$samples)
-colnames(design) <- levels(Group)
-y <- estimateDisp(y, design)
-fit <- glmFit(y, design)
+We then convert the `dataMetrics` object from a list of dataframes into one dataframe. 
 
-dataMetrics <- data.frame(ID = rownames(data))
-for (i in 1:(ncol(fit)-1)){
-    for (j in (i+1):ncol(fit)){
-        contrast=rep(0,ncol(fit))
-        contrast[i]=1
-        contrast[j]=-1
-        lrt <- glmLRT(fit, contrast=contrast)
-        lrt <- topTags(lrt, n = nrow(y[[1]]))[[1]]
-        
-        setDT(lrt, keep.rownames = TRUE)[]
-        lrt <- as.data.frame(lrt)
-        colnames(lrt) <- paste0(colnames(fit)[i], "_", colnames(fit)[j], ".", colnames(lrt))
-        colnames(lrt)[1] = "ID"
-        
-        reorderID <- full_join(data, lrt, by = "ID")
-        dataMetrics <- cbind(dataMetrics, reorderID[,-c(1:ncol(data))])
-    }
-}
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+dMUnlist <- dataMetrics
+dMUnlist[-1] <- lapply(dMUnlist[-1], transform, ID = NULL)
+dMUnlist <- do.call(cbind, dMUnlist)
+names(dMUnlist)[1] <- "ID"
 ```
 
 Now, we can tranform our `data` object into a `DelayedMatrix` class object and then input both our `data` and `dataMetrics` objects combined into a `SummarizedExperiment` class object. We can verify that the `assay()` and `rowData()` methods work for accessing our `SummarizedExperiment` object.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE}
-dataMetrics$ID <- as.character(dataMetrics$ID)
+rownames(data) = data[,1]
 data = data[,-1]
 data <- DelayedArray(data)
-se_soybean_ir_sub <- SummarizedExperiment(assays = data, rowData = dataMetrics)
+se_soybean_ir_sub <- SummarizedExperiment(assays = data, rowData = dMUnlist)
 assay(se_soybean_ir_sub)
 rowData(se_soybean_ir_sub)
 ```
@@ -87,49 +66,31 @@ ________________________________________________________________________________
 
 ## Example: three treatments
 
-Similarly, as was shown in the data page, the `data` object called `soybean_cn_sub` contained 7,332 genes and three treatment groups, S1, S2, and S3 [@brown2015developmental]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by preparing the `data` and `dataMetrics` objects.
+Similarly, as was shown in the data page, the `data` object called `soybean_cn_sub` contained 7,332 genes and three treatment groups, S1, S2, and S3 [@brown2015developmental]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by reading in the `data` and `dataMetrics` objects (created from `edgeR` in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html).
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE}
 data(soybean_cn_sub)
 data = soybean_cn_sub
-rownames(data) = data[,1]
+data(soybean_cn_sub_metrics)
+dataMetrics = soybean_cn_sub_metrics
+```
 
-y = DGEList(counts=data[,-1])
-group = c(1,1,1,2,2,2,3,3,3)
-y = DGEList(counts=y, group=group)
-Group = factor(c(rep("S1",3), rep("S2",3), rep("S3",3)))
-design <- model.matrix(~0+Group, data=y$samples)
-colnames(design) <- levels(Group)
-y <- estimateDisp(y, design)
-fit <- glmFit(y, design)
+We then convert the `dataMetrics` object from a list of dataframes into one dataframe. 
 
-dataMetrics <- data.frame(ID = rownames(data))
-for (i in 1:(ncol(fit)-1)){
-    for (j in (i+1):ncol(fit)){
-        contrast=rep(0,ncol(fit))
-        contrast[i]=1
-        contrast[j]=-1
-        lrt <- glmLRT(fit, contrast=contrast)
-        lrt <- topTags(lrt, n = nrow(y[[1]]))[[1]]
-        
-        setDT(lrt, keep.rownames = TRUE)[]
-        lrt <- as.data.frame(lrt)
-        colnames(lrt) <- paste0(colnames(fit)[i], "_", colnames(fit)[j], ".", colnames(lrt))
-        colnames(lrt)[1] = "ID"
-        
-        reorderID <- full_join(data, lrt, by = "ID")
-        dataMetrics <- cbind(dataMetrics, reorderID[,-c(1:ncol(data))])
-    }
-}
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+dMUnlist <- dataMetrics
+dMUnlist[-1] <- lapply(dMUnlist[-1], transform, ID = NULL)
+dMUnlist <- do.call(cbind, dMUnlist)
+names(dMUnlist)[1] <- "ID"
 ```
 
 Now, we can tranform our `data` object into a `DelayedMatrix` class object and then input both our `data` and `dataMetrics` objects combined into a `SummarizedExperiment` class object. We can verify that the `assay()` and `rowData()` methods work for accessing our `SummarizedExperiment` object.
 
 ```{r, eval=TRUE, include=TRUE, message=FALSE}
-dataMetrics$ID <- as.character(dataMetrics$ID)
+rownames(data) = data[,1]
 data = data[,-1]
 data <- DelayedArray(data)
-se_soybean_cn_sub <- SummarizedExperiment(assays = data, rowData = dataMetrics)
+se_soybean_cn_sub <- SummarizedExperiment(assays = data, rowData = dMUnlist)
 assay(se_soybean_cn_sub)
 rowData(se_soybean_cn_sub)
 ```
