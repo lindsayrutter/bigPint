@@ -4,10 +4,12 @@
 \name{se_soybean_cn_sub}
 \alias{se_soybean_cn_sub}
 \title{Normalized and subsetted soybean cotyledon SummarizedExperiment}
-\format{(1) A DelayedMatrix with 7,332 rows and 10 variables and 1 row per
+\format{
+(1) A DelayedMatrix with 7,332 rows and 10 variables and 1 row per
  gene. Accessible by \code{assay(se_soybean_cn_sub)}. (2) A List with 1
  list element per treatment group combination and 1 row per gene.
- Accessible by \code{rowData(se_soybean_cn_sub)}.}
+ Accessible by \code{rowData(se_soybean_cn_sub)}.
+}
 \usage{
 data(se_soybean_cn_sub)
 }

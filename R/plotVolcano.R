@@ -175,6 +175,11 @@ if (is.null(geneList) && !is.null(dataMetrics)){
     logFC)
 }
 
+if (!is.null(dataMetrics)){
+    helperTestDataMetricsVolcano(data, dataMetrics, threshVar, PValue,
+    logFC)
+}
+
 countColor2 <- counts <- hexID <- ID <- NULL
 myPairs <- helperMakePairs(data)[["myPairs"]]
 colGroups <- helperMakePairs(data)[["colGroups"]]

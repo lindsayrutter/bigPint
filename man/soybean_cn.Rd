@@ -4,7 +4,11 @@
 \name{soybean_cn}
 \alias{soybean_cn}
 \title{Normalized soybean cotyledon data}
-\format{a \code{RData} instance, 1 row per gene}
+\format{
+a \code{RData} instance, 1 row per gene
+
+A data frame with 73,320 rows and 10 variables
+}
 \description{
 This dataset contains normalized RNA-sequencing read counts 
 from soybean cotyledon across three time stages of development. Early 

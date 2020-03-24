@@ -4,8 +4,13 @@
 \name{soybean_ir_sub_metrics}
 \alias{soybean_ir_sub_metrics}
 \title{Raw and subsetted soybean leaves iron-metabolism metrics}
-\format{a \code{RData} instance, 1 list per treatment group combination 
-and 1 row per gene}
+\format{
+a \code{RData} instance, 1 list per treatment group combination 
+and 1 row per gene
+
+A nested list of length 1. The list contains the metrics for the 
+5,604 genes for the one treatment group combination.
+}
 \usage{
 data(soybean_ir_sub_metrics)
 }

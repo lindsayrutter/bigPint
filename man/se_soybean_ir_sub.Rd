@@ -4,10 +4,14 @@
 \name{se_soybean_ir_sub}
 \alias{se_soybean_ir_sub}
 \title{Raw and subsetted soybean leaves iron-metabolism SummarizedExperiment}
-\format{(1) A DelayedMatrix with 5,604 rows and 7 variables and 1 row per
+\format{
+(1) A DelayedMatrix with 5,604 rows and 7 variables and 1 row per
 gene. Accessible by \code{assay(se_soybean_ir_sub)}. (2) A List with 1
 list element per treatment group combination and 1 row per gene.
-Accessible by \code{rowData(se_soybean_ir_sub)}.}
+Accessible by \code{rowData(se_soybean_ir_sub)}.
+
+A data frame with 5,604 rows and 7 variables
+}
 \usage{
 data(se_soybean_ir_sub)
 }

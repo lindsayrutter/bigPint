@@ -4,7 +4,7 @@ colNames = colnames(data[,-1])
 seqVec <- seq_along(colNames)
     
 generalMessage = "For more information about formatting the data
-object, see https://lrutter.github.io/bigPint/articles/data.html"
+object, see https://lindsayrutter.github.io/bigPint/articles/data.html"
 
 if (!methods::is(data, "data.frame")){ 
     stop(paste0("Data object must be of class 'data.frame'. If you are

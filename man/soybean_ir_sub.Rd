@@ -4,7 +4,11 @@
 \name{soybean_ir_sub}
 \alias{soybean_ir_sub}
 \title{Raw and subsetted soybean leaves iron-metabolism data}
-\format{a \code{RData} instance, 1 row per gene}
+\format{
+a \code{RData} instance, 1 row per gene
+
+A data frame with 5,604 rows and 7 variables
+}
 \usage{
 data(soybean_ir_sub)
 }

@@ -4,8 +4,13 @@
 \name{soybean_cn_metrics}
 \alias{soybean_cn_metrics}
 \title{Normalized soybean cotyledon metrics}
-\format{a \code{RData} instance, 1 list per treatment group combination 
-and 1 row per gene}
+\format{
+a \code{RData} instance, 1 list per treatment group combination 
+and 1 row per gene
+
+A nested list of length 3. Each list contains the metrics for the 
+73,320 genes for one treatment group combination.
+}
 \description{
 This data contains metrics for normalized RNA-sequencing read
 counts from soybean cotyledon across three time stages of development. 

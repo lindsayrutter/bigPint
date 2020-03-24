@@ -4,8 +4,13 @@
 \name{soybean_ir_metrics}
 \alias{soybean_ir_metrics}
 \title{Raw soybean leaves iron-metabolism metrics}
-\format{a \code{RData} instance, 1 list per treatment group combination 
-and 1 row per gene}
+\format{
+a \code{RData} instance, 1 list per treatment group combination 
+and 1 row per gene
+
+A nested list of length 1. The list contains the metrics for the 
+56,044 genes for the one treatment group combination.
+}
 \description{
 This data contains metrics for raw RNA-sequencing read counts
 from a soybean dataset that compared leaves that were exposed to iron-rich

@@ -4,8 +4,10 @@
 \name{soybean_cn_sub_metrics}
 \alias{soybean_cn_sub_metrics}
 \title{Normalized and subsetted soybean cotyledon metrics}
-\format{a \code{RData} instance, List with one list element per treatment
-group combination and 1 row per gene}
+\format{
+a \code{RData} instance, List with one list element per treatment
+group combination and 1 row per gene
+}
 \usage{
 data(soybean_cn_sub_metrics)
 }

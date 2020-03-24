@@ -3,7 +3,7 @@ helperTestDataMetricsVolcanoApp <- function(data, dataMetrics, PValue,
 logFC){
 
 generalMessage = "For more information about formatting the dataMetrics
-objects, see https://lrutter.github.io/bigPint/articles/dataMetrics.html.
+objects, see https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html.
 Note that volcano plots require that each element in the dataMetrics object
 has additional two columns, a PValue column and a logFC column."
 

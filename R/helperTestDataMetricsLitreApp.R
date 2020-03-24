@@ -2,7 +2,7 @@
 helperTestDataMetricsLitreApp <- function(data, dataMetrics){
 
 generalMessage = "For more information about formatting the dataMetrics
-object, see https://lrutter.github.io/bigPint/articles/dataMetrics.html"
+object, see https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html"
 
 colNames = colnames(data[,-1])
 seqVec <- seq_along(colNames)

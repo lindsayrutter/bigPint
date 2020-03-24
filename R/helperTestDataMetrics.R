@@ -5,7 +5,7 @@ colNames = colnames(data[,-1])
 seqVec <- seq_along(colNames)
     
 generalMessage = "For more information about formatting the dataMetrics
-object, see https://lrutter.github.io/bigPint/articles/dataMetrics.html"
+object, see https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html"
 
 if (!methods::is(dataMetrics, "list")){ 
     stop(paste0("Data metrics object must be of class 'list'. ",

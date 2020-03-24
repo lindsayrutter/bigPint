@@ -4,7 +4,11 @@
 \name{soybean_ir}
 \alias{soybean_ir}
 \title{Raw soybean leaves iron-metabolism data}
-\format{a \code{RData} instance, 1 row per gene}
+\format{
+a \code{RData} instance, 1 row per gene
+
+A data frame with 56,044 rows and 7 variables
+}
 \description{
 This dataset contains raw RNA-sequencing read counts from a 
 soybean dataset that compared leaves that were exposed to iron-rich (iron

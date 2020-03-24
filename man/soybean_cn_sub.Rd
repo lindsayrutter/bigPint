@@ -4,7 +4,9 @@
 \name{soybean_cn_sub}
 \alias{soybean_cn_sub}
 \title{Normalized and subsetted soybean cotyledon data}
-\format{A data frame with 7,332 rows and 10 variables. 1 row per gene.}
+\format{
+A data frame with 7,332 rows and 10 variables. 1 row per gene.
+}
 \usage{
 data(soybean_cn_sub)
 }
