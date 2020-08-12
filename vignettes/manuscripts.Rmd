@@ -1,24 +1,22 @@
 ---
 title: 'Manuscripts'
-author:
-- name: Lindsay Rutter
-date: '`r Sys.Date()`'
 package: bigPint
 bibliography: bigPint.bib
 output:
   BiocStyle::html_document:
     toc_float: true
     tidy: TRUE
+    border-width: 5px
 vignette: >
   \usepackage[utf8]{inputenc}
-  %\VignetteIndexEntry{"Data metrics object"}
+  %\VignetteIndexEntry{"Recommended RNA-seq pipeline"}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
   %\VignettePackage{bigPint}
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo=TRUE)
+knitr::opts_chunk$set(echo=FALSE)
 ```
 
 On this page are links and short descriptions of peer-reviewed publications related to the `bigPint` software package.

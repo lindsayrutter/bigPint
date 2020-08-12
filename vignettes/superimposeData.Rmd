@@ -1,8 +1,5 @@
 ---
 title: 'Alternatives to data metrics object'
-author:
-- name: Lindsay Rutter
-date: '`r Sys.Date()`'
 package: bigPint
 bibliography: bigPint.bib
 output:

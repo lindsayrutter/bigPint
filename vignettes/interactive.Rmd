@@ -1,8 +1,5 @@
 ---
 title: 'Producing interactive plots'
-author:
-- name: Lindsay Rutter
-date: '`r Sys.Date()`'
 package: bigPint
 bibliography: bigPint.bib
 output:
