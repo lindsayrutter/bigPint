@@ -108,7 +108,7 @@ server <- function(input, output, session) {
     pS <- p
     
     # Render scatterplot matrix interactive as a plotly object
-    ggPS <- ggplotly(pS, width=700, height=600)
+    ggPS <- ggplotly(pS, width=600, height=600)
     
     # Specify that hovering over hexagons should indicate count number
     myLength <- length(ggPS[["x"]][["data"]])
