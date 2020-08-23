@@ -14,7 +14,8 @@
 #' use dataMetrics, threshVar, and threshVal to create clusters to be
 #' overlaid as parallel coordinate lines; default NULL. See package website
 #' for examples
-#' @param geneLists LIST | List of ID values of genes already clustered to be #' drawn from data as parallel coordinate lines. Each list item is an array
+#' @param geneLists LIST | List of ID values of genes already clustered to be
+#' drawn from data as parallel coordinate lines. Each list item is an array
 #' of genes ID values that are already grouped as a cluster. Unlike the 
 #' singular geneList object, the plural geneLists object is not be clustered.
 #' If you instead wish to cluster genes, use dataMetrics, threshVar, and 
@@ -31,6 +32,12 @@
 #' whole dataset (from data input) and the parallel coordinate lines will 
 #' represent only the significant genes (those that pass threshVal for 
 #' threshVar)
+#' @param showPairs BOOLEAN [TRUE | FALSE] | When more than three treatment
+#' groups are present, for each pairwise comparison, show only the results
+#' for that pair of treatment groups; default is TRUE. If FALSE, show results
+#' for all treatment groups even though clusters and significance are
+#' determined in pairwise fashion. Note this parameter will not make a
+#' difference when the data only contains two treatment groups
 #' @param nC INTEGER | Number of clusters; default 4
 #' @param colList CHARACTER ARRAY | List of colors for each cluster; default 
 #' is rainbow(nC)
@@ -234,11 +241,11 @@
 #'
 plotClusters <- function(data, dataMetrics = NULL, dataSE=NULL, geneList = NULL,
     geneLists = NULL, threshVar="FDR", threshVal=0.05, clusterAllData = TRUE, 
-    nC = 4, colList = rainbow(nC), aggMethod = c("ward.D", "ward.D2",
-    "single", "complete", "average", "mcquitty", "median", "centroid"),
-    yAxisLabel = "Count", xAxisLabel = "Sample", lineSize = 0.1,
-    lineAlpha = 0.5, vxAxis = FALSE, outDir=tempdir(), saveFile = TRUE,
-    verbose=FALSE){
+    showPairs = TRUE, nC = 4, colList = rainbow(nC),
+    aggMethod = c("ward.D", "ward.D2", "single", "complete", "average",
+    "mcquitty", "median", "centroid"), yAxisLabel = "Count", xAxisLabel =
+    "Sample", lineSize = 0.1, lineAlpha = 0.5, vxAxis = FALSE,
+    outDir=tempdir(), saveFile = TRUE, verbose=FALSE){
 
 aggMethod <- match.arg(aggMethod)
 
@@ -285,12 +292,20 @@ ret <- lapply(cols.combn, function(x){
     fData <- cbind(ID=data$ID, data[,which(colGroups %in% 
     c(group1, group2))])
     
-    boxDat <- fData %>% gather(key, val, c(-ID))
-    colnames(boxDat) <- c("ID", "Sample", "Count")
-    
-    userOrder <- unique(boxDat$Sample)
-    boxDat$Sample <- as.factor(boxDat$Sample)
-    levels(boxDat$Sample) <- userOrder
+    if (showPairs){
+        boxDat <- fData %>% gather(key, val, c(-ID))
+        colnames(boxDat) <- c("ID", "Sample", "Count")
+        userOrder <- unique(boxDat$Sample)
+        boxDat$Sample <- as.factor(boxDat$Sample)
+        levels(boxDat$Sample) <- userOrder        
+    }
+    else{
+        boxDat <- data %>% gather(key, val, c(-ID))
+        colnames(boxDat) <- c("ID", "Sample", "Count")
+        userOrder <- unique(boxDat$Sample)
+        boxDat$Sample <- as.factor(boxDat$Sample)
+        levels(boxDat$Sample) <- userOrder    
+    }
     
     plotName <- paste0(group1,"_",group2)
     
@@ -350,22 +365,36 @@ ret <- lapply(cols.combn, function(x){
     # Check if there are even any genes that pass the threshold. 
     # Then, perform clustering on whole dataset and assigned 
     # significant genes to those clusters from the full dataset.
-    if (nrow(data)>=nC && clusterAllData == TRUE){
-        p <- helperCadTRUE(data, dataMetrics, metricPair, aggMethod,
+    if (nrow(data)>=nC && clusterAllData == TRUE && showPairs == TRUE){
+        p <- helperCadTRUEPair(data, dataMetrics, metricPair, aggMethod,
         nC, threshVar, threshVal, verbose, vxAxis, saveFile, boxDat,
         xAxisLabel, yAxisLabel, lineAlpha, lineSize, plotName,
         outDir, colList)
         return(p)
     }
+    else if (nrow(data)>=nC && clusterAllData == TRUE && showPairs == FALSE){
+        p <- helperCadTRUE(data, dataMetrics, metricPair, aggMethod,
+        nC, threshVar, threshVal, verbose, vxAxis, saveFile, boxDat,
+        xAxisLabel, yAxisLabel, lineAlpha, lineSize, plotName,
+        outDir, colList)
+        return(p)        
+    }
     
     # Check if there are even any genes that pass the threshold. Then, 
     # perform clustering on just the significant genes.
-    if (nrow(cData)>=nC && clusterAllData == FALSE){
-        p <- helperCadFALSE(cData, dataMetrics, metricPair,
+    if (nrow(cData)>=nC && clusterAllData == FALSE && showPairs == TRUE){
+        p <- helperCadFALSEPair(cData, dataMetrics, metricPair,
         aggMethod, nC, threshVar, threshVal, verbose, vxAxis,
         saveFile, boxDat, xAxisLabel, yAxisLabel, lineAlpha, lineSize,
         plotName, outDir, colList)
         return(p)
+    }
+    else if (nrow(cData)>=nC && clusterAllData == FALSE && showPairs == FALSE){
+        p <- helperCadFALSE(data, cData, dataMetrics, metricPair,
+        aggMethod, nC, threshVar, threshVal, verbose, vxAxis,
+        saveFile, boxDat, xAxisLabel, yAxisLabel, lineAlpha, lineSize,
+        plotName, outDir, colList)
+        return(p)        
     }
     
     # Indicate if no significant genes existed

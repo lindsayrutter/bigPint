@@ -1,7 +1,7 @@
-helperCadFALSE <- function(data, cData, dataMetrics, metricPair, aggMethod, nC,
+helperCadTRUEPair <- function(data, dataMetrics, metricPair, aggMethod, nC,
 threshVar, threshVal, verbose, vxAxis, saveFile, boxDat, xAxisLabel,
 yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
-    dendo = cData
+    dendo = data
     rownames(dendo) = NULL
     d = suppressWarnings(dist(as.matrix(dendo)))
     hC = hclust(d, method=aggMethod)
@@ -10,19 +10,17 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
     seqVec = seq(nC)
     plot_clusters = lapply(seq_along(seqVec), function(j){
         i = rev(order(table(k)))[j]
-        x = as.data.frame(cData[which(k==i),])
+        x = as.data.frame(data[which(k==i),])
         x$cluster = "color"
         x$cluster2 = factor(x$cluster)
-        x$ID = factor(x$ID)
         xNames = x$ID
-        
         if (!is.null(dataMetrics)){
             metricFDR = metricPair[which(as.character(metricPair$ID) %in% 
             xNames),]
             sigID = metricFDR[which(metricFDR[[threshVar]]<=threshVal),]$ID
             xSig = x[which(xNames %in% sigID),]
             xSigNames = rownames(xSig)
-            nGenes = nrow(xSig)  
+            nGenes = nrow(xSig)            
         }
         else{
             xSig = x
@@ -40,11 +38,24 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
         if (nrow(xSig)>0){
             lastTwoIndices = c(ncol(xSig) -1, ncol(xSig))
             xSig = xSig[, -lastTwoIndices]
-            ############################## here!
-            nonPairIndex = which(data$ID %in% xSig$ID)
-            fullDat = data[nonPairIndex,]
             
-            pcpDat <- melt(fullDat, id.vars="ID")
+            #New code to remove extra treatment groups
+            colNames = levels(boxDat$Sample)
+            seqVec <- seq_along(colNames)
+            colGroups <- vapply(seqVec, function(i){
+                strsplit(colNames[i],"[.]")[[1]][1]
+            }, character(1))
+            uColGroups <- unique(colGroups)
+            
+            xCols = colnames(xSig[,-1])
+            seqVec <- seq_along(xCols)
+            colGroupsXSig <- vapply(seqVec, function(i){
+                strsplit(xCols[i],"[.]")[[1]][1]
+            }, character(1))
+            keepCol = which(colGroupsXSig %in% uColGroups) +1
+            xSig = xSig[,c(1,keepCol)]
+            
+            pcpDat <- melt(xSig, id.vars="ID")
             colnames(pcpDat) <- c("ID", "Sample", "Count")
             pcpDat$Sample <- as.character(pcpDat$Sample)
             pcpDat$ID <- as.factor(pcpDat$ID)

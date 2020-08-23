@@ -1,4 +1,3 @@
-#' @importFrom methods is
 helperTestDataMetrics <- function(data, dataMetrics, threshVar){
 
 colNames = colnames(data[,-1])
