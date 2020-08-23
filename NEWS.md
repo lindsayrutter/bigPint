@@ -1,3 +1,6 @@
+## bigPint 1.5.1 (2020-08-23)
+plotClusters() function now has option for superimposing pairs or whole data using the showPairs parameter.
+
 ## bigPint 1.3.3 (2020-06-15)
 [Our software paper](https://doi.org/10.1371/journal.pcbi.1007912) was published in PLoS Computational Biology. In this paper, we describe how our package created independent layers of interactivity using Plotly in R. Pseudocode and source code are provided. Computational scientists can leverage our open-source code to expand upon our layered interactive technology and apply it in new ways toward other computational biology tasks.
 

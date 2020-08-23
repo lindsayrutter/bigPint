@@ -13,6 +13,7 @@ plotClusters(
   threshVar = "FDR",
   threshVal = 0.05,
   clusterAllData = TRUE,
+  showPairs = TRUE,
   nC = 4,
   colList = rainbow(nC),
   aggMethod = c("ward.D", "ward.D2", "single", "complete", "average", "mcquitty",
@@ -42,7 +43,8 @@ use dataMetrics, threshVar, and threshVal to create clusters to be
 overlaid as parallel coordinate lines; default NULL. See package website
 for examples}
 
-\item{geneLists}{LIST | List of ID values of genes already clustered to be #' drawn from data as parallel coordinate lines. Each list item is an array
+\item{geneLists}{LIST | List of ID values of genes already clustered to be
+drawn from data as parallel coordinate lines. Each list item is an array
 of genes ID values that are already grouped as a cluster. Unlike the 
 singular geneList object, the plural geneLists object is not be clustered.
 If you instead wish to cluster genes, use dataMetrics, threshVar, and 
@@ -62,6 +64,13 @@ genes. With either option, the side-by-side boxplot will represent the
 whole dataset (from data input) and the parallel coordinate lines will 
 represent only the significant genes (those that pass threshVal for 
 threshVar)}
+
+\item{showPairs}{BOOLEAN [TRUE | FALSE] | When more than three treatment
+groups are present, for each pairwise comparison, show only the results
+for that pair of treatment groups; default is TRUE. If FALSE, show results
+for all treatment groups even though clusters and significance are
+determined in pairwise fashion. Note this parameter will not make a
+difference when the data only contains two treatment groups}
 
 \item{nC}{INTEGER | Number of clusters; default 4}
 

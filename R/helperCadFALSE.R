@@ -21,7 +21,7 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
             xNames),]
             sigID = metricFDR[which(metricFDR[[threshVar]]<=threshVal),]$ID
             xSig = x[which(xNames %in% sigID),]
-            xSigNames = rownames(xSig)
+            xSigNames = xNames
             nGenes = nrow(xSig)  
         }
         else{
@@ -43,6 +43,7 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
             ############################## here!
             nonPairIndex = which(data$ID %in% xSig$ID)
             fullDat = data[nonPairIndex,]
+            fullDat$ID = as.factor(fullDat$ID)
             
             pcpDat <- melt(fullDat, id.vars="ID")
             colnames(pcpDat) <- c("ID", "Sample", "Count")

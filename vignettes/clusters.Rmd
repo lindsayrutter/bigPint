@@ -107,6 +107,9 @@ ret <- plotClusters(data=soybean_cn_sub_st, dataMetrics = soybean_cn_sub_metrics
   yAxisLabel = "Standardized read count", saveFile = FALSE)
 names(ret)
 grid.draw(ret[["S1_S2_4"]])
+```
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
 grid.draw(ret[["S1_S3_4"]])
 ```
 
@@ -185,7 +188,7 @@ ________________________________________________________________________________
 
 ## Pre-determined clusters
 
-Some users may perform clustering using other software and may wish to simply overlay those clusters as parallel coordinate plots using the `bigPint` package. This can be achieved in the `plotClusters()` function using the `geneLists` variable. As an example, let us read in three clusters that each contain a character array of gene IDs. These three clusters may have been created in another software package and we simply now wish to plot them out using the `bigPint` graphics. We see that the first cluster contains 7 gene IDs and the last two clusters each contain 2 gene IDs.
+Some users may perform clustering using other software and may wish to simply overlay those clusters as parallel coordinate plots using the `bigPint` package. This can be achieved in the `plotClusters()` function using the `geneLists` variable. As an example, let us read in three clusters that each contain a character array of gene IDs. Hypothetically, these three clusters may have been created in another software package and we simply now wish to plot them out using the `bigPint` graphics. We see that the first cluster contains 7 gene IDs and the last two clusters each contain 2 gene IDs.
 
 ```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
 S1S3Cluster2 <- readRDS(paste0(tempdir(), "/S1_S3_4_2.rds"))
@@ -209,7 +212,53 @@ grid.draw(ret[["S1_S3_3"]])
 
 ____________________________________________________________________________________
 
-## SummarizedExperiment Version
+## Three treatment groups
+
+We note that, when there are more than two treatment groups, users can decide whether to plot clustering results onto just the pair of treatment groups that were used in the clustering analysis or onto all treatment groups in the data nonetheless. This can be tailored using the `showPairs` parameter. When set to the default value of `TRUE`, only the treatment pair that was used to generate the clustering results is shown. Below are four examples illustrating this concept using the standardized cotyledon soybean dataset we read into the session earlier (`soybean_cn_sub_st`). 
+
+In the first example, we set `clusterAllData` to `TRUE` and `showPairs` to `FALSE`. Since we set `clusterAllData` to `TRUE`, clustering analysis is performed on all 7332 genes in the data. After each of the 7332 genes is assigned to one of the clusters, only the 284 significant genes are plotted as parallel coordinate lines. Note that `retTF` below contains `S1_S2`, `S1_S3`, and `S2_S3` comparisons but that we only show `S1_S2` below for simplicity. Since we set `showPairs` to `FALSE`, we do not restrict the output for each pairwise comparison to only show the treatment pair in question. Hence, below we see the S1, S2, and S3 output.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+retTF <- plotClusters(soybean_cn_sub_st, soybean_cn_sub_metrics, threshVar="PValue",
+threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = TRUE,
+showPairs = FALSE, vxAxis = TRUE)
+
+grid.draw(retTF[["S1_S2_4"]])
+```
+
+In the second example, we still set `clusterAllData` to `TRUE` but we now also set `showPairs` to `TRUE`. Since we set `clusterAllData` to `TRUE`, clustering analysis is performed on all 7332 genes in the data. After each of the 7332 genes is assigned to one of the clusters, only the 284 significant genes are plotted as parallel coordinate lines. Note that `retTT` below contains `S1_S2`, `S1_S3`, and `S2_S3` comparisons but that we only show `S1_S2` below for simplicity. Since we set `showPairs` to `TRUE`, we only plot the treatment pair in question for each pairwise comparison. Hence, below we only see the S1 and S2 output.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+retTT <- plotClusters(soybean_cn_sub_st, soybean_cn_sub_metrics, threshVar="PValue",
+threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = TRUE,
+showPairs = TRUE, vxAxis = TRUE)
+
+grid.draw(retTT[["S1_S2_4"]])
+```
+
+In the third example, we set `clusterAllData` to `FALSE` and `showPairs` to `FALSE`. Since we set `clusterAllData` to `FALSE`, clustering analysis is performed on only the 284 significant genes, which are then plotted as parallel coordinate lines. Note that `retFF` below contains `S1_S2`, `S1_S3`, and `S2_S3` comparisons but that we only show `S1_S2` below for simplicity. Since we set `showPairs` to `FALSE`, we do not restrict the output for each pairwise comparison to only show the treatment pair in question. Hence, below we see the S1, S2, and S3 output.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+retFF <- plotClusters(soybean_cn_sub_st, soybean_cn_sub_metrics, threshVar="PValue",
+threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = FALSE,
+showPairs = FALSE, vxAxis = TRUE)
+
+grid.draw(retFF[["S1_S2_4"]])
+```
+
+In the fourth example, we still set `clusterAllData` to `FALSE` but we now set `showPairs` to `TRUE`. Since we set `clusterAllData` to `FALSE`, clustering analysis is performed on only the 284 significant genes, which are then plotted as parallel coordinate lines. Note that `retFT` below contains `S1_S2`, `S1_S3`, and `S2_S3` comparisons but that we only show `S1_S2` below for simplicity. Since we set `showPairs` to `TRUE`, we only plot the treatment pair in question for each pairwise comparison. Hence, below we only see the S1 and S2 output.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+retFT <- plotClusters(soybean_cn_sub_st, soybean_cn_sub_metrics, threshVar="PValue", threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = FALSE,
+showPairs = TRUE, vxAxis = TRUE)
+
+grid.draw(retFT[["S1_S2_4"]])
+```
+
+
+____________________________________________________________________________________
+
+## SummarizedExperiment version
 
 Below are the corresponding code blocks from everything above that now use the `SummarizedExperiment` object (`dataSE`) instead of the `data` and `dataMetrics` objects.
 
@@ -328,6 +377,30 @@ S1S3Cluster4
 ret <- plotClusters(dataSE=se_soybean_cn_sub_st, geneLists = list(S1S3Cluster2,
   S1S3Cluster3, S1S3Cluster4), lineAlpha = 1, lineSize = 0.5)
 grid.draw(ret[["S1_S3_3"]])
+```
+
+____________________________________________________________________________________
+
+### Three treatment groups
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+retTF <- plotClusters(dataSE=se_soybean_cn_sub_st, threshVar="PValue" ,threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = TRUE, showPairs = FALSE, vxAxis = TRUE)
+grid.draw(retTF[["S1_S2_4"]])
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+retTT <- plotClusters(dataSE=se_soybean_cn_sub_st, threshVar="PValue" ,threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = TRUE, showPairs = TRUE, vxAxis = TRUE)
+grid.draw(retTT[["S1_S2_4"]])
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+retFF <- plotClusters(dataSE=se_soybean_cn_sub_st, threshVar="PValue" ,threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = FALSE, showPairs = FALSE, vxAxis = TRUE)
+grid.draw(retFF[["S1_S2_4"]])
+```
+
+```{r, eval=FALSE, include=TRUE, message=FALSE, warning=FALSE}
+retFT <- plotClusters(dataSE=se_soybean_cn_sub_st, threshVar="PValue" ,threshVal = 0.05, nC = 4, lineSize = 0.5, verbose = TRUE, clusterAllData = FALSE, showPairs = TRUE, vxAxis = TRUE)
+grid.draw(retFT[["S1_S2_4"]])
 ```
 
 ____________________________________________________________________________________
