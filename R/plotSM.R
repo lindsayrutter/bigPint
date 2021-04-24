@@ -246,6 +246,9 @@ plotSM = function(data=data, dataMetrics=NULL, dataSE=NULL, geneList = NULL,
         helperTestDataMetrics(data, dataMetrics, threshVar)
     }
     
+    # Convert to data.frame in case tibble
+    data <- as.data.frame(data)
+    
     if (option=="foldChange"){
         
         ret <- helperSMFC(data, dataMetrics, outDir, pointSize, threshFC, threshVar,

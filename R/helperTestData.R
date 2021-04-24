@@ -1,7 +1,4 @@
 helperTestData <- function(data){
-
-# Convert to data.frame in case tibble
-data <- as.data.frame(data)
     
 colNames = colnames(data[,-1])
 seqVec <- seq_along(colNames)
@@ -15,6 +12,9 @@ if (!methods::is(data, "data.frame")){
     the 'dataSE' object. ",
     generalMessage))
 }
+
+# Convert to data.frame in case tibble
+data <- as.data.frame(data)
 
 logicClass = vapply(data[,-1], function(x) methods::is(x, "numeric") ||
 methods::is(x, "integer"), logical(length=1))

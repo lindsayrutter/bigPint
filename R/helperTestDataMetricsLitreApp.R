@@ -1,9 +1,6 @@
 #' @importFrom methods is
 helperTestDataMetricsLitreApp <- function(data, dataMetrics){
 
-# Convert to data.frame in case tibble
-data <- as.data.frame(data)
-
 generalMessage = "For more information about formatting the dataMetrics
 object, see https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html"
 

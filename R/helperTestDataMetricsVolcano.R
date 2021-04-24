@@ -2,9 +2,6 @@
 helperTestDataMetricsVolcano <- function(data, dataMetrics, threshVar,
 PValue, logFC){
 
-# Convert to data.frame in case tibble
-data <- as.data.frame(data)
-
 colNames = colnames(data[,-1])
 seqVec <- seq_along(colNames)
     
