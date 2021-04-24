@@ -3,8 +3,7 @@ helperTestDataMetricsLitreApp <- function(data, dataMetrics){
 
 # Convert to data.frame in case tibble
 data <- as.data.frame(data)
-dataMetrics <- as.data.frame(dataMetrics)
-    
+
 generalMessage = "For more information about formatting the dataMetrics
 object, see https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html"
 
