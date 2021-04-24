@@ -1,6 +1,11 @@
 helperCadTRUEPair <- function(data, dataMetrics, metricPair, aggMethod, nC,
 threshVar, threshVal, verbose, vxAxis, saveFile, boxDat, xAxisLabel,
 yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
+    
+    # Convert to data.frame in case tibble
+    data <- as.data.frame(data)
+    dataMetrics <- as.data.frame(dataMetrics)
+    
     dendo = data
     rownames(dendo) = NULL
     d = suppressWarnings(dist(as.matrix(dendo)))

@@ -4,6 +4,7 @@ yAxisLabel, lineAlpha, lineSize, plotName, outDir, colList) {
     
     # Convert to data.frame in case tibble
     data <- as.data.frame(data)
+    dataMetrics <- as.data.frame(dataMetrics)
     
     dendo = cData
     rownames(dendo) = NULL
