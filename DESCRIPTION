@@ -53,3 +53,4 @@ NeedsCompilation: no
 Packaged: 2018-11-30 04:06:13 UTC; suzu
 LazyData: true
 Encoding: UTF-8
+PackageStatus: Deprecated
