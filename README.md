@@ -7,4 +7,4 @@
 Package website
 ---------------
 
-Welcome to the `bigPint` github repository! Please visit the [bigPint package website](https://lindsayrutter.github.io/bigPint/index.html) to learn how to use this software. There, you can access vignettes with reproducible code, example analysis pipelines with reproducible code, function documentation, and recent news.
+Welcome to the `bigPint` github repository. Please visit the [package website](https://lindsayrutter.github.io/bigPint/index.html) to learn how to use this software. 

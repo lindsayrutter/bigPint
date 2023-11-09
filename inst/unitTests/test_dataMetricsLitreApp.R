@@ -39,7 +39,7 @@ dMFail3[["C_D"]] = d
 dMFail4 = dM
 colnames(dMFail4[["A_B"]])[1] = "notID"
 dMFail5 = dM
-dMFail5[["A_B"]][1] = as.factor(dMFail5[["A_B"]][1])
+dMFail5[["A_B"]][1] = as.factor(dMFail5[["A_B"]][1][[1]])
 dMFail6 = dM
 dMFail6[["A_B"]][1] = Le()
 dMFail7 = dM
@@ -80,7 +80,7 @@ dMFail3[["E_F"]] = dME()
 dMFail4 = dM
 colnames(dMFail4[["A_B"]])[1] = "notID"
 dMFail5 = dM
-dMFail5[["A_B"]][1] = as.factor(dMFail5[["A_B"]][1])
+dMFail5[["A_B"]][1] = as.factor(dMFail5[["A_B"]][1][[1]])
 dMFail6 = dM
 dMFail6[["A_B"]][1] = Le()
 dMFail7 = dM
@@ -103,3 +103,4 @@ test_data <- function() {
     checkException(helperTestDataMetricsLitreApp(d, dMFail9))
     checkException(helperTestDataMetricsLitreApp(d, dMFail10))
 }
+

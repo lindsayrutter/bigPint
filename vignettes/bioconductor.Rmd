@@ -20,7 +20,7 @@ knitr::opts_chunk$set(echo=TRUE)
 
 ## Accessing the vignette
 
-Welcome to the `bigPint` package! If you are a new user, please visit the 
+Welcome to the `bigPint` package. Please visit the 
 package website at [https://lindsayrutter.github.io/bigPint/](https://lindsayrutter.github.io/bigPint/). There, you will find a general overview of the `bigPint` package 
 and the motivations behind it. You will also find ten short vignette articles 
 that we recommend reading in order. These short vignette articles consist of 

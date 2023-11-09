@@ -311,7 +311,8 @@ ret <- lapply(cols.combn, function(x){
     
     if (!is.null(dataMetrics) && is.null(geneList)){
         metricPair = dataMetrics[[paste0(group1,"_",group2)]]
-        metricPair = metricPair[order(metricPair[threshVar]),]
+        #metricPair = metricPair[order(metricPair[threshVar]),]
+        metricPair = metricPair[order(metricPair[,threshVar]),]
         threshID <- metricPair[which(metricPair[threshVar] <=
         threshVal),]$ID
         cData <- fData[which(fData$ID %in% threshID),]  
@@ -360,6 +361,11 @@ ret <- lapply(cols.combn, function(x){
         threshVar = "FDR"
         threshVal = 0.5
         dataMetrics = 1
+    }
+    
+    if(is.null(dataMetrics) && is.null(geneList)){
+        metricPair = data.frame(ID = data$ID, FDR = 0)
+        metricPair$ID = as.character(metricPair$ID)
     }
     
     # Check if there are even any genes that pass the threshold. 
