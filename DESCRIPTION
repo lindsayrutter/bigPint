@@ -2,7 +2,7 @@ Package: bigPint
 Version: 1.5.1
 Title: BIG multivariate data Plotted INTeractively
 Description: Make big data pint-sized. Methods for visualizing large multivariate datasets using static and interactive scatterplot matrices, parallel coordinate plots, volcano plots, and litre plots. Includes examples for visualizing RNA-sequencing datasets and differentially expressed genes.
-Authors@R: c(person("Lindsay", "Rutter", email = "lindsayannerutter@gmail.com", role = c("aut","cre")),
+Authors@R: c(person("Lindsay", "Rutter", email = "bigpintpackage@gmail.com", role = c("aut","cre")),
   person("Dianne", "Cook", email = "dicook@monash.edu", role = c("aut")))
 License: GPL-3
 Depends: R (>= 3.6.0)
