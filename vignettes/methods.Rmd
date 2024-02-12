@@ -1,0 +1,44 @@
+---
+title: 'Methodology paper'
+# author:
+# - name: Lindsay Rutter
+# date: '`r Sys.Date()`'
+# package: bigPint
+# bibliography: bigPint.bib
+# output:
+#   BiocStyle::html_document:
+#     toc_float: true
+#     tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Methodology paper"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+Our methodology paper [Visualization methods for differential expression analysis](https://doi.org/10.1186/s12859-019-2968-1) was published in BMC Bioinformatics. We show examples of why visualization should be an integral component of differential expression analysis and how the bigPint package can help scientists detect normalization issues, differential expression designation problems, and common analysis errors. For users interested in additional applications of the bigPint package, please refer to the paper.
+
+## Citation
+
+The BibTeX entry the cite this paper is as follows:
+
+```
+@Article{rutter2019visualization,
+author="Rutter, Lindsay and Lauter, Adrienne N Moran and Graham, Michelle A and Cook, Dianne",
+title="Visualization methods for differential expression analysis",
+journal="BMC Bioinformatics",
+year="2019",
+volume="20",
+number="1",
+pages="458",
+publisher="Springer",
+doi="10.1186/s12859-019-2968-1",
+url="https://doi.org/10.1186/s12859-019-2968-1"
+}
+```
+

@@ -1,0 +1,139 @@
+---
+title: 'Creating data metrics object'
+author:
+- name: Lindsay Rutter
+date: '`r Sys.Date()`'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Creating data metrics object"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## Data metrics object
+
+Information about the `dataMetrics` object can be found in the article [Data metrics object ](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html). If a researcher is using the `bigPint` package to plot RNA-seq data, then many will create the `dataMetrics` object using popular RNA-seq packages such as [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger], [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated], and [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) [@ritchie2015limma]. These R packages will output several interesting quantitative variables for each gene in the dataset, such as log fold change, p-value, and FDR. These quantitative variables can be incorporated into the `dataMetrics` object and determine by thresholds what subset of genes will be superimposed onto plots. 
+
+____________________________________________________________________________________
+
+## Example: two treatments
+
+The following example shows how to create the `dataMetrics` object called `soybean_ir_sub_metrics`, which was shown in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html) [@soybeanIR]. The dataset from which it is created (`soybean_ir_sub`) contains only two treatment groups, N and P. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+library(bigPint)
+library(edgeR)
+library(data.table)
+
+data(soybean_ir_sub)
+data = soybean_ir_sub
+rownames(data) = data[,1]
+
+y = DGEList(counts=data[,-1])
+group = c(1,1,1,2,2,2)
+y = DGEList(counts=y, group=group)
+Group = factor(c(rep("N",3), rep("P",3)))
+design <- model.matrix(~0+Group, data=y$samples)
+colnames(design) <- levels(Group)
+y <- estimateDisp(y, design)
+fit <- glmFit(y, design)
+
+soybean_ir_sub_metrics <- list()
+
+for (i in 1:(ncol(fit)-1)){
+  for (j in (i+1):ncol(fit)){
+    contrast=rep(0,ncol(fit))
+    contrast[i]=1
+    contrast[j]=-1
+    lrt <- glmLRT(fit, contrast=contrast)
+    lrt <- topTags(lrt, n = nrow(y[[1]]))[[1]]
+    
+    setDT(lrt, keep.rownames = TRUE)[]
+    colnames(lrt)[1] = "ID"
+    lrt <- as.data.frame(lrt)
+    
+    soybean_ir_sub_metrics[[paste0(colnames(fit)[i], "_", colnames(fit)[j])]] <- lrt
+  }
+}
+```
+
+We can indeed examine the generated `soybean_ir_sub_metrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+str(soybean_ir_sub_metrics, strict.width = "wrap")
+```
+
+And verify that it contains one list element:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_ir_sub_metrics)
+```
+
+____________________________________________________________________________________
+
+## Example: three treatments
+
+The following example shows how to create the `dataMetrics` object called `soybean_cn_sub_metrics`, which was shown in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html)). The dataset from which it is created (`soybean_cn_sub`) contains three treatment groups, S1, S2, and S3 [@brown2015developmental]. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
+
+```{r, eval=TRUE, include=TRUE}
+library(edgeR)
+library(data.table)
+
+data(soybean_cn_sub)
+data = soybean_cn_sub
+rownames(data) = data[,1]
+
+y = DGEList(counts=data[,-1])
+group = c(1,1,1,2,2,2,3,3,3)
+y = DGEList(counts=y, group=group)
+Group = factor(c(rep("S1",3), rep("S2",3), rep("S3",3)))
+design <- model.matrix(~0+Group, data=y$samples)
+colnames(design) <- levels(Group)
+y <- estimateDisp(y, design)
+fit <- glmFit(y, design)
+
+soybean_cn_sub_metrics <- list()
+
+for (i in 1:(ncol(fit)-1)){
+  for (j in (i+1):ncol(fit)){
+    contrast=rep(0,ncol(fit))
+    contrast[i]=1
+    contrast[j]=-1
+    lrt <- glmLRT(fit, contrast=contrast)
+    lrt <- topTags(lrt, n = nrow(y[[1]]))[[1]]
+    
+    setDT(lrt, keep.rownames = TRUE)[]
+    colnames(lrt)[1] = "ID"
+    lrt <- as.data.frame(lrt)
+    
+    soybean_cn_sub_metrics[[paste0(colnames(fit)[i], "_", colnames(fit)[j])]] <- lrt
+  }
+}
+```
+
+We can indeed examine the generated `soybean_cn_sub_metrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+str(soybean_cn_sub_metrics, strict.width = "wrap")
+```
+
+And verify that it contains three list element:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_cn_sub_metrics)
+```
+
+____________________________________________________________________________________
+
+## References

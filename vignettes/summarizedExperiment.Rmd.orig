@@ -1,0 +1,97 @@
+---
+title: 'SummarizedExperiment object'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Data metrics object"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## SummarizedExperiment object
+
+Researchers who prefer using the `SummarizedExperiment` class can feed their data and associated metrics into the `bigPint` methods using one `SummarizedExperiment` object (instead of both a `data` and `dataMetrics` object). We demonstrate here how to create a `SummarizedExperiment` object. In the remaining articles of the vignette, the example code uses the `data` and `dataMetrics` objects as example input. However, at the bottom of each vignette, we also include the corresponding example code that uses instead the `SummarizedExperiment` object to create the exact same plots.
+
+____________________________________________________________________________________
+
+## Example: two groups
+
+As was shown in the article [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by reading in the `data` and `dataMetrics` objects (created from `edgeR` in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html).
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+library(bigPint)
+library(DelayedArray)
+library(SummarizedExperiment)
+
+data(soybean_ir_sub)
+data = soybean_ir_sub
+data(soybean_ir_sub_metrics)
+dataMetrics = soybean_ir_sub_metrics
+```
+
+We then convert the `dataMetrics` object from a list of dataframes into one dataframe. 
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+dMUnlist <- dataMetrics
+dMUnlist[-1] <- lapply(dMUnlist[-1], transform, ID = NULL)
+dMUnlist <- do.call(cbind, dMUnlist)
+names(dMUnlist)[1] <- "ID"
+```
+
+Now, we can tranform our `data` object into a `DelayedMatrix` class object and then input both our `data` and `dataMetrics` objects combined into a `SummarizedExperiment` class object. We can verify that the `assay()` and `rowData()` methods work for accessing our `SummarizedExperiment` object.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+rownames(data) = data[,1]
+data = data[,-1]
+data <- DelayedArray(data)
+se_soybean_ir_sub <- SummarizedExperiment(assays = data, rowData = dMUnlist)
+assay(se_soybean_ir_sub)
+rowData(se_soybean_ir_sub)
+```
+
+____________________________________________________________________________________
+
+## Example: three groups
+
+Similarly, as was shown in the data page, the `data` object called `soybean_cn_sub` contained 7,332 genes and three treatment groups, S1, S2, and S3 [@brown2015developmental]. We can create a `SummarizedExperiment` object that combines aspects of the `data` object and `dataMetrics` object. We start by reading in the `data` and `dataMetrics` objects (created from `edgeR` in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html).
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+data(soybean_cn_sub)
+data = soybean_cn_sub
+data(soybean_cn_sub_metrics)
+dataMetrics = soybean_cn_sub_metrics
+```
+
+We then convert the `dataMetrics` object from a list of dataframes into one dataframe. 
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+dMUnlist <- dataMetrics
+dMUnlist[-1] <- lapply(dMUnlist[-1], transform, ID = NULL)
+dMUnlist <- do.call(cbind, dMUnlist)
+names(dMUnlist)[1] <- "ID"
+```
+
+Now, we can tranform our `data` object into a `DelayedMatrix` class object and then input both our `data` and `dataMetrics` objects combined into a `SummarizedExperiment` class object. We can verify that the `assay()` and `rowData()` methods work for accessing our `SummarizedExperiment` object.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+rownames(data) = data[,1]
+data = data[,-1]
+data <- DelayedArray(data)
+se_soybean_cn_sub <- SummarizedExperiment(assays = data, rowData = dMUnlist)
+assay(se_soybean_cn_sub)
+rowData(se_soybean_cn_sub)
+```
+
+____________________________________________________________________________________
+
+## References

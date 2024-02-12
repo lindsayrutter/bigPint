@@ -1,0 +1,21 @@
+pandoc: 2.7.3
+pkgdown: 1.5.1
+pkgdown_sha: ~
+articles:
+  bioconductor: bioconductor.html
+  clusters: clusters.html
+  data: data.html
+  dataMetrics: dataMetrics.html
+  installation: installation.html
+  interactive: interactive.html
+  manuscripts: manuscripts.html
+  pipeline: pipeline.html
+  plotIntro: plotIntro.html
+  static: static.html
+  summarizedExperiment: summarizedExperiment.html
+  superimposeData: superimposeData.html
+last_built: 2020-08-23T11:06Z
+urls:
+  reference: http://lindsayrutter.github.io/bigPint/reference
+  article: http://lindsayrutter.github.io/bigPint/articles
+

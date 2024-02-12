@@ -1,0 +1,315 @@
+---
+title: 'Data metrics object'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Data metrics object"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=TRUE)
+```
+
+## About data metrics object
+
+Researchers may wish to superimpose a subset of the full dataset onto the full dataset. If a researcher is using the package to visualize RNA-seq data, then this subset of data is often differentially expressed genes (DEGs) returned from a model. In this case, the user may wish to use the `dataMetrics` input parameter, which contains at least one quantitative variable returned from a model such as FDR, p-value, and log fold change.  
+
+____________________________________________________________________________________
+
+## Example: two groups
+
+As was shown in the article [Data object](https://lindsayrutter.github.io/bigPint/articles/data.html), the `data` object called `soybean_ir_sub` contained 5,604 genes and two treatment groups, N and P [@soybeanIR]. We can examine the structure of its corresponding `dataMetrics` object called `soybean_ir_sub_metrics` as follows:
+
+```{r, eval=TRUE, include=TRUE, message=FALSE}
+library(bigPint)
+data("soybean_ir_sub_metrics")
+str(soybean_ir_sub_metrics, strict.width = "wrap")
+```
+____________________________________________________________________________________
+
+## Example: three groups
+
+Similarly, as was shown in the data page, the `data` object called `soybean_cn_sub` contained 7,332 genes and three treatment groups, S1, S2, and S3 [@brown2015developmental]. We can examine the structure of its corresponding `dataMetrics` object called `soybean_cn_sub_metrics` as follows:
+
+```{r, eval=TRUE, include=TRUE}
+data("soybean_cn_sub_metrics")
+str(soybean_cn_sub_metrics, strict.width = "wrap")
+```
+
+____________________________________________________________________________________
+
+## Data metrics object rules
+
+As demonstrated in the two examples above, the `dataMetrics` object must meet the following conditions:
+
+* Be of type `list`
+* Contain a number of elements equal to the number of pairwise treatment combinations in the `data` object. For example, the `soybean_ir_sub_metrics` object contains one list element ("N_P") and the `soybean_cn_sub_metrics` object contains three list elements ("S1_S2", "S1_S3", "S2_S3").
+* Have each list element
+    + Be of type `data.frame`
+    + Be called in a three-part format (such as "N_P" or "S2_S3") that matches the Perl expression `^[a-zA-Z0-9]+_[a-zA-Z0-9]+`, where
+      - The first part indicates the first treatment group alphameric name
+      - The second part consists of an underscore "_" to serve as a delimeter
+      - The third part indicates the second treatment group alphameric name
+    + Contain a first column called "ID" of class `character` consisting of the unique names of the genes
+    + Contain at least one column of class `numeric` or `integer` consisting of a quantitative variable. This can be called anything. In the examples above, there are five of such columns called "logFC", "logCPM", "LR", "PValue", and "FDR".
+
+You can quickly double-check the names of the list elements in your `dataMetrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_ir_sub_metrics)
+names(soybean_cn_sub_metrics)
+```
+
+If your `dataMetrics` object does not fit this format, `bigPint` will likely throw an informative error about why your format was not recognized.
+
+____________________________________________________________________________________
+
+## Creating data metrics object
+
+If a researcher is using the `bigPint` package to plot RNA-seq data, then many will create the `dataMetrics` object using popular RNA-seq packages such as [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger], [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated], and [limma](https://bioconductor.org/packages/release/bioc/html/limma.html) [@ritchie2015limma]. These R packages will output several interesting quantitative variables for each gene in the dataset that can be incorporated into the `dataMetrics` object. `bigPint` can then apply thresholds to these variables and create subsets of genes to superimpose. To create numerous `bigPint` plots with the least effort, we recommend creating a `dataMetrics` object that contains at least the following column types:
+
+* Significance level ("PValue")
+* Multiple comparison significance level ("FDR")
+* Log fold change ("logFC")
+
+Many `bigPint` plots use "FDR" to determine "significant" genes and subset them as overlay (FDR < 0.05). The `bigPint` volcano plot uses "PValue" and "logFC". Naming these columns as above will save you time but the names and the default threshold values can be specified away from default when creating each `bigPint` plot.
+
+We now provide reproducible code for creating `dataMetrics` objects with two or three treatment groups using both [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] and [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated].
+
+____________________________________________________________________________________
+
+## Example: two groups (edgeR)
+
+The following example shows how to create the `dataMetrics` object called `soybean_ir_sub_metrics`, which was shown in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html) [@soybeanIR]. The dataset from which it is created (`soybean_ir_sub`) contains only two treatment groups, N and P. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+library(bigPint)
+library(edgeR)
+library(data.table)
+
+data(soybean_ir_sub)
+data = soybean_ir_sub
+rownames(data) = data[,1]
+
+y = DGEList(counts=data[,-1])
+group = c(1,1,1,2,2,2)
+y = DGEList(counts=y, group=group)
+Group = factor(c(rep("N",3), rep("P",3)))
+design <- model.matrix(~0+Group, data=y$samples)
+colnames(design) <- levels(Group)
+y <- estimateDisp(y, design)
+fit <- glmFit(y, design)
+
+soybean_ir_sub_metrics <- list()
+
+for (i in 1:(ncol(fit)-1)){
+  for (j in (i+1):ncol(fit)){
+    contrast=rep(0,ncol(fit))
+    contrast[i]=1
+    contrast[j]=-1
+    lrt <- glmLRT(fit, contrast=contrast)
+    lrt <- topTags(lrt, n = nrow(y[[1]]))[[1]]
+    
+    setDT(lrt, keep.rownames = TRUE)[]
+    colnames(lrt)[1] = "ID"
+    lrt <- as.data.frame(lrt)
+    
+    soybean_ir_sub_metrics[[paste0(colnames(fit)[i], "_", colnames(fit)[j])]] <- lrt
+  }
+}
+```
+
+We can indeed examine the generated `soybean_ir_sub_metrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+str(soybean_ir_sub_metrics, strict.width = "wrap")
+```
+
+And verify that it contains one list element:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_ir_sub_metrics)
+```
+
+____________________________________________________________________________________
+
+## Example: three groups (edgeR)
+
+The following example shows how to create the `dataMetrics` object called `soybean_cn_sub_metrics`, which was shown in the article [Data metrics object](https://lindsayrutter.github.io/bigPint/articles/dataMetrics.html)). The dataset from which it is created (`soybean_cn_sub`) contains three treatment groups, S1, S2, and S3 [@brown2015developmental]. In this case, the [edgeR](https://bioconductor.org/packages/release/bioc/html/edgeR.html) [@robinson2010edger] package was primarily followed.
+
+```{r, eval=TRUE, include=TRUE}
+data(soybean_cn_sub)
+data = soybean_cn_sub
+rownames(data) = data[,1]
+
+y = DGEList(counts=data[,-1])
+group = c(1,1,1,2,2,2,3,3,3)
+y = DGEList(counts=y, group=group)
+Group = factor(c(rep("S1",3), rep("S2",3), rep("S3",3)))
+design <- model.matrix(~0+Group, data=y$samples)
+colnames(design) <- levels(Group)
+y <- estimateDisp(y, design)
+fit <- glmFit(y, design)
+
+soybean_cn_sub_metrics <- list()
+
+for (i in 1:(ncol(fit)-1)){
+  for (j in (i+1):ncol(fit)){
+    contrast=rep(0,ncol(fit))
+    contrast[i]=1
+    contrast[j]=-1
+    lrt <- glmLRT(fit, contrast=contrast)
+    lrt <- topTags(lrt, n = nrow(y[[1]]))[[1]]
+    
+    setDT(lrt, keep.rownames = TRUE)[]
+    colnames(lrt)[1] = "ID"
+    lrt <- as.data.frame(lrt)
+    
+    soybean_cn_sub_metrics[[paste0(colnames(fit)[i], "_", colnames(fit)[j])]] <- lrt
+  }
+}
+```
+
+We can indeed examine the generated `soybean_cn_sub_metrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+str(soybean_cn_sub_metrics, strict.width = "wrap")
+```
+
+And verify that it contains three list element:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_cn_sub_metrics)
+```
+
+____________________________________________________________________________________
+
+## Example: two groups (DESeq2)
+
+This example shows how to create a `dataMetrics` object from (`soybean_ir_sub`). In this case, the [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated] package was used.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+library(DESeq2)
+
+data(soybean_ir_sub)
+data = soybean_ir_sub
+rownames(data) = data[,1]
+data = as.matrix(data[,-1])
+
+coldata = data.frame(row.names = colnames(data), treatment = unlist(lapply(
+  colnames(data), function (x) unlist(strsplit(x, "[.]"))[1])))
+dds = DESeqDataSetFromMatrix(countData = data, colData = coldata,
+  design = ~ treatment)
+dds <- DESeq(dds)
+
+uTreat = unique(unlist(lapply(colnames(data), function (x) unlist(strsplit(
+  x, "[.]"))[1])))
+soybean_ir_sub_metrics <- list()
+
+for (i in 1:(length(uTreat)-1)){
+    for (j in (i+1):length(uTreat)){
+        res <- results(dds, contrast=c("treatment", uTreat[i], uTreat[j]))
+        metrics = as.data.frame(res@listData)
+        metrics = cbind(ID = res@rownames, metrics)
+        metrics$ID = as.character(metrics$ID)
+        metrics <- metrics[order(metrics$padj), ]
+        soybean_ir_sub_metrics[[paste0(uTreat[i], "_", uTreat[j])]] <- metrics
+    }
+}
+```
+
+By default, `DESeq2` gives output with variables called "pvalue", "padj", and "log2FoldChange". Various functions in `bigPint` expect column names like "FDR", "logFC", and "PValue" respectively in the `dataMetrics` object. That can be modified manually using the `threshVar` input parameter each time creating a plot. But it is easier to simply rename these parameters from the start in the `dataMetrics` object.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+for (df in seq_len(length(soybean_ir_sub_metrics))){
+    whichPadj = which(colnames(soybean_ir_sub_metrics[[df]])=="pvalue")
+    colnames(soybean_ir_sub_metrics[[df]])[whichPadj] = "PValue"
+    whichPadj = which(colnames(soybean_ir_sub_metrics[[df]])=="padj")
+    colnames(soybean_ir_sub_metrics[[df]])[whichPadj] = "FDR"
+    whichPadj = which(colnames(soybean_ir_sub_metrics[[df]])=="log2FoldChange")
+    colnames(soybean_ir_sub_metrics[[df]])[whichPadj] = "logFC"
+}
+```
+
+We can indeed examine the generated `soybean_ir_sub_metrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+str(soybean_ir_sub_metrics, strict.width = "wrap")
+```
+
+And verify that it contains one list element:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_ir_sub_metrics)
+```
+
+____________________________________________________________________________________
+
+## Example: three groups (DESeq2)
+
+This example shows how to create a `dataMetrics` object from (`soybean_cn_sub`). In this case, the [DESeq2](https://bioconductor.org/packages/release/bioc/html/DESeq2.html) [@love2014moderated] package was used. The `DESeq` package expects a count table that contains integers and has gene-wise dispersion estimates larger than two orders of magnitude from the minimum value. To fit this requirement just for this didactic exercise, we multiply each value by ten and perform a `ceiling()` function.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+data(soybean_cn_sub)
+data = soybean_cn_sub
+rownames(data) = data[,1]
+data = as.matrix(ceiling(data[,-1] * 10))
+
+coldata = data.frame(row.names = colnames(data), treatment = unlist(lapply(
+  colnames(data), function (x) unlist(strsplit(x, "[.]"))[1])))
+dds = DESeqDataSetFromMatrix(countData = data, colData = coldata,
+  design = ~ treatment)
+dds <- DESeq(dds)
+
+uTreat <- unique(unlist(lapply(colnames(data), function (x)
+  unlist(strsplit(x, "[.]"))[1])))
+soybean_cn_sub_metrics <- list()
+
+for (i in 1:(length(uTreat)-1)){
+    for (j in (i+1):length(uTreat)){
+        res <- results(dds, contrast=c("treatment", uTreat[i], uTreat[j]))
+        metrics = as.data.frame(res@listData)
+        metrics = cbind(ID = res@rownames, metrics)
+        metrics$ID = as.character(metrics$ID)
+        metrics <- metrics[order(metrics$padj), ]
+        soybean_cn_sub_metrics[[paste0(uTreat[i], "_", uTreat[j])]] <- metrics
+    }
+}
+```
+
+By default, `DESeq2` gives output with variables called "pvalue", "padj", and "log2FoldChange". Various functions in `bigPint` expect column names like "FDR", "logFC", and "PValue" respectively in the `dataMetrics` object. That can be modified manually using the `threshVar` input parameter each time creating a plot. But it is easier to simply rename these parameters from the start in the `dataMetrics` object.
+
+```{r, eval=TRUE, include=TRUE, message=FALSE, warning=FALSE}
+for (df in seq_len(length(soybean_ir_sub_metrics))){
+    whichPadj = which(colnames(soybean_ir_sub_metrics[[df]])=="pvalue")
+    colnames(soybean_ir_sub_metrics[[df]])[whichPadj] = "PValue"
+    whichPadj = which(colnames(soybean_ir_sub_metrics[[df]])=="padj")
+    colnames(soybean_ir_sub_metrics[[df]])[whichPadj] = "FDR"
+    whichPadj = which(colnames(soybean_ir_sub_metrics[[df]])=="log2FoldChange")
+    colnames(soybean_ir_sub_metrics[[df]])[whichPadj] = "logFC"
+}
+```
+
+We can indeed examine the generated `soybean_cn_sub_metrics` object as follows:
+
+```{r, eval=TRUE, include=TRUE}
+str(soybean_cn_sub_metrics, strict.width = "wrap")
+```
+
+And verify that it contains three list element:
+
+```{r, eval=TRUE, include=TRUE}
+names(soybean_cn_sub_metrics)
+```
+
+____________________________________________________________________________________
+
+## References

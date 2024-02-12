@@ -1,0 +1,86 @@
+---
+title: 'Manuscripts'
+package: bigPint
+bibliography: bigPint.bib
+output:
+  BiocStyle::html_document:
+    toc_float: true
+    tidy: TRUE
+    border-width: 5px
+vignette: >
+  \usepackage[utf8]{inputenc}
+  %\VignetteIndexEntry{"Recommended RNA-seq pipeline"}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+  %\VignettePackage{bigPint}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo=FALSE)
+```
+
+On this page are links and short descriptions of peer-reviewed publications related to the `bigPint` software package.
+
+## Methodology paper
+
+Our methodology paper [Visualization methods for differential expression analysis](https://doi.org/10.1186/s12859-019-2968-1) was published in BMC Bioinformatics. We show examples of why visualization should be an integral component of differential expression analysis and how the bigPint package can help scientists detect normalization issues, differential expression designation problems, and common analysis errors. For users interested in additional applications of the bigPint package, please refer to the paper.
+
+The BibTeX entry the cite this paper is as follows:
+
+```
+@Article{rutter2019visualization,
+author="Rutter, Lindsay and Lauter, Adrienne N Moran and Graham, Michelle A and Cook, Dianne",
+title="Visualization methods for differential expression analysis",
+journal="BMC Bioinformatics",
+year="2019",
+volume="20",
+number="1",
+pages="458",
+publisher="Springer",
+doi="10.1186/s12859-019-2968-1",
+url="https://doi.org/10.1186/s12859-019-2968-1"
+}
+```
+
+## Research paper
+
+Our research paper [Transcriptomic responses to diet quality and viral infection in Apis mellifera](https://doi.org/10.1186/s12864-019-5767-1) was published in BMC Genomics. We examined how monofloral diet quality and Israeli acute paralysis virus inoculation affected honey bee transcriptomics. Our RNA-seq data was noisy and we used data visualization from the bigPint package to identify noise and robustness in our data. For users interested in additional applications of the bigPint package, please refer to the paper.
+
+The BibTeX entry the cite this paper is as follows:
+
+```
+@Article{Rutter2019,
+author="Rutter, Lindsay and Carrillo-Tripp, Jimena and Bonning, Bryony C. and Cook, Dianne and Toth, Amy L. and Dolezal, Adam G.",
+title="Transcriptomic responses to diet quality and viral infection in Apis mellifera",
+journal="BMC Genomics",
+year="2019",
+month="May",
+day="22",
+volume="20",
+number="1",
+pages="412",
+doi="10.1186/s12864-019-5767-1",
+url="https://doi.org/10.1186/s12864-019-5767-1"
+}
+```
+
+## Software paper
+
+Our software paper [bigPint: A Bioconductor visualization package that makes big data pint-sized](https://doi.org/10.1371/journal.pcbi.1007912) was published in PLoS Computational Biology. In this paper, we describe how our package created independent layers of interactivity using Plotly in R. Pseudocode and source code are provided. Computational scientists can leverage our open-source code to expand upon our layered interactive technology and apply it in new ways toward other computational biology tasks.
+
+The BibTeX entry the cite this paper is as follows:
+
+```
+@Article{rutter2020bigpint,
+  title="bigPint: A Bioconductor visualization package that makes big data pint-sized",
+  author="Rutter, Lindsay and Cook, Dianne",
+  journal="PLOS Computational Biology",
+  volume="16",
+  number="6",
+  pages="e1007912",
+  year="2020",
+  publisher="Public Library of Science",
+  doi="10.1371/journal.pcbi.1007912",
+  url="https://doi.org/10.1371/journal.pcbi.1007912"
+}
+```
